@@ -1,0 +1,8 @@
+{
+  "name": "minhas-despesas-api",
+  "version": "1.0.0",
+  "main": "dist/server.js",
+  "author": "João Pedro <joaopedromoraesnsilva@gmail.com>",
+  "repository": "https://github.com/JPedro109/minhas-despesas-api.git",
+  "license": "MIT"
+}

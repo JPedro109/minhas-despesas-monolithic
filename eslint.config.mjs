@@ -10,9 +10,17 @@ export default [
   {
     rules: {
       "quotes": ["error", "double"],
-      "semi": ["error", "always"], 
+      "semi": ["error", "always"],
       "@typescript-eslint/explicit-function-return-type": ["error"],
       "@typescript-eslint/no-explicit-any": ["error"]
     },
+  },
+  {
+    ignores: [
+      "commitlint.config.js",
+      "jest.config.js",
+      "jest-unit-config.js",
+      "jest-integration-config.js",
+    ]
   }
 ];

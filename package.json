@@ -4,5 +4,10 @@
   "main": "dist/server.js",
   "author": "João Pedro <joaopedromoraesnsilva@gmail.com>",
   "repository": "https://github.com/JPedro109/minhas-despesas-api.git",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
 }

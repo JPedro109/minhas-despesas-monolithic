@@ -1,6 +1,6 @@
 import { InvalidUserPasswordError } from "@/layers/domain";
 
-export class UserPassword {
+export class UserPasswordValueObject {
 
 	private readonly password: string;
 	
@@ -12,10 +12,10 @@ export class UserPassword {
 		return this.password;
 	}
 	
-	static create(password: string): UserPassword | InvalidUserPasswordError {
+	static create(password: string): UserPasswordValueObject | InvalidUserPasswordError {
 		if(!this.validate(password)) return new InvalidUserPasswordError();
 
-		return new UserPassword(password);
+		return new UserPasswordValueObject(password);
 	}
 
 	private static validate(password: string): boolean {

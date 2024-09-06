@@ -1,6 +1,6 @@
 import { InvalidUsernameError } from "@/layers/domain";
 
-export class Username {
+export class UsernameValueObject {
 
 	private constructor(private readonly username: string) {
 		this.username = username;
@@ -10,10 +10,10 @@ export class Username {
 		return this.username;
 	}
 
-	static create(username: string): Username | InvalidUsernameError {
+	static create(username: string): UsernameValueObject | InvalidUsernameError {
 		if(!this.validate(username)) return new InvalidUsernameError();
 
-		return new Username(username);
+		return new UsernameValueObject(username);
 	}
 
 	private static validate(username: string): boolean {

@@ -1,6 +1,6 @@
 import { InvalidUserEmailError } from "@/layers/domain";
 
-export class UserEmail {
+export class UserEmailValueObject {
 
 	private readonly email: string;
 
@@ -12,10 +12,10 @@ export class UserEmail {
 		return this.email;
 	}
 
-	static create(email: string): UserEmail | InvalidUserEmailError {
+	static create(email: string): UserEmailValueObject | InvalidUserEmailError {
 		if(!this.validate(email)) return new InvalidUserEmailError(email);
 
-		return new UserEmail(email);
+		return new UserEmailValueObject(email);
 	}
 
 	private static validate(email: string): boolean {

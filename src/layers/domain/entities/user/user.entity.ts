@@ -1,5 +1,5 @@
 import { AbstractEntity } from "../abstract/abstract.entity";
-import { UserEmail, UserPassword, Username, DomainError } from "@/layers/domain";
+import { UserEmailValueObject, UserPasswordValueObject, UsernameValueObject, DomainError } from "@/layers/domain";
 
 export type UserProps = {
 	email: string;
@@ -16,9 +16,9 @@ export class UserEntity extends AbstractEntity<UserProps> {
 		super(props, id);
 
 		const valueObjets = {
-			email: UserEmail.create(props.email),
-			username: Username.create(props.email),
-			password: UserPassword.create(props.password),
+			email: UserEmailValueObject.create(props.email),
+			username: UsernameValueObject.create(props.email),
+			password: UserPasswordValueObject.create(props.password),
 		};
 
 		const result = UserEntity.validate(valueObjets);
@@ -31,7 +31,7 @@ export class UserEntity extends AbstractEntity<UserProps> {
 	}
 
 	set email(email: string) {
-		const result = UserEmail.create(email);
+		const result = UserEmailValueObject.create(email);
 		if (result instanceof Error) throw result;
 		this.props.email = result.value;
 	}
@@ -41,7 +41,7 @@ export class UserEntity extends AbstractEntity<UserProps> {
 	}
 
 	set username(username: string) {
-		const result = Username.create(username);
+		const result = UsernameValueObject.create(username);
 		if (result instanceof Error) throw result;
 		this.props.username = result.value;
 	}
@@ -51,7 +51,7 @@ export class UserEntity extends AbstractEntity<UserProps> {
 	}
 
 	set password(password: string) {
-		const result = UserPassword.create(password);
+		const result = UserPasswordValueObject.create(password);
 		if (result instanceof Error) throw result;
 		this.props.password = result.value;
 	}

@@ -6,3 +6,5 @@ export * from "./errors/invalid-username.error";
 
 export * from "./user-password.value-object";
 export * from "./errors/invalid-user-password.error";
+
+export * from "./user.entity";

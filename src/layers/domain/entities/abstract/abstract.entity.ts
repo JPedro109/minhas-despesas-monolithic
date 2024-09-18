@@ -8,12 +8,12 @@ export abstract class AbstractEntity<Props> {
 		return this.id;
 	}
 
-	protected static validate<T>(validations: T): { valid: boolean, errors?: string } {
+	protected validate<T>(validations: T): { valid: boolean, errors?: string } {
 		const errors = [];
 
 		for(const key in validations) {
 			if(validations[key] instanceof Error) {
-				const error = validations[key] as Error;
+				const error = validations[key];
 				errors.push(error.message);
 			}
 		}

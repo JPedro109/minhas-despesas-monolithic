@@ -21,7 +21,7 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
 			dueDate: ExpenseDueDateValueObject.create(props.dueDate),
 		};
 
-		const result = ExpenseEntity.validate(valueObjets);
+		const result = this.validate(valueObjets);
 
 		if(!result.valid) throw new DomainError(result.errors);
 	}

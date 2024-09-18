@@ -27,7 +27,7 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
 
         props.actions.map((action, index) => valueObjects[`${action}${index + 1}`] = PlanActionValueObject.create(action));
 
-        const result = PlanEntity.validate(valueObjects);
+        const result = this.validate(valueObjects);
 
         if (!result.valid) throw new DomainError(result.errors);
     }

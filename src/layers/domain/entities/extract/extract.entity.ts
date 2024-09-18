@@ -21,7 +21,7 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 			referenceMonth: ExtractReferenceMonthValueObject.create(props.referenceMonth),
 		};
 
-		const result = ExtractEntity.validate(valueObjets);
+		const result = this.validate(valueObjets);
 
 		if(!result.valid) throw new DomainError(result.errors);
 	}

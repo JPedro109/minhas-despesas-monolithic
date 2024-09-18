@@ -21,7 +21,7 @@ export class UserEntity extends AbstractEntity<UserProps> {
 			password: UserPasswordValueObject.create(props.password),
 		};
 
-		const result = UserEntity.validate(valueObjets);
+		const result = this.validate(valueObjets);
 
 		if(!result.valid) throw new DomainError(result.errors);
 	}

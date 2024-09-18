@@ -26,6 +26,10 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 		if(!result.valid) throw new DomainError(result.errors);
 	}
 
+	public get referenceMonth(): number {
+		return this.props.referenceMonth;
+	}
+
 	public get url(): string {
 		return this.props.url;
 	}

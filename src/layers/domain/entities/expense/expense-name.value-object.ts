@@ -1,11 +1,7 @@
 import { InvalidExpenseNameError } from "./errors/invalid-expense-name.error";
 
 export class ExpenseNameValueObject {
-    private readonly expenseName: string;
-  
-    private constructor(expenseName: string) {
-      this.expenseName = expenseName;
-    }
+    private constructor(private readonly expenseName: string) { }
   
     public get value(): string {
       return this.expenseName;

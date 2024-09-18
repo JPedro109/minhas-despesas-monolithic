@@ -1,11 +1,7 @@
 import { InvalidExtractUrlError } from "./errors/extract-invalid-url.error";
 
 export class ExtractUrlValueObject {
-    private readonly url: string;
-
-    private constructor(url: string) {
-        this.url = url;
-    }
+    private constructor(private readonly url: string) { }
 
     public get value(): string {
         return this.url;

@@ -1,26 +1,22 @@
 import { InvalidExpenseDueDateError } from "./errors/invalid-expense-due-date.error";
 
 export class ExpenseDueDateValueObject {
-    private readonly expenseDueDate: Date;
-  
-    private constructor(dueDate: Date) {
-      this.expenseDueDate = dueDate;
-    }
+    private constructor(private readonly expenseDueDate: Date) { }
   
     public get value(): Date {
       return this.expenseDueDate;
     }
   
-    static create(dueDate: Date): ExpenseDueDateValueObject | InvalidExpenseDueDateError {
-      if (!this.validate(dueDate)) return new InvalidExpenseDueDateError();
+    static create(expenseDueDate: Date): ExpenseDueDateValueObject | InvalidExpenseDueDateError {
+      if (!this.validate(expenseDueDate)) return new InvalidExpenseDueDateError();
     
-      return new ExpenseDueDateValueObject(dueDate);
+      return new ExpenseDueDateValueObject(expenseDueDate);
     }
   
-    private static validate(dueDate: Date): boolean {
+    private static validate(expenseDueDate: Date): boolean {
       const currentDate = new Date();
     
-      if (currentDate.getTime() >= dueDate.getTime()) return false;
+      if (currentDate.getTime() >= expenseDueDate.getTime()) return false;
     
       return true;
     }

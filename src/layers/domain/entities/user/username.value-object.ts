@@ -2,9 +2,7 @@ import { InvalidUsernameError } from "@/layers/domain";
 
 export class UsernameValueObject {
 
-	private constructor(private readonly username: string) {
-		this.username = username;
-	}
+	private constructor(private readonly username: string) { }
 
 	public get value(): string {
 		return this.username;

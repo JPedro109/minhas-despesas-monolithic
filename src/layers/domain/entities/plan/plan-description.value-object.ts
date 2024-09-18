@@ -2,9 +2,7 @@ import { InvalidPlanDescriptionError } from "@/layers/domain";
 
 export class PlanDescriptionValueObject {
 
-	private constructor(private readonly planDescription: string) {
-		this.planDescription = planDescription;
-	}
+	private constructor(private readonly planDescription: string) { }
 
 	public get value(): string {
 		return this.planDescription;

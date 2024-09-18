@@ -1,11 +1,7 @@
 import { InvalidExtractReferenceMonthError } from "./errors/extract-invalid-reference-month.error";
 
 export class ExtractReferenceMonthValueObject {
-    private readonly referenceMonth: number;
-
-    private constructor(referenceMonth: number) {
-        this.referenceMonth = referenceMonth;
-    }
+    private constructor(private readonly referenceMonth: number) { }
 
     public get value(): number {
         return this.referenceMonth;

@@ -2,9 +2,7 @@ import { InvalidPlanNameError } from "@/layers/domain";
 
 export class PlanNameValueObject {
 
-	private constructor(private readonly planName: string) {
-		this.planName = planName;
-	}
+	private constructor(private readonly planName: string) { }
 
 	public get value(): string {
 		return this.planName;

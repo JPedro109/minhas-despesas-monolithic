@@ -10,9 +10,7 @@ export type PlanActionValueObjectProps = {
 
 export class PlanActionValueObject {
 
-    private constructor(private readonly props: PlanActionValueObjectProps) {
-        this.props = props;
-    }
+    private constructor(private readonly props: PlanActionValueObjectProps) { }
 
     public get id(): string {
         return this.props.id;

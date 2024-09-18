@@ -1,11 +1,7 @@
 import { InvalidExpenseValueError } from "./errors/invalid-expense-value.error";
 
 export class ExpenseValueValueObject {
-    private readonly expenseValue: number;
-
-    private constructor(expenseValue: number) {
-        this.expenseValue = expenseValue;
-    }
+    private constructor(private readonly expenseValue: number) { }
 
     public get value(): number {
         return this.expenseValue;

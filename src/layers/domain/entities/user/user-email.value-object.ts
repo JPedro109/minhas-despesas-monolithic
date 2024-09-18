@@ -13,7 +13,7 @@ export class UserEmailValueObject {
 	}
 
 	static create(email: string): UserEmailValueObject | InvalidUserEmailError {
-		if(!this.validate(email)) return new InvalidUserEmailError(email);
+		if(!this.validate(email)) return new InvalidUserEmailError();
 
 		return new UserEmailValueObject(email);
 	}

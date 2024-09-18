@@ -6,3 +6,4 @@ export * from "./entities/expense";
 export * from "./entities/payment-history";
 export * from "./entities/extract";
 export * from "./entities/plan";
+export * from "./entities/subscription";

@@ -169,6 +169,23 @@ describe("Entity - Expense", () => {
 		expect(expense.dueDate).toBe(newDueDate);
 	});
 
+	test("Should not update paid status, because it is already false", () => {
+		const expenseName = "Rent";
+		const expenseValue = 100;
+		const dueDate = new Date("3000-01-01");
+		const expense = new ExpenseEntity({
+			enpenseName: expenseName,
+			expenseValue: expenseValue,
+			dueDate: dueDate,
+			paid: false,
+			createdAt: new Date()
+		});
+
+		const sut = (): boolean => expense.paid = false;
+
+		expect(sut).toThrow(DomainError);
+	});
+
 	test("Should not update paid status, because it is already true", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;

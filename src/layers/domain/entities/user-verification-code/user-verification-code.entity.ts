@@ -50,7 +50,7 @@ export class UserVerificationCodeEntity extends AbstractEntity<UserVerificationC
 
     public set valid(valid: boolean) {
 		if(!this.props.valid) throw new DomainError("O código já está invalidado");
-		if(this.props.valid && valid) throw new DomainError("Você já está ativo um código");
+		if(this.props.valid && valid) throw new DomainError("Esse código já está ativo");
 		this.props.valid = valid;
 	}
 	

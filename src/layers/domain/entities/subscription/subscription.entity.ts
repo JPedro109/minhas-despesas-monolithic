@@ -43,7 +43,7 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
     }
 
     set renewable(renewable: boolean) {
-		if(this.props.renewable === renewable) throw new DomainError(`A assinatura já está ${renewable ? "renovável" : "como não revová "}`);
+		if(this.props.renewable === renewable) throw new DomainError(`A assinatura já está ${renewable ? "renovável" : "como não renovável "}`);
         this.props.renewable = renewable;
     }
 

@@ -2,9 +2,9 @@ import { AbstractEntity } from "../abstract/abstract.entity";
 import { 
     PlanNameValueObject, 
     PlanDescriptionValueObject,
-     PlanActionValueObject, 
-     DomainError, 
-     PlanActionValueObjectProps 
+    PlanActionValueObject, 
+    DomainError, 
+    PlanActionValueObjectProps 
 } from "@/layers/domain";
 
 export type PlanProps = {

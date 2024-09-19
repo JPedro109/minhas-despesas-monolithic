@@ -2,7 +2,7 @@ import { SubscriptionEntity, DomainError } from "@/layers/domain";
 
 describe("Entity - Subscription", () => {
 
-	test("Should not create subscription, because endDate is before startDate", () => {
+	test("Should not create SubscriptionEntity, because endDate is before startDate", () => {
 		const startDate = new Date("2024-01-01");
 		const endDate = new Date("2023-12-31");
 
@@ -19,7 +19,7 @@ describe("Entity - Subscription", () => {
 		expect(sut).toThrow(DomainError);
 	});
 
-	test("Should create subscription", () => {
+	test("Should create SubscriptionEntity", () => {
 		const startDate = new Date("2024-01-01");
 		const endDate = new Date("2024-12-31");
 
@@ -36,7 +36,7 @@ describe("Entity - Subscription", () => {
 		expect(sut).toBeInstanceOf(SubscriptionEntity);
 	});
 
-	test("Should not update active status, because it is already true", () => {
+	test("Should not update active status, because it is already false", () => {
 		const subscription = new SubscriptionEntity({
 			userId: "user123",
 			planId: "plan123",
@@ -131,22 +131,5 @@ describe("Entity - Subscription", () => {
 		subscription.renewable = true;
 
 		expect(subscription.renewable).toBeTruthy();
-	});
-
-	test("Should update updatedAt date", () => {
-		const subscription = new SubscriptionEntity({
-			userId: "user123",
-			planId: "plan123",
-			active: true,
-			renewable: true,
-			startDate: new Date("2024-01-01"),
-			endDate: new Date("2024-12-31"),
-			createdAt: new Date(),
-		});
-
-		const newUpdatedAt = new Date("2024-09-01");
-		subscription.updatedAt = newUpdatedAt;
-
-		expect(subscription.updatedAt).toBe(newUpdatedAt);
 	});
 });

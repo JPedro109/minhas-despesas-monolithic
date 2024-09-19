@@ -2,7 +2,7 @@ import { UserEntity, DomainError, InvalidUserEmailError, InvalidUserPasswordErro
 
 describe(("Entity - User"), () => {
     
-	test("Should not create user, because user email is not valid" , () => {
+	test("Should not create UserEntity, because user email is not valid" , () => {
 		const invalidUserEmail = "email.com";
 		const username = "username";
 		const password = "Password1234";
@@ -18,7 +18,7 @@ describe(("Entity - User"), () => {
 		expect(sut).toThrow(DomainError);
 	});
 
-	test("Should not create user, because username is not valid" , () => {
+	test("Should not create UserEntity, because username is not valid" , () => {
 		const userEmail = "email@test.com";
 		const invalidUsername = "";
 		const password = "password";
@@ -34,7 +34,7 @@ describe(("Entity - User"), () => {
 		expect(sut).toThrow(DomainError);
 	});
 
-	test("Should not create user, because user password is not valid" , () => {
+	test("Should not create UserEntity, because user password is not valid" , () => {
 		const email = "email@test.com";
 		const username = "username";
 		const invalidUserPassword = "password";
@@ -50,7 +50,7 @@ describe(("Entity - User"), () => {
 		expect(sut).toThrow(DomainError);
 	});
 
-	test("Should create user" , () => {
+	test("Should create UserEntity" , () => {
 		const userEmail = "email@test.com";
 		const username = "username";
 		const userPassword = "Password1234";
@@ -66,7 +66,7 @@ describe(("Entity - User"), () => {
 		expect(sut).toBeInstanceOf(UserEntity);
 	});
 
-	test("Should not update email, because email is invalid" , () => {
+	test("Should not update email, because it is invalid" , () => {
 		const userEmail = "email@test.com";
 		const username = "username";
 		const userPassword = "Password1234";
@@ -101,7 +101,7 @@ describe(("Entity - User"), () => {
 		expect(user.email).toBe("email2@test.com");
 	});
 
-	test("Should not update username, because username is invalid" , () => {
+	test("Should not update username, because it is invalid" , () => {
 		const userEmail = "email@test.com";
 		const username = "username";
 		const userPassword = "Password1234";
@@ -135,7 +135,7 @@ describe(("Entity - User"), () => {
 		expect(user.username).toBe("username 2");
 	});
 
-	test("Should not update password, because password is invalid" , () => {
+	test("Should not update password, because it is invalid" , () => {
 		const userEmail = "email@test.com";
 		const username = "username";
 		const userPassword = "Password1234";
@@ -169,7 +169,7 @@ describe(("Entity - User"), () => {
 		expect(user.password).toBe("Password12345");
 	});
 
-	test("Should not update verified email, because verified email already is true" , () => {
+	test("Should not update verified email, because it already is true" , () => {
 		const userEmail = "email@test.com";
 		const username = "username";
 		const userPassword = "Password1234";

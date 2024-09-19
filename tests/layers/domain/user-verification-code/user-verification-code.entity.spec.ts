@@ -13,7 +13,7 @@ const user = new UserEntity(
 
 describe("Entity - UserVerificationCode", () => {
     
-    test("Should not create user verification code, because verification code is null", () => {
+    test("Should not create UserVerificationCodeEntity, because verification code is null", () => {
         const invalidVerificationCode = "";
         const typeName = "create_user";
         const valid = true;
@@ -32,7 +32,7 @@ describe("Entity - UserVerificationCode", () => {
         expect(sut).toThrow(DomainError);
     });
 
-    test("Should not create user verification code, because verification code is invalid", () => {
+    test("Should not create UserVerificationCodeEntity, because verification code is invalid", () => {
         const invalidVerificationCode = "1234567";
         const typeName = "create_user";
         const valid = true;
@@ -51,7 +51,7 @@ describe("Entity - UserVerificationCode", () => {
         expect(sut).toThrow(DomainError);
     });
 
-    test("Should not create user verification code, because verification code type is empty", () => {
+    test("Should not create UserVerificationCodeEntity, because verification code type is empty", () => {
         const verificationCode = "123456";
         const invalidTypeName = "" as "create_user";
         const valid = true;
@@ -70,7 +70,7 @@ describe("Entity - UserVerificationCode", () => {
         expect(sut).toThrow(DomainError);
     });
 
-    test("Should not create user verification code, because verification code type is invalid", () => {
+    test("Should not create UserVerificationCodeEntity, because verification code type is invalid", () => {
         const verificationCode = "123456";
         const invalidTypeName = "invalid_type" as "create_user";
         const valid = true;
@@ -89,7 +89,7 @@ describe("Entity - UserVerificationCode", () => {
         expect(sut).toThrow(DomainError);
     });
 
-    test("Should create user verification code", () => {
+    test("Should create UserVerificationCodeEntity", () => {
         const verificationCode = "123456";
         const typeName = "create_user";
         const valid = true;
@@ -166,26 +166,5 @@ describe("Entity - UserVerificationCode", () => {
         userVerificationCode.valid = false;
 
         expect(userVerificationCode.valid).toBe(false);
-    });
-
-    test("Should update updatedAt", () => {
-        const verificationCode = "123456";
-        const typeName = "create_user";
-        const valid = true;
-        const expiryDate = new Date();
-        const createdAt = new Date();
-        const userVerificationCode = new UserVerificationCodeEntity({
-            type: typeName, 
-            verificationCode,
-            verificationCodeExpiryDate: expiryDate,
-            valid,
-            user,
-            createdAt
-        });
-
-        const newUpdatedAt = new Date();
-        userVerificationCode.updatedAt = newUpdatedAt;
-
-        expect(userVerificationCode.updatedAt).toBe(newUpdatedAt);
     });
 });

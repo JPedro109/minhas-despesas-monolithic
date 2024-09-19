@@ -2,7 +2,7 @@ import { UserVerificationCodeValueObject, InvalidUserVerificationCodeError } fro
 
 describe(("Value Object - UserVerificationCodeValueObject"), () => {
     
-	test("Should not create user verification code, because user verification code is empty" , () => {
+	test("Should not create UserVerificationCodeValueObject, because user verification code is empty" , () => {
 		const invalidUserVerificationCode = "";
 
 		const sut = UserVerificationCodeValueObject.create(invalidUserVerificationCode);
@@ -10,7 +10,7 @@ describe(("Value Object - UserVerificationCodeValueObject"), () => {
 		expect(sut).toBeInstanceOf(InvalidUserVerificationCodeError);
 	});
 
-	test("Should not create user verification code, because the user verification code has more than 6 characters" , () => {
+	test("Should not create UserVerificationCodeValueObject, because the user verification code has more than 6 characters" , () => {
 		const invalidUserVerificationCode = "c".repeat(7);
 
 		const sut = UserVerificationCodeValueObject.create(invalidUserVerificationCode);
@@ -18,7 +18,7 @@ describe(("Value Object - UserVerificationCodeValueObject"), () => {
 		expect(sut).toBeInstanceOf(InvalidUserVerificationCodeError);
 	});
 
-	test("Should not create user verification code, because the user verification code has more than 256 characters" , () => {
+	test("Should create UserVerificationCodeValueObject" , () => {
 		const userVerificationCode = "123456";
 
 		const sut = UserVerificationCodeValueObject.create(userVerificationCode);

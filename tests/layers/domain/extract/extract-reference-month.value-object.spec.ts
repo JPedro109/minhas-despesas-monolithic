@@ -2,7 +2,7 @@ import { ExtractReferenceMonthValueObject, InvalidExtractReferenceMonthError } f
 
 describe("Value Object - ExtractReferenceMonthValueObject", () => {
 
-    test("Should not create reference month, because reference month is empty", () => {
+    test("Should not create ExtractReferenceMonthValueObject, because reference month is empty", () => {
         const invalidReferenceMonth = null;
 
         const sut = ExtractReferenceMonthValueObject.create(invalidReferenceMonth);
@@ -10,7 +10,7 @@ describe("Value Object - ExtractReferenceMonthValueObject", () => {
         expect(sut).toBeInstanceOf(InvalidExtractReferenceMonthError);
     });
 
-    test("Should not create reference month, because reference month is less than 1", () => {
+    test("Should not create ExtractReferenceMonthValueObject, because reference month is less than 1", () => {
         const invalidReferenceMonth = 0;
 
         const sut = ExtractReferenceMonthValueObject.create(invalidReferenceMonth);
@@ -18,7 +18,7 @@ describe("Value Object - ExtractReferenceMonthValueObject", () => {
         expect(sut).toBeInstanceOf(InvalidExtractReferenceMonthError);
     });
 
-    test("Should not create reference month, because reference month is greater than 12", () => {
+    test("Should not create ExtractReferenceMonthValueObject, because reference month is greater than 12", () => {
         const invalidReferenceMonth = 13;
 
         const sut = ExtractReferenceMonthValueObject.create(invalidReferenceMonth);
@@ -27,7 +27,7 @@ describe("Value Object - ExtractReferenceMonthValueObject", () => {
     });
 
     
-    test("Should create reference month, because reference month is valid", () => {
+    test("Should create ExtractReferenceMonthValueObject", () => {
         const referenceMonth = 1;
 
         const sut = ExtractReferenceMonthValueObject.create(referenceMonth);

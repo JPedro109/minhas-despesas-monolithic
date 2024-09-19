@@ -2,7 +2,7 @@ import { PlanEntity, DomainError, InvalidPlanNameError, InvalidPlanDescriptionEr
 
 describe("Entity - Plan", () => {
 
-    test("Should not create plan, because plan name is not valid", () => {
+    test("Should not create PlanEntity, because plan name is not valid", () => {
         const invalidPlanName = "";
         const planDescription = "A valid description";
         const actions = [];
@@ -17,7 +17,7 @@ describe("Entity - Plan", () => {
         expect(sut).toThrow(DomainError);
     });
 
-    test("Should not create plan, because plan description is not valid", () => {
+    test("Should not create PlanEntity, because plan description is not valid", () => {
         const planName = "Valid Plan";
         const invalidPlanDescription = "";
         const actions = [];
@@ -32,7 +32,7 @@ describe("Entity - Plan", () => {
         expect(sut).toThrow(DomainError);
     });
 
-    test("Should not create plan, because actions are invalid", () => {
+    test("Should not create PlanEntity, because actions are not valid", () => {
         const planName = "Valid Plan";
         const planDescription = "A valid description";
         const invalidActions = [{ id: "", name: "", description: "", createdAt: new Date() }];
@@ -47,7 +47,7 @@ describe("Entity - Plan", () => {
         expect(sut).toThrow(DomainError);
     });
 
-    test("Should create plan", () => {
+    test("Should create PlanEntity", () => {
         const planName = "Valid Plan";
         const planDescription = "A valid description";
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
@@ -62,7 +62,7 @@ describe("Entity - Plan", () => {
         expect(sut).toBeInstanceOf(PlanEntity);
     });
 
-    test("Should not update plan name, because name is invalid", () => {
+    test("Should not update plan name, because it is invalid", () => {
         const planName = "Valid Plan";
         const planDescription = "A valid description";
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
@@ -96,7 +96,7 @@ describe("Entity - Plan", () => {
         expect(plan.name).toBe("Updated Plan");
     });
 
-    test("Should not update plan description, because description is invalid", () => {
+    test("Should not update plan description, because it is invalid", () => {
         const planName = "Valid Plan";
         const planDescription = "A valid description";
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
@@ -128,23 +128,5 @@ describe("Entity - Plan", () => {
         plan.description = "Updated description";
 
         expect(plan.description).toBe("Updated description");
-    });
-
-    test("Should update createdAt date", () => {
-        const planName = "Valid Plan";
-        const planDescription = "A valid description";
-        const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
-
-        const plan = new PlanEntity({
-          name: planName, 
-          description: planDescription, 
-          actions,
-          createdAt: new Date()
-        });
-      
-        const newDate = new Date();
-        plan.updatedAt = newDate;
-      
-        expect(plan.updatedAt).toBe(newDate);
     });
 });

@@ -2,7 +2,7 @@ import { PlanDescriptionValueObject, InvalidPlanDescriptionError } from "@/layer
 
 describe(("Value Object - PlanDescriptionValueObject"), () => {
     
-	test("Should not create plan description, because plan description is empty" , () => {
+	test("Should not create PlanDescriptionValueObject, because plan description is empty" , () => {
 		const invalidPlanDescription = "";
 
 		const sut = PlanDescriptionValueObject.create(invalidPlanDescription);
@@ -10,7 +10,7 @@ describe(("Value Object - PlanDescriptionValueObject"), () => {
 		expect(sut).toBeInstanceOf(InvalidPlanDescriptionError);
 	});
 
-	test("Should not create plan description, because the plan description has more than 100 characters" , () => {
+	test("Should not create PlanDescriptionValueObject, because the plan description has more than 100 characters" , () => {
 		const invalidPlanDescription = "c".repeat(101);
 
 		const sut = PlanDescriptionValueObject.create(invalidPlanDescription);
@@ -18,7 +18,7 @@ describe(("Value Object - PlanDescriptionValueObject"), () => {
 		expect(sut).toBeInstanceOf(InvalidPlanDescriptionError);
 	});
 
-	test("Should create plan description" , () => {
+	test("Should create PlanDescriptionValueObject" , () => {
 		const planName = "plan description";
 
 		const sut = PlanDescriptionValueObject.create(planName);

@@ -2,7 +2,7 @@ import { ExpenseDueDateValueObject, InvalidExpenseDueDateError } from "@/layers/
 
 describe("Value Object - ExpenseDueDateValueObject", () => {
   
-    test("Should not create ExpenseDueDateValueObject, because value date is errored", () => {
+    test("Should not create ExpenseDueDateValueObject, because value date is less than the current date", () => {
         const invalidDate = new Date("2000-01-01");
 
         const sut = ExpenseDueDateValueObject.create(invalidDate);

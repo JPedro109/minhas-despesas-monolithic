@@ -2,7 +2,7 @@ import { ExpenseEntity, DomainError, InvalidExpenseNameError, InvalidExpenseValu
 
 describe("Entity - Expense", () => {
 
-	test("Should not create expense, because expense name is not valid", () => {
+	test("Should not create ExpenseEntity, because expense name is not valid", () => {
 		const invalidExpenseName = "";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
@@ -18,7 +18,7 @@ describe("Entity - Expense", () => {
 		expect(sut).toThrow(DomainError);
 	});
 
-	test("Should not create expense, because expense value is not valid", () => {
+	test("Should not create ExpenseEntity, because expense value is not valid", () => {
 		const expenseName = "Rent";
 		const invalidExpenseValue = -100;
 		const dueDate = new Date("3000-01-01");
@@ -34,7 +34,7 @@ describe("Entity - Expense", () => {
 		expect(sut).toThrow(DomainError);
 	});
 
-	test("Should not create expense, because due date is not valid", () => {
+	test("Should not create ExpenseEntity, because due date is not valid", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const invalidDueDate = new Date("2000-01-01");
@@ -50,7 +50,7 @@ describe("Entity - Expense", () => {
 		expect(sut).toThrow(DomainError);
 	});
 
-	test("Should create expense", () => {
+	test("Should create ExpenseEntity", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");

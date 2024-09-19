@@ -2,7 +2,7 @@ import { PlanNameValueObject, InvalidPlanNameError } from "@/layers/domain";
 
 describe(("Value Object - PlanNameValueObject"), () => {
     
-	test("Should not create plan name, because plan name is empty" , () => {
+	test("Should not create PlanNameValueObject, because plan name is empty" , () => {
 		const invalidUsername = "";
 
 		const sut = PlanNameValueObject.create(invalidUsername);
@@ -10,7 +10,7 @@ describe(("Value Object - PlanNameValueObject"), () => {
 		expect(sut).toBeInstanceOf(InvalidPlanNameError);
 	});
 
-	test("Should not create plan name, because the plan name has more than 51 characters" , () => {
+	test("Should not create PlanNameValueObject, because the plan name has more than 50 characters" , () => {
 		const invalidUsername = "c".repeat(51);
 
 		const sut = PlanNameValueObject.create(invalidUsername);
@@ -18,7 +18,7 @@ describe(("Value Object - PlanNameValueObject"), () => {
 		expect(sut).toBeInstanceOf(InvalidPlanNameError);
 	});
 
-	test("Should create plan name" , () => {
+	test("Should create PlanNameValueObject" , () => {
 		const planName = "plan name";
 
 		const sut = PlanNameValueObject.create(planName);

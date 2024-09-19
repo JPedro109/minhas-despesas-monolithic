@@ -2,7 +2,7 @@ import { PaymentHistoryEntity } from "@/layers/domain";
 
 describe("Entity - PaymentHistory", () => {
 
-    test("Should create history payment entity", () => {
+    test("Should create PaymentHistoryEntity", () => {
         const userId = "1";
         const expenseId = "1";
         const expenseName = "Expense Name";

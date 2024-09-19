@@ -10,7 +10,7 @@ describe("Value Object - ExpenseNameValueObject", () => {
         expect(sut).toBeInstanceOf(InvalidExpenseNameError);
     });
 
-    test("Should not create ExpenseNameValueObject, because value has more than 200 characters", () => {
+    test("Should not create ExpenseNameValueObject, because value has more than 60 characters", () => {
         const invalidExpenseName = "c".repeat(61);
 
         const sut = ExpenseNameValueObject.create(invalidExpenseName);

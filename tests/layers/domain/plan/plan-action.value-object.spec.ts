@@ -2,7 +2,7 @@ import { PlanActionValueObject, InvalidPlanActionError } from "@/layers/domain";
 
 describe("Value Object - PlanActionValueObject", () => {
 
-    test("Should not create plan, because name is empty", () => {
+    test("Should not create PlanActionValueObject, because name is empty", () => {
         const invalidName = "";
 
         const sut = PlanActionValueObject.create({
@@ -16,7 +16,7 @@ describe("Value Object - PlanActionValueObject", () => {
         expect(sut).toBeInstanceOf(InvalidPlanActionError);
     });
 
-    test("Should not create plan, because name has more than 15 characters", () => {
+    test("Should not create PlanActionValueObject, because name has more than 15 characters", () => {
         const invalidName = "a".repeat(16);
 
         const sut = PlanActionValueObject.create({
@@ -30,7 +30,7 @@ describe("Value Object - PlanActionValueObject", () => {
         expect(sut).toBeInstanceOf(InvalidPlanActionError);
     });
 
-    test("Should not create plan, because description is empty", () => {
+    test("Should not create PlanActionValueObject, because description is empty", () => {
         const invalidDescription = "";
 
         const sut = PlanActionValueObject.create({
@@ -44,7 +44,7 @@ describe("Value Object - PlanActionValueObject", () => {
         expect(sut).toBeInstanceOf(InvalidPlanActionError);
     });
 
-    test("Should not create plan, because description has more than 50 characters", () => {
+    test("Should not create PlanActionValueObject, because description has more than 50 characters", () => {
         const invalidDescription = "a".repeat(51);
 
         const sut = PlanActionValueObject.create({
@@ -58,7 +58,7 @@ describe("Value Object - PlanActionValueObject", () => {
         expect(sut).toBeInstanceOf(InvalidPlanActionError);
     });
 
-    test("Should create plan with valid data", () => {
+    test("Should create PlanActionValueObject", () => {
         const validName = "Valid name";
         const validDescription = "Valid description";
       

@@ -2,7 +2,7 @@ import { UserVerificationCodeTypeValueObject, InvalidUserVerificationCodeTypeErr
 
 describe(("Value Object - UserVerificationCodeTypeValueObject"), () => {
     
-	test("Should not create user verification code type, because user verification code type is empty" , () => {
+	test("Should not create UserVerificationCodeTypeValueObject, because user verification code type is empty" , () => {
 		const invalidUserVerificationCodeTypeName = "";
 
 		const sut = UserVerificationCodeTypeValueObject.create(invalidUserVerificationCodeTypeName);
@@ -10,7 +10,7 @@ describe(("Value Object - UserVerificationCodeTypeValueObject"), () => {
 		expect(sut).toBeInstanceOf(InvalidUserVerificationCodeTypeError);
 	});
 
-	test("Should not create user verification code type, because the user verification code type is invalid" , () => {
+	test("Should not create UserVerificationCodeTypeValueObject, because the user verification code type is invalid" , () => {
 		const invalidUserVerificationCodeTypeName = "invalid_type";
 
 		const sut = UserVerificationCodeTypeValueObject.create(invalidUserVerificationCodeTypeName);
@@ -18,7 +18,7 @@ describe(("Value Object - UserVerificationCodeTypeValueObject"), () => {
 		expect(sut).toBeInstanceOf(InvalidUserVerificationCodeTypeError);
 	});
 
-	test("Should create user verification code type" , () => {
+	test("Should create UserVerificationCodeTypeValueObject" , () => {
 		const userVerificationCodeTypeName = "create_user";
 
 		const sut = UserVerificationCodeTypeValueObject.create(userVerificationCodeTypeName);

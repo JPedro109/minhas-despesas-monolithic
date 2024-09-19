@@ -1,6 +1,7 @@
 import { ExpenseNameValueObject, InvalidExpenseNameError } from "@/layers/domain";
 
 describe("Value Object - ExpenseNameValueObject", () => {
+    
     test("Should not create ExpenseNameValueObject, because value is null", () => {
         const invalidExpenseName = "";
 

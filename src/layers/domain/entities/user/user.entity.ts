@@ -6,14 +6,13 @@ export type UserProps = {
 	username: string;
 	password: string;
 	verifiedEmail: boolean;
-	createdAt: Date;
 	updatedAt?: Date;
 }
 
 export class UserEntity extends AbstractEntity<UserProps> {
 
-	constructor(props: UserProps, id?: string) {
-		super(props, id);
+	constructor(props: UserProps, id?: string, createdAt?: Date) {
+		super(props, id, createdAt);
 
 		const valueObjets = {
 			email: UserEmailValueObject.create(props.email),
@@ -63,10 +62,6 @@ export class UserEntity extends AbstractEntity<UserProps> {
 	set verifiedEmail(verifiedEmail: boolean) {
 		if(this.props.verifiedEmail) throw new DomainError("O email já está verificado");
 		this.props.verifiedEmail = verifiedEmail;
-	}
-
-	get createdAt(): Date {
-		return this.props.createdAt;
 	}
 
 	set updatedAt(updatedAt: Date) {

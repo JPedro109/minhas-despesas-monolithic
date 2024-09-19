@@ -10,8 +10,7 @@ describe("Entity - Plan", () => {
         const sut = (): PlanEntity => new PlanEntity({
           name: invalidPlanName, 
           description: planDescription, 
-          actions,
-          createdAt: new Date()
+          actions
         });
       
         expect(sut).toThrow(DomainError);
@@ -25,8 +24,7 @@ describe("Entity - Plan", () => {
         const sut = (): PlanEntity => new PlanEntity({
           name: planName, 
           description: invalidPlanDescription, 
-          actions,
-          createdAt: new Date()
+          actions
         });
 
         expect(sut).toThrow(DomainError);
@@ -40,8 +38,7 @@ describe("Entity - Plan", () => {
         const sut = (): PlanEntity => new PlanEntity({
           name: planName, 
           description: planDescription, 
-          actions: invalidActions,
-          createdAt: new Date()
+          actions: invalidActions
         });
 
         expect(sut).toThrow(DomainError);
@@ -55,8 +52,7 @@ describe("Entity - Plan", () => {
         const sut = new PlanEntity({
           name: planName, 
           description: planDescription, 
-          actions,
-          createdAt: new Date()
+          actions
         });
 
         expect(sut).toBeInstanceOf(PlanEntity);
@@ -70,8 +66,7 @@ describe("Entity - Plan", () => {
         const plan = new PlanEntity({
           name: planName, 
           description: planDescription, 
-          actions,
-          createdAt: new Date()
+          actions
         });
 
         const sut = (): string => plan.name = "";
@@ -87,8 +82,7 @@ describe("Entity - Plan", () => {
         const plan = new PlanEntity({
           name: planName, 
           description: planDescription, 
-          actions,
-          createdAt: new Date()
+          actions
         });
 
         plan.name = "Updated Plan";
@@ -104,8 +98,7 @@ describe("Entity - Plan", () => {
         const plan = new PlanEntity({
           name: planName, 
           description: planDescription, 
-          actions,
-          createdAt: new Date()
+          actions
         });
 
         const sut = (): string => plan.description = "";
@@ -121,8 +114,7 @@ describe("Entity - Plan", () => {
         const plan = new PlanEntity({
           name: planName, 
           description: planDescription, 
-          actions,
-          createdAt: new Date()
+          actions
         });
 
         plan.description = "Updated description";

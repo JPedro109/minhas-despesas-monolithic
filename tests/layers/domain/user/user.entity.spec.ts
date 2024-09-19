@@ -11,8 +11,7 @@ describe(("Entity - User"), () => {
 			email: invalidUserEmail, 
 			username: username, 
 			password,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		expect(sut).toThrow(DomainError);
@@ -27,8 +26,7 @@ describe(("Entity - User"), () => {
 			email: userEmail, 
 			username: invalidUsername, 
 			password,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		expect(sut).toThrow(DomainError);
@@ -43,8 +41,7 @@ describe(("Entity - User"), () => {
 			email: email, 
 			username: username, 
 			password: invalidUserPassword,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		expect(sut).toThrow(DomainError);
@@ -59,8 +56,7 @@ describe(("Entity - User"), () => {
 			email: userEmail, 
 			username: username, 
 			password: userPassword,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		expect(sut).toBeInstanceOf(UserEntity);
@@ -74,8 +70,7 @@ describe(("Entity - User"), () => {
 			email: userEmail, 
 			username: username, 
 			password: userPassword,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		const sut = (): string => user.email = "";
@@ -92,8 +87,7 @@ describe(("Entity - User"), () => {
 			email: userEmail, 
 			username: username, 
 			password: userPassword,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		user.email = "email2@test.com";
@@ -109,8 +103,7 @@ describe(("Entity - User"), () => {
 			email: userEmail, 
 			username: username, 
 			password: userPassword,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		const sut = (): string => user.username = "";
@@ -126,8 +119,7 @@ describe(("Entity - User"), () => {
 			email: userEmail, 
 			username: username, 
 			password: userPassword,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		user.username = "username 2";
@@ -143,8 +135,7 @@ describe(("Entity - User"), () => {
 			email: userEmail, 
 			username: username, 
 			password: userPassword,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		const sut = (): string => user.password = "";
@@ -160,8 +151,7 @@ describe(("Entity - User"), () => {
 			email: userEmail, 
 			username: username, 
 			password: userPassword,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		user.password = "Password12345";
@@ -177,8 +167,7 @@ describe(("Entity - User"), () => {
 			email: userEmail, 
 			username: username, 
 			password: userPassword,
-			verifiedEmail: true,
-			createdAt: new Date()
+			verifiedEmail: true
 		});
 
 		const sut = (): boolean => user.verifiedEmail = true;
@@ -194,8 +183,7 @@ describe(("Entity - User"), () => {
 			email: userEmail, 
 			username: username, 
 			password: userPassword,
-			verifiedEmail: false,
-			createdAt: new Date()
+			verifiedEmail: false
 		});
 
 		user.verifiedEmail = true;

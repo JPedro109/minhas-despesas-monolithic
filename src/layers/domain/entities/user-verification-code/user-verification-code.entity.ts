@@ -12,14 +12,13 @@ export type UserVerificationCodeProps = {
     verificationCodeExpiryDate: Date;
     valid: boolean;
     user: UserEntity;
-    createdAt: Date;
     updatedAt?: Date;
 }
 
 export class UserVerificationCodeEntity extends AbstractEntity<UserVerificationCodeProps> {
 
-	constructor(props: UserVerificationCodeProps, id?: string) {
-		super(props, id);
+	constructor(props: UserVerificationCodeProps, id?: string, createdAt?: Date) {
+		super(props, id, createdAt);
 
 		const valueObjets = {
 			verificationCode: UserVerificationCodeValueObject.create(props.verificationCode),
@@ -55,10 +54,6 @@ export class UserVerificationCodeEntity extends AbstractEntity<UserVerificationC
 	
 	public get user(): UserEntity {
 		return this.props.user;
-	}
-
-	public get createdAt(): Date {
-		return this.props.createdAt;
 	}
 
 	public get updatedAt(): Date  {

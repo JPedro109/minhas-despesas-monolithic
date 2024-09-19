@@ -8,14 +8,13 @@ export type SubscriptionProps = {
     renewable: boolean;
     startDate: Date;
     endDate?: Date;
-    createdAt: Date;
     updatedAt?: Date;
 }
 
 export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
 
-    constructor(props: SubscriptionProps, id?: string) {
-        super(props, id);
+    constructor(props: SubscriptionProps, id?: string, createdAt?: Date) {
+		super(props, id, createdAt);
 
         if (this.endDate.getTime() <= this.startDate.getTime()) 
             throw new DomainError("A data de término da assinatura deve ser maior que a data de início");
@@ -53,10 +52,6 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
 
     get endDate(): Date {
         return this.props.endDate;
-    }
-
-    get createdAt(): Date {
-        return this.props.createdAt;
     }
 
     get updatedAt(): Date {

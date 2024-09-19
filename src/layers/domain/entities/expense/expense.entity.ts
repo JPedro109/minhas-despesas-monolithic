@@ -6,14 +6,13 @@ export type ExpenseProps = {
     expenseValue: number;
     dueDate: Date;
     paid: boolean;
-    createdAt: Date;
 	updatedAt?: Date;
 }
 
 export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
 
-    constructor(props: ExpenseProps, id?: string) {
-		super(props, id);
+    constructor(props: ExpenseProps, id?: string, createdAt?: Date) {
+		super(props, id, createdAt);
 
 		const valueObjets = {
 			enpenseName: ExpenseNameValueObject.create(props.enpenseName),
@@ -63,10 +62,6 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
     set paid(paid: boolean) {
 		if(this.props.paid === paid) throw new DomainError(`A despesa já está ${paid ? "paga" : "como não paga"}`);
         this.props.paid = paid;
-    }
-
-    get createdAt(): Date {
-        return this.props.createdAt;
     }
 
     get updatedAt(): Date {

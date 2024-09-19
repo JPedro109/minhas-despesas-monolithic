@@ -5,9 +5,7 @@ const user = new UserEntity(
         email: "email@test.com",
         username: "username",
         password: "Password1234",
-        verifiedEmail: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        verifiedEmail: true
     }
 );
 
@@ -18,15 +16,14 @@ describe("Entity - UserVerificationCode", () => {
         const typeName = "create_user";
         const valid = true;
         const expiryDate = new Date();
-        const createdAt = new Date();
+
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
             type: typeName, 
             verificationCode: invalidVerificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
-            user,
-            createdAt
+            user
         });
 
         expect(sut).toThrow(DomainError);
@@ -37,15 +34,14 @@ describe("Entity - UserVerificationCode", () => {
         const typeName = "create_user";
         const valid = true;
         const expiryDate = new Date();
-        const createdAt = new Date();
+
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
             type: typeName, 
             verificationCode: invalidVerificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
-            user,
-            createdAt
+            user
         });
 
         expect(sut).toThrow(DomainError);
@@ -56,15 +52,14 @@ describe("Entity - UserVerificationCode", () => {
         const invalidTypeName = "" as "create_user";
         const valid = true;
         const expiryDate = new Date();
-        const createdAt = new Date();
+
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
             type: invalidTypeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
-            user,
-            createdAt
+            user
         });
 
         expect(sut).toThrow(DomainError);
@@ -75,15 +70,14 @@ describe("Entity - UserVerificationCode", () => {
         const invalidTypeName = "invalid_type" as "create_user";
         const valid = true;
         const expiryDate = new Date();
-        const createdAt = new Date();
+
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
             type: invalidTypeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
-            user,
-            createdAt
+            user
         });
 
         expect(sut).toThrow(DomainError);
@@ -94,15 +88,14 @@ describe("Entity - UserVerificationCode", () => {
         const typeName = "create_user";
         const valid = true;
         const expiryDate = new Date();
-        const createdAt = new Date();
+
 
         const sut = new UserVerificationCodeEntity({
             type: typeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
-            user,
-            createdAt
+            user
         });
 
         expect(sut).toBeInstanceOf(UserVerificationCodeEntity);
@@ -113,14 +106,13 @@ describe("Entity - UserVerificationCode", () => {
         const typeName = "create_user";
         const expiryDate = new Date();
         const valid = false;
-        const createdAt = new Date();
+
         const userVerificationCode = new UserVerificationCodeEntity({
             type: typeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
-            user,
-            createdAt
+            user
         });
 
         const sut = (): boolean => userVerificationCode.valid = true;
@@ -133,14 +125,13 @@ describe("Entity - UserVerificationCode", () => {
         const typeName = "create_user";
         const expiryDate = new Date();
         const valid = true;
-        const createdAt = new Date();
+
         const userVerificationCode = new UserVerificationCodeEntity({
             type: typeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
-            user,
-            createdAt
+            user
         });
 
         const sut = (): boolean => userVerificationCode.valid = true;
@@ -153,14 +144,13 @@ describe("Entity - UserVerificationCode", () => {
         const typeName = "create_user";
         const valid = true;
         const expiryDate = new Date();
-        const createdAt = new Date();
+
         const userVerificationCode = new UserVerificationCodeEntity({
             type: typeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
-            user,
-            createdAt
+            user
         });
 
         userVerificationCode.valid = false;

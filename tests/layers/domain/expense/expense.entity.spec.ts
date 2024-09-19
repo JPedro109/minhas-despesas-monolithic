@@ -11,8 +11,7 @@ describe("Entity - Expense", () => {
 			enpenseName: invalidExpenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		expect(sut).toThrow(DomainError);
@@ -27,8 +26,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: invalidExpenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		expect(sut).toThrow(DomainError);
@@ -43,8 +41,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: invalidDueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		expect(sut).toThrow(DomainError);
@@ -59,8 +56,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		expect(sut).toBeInstanceOf(ExpenseEntity);
@@ -74,8 +70,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		const sut = (): string => expense.expenseName = "";
@@ -91,8 +86,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		expense.expenseName = "Utilities";
@@ -108,8 +102,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		const sut = (): number => expense.expenseValue = -100;
@@ -125,8 +118,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		expense.expenseValue = 200;
@@ -142,8 +134,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		const sut = (): Date => expense.dueDate = new Date("2000-01-01");
@@ -159,8 +150,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		const newDueDate = new Date("3000-01-01");
@@ -177,8 +167,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		const sut = (): boolean => expense.paid = false;
@@ -194,8 +183,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: true,
-			createdAt: new Date()
+			paid: true
 		});
 
 		const sut = (): boolean => expense.paid = true;
@@ -211,8 +199,7 @@ describe("Entity - Expense", () => {
 			enpenseName: expenseName,
 			expenseValue: expenseValue,
 			dueDate: dueDate,
-			paid: false,
-			createdAt: new Date()
+			paid: false
 		});
 
 		expense.paid = true;

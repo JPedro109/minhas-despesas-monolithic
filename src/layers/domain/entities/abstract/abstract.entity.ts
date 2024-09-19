@@ -1,11 +1,16 @@
 export abstract class AbstractEntity<Props> {
 	constructor(
         protected props: Props, 
-        private readonly id: string = "1"
+        private readonly entityId: string = "1",
+        private readonly entityCreatedAt: Date = new Date(),
 	) { }
 
-	public get value() : string {
-		return this.id;
+	public get id(): string {
+		return this.entityId;
+	}
+
+	public get createdAt(): Date {
+		return this.entityCreatedAt;
 	}
 
 	protected validate<T>(validations: T): { valid: boolean, errors?: string } {

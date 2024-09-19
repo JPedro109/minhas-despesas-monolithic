@@ -8,8 +8,7 @@ describe("Entity - Extract", () => {
       
         const sut = (): ExtractEntity => new ExtractEntity({
           url: invalidUrl,
-          referenceMonth,
-          createdAt: new Date()
+          referenceMonth
         });
       
         expect(sut).toThrow(DomainError);
@@ -21,8 +20,7 @@ describe("Entity - Extract", () => {
 
         const sut = (): ExtractEntity => new ExtractEntity({
           url,
-          referenceMonth: invalidReferenceMonth,
-          createdAt: new Date()
+          referenceMonth: invalidReferenceMonth
         });
 
         expect(sut).toThrow(DomainError);
@@ -35,8 +33,7 @@ describe("Entity - Extract", () => {
       
         const sut = new ExtractEntity({
           url: validUrl,
-          referenceMonth,
-          createdAt: new Date()
+          referenceMonth
         });
       
         expect(sut).toBeInstanceOf(ExtractEntity);

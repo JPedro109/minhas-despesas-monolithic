@@ -9,15 +9,14 @@ describe("Entity - PaymentHistory", () => {
         const expenseValue = 100.00;
         const dueDate = new Date("2024-12-01");
         const paidDate = new Date("2024-11-01");
-        const createdAt = new Date("2024-10-01");
+        
         const sut = new PaymentHistoryEntity({
             userId,
             expenseId,
             expenseName,
             expenseValue,
             dueDate,
-            paidDate,
-            createdAt
+            paidDate
         });
 
         expect(sut).toBeInstanceOf(PaymentHistoryEntity);
@@ -27,6 +26,6 @@ describe("Entity - PaymentHistory", () => {
         expect(sut.expenseValue).toBe(expenseValue);
         expect(sut.dueDate).toEqual(dueDate);
         expect(sut.paidDate).toEqual(paidDate);
-        expect(sut.createdAt).toEqual(createdAt);
+        expect(sut.createdAt).not.toBeUndefined();
     });
 });

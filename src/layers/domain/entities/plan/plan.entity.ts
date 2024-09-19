@@ -11,14 +11,13 @@ export type PlanProps = {
     name: string;
     description: string;
     actions: PlanActionValueObjectProps[];
-    createdAt: Date;
     updatedAt?: Date;
 }
 
 export class PlanEntity extends AbstractEntity<PlanProps> {
 
-    constructor(props: PlanProps, id?: string) {
-        super(props, id);
+    constructor(props: PlanProps, id?: string, createdAt?: Date) {
+		super(props, id, createdAt);
 
         const valueObjects = {
             name: PlanNameValueObject.create(props.name),
@@ -54,10 +53,6 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
 
     get actions(): PlanActionValueObjectProps[] {
         return this.props.actions;
-    }
-
-    get createdAt(): Date {
-        return this.props.createdAt;
     }
 
     set updatedAt(updatedAt: Date) {

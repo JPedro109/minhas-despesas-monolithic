@@ -12,8 +12,7 @@ describe("Entity - Subscription", () => {
 			active: true,
 			renewable: true,
 			startDate: startDate,
-			endDate: endDate,
-			createdAt: new Date(),
+			endDate: endDate
 		});
 
 		expect(sut).toThrow(DomainError);
@@ -29,8 +28,7 @@ describe("Entity - Subscription", () => {
 			active: true,
 			renewable: true,
 			startDate: startDate,
-			endDate: endDate,
-			createdAt: new Date(),
+			endDate: endDate
 		});
 
 		expect(sut).toBeInstanceOf(SubscriptionEntity);
@@ -43,8 +41,7 @@ describe("Entity - Subscription", () => {
 			active: false,
 			renewable: true,
 			startDate: new Date("2024-01-01"),
-			endDate: new Date("2024-12-31"),
-			createdAt: new Date(),
+			endDate: new Date("2024-12-31")
 		});
 
 		const sut = (): boolean => subscription.active = false;
@@ -59,8 +56,7 @@ describe("Entity - Subscription", () => {
 			active: true,
 			renewable: true,
 			startDate: new Date("2024-01-01"),
-			endDate: new Date("2024-12-31"),
-			createdAt: new Date(),
+			endDate: new Date("2024-12-31")
 		});
 
 		const sut = (): boolean => subscription.active = true;
@@ -75,8 +71,7 @@ describe("Entity - Subscription", () => {
 			active: false,
 			renewable: true,
 			startDate: new Date("2024-01-01"),
-			endDate: new Date("2024-12-31"),
-			createdAt: new Date(),
+			endDate: new Date("2024-12-31")
 		});
 
 		subscription.active = true;
@@ -91,8 +86,7 @@ describe("Entity - Subscription", () => {
 			active: true,
 			renewable: false,
 			startDate: new Date("2024-01-01"),
-			endDate: new Date("2024-12-31"),
-			createdAt: new Date(),
+			endDate: new Date("2024-12-31")
 		});
 
 		const sut = (): boolean => subscription.renewable = false;
@@ -108,8 +102,7 @@ describe("Entity - Subscription", () => {
 			active: true,
 			renewable: true,
 			startDate: new Date("2024-01-01"),
-			endDate: new Date("2024-12-31"),
-			createdAt: new Date(),
+			endDate: new Date("2024-12-31")
 		});
 
 		const sut = (): boolean => subscription.renewable = true;
@@ -124,8 +117,7 @@ describe("Entity - Subscription", () => {
 			active: true,
 			renewable: false,
 			startDate: new Date("2024-01-01"),
-			endDate: new Date("2024-12-31"),
-			createdAt: new Date(),
+			endDate: new Date("2024-12-31")
 		});
 
 		subscription.renewable = true;

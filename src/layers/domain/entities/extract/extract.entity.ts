@@ -8,13 +8,12 @@ import {
 export type ExtractProps = {
     url: string;
     referenceMonth: number;
-    createdAt: Date;
 }
 
 export class ExtractEntity extends AbstractEntity<ExtractProps> {
 
-	constructor(props: ExtractProps, id?: string) {
-		super(props, id);
+	constructor(props: ExtractProps, id?: string, createdAt?: Date) {
+		super(props, id, createdAt);
 
 		const valueObjets = {
 			url: ExtractUrlValueObject.create(props.url),
@@ -32,9 +31,5 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 
 	public get url(): string {
 		return this.props.url;
-	}
-
-	public get createdAt(): Date {
-		return this.props.createdAt;
 	}
 }

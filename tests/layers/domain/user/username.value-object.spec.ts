@@ -18,7 +18,7 @@ describe(("Value Object - UsernameValueObject"), () => {
 		expect(sut).toBeInstanceOf(InvalidUsernameError);
 	});
 
-	test("Should not create UsernameValueObject, because the username has more than 256 characters" , () => {
+	test("Should create UsernameValueObject" , () => {
 		const username = "username";
 
 		const sut = UsernameValueObject.create(username);

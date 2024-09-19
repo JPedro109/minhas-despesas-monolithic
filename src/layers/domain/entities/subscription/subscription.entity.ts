@@ -1,9 +1,10 @@
 import { AbstractEntity } from "../abstract/abstract.entity";
-import { DomainError } from "@/layers/domain";
+import { DomainError, PlanAmountValueObject } from "@/layers/domain";
 
 export type SubscriptionProps = {
     userId: string;
     planId: string;
+    amount: number;
     active: boolean;
     renewable: boolean;
     startDate: Date;
@@ -18,6 +19,14 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
 
         if (this.endDate.getTime() <= this.startDate.getTime()) 
             throw new DomainError("A data de término da assinatura deve ser maior que a data de início");
+
+        const valueObjets = {
+            amount: PlanAmountValueObject.create(props.amount)
+        };
+
+        const result = this.validate(valueObjets);
+
+		if(!result.valid) throw new DomainError(result.errors);
     }
 
     get userId(): string {
@@ -26,6 +35,10 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
 
     get planId(): string {
         return this.props.planId;
+    }
+
+    get amount(): number {
+        return this.props.amount;
     }
 
     get active(): boolean {

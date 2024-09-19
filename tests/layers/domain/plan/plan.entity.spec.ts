@@ -1,4 +1,4 @@
-import { PlanEntity, DomainError, InvalidPlanNameError, InvalidPlanDescriptionError } from "@/layers/domain";
+import { PlanEntity, DomainError, InvalidPlanDescriptionError } from "@/layers/domain";
 
 describe("Entity - Plan", () => {
 
@@ -87,40 +87,6 @@ describe("Entity - Plan", () => {
         expect(sut.actions).toEqual(actions);
         expect(sut.createdAt).not.toBeUndefined();
         expect(sut.updatedAt).toBeUndefined();
-    });
-
-    test("Should not update plan name, because it is invalid", () => {
-        const name = "Valid Plan";
-        const description = "A valid description";
-        const amount = 100;
-        const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
-        const plan = new PlanEntity({
-          name, 
-          description, 
-          amount,
-          actions
-        });
-
-        const sut = (): string => plan.name = "";
-
-        expect(sut).toThrow(InvalidPlanNameError);
-    });
-
-    test("Should update plan name", () => {
-        const name = "Valid Plan";
-        const description = "A valid description";
-        const amount = 100;
-        const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
-        const plan = new PlanEntity({
-          name, 
-          description, 
-          amount,
-          actions
-        });
-
-        plan.name = "Updated Plan";
-
-        expect(plan.name).toBe("Updated Plan");
     });
 
     test("Should not update plan description, because it is invalid", () => {

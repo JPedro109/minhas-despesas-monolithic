@@ -33,6 +33,7 @@ export class UserEntity extends AbstractEntity<UserProps> {
 		const result = UserEmailValueObject.create(email);
 		if (result instanceof Error) throw result;
 		this.props.email = result.value;
+        this.props.updatedAt = new Date();
 	}
 
 	get username(): string {
@@ -43,6 +44,7 @@ export class UserEntity extends AbstractEntity<UserProps> {
 		const result = UsernameValueObject.create(username);
 		if (result instanceof Error) throw result;
 		this.props.username = result.value;
+        this.props.updatedAt = new Date();
 	}
 
 	get password(): string {
@@ -53,6 +55,7 @@ export class UserEntity extends AbstractEntity<UserProps> {
 		const result = UserPasswordValueObject.create(password);
 		if (result instanceof Error) throw result;
 		this.props.password = result.value;
+        this.props.updatedAt = new Date();
 	}
 
 	get verifiedEmail(): boolean {
@@ -62,13 +65,10 @@ export class UserEntity extends AbstractEntity<UserProps> {
 	set verifiedEmail(verifiedEmail: boolean) {
 		if(this.props.verifiedEmail) throw new DomainError("O email já está verificado");
 		this.props.verifiedEmail = verifiedEmail;
+        this.props.updatedAt = new Date();
 	}
 
-	set updatedAt(updatedAt: Date) {
-		this.props.updatedAt = updatedAt;
-	}
-
-	get updatedAt(): Date {
+	get updatedAt(): Date | null {
 		return this.props.updatedAt;
 	}
 }

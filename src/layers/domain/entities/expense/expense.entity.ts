@@ -33,6 +33,7 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
         const result = ExpenseNameValueObject.create(expenseName);
 		if (result instanceof Error) throw result;
         this.props.enpenseName = result.value;
+        this.props.updatedAt = new Date();
     }
 
     get expenseValue(): number {
@@ -43,6 +44,7 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
         const result = ExpenseValueValueObject.create(expenseValue);
 		if (result instanceof Error) throw result;
         this.props.expenseValue = result.value;
+        this.props.updatedAt = new Date();
     }
 
     get dueDate(): Date {
@@ -53,6 +55,7 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
         const result = ExpenseDueDateValueObject.create(dueDate);
 		if (result instanceof Error) throw result;
         this.props.dueDate = result.value;
+        this.props.updatedAt = new Date();
     }
 
     get paid(): boolean {
@@ -62,13 +65,10 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
     set paid(paid: boolean) {
 		if(this.props.paid === paid) throw new DomainError(`A despesa já está ${paid ? "paga" : "como não paga"}`);
         this.props.paid = paid;
+        this.props.updatedAt = new Date();
     }
 
-    get updatedAt(): Date {
+    get updatedAt(): Date | null {
         return this.props.updatedAt;
-    }
-
-    set updatedAt(updatedAt: Date) {
-        this.props.updatedAt = updatedAt;
     }
 }

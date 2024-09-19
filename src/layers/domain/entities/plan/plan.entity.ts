@@ -39,6 +39,7 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
         const result = PlanNameValueObject.create(name);
         if (result instanceof Error) throw result;
         this.props.name = result.value;
+        this.props.updatedAt = new Date();
     }
 
     get description(): string {
@@ -49,17 +50,14 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
         const result = PlanDescriptionValueObject.create(description);
         if (result instanceof Error) throw result;
         this.props.description = result.value;
+        this.props.updatedAt = new Date();
     }
 
     get actions(): PlanActionValueObjectProps[] {
         return this.props.actions;
     }
 
-    set updatedAt(updatedAt: Date) {
-        this.props.updatedAt = updatedAt;
-    }
-
-    get updatedAt(): Date {
+    get updatedAt(): Date | null {
         return this.props.updatedAt;
     }
 }

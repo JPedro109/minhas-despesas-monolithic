@@ -50,17 +50,14 @@ export class UserVerificationCodeEntity extends AbstractEntity<UserVerificationC
 		if(!this.props.valid) throw new DomainError("O código já está invalidado");
 		if(this.props.valid && valid) throw new DomainError("Esse código já está ativo");
 		this.props.valid = valid;
+        this.props.updatedAt = new Date();
 	}
 	
 	public get user(): UserEntity {
 		return this.props.user;
 	}
 
-	public get updatedAt(): Date  {
+	public get updatedAt(): Date | null {
 		return this.props.updatedAt;
-	}
-
-	public set updatedAt(updatedAt: Date) {
-		this.props.updatedAt = updatedAt;
 	}
 }

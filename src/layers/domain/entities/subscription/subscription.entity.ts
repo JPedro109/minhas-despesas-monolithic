@@ -35,6 +35,7 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
     set active(active: boolean) {
 		if(this.props.active === active) throw new DomainError(`A assinatura já está ${active ? "ativa" : "como não ativa"}`);
         this.props.active = active;
+        this.props.updatedAt = new Date();
     }
 
     get renewable(): boolean {
@@ -44,6 +45,7 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
     set renewable(renewable: boolean) {
 		if(this.props.renewable === renewable) throw new DomainError(`A assinatura já está ${renewable ? "renovável" : "como não renovável "}`);
         this.props.renewable = renewable;
+        this.props.updatedAt = new Date();
     }
 
     get startDate(): Date {
@@ -54,11 +56,7 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
         return this.props.endDate;
     }
 
-    get updatedAt(): Date {
+    get updatedAt(): Date | null {
         return this.props.updatedAt;
     }
-    
-	set updatedAt(updatedAt: Date) {
-		this.props.updatedAt = updatedAt;
-	}
 }

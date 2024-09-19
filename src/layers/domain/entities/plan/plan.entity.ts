@@ -4,11 +4,13 @@ import {
     PlanDescriptionValueObject,
     PlanActionValueObject, 
     DomainError, 
-    PlanActionValueObjectProps 
+    PlanActionValueObjectProps, 
+    PlanAmountValueObject
 } from "@/layers/domain";
 
 export type PlanProps = {
     name: string;
+    amount: number;
     description: string;
     actions: PlanActionValueObjectProps[];
     updatedAt?: Date;
@@ -21,7 +23,8 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
 
         const valueObjects = {
             name: PlanNameValueObject.create(props.name),
-            description: PlanDescriptionValueObject.create(props.description)
+            description: PlanDescriptionValueObject.create(props.description),
+            amount: PlanAmountValueObject.create(props.amount)
         };
 
         props.actions.map((action, index) => valueObjects[`${action}${index + 1}`] = PlanActionValueObject.create(action));
@@ -51,6 +54,10 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
         if (result instanceof Error) throw result;
         this.props.description = result.value;
         this.props.updatedAt = new Date();
+    }
+
+    get amount(): number {
+        return this.props.amount;
     }
 
     get actions(): PlanActionValueObjectProps[] {

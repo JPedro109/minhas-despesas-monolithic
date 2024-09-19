@@ -3,9 +3,9 @@ import { ExpenseValueValueObject, InvalidExpenseValueError } from "@/layers/doma
 describe("Value Object - ExpenseValueValueObject", () => {
 
     test("Should not create ExpenseValueValueObject, because value is less than zero", () => {
-        const InvalidExpenseValue = -1;
+        const invalidExpenseValue = -1;
       
-        const sut = ExpenseValueValueObject.create(InvalidExpenseValue);
+        const sut = ExpenseValueValueObject.create(invalidExpenseValue);
       
         expect(sut).toBeInstanceOf(InvalidExpenseValueError);
     });
@@ -13,8 +13,9 @@ describe("Value Object - ExpenseValueValueObject", () => {
     test("Should create ExpenseValueValueObject", () => {
       const expenseValue = 1;
     
-      const sut = ExpenseValueValueObject.create(expenseValue);
+      const sut = ExpenseValueValueObject.create(expenseValue) as unknown as ExpenseValueValueObject;
     
       expect(sut).toBeInstanceOf(ExpenseValueValueObject);
+      expect(sut.value).toBe(expenseValue);
     });
 });

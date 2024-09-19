@@ -2,7 +2,7 @@ import { AbstractEntity } from "../abstract/abstract.entity";
 import { ExpenseNameValueObject, ExpenseValueValueObject, ExpenseDueDateValueObject, DomainError } from "@/layers/domain";
 
 export type ExpenseProps = {
-    enpenseName: string;
+    expenseName: string;
     expenseValue: number;
     dueDate: Date;
     paid: boolean;
@@ -15,7 +15,7 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
 		super(props, id, createdAt);
 
 		const valueObjets = {
-			enpenseName: ExpenseNameValueObject.create(props.enpenseName),
+			expenseName: ExpenseNameValueObject.create(props.expenseName),
 			expenseValue: ExpenseValueValueObject.create(props.expenseValue),
 			dueDate: ExpenseDueDateValueObject.create(props.dueDate),
 		};
@@ -26,13 +26,13 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
 	}
 
     get expenseName(): string {
-        return this.props.enpenseName;
+        return this.props.expenseName;
     }
 
     set expenseName(expenseName: string) {
         const result = ExpenseNameValueObject.create(expenseName);
 		if (result instanceof Error) throw result;
-        this.props.enpenseName = result.value;
+        this.props.expenseName = result.value;
         this.props.updatedAt = new Date();
     }
 

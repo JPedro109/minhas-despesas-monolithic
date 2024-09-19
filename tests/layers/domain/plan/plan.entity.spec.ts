@@ -3,13 +3,13 @@ import { PlanEntity, DomainError, InvalidPlanNameError, InvalidPlanDescriptionEr
 describe("Entity - Plan", () => {
 
     test("Should not create PlanEntity, because plan name is not valid", () => {
-        const invalidPlanName = "";
-        const planDescription = "A valid description";
+        const invalidName = "";
+        const description = "A valid description";
         const actions = [];
       
         const sut = (): PlanEntity => new PlanEntity({
-          name: invalidPlanName, 
-          description: planDescription, 
+          name: invalidName, 
+          description, 
           actions
         });
       
@@ -17,12 +17,12 @@ describe("Entity - Plan", () => {
     });
 
     test("Should not create PlanEntity, because plan description is not valid", () => {
-        const planName = "Valid Plan";
+        const name = "Valid Plan";
         const invalidPlanDescription = "";
         const actions = [];
 
         const sut = (): PlanEntity => new PlanEntity({
-          name: planName, 
+          name, 
           description: invalidPlanDescription, 
           actions
         });
@@ -31,13 +31,13 @@ describe("Entity - Plan", () => {
     });
 
     test("Should not create PlanEntity, because actions are not valid", () => {
-        const planName = "Valid Plan";
-        const planDescription = "A valid description";
+        const name = "Valid Plan";
+        const description = "A valid description";
         const invalidActions = [{ id: "", name: "", description: "", createdAt: new Date() }];
 
         const sut = (): PlanEntity => new PlanEntity({
-          name: planName, 
-          description: planDescription, 
+          name, 
+          description, 
           actions: invalidActions
         });
 
@@ -45,27 +45,32 @@ describe("Entity - Plan", () => {
     });
 
     test("Should create PlanEntity", () => {
-        const planName = "Valid Plan";
-        const planDescription = "A valid description";
+        const name = "Valid Plan";
+        const description = "A valid description";
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
 
         const sut = new PlanEntity({
-          name: planName, 
-          description: planDescription, 
+          name, 
+          description, 
           actions
         });
 
         expect(sut).toBeInstanceOf(PlanEntity);
+        expect(sut.id).not.toBeUndefined();
+        expect(sut.name).toBe(name);
+        expect(sut.description).toBe(description);
+        expect(sut.actions).toEqual(actions);
+        expect(sut.createdAt).not.toBeUndefined();
+        expect(sut.updatedAt).toBeUndefined();
     });
 
     test("Should not update plan name, because it is invalid", () => {
-        const planName = "Valid Plan";
-        const planDescription = "A valid description";
+        const name = "Valid Plan";
+        const description = "A valid description";
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
-
         const plan = new PlanEntity({
-          name: planName, 
-          description: planDescription, 
+          name, 
+          description, 
           actions
         });
 
@@ -75,13 +80,12 @@ describe("Entity - Plan", () => {
     });
 
     test("Should update plan name", () => {
-        const planName = "Valid Plan";
-        const planDescription = "A valid description";
+        const name = "Valid Plan";
+        const description = "A valid description";
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
-
         const plan = new PlanEntity({
-          name: planName, 
-          description: planDescription, 
+          name, 
+          description, 
           actions
         });
 
@@ -91,13 +95,12 @@ describe("Entity - Plan", () => {
     });
 
     test("Should not update plan description, because it is invalid", () => {
-        const planName = "Valid Plan";
-        const planDescription = "A valid description";
+        const name = "Valid Plan";
+        const description = "A valid description";
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
-
         const plan = new PlanEntity({
-          name: planName, 
-          description: planDescription, 
+          name, 
+          description, 
           actions
         });
 
@@ -107,13 +110,12 @@ describe("Entity - Plan", () => {
     });
 
     test("Should update plan description", () => {
-        const planName = "Valid Plan";
-        const planDescription = "A valid description";
+        const name = "Valid Plan";
+        const description = "A valid description";
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
-
         const plan = new PlanEntity({
-          name: planName, 
-          description: planDescription, 
+          name, 
+          description, 
           actions
         });
 

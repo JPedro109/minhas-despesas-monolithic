@@ -21,8 +21,9 @@ describe(("Value Object - UserVerificationCodeValueObject"), () => {
 	test("Should create UserVerificationCodeValueObject" , () => {
 		const userVerificationCode = "123456";
 
-		const sut = UserVerificationCodeValueObject.create(userVerificationCode);
+		const sut = UserVerificationCodeValueObject.create(userVerificationCode) as unknown as UserVerificationCodeValueObject;
 
 		expect(sut).toBeInstanceOf(UserVerificationCodeValueObject);
+		expect(sut.value).toBe(userVerificationCode);
 	});
 });

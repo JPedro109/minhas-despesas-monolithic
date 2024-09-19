@@ -3,18 +3,19 @@ import { ExpenseDueDateValueObject, InvalidExpenseDueDateError } from "@/layers/
 describe("Value Object - ExpenseDueDateValueObject", () => {
   
     test("Should not create ExpenseDueDateValueObject, because value date is less than the current date", () => {
-        const invalidDate = new Date("2000-01-01");
+        const invalidExpenseDueDate = new Date("2000-01-01");
 
-        const sut = ExpenseDueDateValueObject.create(invalidDate);
+        const sut = ExpenseDueDateValueObject.create(invalidExpenseDueDate);
 
         expect(sut).toBeInstanceOf(InvalidExpenseDueDateError);
     });
 
     test("Should create ExpenseDueDateValueObject", () => {
-        const dueDate = new Date("3000-01-01");
+        const expenseDueDate = new Date("3000-01-01");
       
-        const sut = ExpenseDueDateValueObject.create(dueDate);
+        const sut = ExpenseDueDateValueObject.create(expenseDueDate) as unknown as ExpenseDueDateValueObject;
       
         expect(sut).toBeInstanceOf(ExpenseDueDateValueObject);
+        expect(sut.value).toBe(expenseDueDate);
     });
 });

@@ -20,6 +20,7 @@ describe("Entity - PaymentHistory", () => {
         });
 
         expect(sut).toBeInstanceOf(PaymentHistoryEntity);
+        expect(sut.id).not.toBeUndefined();
         expect(sut.userId).toBe(userId);
         expect(sut.expenseId).toBe(expenseId);
         expect(sut.expenseName).toBe(expenseName);

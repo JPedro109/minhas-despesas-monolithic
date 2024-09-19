@@ -16,11 +16,11 @@ describe("Entity - Extract", () => {
 
     test("Should not create ExtractEntity, because reference month is invalid", () => {
         const url = "https://example.com";
-        const invalidReferenceMonth = -1;
+        const referenceMonth = -1;
 
         const sut = (): ExtractEntity => new ExtractEntity({
           url,
-          referenceMonth: invalidReferenceMonth
+          referenceMonth
         });
 
         expect(sut).toThrow(DomainError);
@@ -28,14 +28,18 @@ describe("Entity - Extract", () => {
 
 
     test("Should create ExtractEntity", () => {
-        const validUrl = "https://example.com";
+        const url = "https://example.com";
         const referenceMonth = 1;
       
         const sut = new ExtractEntity({
-          url: validUrl,
+          url,
           referenceMonth
         });
       
         expect(sut).toBeInstanceOf(ExtractEntity);
+        expect(sut.id).not.toBeUndefined();
+        expect(sut.referenceMonth).toBe(referenceMonth);
+        expect(sut.url).toBe(url);
+        expect(sut.createdAt).not.toBeUndefined();
     });
 });

@@ -21,8 +21,9 @@ describe(("Value Object - PlanDescriptionValueObject"), () => {
 	test("Should create PlanDescriptionValueObject" , () => {
 		const planName = "plan description";
 
-		const sut = PlanDescriptionValueObject.create(planName);
+		const sut = PlanDescriptionValueObject.create(planName) as unknown as PlanDescriptionValueObject;
 
 		expect(sut).toBeInstanceOf(PlanDescriptionValueObject);
+		expect(sut.value).toBe(planName);
 	});
 });

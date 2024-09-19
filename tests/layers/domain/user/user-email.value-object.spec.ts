@@ -27,17 +27,17 @@ describe(("Value Object - UserEmailValueObject"), () => {
 	});
 
 	test("Should not create UserEmailValueObject, because the email account has more than 64 characters" , () => {
-		const invalidAccount = "c".repeat(100);
+		const invalidUserEmail = "c".repeat(100);
 
-		const sut = UserEmailValueObject.create(`${invalidAccount}@test.com`);
+		const sut = UserEmailValueObject.create(`${invalidUserEmail}@test.com`);
 
 		expect(sut).toBeInstanceOf(InvalidUserEmailError);
 	});
 
 	test("Should not create UserEmailValueObject, because the email domain has more than 64 characters" , () => {
-		const invalidDomain = "c".repeat(300);
+		const invalidUserEmail = "c".repeat(300);
 
-		const sut = UserEmailValueObject.create(`email@${invalidDomain}.com`);
+		const sut = UserEmailValueObject.create(`email@${invalidUserEmail}.com`);
 
 		expect(sut).toBeInstanceOf(InvalidUserEmailError);
 	});

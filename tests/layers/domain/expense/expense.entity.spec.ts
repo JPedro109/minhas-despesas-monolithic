@@ -6,12 +6,13 @@ describe("Entity - Expense", () => {
 		const invalidExpenseName = "";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 
 		const sut = (): ExpenseEntity => new ExpenseEntity({
-			enpenseName: invalidExpenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: false
+			expenseName: invalidExpenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		expect(sut).toThrow(DomainError);
@@ -21,12 +22,13 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const invalidExpenseValue = -100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 
 		const sut = (): ExpenseEntity => new ExpenseEntity({
-			enpenseName: expenseName,
+			expenseName,
 			expenseValue: invalidExpenseValue,
-			dueDate: dueDate,
-			paid: false
+			dueDate,
+			paid
 		});
 
 		expect(sut).toThrow(DomainError);
@@ -36,12 +38,13 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const invalidDueDate = new Date("2000-01-01");
+		const paid = false;
 
 		const sut = (): ExpenseEntity => new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
+			expenseName,
+			expenseValue,
 			dueDate: invalidDueDate,
-			paid: false
+			paid
 		});
 
 		expect(sut).toThrow(DomainError);
@@ -51,26 +54,34 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 
 		const sut = new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: false
+			expenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		expect(sut).toBeInstanceOf(ExpenseEntity);
+		expect(sut.id).not.toBeUndefined();
+		expect(sut.expenseName).toBe(expenseName);
+		expect(sut.expenseValue).toBe(expenseValue);
+		expect(sut.dueDate).toBe(dueDate);
+		expect(sut.createdAt).not.toBeUndefined();
+		expect(sut.updatedAt).toBeUndefined();
 	});
 
 	test("Should not update expense name, because it is invalid", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 		const expense = new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: false
+			expenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		const sut = (): string => expense.expenseName = "";
@@ -82,11 +93,12 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 		const expense = new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: false
+			expenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		expense.expenseName = "Utilities";
@@ -98,11 +110,12 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 		const expense = new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: false
+			expenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		const sut = (): number => expense.expenseValue = -100;
@@ -114,11 +127,12 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 		const expense = new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: false
+			expenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		expense.expenseValue = 200;
@@ -130,11 +144,12 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 		const expense = new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: false
+			expenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		const sut = (): Date => expense.dueDate = new Date("2000-01-01");
@@ -146,11 +161,12 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 		const expense = new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: false
+			expenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		const newDueDate = new Date("3000-01-01");
@@ -163,11 +179,12 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 		const expense = new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: false
+			expenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		const sut = (): boolean => expense.paid = false;
@@ -179,11 +196,12 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = true;
 		const expense = new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: true
+			expenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		const sut = (): boolean => expense.paid = true;
@@ -195,11 +213,12 @@ describe("Entity - Expense", () => {
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
+		const paid = false;
 		const expense = new ExpenseEntity({
-			enpenseName: expenseName,
-			expenseValue: expenseValue,
-			dueDate: dueDate,
-			paid: false
+			expenseName,
+			expenseValue,
+			dueDate,
+			paid
 		});
 
 		expense.paid = true;

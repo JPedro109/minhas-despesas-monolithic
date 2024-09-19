@@ -12,16 +12,16 @@ const user = new UserEntity(
 describe("Entity - UserVerificationCode", () => {
     
     test("Should not create UserVerificationCodeEntity, because verification code is null", () => {
+        const type = "create_user";
         const invalidVerificationCode = "";
-        const typeName = "create_user";
+        const verificationCodeExpiryDate = new Date();
         const valid = true;
-        const expiryDate = new Date();
 
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
-            type: typeName, 
+            type, 
             verificationCode: invalidVerificationCode,
-            verificationCodeExpiryDate: expiryDate,
+            verificationCodeExpiryDate,
             valid,
             user
         });
@@ -30,16 +30,15 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should not create UserVerificationCodeEntity, because verification code is invalid", () => {
+        const type = "create_user";
         const invalidVerificationCode = "1234567";
-        const typeName = "create_user";
+        const verificationCodeExpiryDate = new Date();
         const valid = true;
-        const expiryDate = new Date();
-
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
-            type: typeName, 
+            type, 
             verificationCode: invalidVerificationCode,
-            verificationCodeExpiryDate: expiryDate,
+            verificationCodeExpiryDate,
             valid,
             user
         });
@@ -48,16 +47,15 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should not create UserVerificationCodeEntity, because verification code type is empty", () => {
-        const verificationCode = "123456";
         const invalidTypeName = "" as "create_user";
+        const verificationCode = "123456";
+        const verificationCodeExpiryDate = new Date();
         const valid = true;
-        const expiryDate = new Date();
-
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
             type: invalidTypeName, 
             verificationCode,
-            verificationCodeExpiryDate: expiryDate,
+            verificationCodeExpiryDate,
             valid,
             user
         });
@@ -66,16 +64,15 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should not create UserVerificationCodeEntity, because verification code type is invalid", () => {
-        const verificationCode = "123456";
         const invalidTypeName = "invalid_type" as "create_user";
+        const verificationCode = "123456";
         const valid = true;
-        const expiryDate = new Date();
-
+        const verificationCodeExpiryDate = new Date();
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
             type: invalidTypeName, 
             verificationCode,
-            verificationCodeExpiryDate: expiryDate,
+            verificationCodeExpiryDate,
             valid,
             user
         });
@@ -84,33 +81,39 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should create UserVerificationCodeEntity", () => {
+        const type = "create_user";
         const verificationCode = "123456";
-        const typeName = "create_user";
+        const verificationCodeExpiryDate = new Date();
         const valid = true;
-        const expiryDate = new Date();
-
 
         const sut = new UserVerificationCodeEntity({
-            type: typeName, 
+            type, 
             verificationCode,
-            verificationCodeExpiryDate: expiryDate,
+            verificationCodeExpiryDate,
             valid,
             user
         });
 
         expect(sut).toBeInstanceOf(UserVerificationCodeEntity);
+        expect(sut.id).not.toBeUndefined();
+        expect(sut.type).toBe(type);
+        expect(sut.verificationCode).toBe(verificationCode);
+        expect(sut.verificationCodeExpiryDate).toBe(verificationCodeExpiryDate);
+        expect(sut.valid).toBe(valid);
+        expect(sut.user).toEqual(user);
+        expect(sut.createdAt).not.toBeUndefined();
+        expect(sut.updatedAt).toBeUndefined();
     });
 
     test("Should not update valid status, because code is already invalid", () => {
+        const type = "create_user";
         const verificationCode = "123456";
-        const typeName = "create_user";
-        const expiryDate = new Date();
+        const verificationCodeExpiryDate = new Date();
         const valid = false;
-
         const userVerificationCode = new UserVerificationCodeEntity({
-            type: typeName, 
+            type, 
             verificationCode,
-            verificationCodeExpiryDate: expiryDate,
+            verificationCodeExpiryDate,
             valid,
             user
         });
@@ -121,15 +124,14 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should not update valid status, because already is active", () => {
+        const type = "create_user";
         const verificationCode = "123456";
-        const typeName = "create_user";
-        const expiryDate = new Date();
+        const verificationCodeExpiryDate = new Date();
         const valid = true;
-
         const userVerificationCode = new UserVerificationCodeEntity({
-            type: typeName, 
+            type, 
             verificationCode,
-            verificationCodeExpiryDate: expiryDate,
+            verificationCodeExpiryDate,
             valid,
             user
         });
@@ -140,15 +142,14 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should update valid status", () => {
+        const type = "create_user";
         const verificationCode = "123456";
-        const typeName = "create_user";
+        const verificationCodeExpiryDate = new Date();
         const valid = true;
-        const expiryDate = new Date();
-
         const userVerificationCode = new UserVerificationCodeEntity({
-            type: typeName, 
+            type, 
             verificationCode,
-            verificationCodeExpiryDate: expiryDate,
+            verificationCodeExpiryDate,
             valid,
             user
         });

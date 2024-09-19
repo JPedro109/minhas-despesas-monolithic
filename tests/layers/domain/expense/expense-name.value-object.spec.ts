@@ -21,8 +21,9 @@ describe("Value Object - ExpenseNameValueObject", () => {
     test("Should create ExpenseNameValueObject", () => {
         const expenseName = "expense";
 
-        const sut = ExpenseNameValueObject.create(expenseName);
+        const sut = ExpenseNameValueObject.create(expenseName) as unknown as ExpenseNameValueObject;
 
         expect(sut).toBeInstanceOf(ExpenseNameValueObject);
+        expect(sut.value).toBe(expenseName);
     });
 });

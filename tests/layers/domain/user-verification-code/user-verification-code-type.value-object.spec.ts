@@ -5,35 +5,23 @@ describe(("Object Value - UserVerificationCodeTypeValueObject"), () => {
 	test("Should not create user verification code type, because user verification code type is empty" , () => {
 		const invalidUserVerificationCodeTypeName = "";
 
-		const sut = UserVerificationCodeTypeValueObject.create({
-            id: "1",
-            typeName: invalidUserVerificationCodeTypeName,
-            createdAt: new Date()
-        });
+		const sut = UserVerificationCodeTypeValueObject.create(invalidUserVerificationCodeTypeName);
 
 		expect(sut).toBeInstanceOf(InvalidUserVerificationCodeTypeError);
 	});
 
-	test("Should not create user verification code type, because the user verification code type has more than 6 characters" , () => {
-		const invalidUserVerificationCodeTypeName = "c".repeat(16);
+	test("Should not create user verification code type, because the user verification code type is invalid" , () => {
+		const invalidUserVerificationCodeTypeName = "invalid_type";
 
-		const sut = UserVerificationCodeTypeValueObject.create({
-            id: "1",
-            typeName: invalidUserVerificationCodeTypeName,
-            createdAt: new Date()
-        });
+		const sut = UserVerificationCodeTypeValueObject.create(invalidUserVerificationCodeTypeName);
 
 		expect(sut).toBeInstanceOf(InvalidUserVerificationCodeTypeError);
 	});
 
-	test("Should not create user verification code type, because the user verification code type has more than 256 characters" , () => {
-		const userVerificationCodeTypeName = "123456";
+	test("Should create user verification code type" , () => {
+		const userVerificationCodeTypeName = "create_user";
 
-		const sut = UserVerificationCodeTypeValueObject.create({
-            id: "1",
-            typeName: userVerificationCodeTypeName,
-            createdAt: new Date()
-        });
+		const sut = UserVerificationCodeTypeValueObject.create(userVerificationCodeTypeName);
 
 		expect(sut).toBeInstanceOf(UserVerificationCodeTypeValueObject);
 	});

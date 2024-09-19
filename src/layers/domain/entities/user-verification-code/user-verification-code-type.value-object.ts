@@ -1,39 +1,25 @@
 import { InvalidUserVerificationCodeTypeError } from "@/layers/domain";
 
-export type UserVerificationCodeTypeValueObjectProps = {
-	id: string;
-	typeName: string;
-	createdAt: Date;
-}
-
 export class UserVerificationCodeTypeValueObject {
 
-	private constructor(private readonly props: UserVerificationCodeTypeValueObjectProps) {
-		this.props = props;
+	private constructor(private readonly userVerificationCodeType: string) {
+		this.userVerificationCodeType = userVerificationCodeType;
 	}
 
-	public get id(): string {
-		return this.props.id;
+	public get value(): string {
+		return this.userVerificationCodeType;
 	}
 
-	public get typeName(): string {
-		return this.props.typeName;
+	static create(userVerificationCodeType: string): UserVerificationCodeTypeValueObject | InvalidUserVerificationCodeTypeError {
+		if(!this.validate(userVerificationCodeType)) return new InvalidUserVerificationCodeTypeError();
+
+		return new UserVerificationCodeTypeValueObject(userVerificationCodeType);
 	}
 
-	public get createdAt(): Date {
-		return this.props.createdAt;
-	}
-
-	static create(props: UserVerificationCodeTypeValueObjectProps): UserVerificationCodeTypeValueObject | InvalidUserVerificationCodeTypeError {
-		if(!this.validateTypeName(props.typeName)) return new InvalidUserVerificationCodeTypeError();
-
-		return new UserVerificationCodeTypeValueObject(props);
-	}
-
-	private static validateTypeName(typeName: string): boolean {
+	private static validate(typeName: string): boolean {
 		if(!typeName) return false;
 
-		if(typeName.length > 15) return false;
+		if(typeName !== "create_user" && typeName !== "update_user" && typeName !== "verify_user_email") return false;
 
 		return true;
 	}

@@ -2,13 +2,12 @@ import { AbstractEntity } from "../abstract/abstract.entity";
 import { 
     UserVerificationCodeValueObject, 
     UserVerificationCodeTypeValueObject, 
-    UserVerificationCodeTypeValueObjectProps, 
 	UserEntity,
     DomainError 
 } from "@/layers/domain";
 
 export type UserVerificationCodeProps = {
-    type: UserVerificationCodeTypeValueObjectProps;
+    type: "create_user" | "update_user" | "verify_user_email";
     verificationCode: string;
     verificationCodeExpiryDate: Date;
     valid: boolean;
@@ -32,7 +31,7 @@ export class UserVerificationCodeEntity extends AbstractEntity<UserVerificationC
 		if(!result.valid) throw new DomainError(result.errors);
 	}
 
-	public get type(): UserVerificationCodeTypeValueObjectProps {
+	public get type(): string {
 		return this.props.type;
 	}
 

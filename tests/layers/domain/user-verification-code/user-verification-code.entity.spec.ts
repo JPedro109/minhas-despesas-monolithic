@@ -15,17 +15,13 @@ describe("Entity - UserVerificationCode", () => {
     
     test("Should not create user verification code, because verification code is null", () => {
         const invalidVerificationCode = "";
-        const typeName = "email";
+        const typeName = "create_user";
         const valid = true;
         const expiryDate = new Date();
         const createdAt = new Date();
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
-            type: {
-                id: "1",
-                typeName,
-                createdAt: new Date()
-            }, 
+            type: typeName, 
             verificationCode: invalidVerificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
@@ -38,17 +34,13 @@ describe("Entity - UserVerificationCode", () => {
 
     test("Should not create user verification code, because verification code is invalid", () => {
         const invalidVerificationCode = "1234567";
-        const typeName = "email";
+        const typeName = "create_user";
         const valid = true;
         const expiryDate = new Date();
         const createdAt = new Date();
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
-            type: {
-                id: "1",
-                typeName,
-                createdAt: new Date()
-            }, 
+            type: typeName, 
             verificationCode: invalidVerificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
@@ -59,19 +51,15 @@ describe("Entity - UserVerificationCode", () => {
         expect(sut).toThrow(DomainError);
     });
 
-    test("Should not create user verification code, because verification code type is null", () => {
+    test("Should not create user verification code, because verification code type is empty", () => {
         const verificationCode = "123456";
-        const invalidTypeName = "";
+        const invalidTypeName = "" as "create_user";
         const valid = true;
         const expiryDate = new Date();
         const createdAt = new Date();
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
-            type: {
-                id: "1",
-                typeName: invalidTypeName,
-                createdAt: new Date()
-            }, 
+            type: invalidTypeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
@@ -84,17 +72,13 @@ describe("Entity - UserVerificationCode", () => {
 
     test("Should not create user verification code, because verification code type is invalid", () => {
         const verificationCode = "123456";
-        const invalidTypeName = "c".repeat(16);
+        const invalidTypeName = "invalid_type" as "create_user";
         const valid = true;
         const expiryDate = new Date();
         const createdAt = new Date();
 
         const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
-            type: {
-                id: "1",
-                typeName: invalidTypeName,
-                createdAt: new Date()
-            }, 
+            type: invalidTypeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
@@ -107,17 +91,13 @@ describe("Entity - UserVerificationCode", () => {
 
     test("Should create user verification code", () => {
         const verificationCode = "123456";
-        const typeName = "email";
+        const typeName = "create_user";
         const valid = true;
         const expiryDate = new Date();
         const createdAt = new Date();
 
         const sut = new UserVerificationCodeEntity({
-            type: {
-                id: "1",
-                typeName,
-                createdAt: new Date()
-            }, 
+            type: typeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
@@ -130,16 +110,12 @@ describe("Entity - UserVerificationCode", () => {
 
     test("Should not update valid status, because code is already invalid", () => {
         const verificationCode = "123456";
-        const typeName = "email";
+        const typeName = "create_user";
         const expiryDate = new Date();
         const valid = false;
         const createdAt = new Date();
         const userVerificationCode = new UserVerificationCodeEntity({
-            type: {
-                id: "1",
-                typeName,
-                createdAt: new Date()
-            }, 
+            type: typeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
@@ -154,16 +130,12 @@ describe("Entity - UserVerificationCode", () => {
 
     test("Should not update valid status, because already is active", () => {
         const verificationCode = "123456";
-        const typeName = "email";
+        const typeName = "create_user";
         const expiryDate = new Date();
         const valid = true;
         const createdAt = new Date();
         const userVerificationCode = new UserVerificationCodeEntity({
-            type: {
-                id: "1",
-                typeName,
-                createdAt: new Date()
-            }, 
+            type: typeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
@@ -178,16 +150,12 @@ describe("Entity - UserVerificationCode", () => {
 
     test("Should update valid status", () => {
         const verificationCode = "123456";
-        const typeName = "email";
+        const typeName = "create_user";
         const valid = true;
         const expiryDate = new Date();
         const createdAt = new Date();
         const userVerificationCode = new UserVerificationCodeEntity({
-            type: {
-                id: "1",
-                typeName,
-                createdAt: new Date()
-            }, 
+            type: typeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,
@@ -202,16 +170,12 @@ describe("Entity - UserVerificationCode", () => {
 
     test("Should update updatedAt", () => {
         const verificationCode = "123456";
-        const typeName = "email";
+        const typeName = "create_user";
         const valid = true;
         const expiryDate = new Date();
         const createdAt = new Date();
         const userVerificationCode = new UserVerificationCodeEntity({
-            type: {
-                id: "1",
-                typeName,
-                createdAt: new Date()
-            }, 
+            type: typeName, 
             verificationCode,
             verificationCodeExpiryDate: expiryDate,
             valid,

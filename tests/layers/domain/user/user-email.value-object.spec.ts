@@ -10,8 +10,8 @@ describe(("Value Object - UserEmailValueObject"), () => {
 		expect(sut).toBeInstanceOf(InvalidUserEmailError);
 	});
     
-	test("Should not create UserEmailValueObject, because email has more than 256 characters" , () => {
-		const invalidUserEmail = "c".repeat(257);
+	test("Should not create UserEmailValueObject, because email has more than 255 characters" , () => {
+		const invalidUserEmail = "c".repeat(256);
 
 		const sut = UserEmailValueObject.create(invalidUserEmail);
 

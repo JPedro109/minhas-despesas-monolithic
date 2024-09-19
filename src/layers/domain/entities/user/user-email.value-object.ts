@@ -17,7 +17,7 @@ export class UserEmailValueObject {
 	private static validate(userEmail: string): boolean {
 		if(!userEmail) return false;
 
-		if(userEmail.length > 256) return false;
+		if(userEmail.length > 255) return false;
 
 		const userEmailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 

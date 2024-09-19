@@ -17,7 +17,7 @@ export class UsernameValueObject {
 	private static validate(username: string): boolean {
 		if(!username) return false;
 
-		if(username.length > 256) return false;
+		if(username.length > 255) return false;
 
 		return true;
 	}

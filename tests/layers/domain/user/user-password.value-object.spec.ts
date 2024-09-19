@@ -1,6 +1,6 @@
 import { UserPasswordValueObject, InvalidUserPasswordError } from "@/layers/domain";
 
-describe(("Object Value - UserPasswordValueObject"), () => {
+describe(("Value Object - UserPasswordValueObject"), () => {
     
 	test("Should not create user password, because password is empty" , () => {
 		const invalidUserPassword = "";

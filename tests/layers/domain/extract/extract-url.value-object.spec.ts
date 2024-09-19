@@ -1,6 +1,6 @@
 import { ExtractUrlValueObject, InvalidExtractUrlError } from "@/layers/domain";
 
-describe("Object Value - ExtractUrlValueObject", () => {
+describe("Value Object - ExtractUrlValueObject", () => {
 
     test("Should not create URL, because URL is empty", () => {
         const invalidUrl = "";

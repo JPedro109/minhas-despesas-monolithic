@@ -1,6 +1,6 @@
 import { ExtractReferenceMonthValueObject, InvalidExtractReferenceMonthError } from "@/layers/domain";
 
-describe("Object Value - ExtractReferenceMonthValueObject", () => {
+describe("Value Object - ExtractReferenceMonthValueObject", () => {
 
     test("Should not create reference month, because reference month is empty", () => {
         const invalidReferenceMonth = null;

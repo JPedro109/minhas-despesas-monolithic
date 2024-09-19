@@ -1,6 +1,6 @@
 import { UserEmailValueObject, InvalidUserEmailError } from "@/layers/domain";
 
-describe(("Object Value - UserEmailValueObject"), () => {
+describe(("Value Object - UserEmailValueObject"), () => {
     
 	test("Should not create user email, because email is empty" , () => {
 		const invalidUserEmail = "";

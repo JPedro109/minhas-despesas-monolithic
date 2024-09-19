@@ -1,6 +1,6 @@
 import { PlanActionValueObject, InvalidPlanActionError } from "@/layers/domain";
 
-describe("Object Value - PlanActionValueObject", () => {
+describe("Value Object - PlanActionValueObject", () => {
 
   test("Should not create plan, because name is empty", () => {
     const invalidName = "";

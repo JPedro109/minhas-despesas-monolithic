@@ -1,6 +1,6 @@
 import { PlanDescriptionValueObject, InvalidPlanDescriptionError } from "@/layers/domain";
 
-describe(("Object Value - PlanDescriptionValueObject"), () => {
+describe(("Value Object - PlanDescriptionValueObject"), () => {
     
 	test("Should not create plan description, because plan description is empty" , () => {
 		const invalidPlanDescription = "";

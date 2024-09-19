@@ -1,6 +1,6 @@
 import { UsernameValueObject, InvalidUsernameError } from "@/layers/domain";
 
-describe(("Object Value - UsernameValueObject"), () => {
+describe(("Value Object - UsernameValueObject"), () => {
     
 	test("Should not create username, because username is empty" , () => {
 		const invalidUsername = "";

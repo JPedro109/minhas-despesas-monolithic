@@ -1,6 +1,6 @@
 import { UserVerificationCodeValueObject, InvalidUserVerificationCodeError } from "@/layers/domain";
 
-describe(("Object Value - UserVerificationCodeValueObject"), () => {
+describe(("Value Object - UserVerificationCodeValueObject"), () => {
     
 	test("Should not create user verification code, because user verification code is empty" , () => {
 		const invalidUserVerificationCode = "";

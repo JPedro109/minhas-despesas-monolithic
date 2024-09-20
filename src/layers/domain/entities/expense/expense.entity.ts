@@ -14,13 +14,13 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
     constructor(props: ExpenseProps, id?: string, createdAt?: Date) {
 		super(props, id, createdAt);
 
-		const valueObjets = {
+		const valueObjects = {
 			expenseName: ExpenseNameValueObject.create(props.expenseName),
 			expenseValue: ExpenseValueValueObject.create(props.expenseValue),
 			dueDate: ExpenseDueDateValueObject.create(props.dueDate),
 		};
 
-		const result = this.validate(valueObjets);
+		const result = this.validate(valueObjects);
 
 		if(!result.valid) throw new DomainError(result.errors);
 	}

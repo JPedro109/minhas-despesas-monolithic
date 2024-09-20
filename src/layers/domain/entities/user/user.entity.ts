@@ -14,13 +14,13 @@ export class UserEntity extends AbstractEntity<UserProps> {
 	constructor(props: UserProps, id?: string, createdAt?: Date) {
 		super(props, id, createdAt);
 
-		const valueObjets = {
+		const valueObjects = {
 			email: UserEmailValueObject.create(props.email),
 			username: UsernameValueObject.create(props.email),
 			password: UserPasswordValueObject.create(props.password),
 		};
 
-		const result = this.validate(valueObjets);
+		const result = this.validate(valueObjects);
 
 		if(!result.valid) throw new DomainError(result.errors);
 	}

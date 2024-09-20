@@ -15,12 +15,12 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 	constructor(props: ExtractProps, id?: string, createdAt?: Date) {
 		super(props, id, createdAt);
 
-		const valueObjets = {
+		const valueObjects = {
 			url: ExtractUrlValueObject.create(props.url),
 			referenceMonth: ExtractReferenceMonthValueObject.create(props.referenceMonth),
 		};
 
-		const result = this.validate(valueObjets);
+		const result = this.validate(valueObjects);
 
 		if(!result.valid) throw new DomainError(result.errors);
 	}

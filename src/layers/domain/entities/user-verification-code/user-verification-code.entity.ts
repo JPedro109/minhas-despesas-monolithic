@@ -20,12 +20,12 @@ export class UserVerificationCodeEntity extends AbstractEntity<UserVerificationC
 	constructor(props: UserVerificationCodeProps, id?: string, createdAt?: Date) {
 		super(props, id, createdAt);
 
-		const valueObjets = {
+		const valueObjects = {
 			verificationCode: UserVerificationCodeValueObject.create(props.verificationCode),
             type: UserVerificationCodeTypeValueObject.create(props.type)
 		};
 
-		const result = this.validate(valueObjets);
+		const result = this.validate(valueObjects);
 
 		if(!result.valid) throw new DomainError(result.errors);
 	}

@@ -20,11 +20,11 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
         if (this.endDate.getTime() <= this.startDate.getTime()) 
             throw new DomainError("A data de término da assinatura deve ser maior que a data de início");
 
-        const valueObjets = {
+        const valueObjects = {
             amount: PlanAmountValueObject.create(props.amount)
         };
 
-        const result = this.validate(valueObjets);
+        const result = this.validate(valueObjects);
 
 		if(!result.valid) throw new DomainError(result.errors);
     }

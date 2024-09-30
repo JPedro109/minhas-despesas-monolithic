@@ -7,7 +7,7 @@ import {
 } from "@/layers/domain";
 
 export type UserVerificationCodeProps = {
-    type: "create_user" | "update_user" | "verify_user_email";
+    type: "verify_user_email" | "update_email" | "password_recovery";
     verificationCode: string;
     verificationCodeExpiryDate: Date;
     valid: boolean;

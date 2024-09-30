@@ -19,7 +19,7 @@ export class UserVerificationCodeTypeValueObject {
 	private static validate(typeName: string): boolean {
 		if(!typeName) return false;
 
-		if(typeName !== "create_user" && typeName !== "update_user" && typeName !== "verify_user_email") return false;
+		if(typeName !== "verify_user_email" && typeName !== "update_email" && typeName !== "password_recovery") return false;
 
 		return true;
 	}

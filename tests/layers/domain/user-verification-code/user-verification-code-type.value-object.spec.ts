@@ -19,7 +19,7 @@ describe(("Value Object - UserVerificationCodeTypeValueObject"), () => {
 	});
 
 	test("Should create UserVerificationCodeTypeValueObject" , () => {
-		const userVerificationCodeTypeName = "create_user";
+		const userVerificationCodeTypeName = "verify_user_email";
 
 		const sut = UserVerificationCodeTypeValueObject.create(userVerificationCodeTypeName) as unknown as UserVerificationCodeTypeValueObject;
 

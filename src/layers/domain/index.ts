@@ -1,6 +1,7 @@
 export * from "./errors/domain.error";
 
 export * from "./entities/user";
+export * from "./entities/customer";
 export * from "./entities/user-verification-code";
 export * from "./entities/expense";
 export * from "./entities/payment-history";

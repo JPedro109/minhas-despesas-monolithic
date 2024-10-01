@@ -9,9 +9,9 @@ import {
 export type UserVerificationCodeProps = {
     type: "verify_user_email" | "update_email" | "password_recovery";
     verificationCode: string;
-    verificationCodeExpiryDate: Date;
     valid: boolean;
     user: UserEntity;
+    verificationCodeExpiryDate?: Date;
     updatedAt?: Date;
 }
 

@@ -2,12 +2,13 @@ import { AbstractEntity } from "../abstract/abstract.entity";
 import { 
     UserVerificationCodeValueObject, 
     UserVerificationCodeTypeValueObject, 
+	UserVerificationCodeTypeEnum,
 	UserEntity,
-    DomainError 
+    DomainError
 } from "@/layers/domain";
 
 export type UserVerificationCodeProps = {
-    type: "verify_user_email" | "update_email" | "password_recovery";
+    type: UserVerificationCodeTypeEnum;
     verificationCode: string;
     valid: boolean;
     user: UserEntity;

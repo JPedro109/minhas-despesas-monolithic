@@ -1,4 +1,4 @@
-import { UserVerificationCodeEntity, DomainError, UserEntity } from "@/layers/domain";
+import { UserVerificationCodeEntity, DomainError, UserEntity, UserVerificationCodeTypeEnum } from "@/layers/domain";
 
 const user = new UserEntity(
     {
@@ -12,7 +12,7 @@ const user = new UserEntity(
 describe("Entity - UserVerificationCode", () => {
     
     test("Should not create UserVerificationCodeEntity, because verification code is null", () => {
-        const type = "verify_user_email";
+        const type = UserVerificationCodeTypeEnum.VerifyUserEmail;
         const invalidVerificationCode = "";
         const verificationCodeExpiryDate = new Date();
         const valid = true;
@@ -29,7 +29,7 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should not create UserVerificationCodeEntity, because verification code is invalid", () => {
-        const type = "verify_user_email";
+        const type = UserVerificationCodeTypeEnum.VerifyUserEmail;
         const invalidVerificationCode = "1234567";
         const verificationCodeExpiryDate = new Date();
         const valid = true;
@@ -46,7 +46,7 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should not create UserVerificationCodeEntity, because verification code type is empty", () => {
-        const invalidTypeName = "" as "verify_user_email";
+        const invalidTypeName = "" as UserVerificationCodeTypeEnum;
         const verificationCode = "123456";
         const verificationCodeExpiryDate = new Date();
         const valid = true;
@@ -63,7 +63,7 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should not create UserVerificationCodeEntity, because verification code type is invalid", () => {
-        const invalidTypeName = "invalid_type" as "verify_user_email";
+        const invalidTypeName = "invalid_type" as UserVerificationCodeTypeEnum;
         const verificationCode = "123456";
         const valid = true;
         const verificationCodeExpiryDate = new Date();
@@ -80,7 +80,7 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should create UserVerificationCodeEntity", () => {
-        const type = "verify_user_email";
+        const type = UserVerificationCodeTypeEnum.VerifyUserEmail;
         const verificationCode = "123456";
         const verificationCodeExpiryDate = new Date();
         const valid = true;
@@ -105,7 +105,7 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should not update valid status, because code is already invalid", () => {
-        const type = "verify_user_email";
+        const type = UserVerificationCodeTypeEnum.VerifyUserEmail;
         const verificationCode = "123456";
         const verificationCodeExpiryDate = new Date();
         const valid = false;
@@ -123,7 +123,7 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should not update valid status, because already is active", () => {
-        const type = "verify_user_email";
+        const type = UserVerificationCodeTypeEnum.VerifyUserEmail;
         const verificationCode = "123456";
         const verificationCodeExpiryDate = new Date();
         const valid = true;
@@ -141,7 +141,7 @@ describe("Entity - UserVerificationCode", () => {
     });
 
     test("Should update valid status", () => {
-        const type = "verify_user_email";
+        const type = UserVerificationCodeTypeEnum.VerifyUserEmail;
         const verificationCode = "123456";
         const verificationCodeExpiryDate = new Date();
         const valid = true;

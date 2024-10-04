@@ -2,9 +2,7 @@ import { InvalidUserVerificationCodeError } from "@/layers/domain";
 
 export class UserVerificationCodeValueObject {
 
-	private constructor(private readonly userVerificationCode: string) {
-		this.userVerificationCode = userVerificationCode;
-	}
+	private constructor(private readonly userVerificationCode: string) { }
 
 	public get value(): string {
 		return this.userVerificationCode;

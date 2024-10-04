@@ -1,8 +1,7 @@
 import { InvalidUserEmailError } from "@/layers/domain";
 
 export class UserEmailValueObject {
-	private constructor(private readonly userEmail: string) {
-	}
+	private constructor(private readonly userEmail: string) { }
 	
 	public get value() : string {
 		return this.userEmail;

@@ -2,9 +2,7 @@ import { UserVerificationCodeTypeEnum, InvalidUserVerificationCodeTypeError } fr
 
 export class UserVerificationCodeTypeValueObject {
 
-	private constructor(private readonly userVerificationCodeType: UserVerificationCodeTypeEnum) {
-		this.userVerificationCodeType = userVerificationCodeType;
-	}
+	private constructor(private readonly userVerificationCodeType: UserVerificationCodeTypeEnum) { }
 
 	public get value(): UserVerificationCodeTypeEnum {
 		return this.userVerificationCodeType;

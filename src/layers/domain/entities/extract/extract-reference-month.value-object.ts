@@ -1,4 +1,4 @@
-import { InvalidExtractReferenceMonthError } from "./errors/extract-invalid-reference-month.error";
+import { InvalidExtractReferenceMonthError } from "./errors/invalid-extract-reference-month.error";
 
 export class ExtractReferenceMonthValueObject {
     private constructor(private readonly referenceMonth: number) { }

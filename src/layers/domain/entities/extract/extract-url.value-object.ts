@@ -1,4 +1,4 @@
-import { InvalidExtractUrlError } from "./errors/extract-invalid-url.error";
+import { InvalidExtractUrlError } from "./errors/invalid-extract-url.error";
 
 export class ExtractUrlValueObject {
     private constructor(private readonly url: string) { }

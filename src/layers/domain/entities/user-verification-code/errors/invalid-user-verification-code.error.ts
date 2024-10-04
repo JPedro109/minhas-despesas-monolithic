@@ -2,7 +2,7 @@ import { DomainError } from "@/layers/domain";
 
 export class InvalidUserVerificationCodeError extends DomainError {
 	constructor() {
-		super("Código de verificação do usuário inválido");
+		super("O código de verificação do usuário é inválido");
 		this.name = "InvalidUserVerificationCodeError";
 	}
 }

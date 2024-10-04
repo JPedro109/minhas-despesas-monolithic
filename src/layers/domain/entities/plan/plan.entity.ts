@@ -1,32 +1,42 @@
 import { AbstractEntity } from "../abstract/abstract.entity";
-import { 
-    PlanNameValueObject, 
+import {
+    PlanNameValueObject,
     PlanDescriptionValueObject,
-    PlanActionValueObject, 
-    PlanActionValueObjectProps, 
     PlanAmountValueObject
 } from "@/layers/domain";
+
+export type PlanActionProps = {
+    id: string;
+    name: string;
+    description: string;
+    createdAt: Date;
+    updatedAt?: Date;
+}
 
 export type PlanProps = {
     name: string;
     amount: number;
     description: string;
-    actions: PlanActionValueObjectProps[];
+    actions: {
+        id: string;
+        name: string;
+        description: string;
+        createdAt: Date;
+        updatedAt?: Date;
+    }[];
     updatedAt?: Date;
 }
 
 export class PlanEntity extends AbstractEntity<PlanProps> {
 
     constructor(props: PlanProps, id?: string, createdAt?: Date) {
-		super(props, id, createdAt);
+        super(props, id, createdAt);
 
         const valueObjects = {
             name: PlanNameValueObject.create(props.name),
             description: PlanDescriptionValueObject.create(props.description),
             amount: PlanAmountValueObject.create(props.amount)
         };
-
-        props.actions.map((action, index) => valueObjects[`${action}${index + 1}`] = PlanActionValueObject.create(action));
 
         this.validate(valueObjects);
     }
@@ -50,7 +60,7 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
         return this.props.amount;
     }
 
-    get actions(): PlanActionValueObjectProps[] {
+    get actions(): PlanActionProps[] {
         return this.props.actions;
     }
 

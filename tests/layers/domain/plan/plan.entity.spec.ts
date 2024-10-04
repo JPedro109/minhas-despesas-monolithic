@@ -50,23 +50,7 @@ describe("Entity - Plan", () => {
       expect(sut).toThrow(DomainError);
   });
 
-    test("Should not create PlanEntity, because actions are not valid", () => {
-        const name = "Valid Plan";
-        const description = "A valid description";
-        const amount = 100;
-        const invalidActions = [{ id: "", name: "", description: "", createdAt: new Date() }];
-
-        const sut = (): PlanEntity => new PlanEntity({
-          name, 
-          description, 
-          amount,
-          actions: invalidActions
-        });
-
-        expect(sut).toThrow(DomainError);
-    });
-
-    test("Should create PlanEntity", () => {
+  test("Should create PlanEntity", () => {
         const name = "Valid Plan";
         const description = "A valid description";
         const amount = 100;

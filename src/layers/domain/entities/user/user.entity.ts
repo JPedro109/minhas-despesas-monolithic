@@ -20,9 +20,7 @@ export class UserEntity extends AbstractEntity<UserProps> {
 			password: UserPasswordValueObject.create(props.password),
 		};
 
-		const result = this.validate(valueObjects);
-
-		if(!result.valid) throw new DomainError(result.errors);
+		this.validate(valueObjects);
 	}
 
 	get email(): string {

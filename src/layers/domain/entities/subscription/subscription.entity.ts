@@ -24,9 +24,7 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
             amount: PlanAmountValueObject.create(props.amount)
         };
 
-        const result = this.validate(valueObjects);
-
-		if(!result.valid) throw new DomainError(result.errors);
+        this.validate(valueObjects);
     }
 
     get userId(): string {

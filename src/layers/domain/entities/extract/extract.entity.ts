@@ -1,7 +1,6 @@
 import { AbstractEntity } from "../abstract/abstract.entity";
 import { 
     ExtractUrlValueObject,
-    DomainError, 
 	ExtractReferenceMonthValueObject
 } from "@/layers/domain";
 
@@ -20,9 +19,7 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 			referenceMonth: ExtractReferenceMonthValueObject.create(props.referenceMonth),
 		};
 
-		const result = this.validate(valueObjects);
-
-		if(!result.valid) throw new DomainError(result.errors);
+		this.validate(valueObjects);
 	}
 
 	public get referenceMonth(): number {

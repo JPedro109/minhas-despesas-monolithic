@@ -3,7 +3,6 @@ import {
     PlanNameValueObject, 
     PlanDescriptionValueObject,
     PlanActionValueObject, 
-    DomainError, 
     PlanActionValueObjectProps, 
     PlanAmountValueObject
 } from "@/layers/domain";
@@ -29,9 +28,7 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
 
         props.actions.map((action, index) => valueObjects[`${action}${index + 1}`] = PlanActionValueObject.create(action));
 
-        const result = this.validate(valueObjects);
-
-        if (!result.valid) throw new DomainError(result.errors);
+        this.validate(valueObjects);
     }
 
     get name(): string {

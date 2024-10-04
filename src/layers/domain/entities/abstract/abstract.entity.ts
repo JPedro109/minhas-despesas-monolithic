@@ -1,8 +1,10 @@
+import { DomainError } from "@/layers/domain";
+
 export abstract class AbstractEntity<Props> {
 	constructor(
         protected props: Props, 
         private readonly entityId: string = "1",
-        private readonly entityCreatedAt: Date = new Date(),
+        private readonly entityCreatedAt: Date = new Date()
 	) { }
 
 	public get id(): string {
@@ -13,7 +15,7 @@ export abstract class AbstractEntity<Props> {
 		return this.entityCreatedAt;
 	}
 
-	protected validate<T>(validations: T): { valid: boolean, errors?: string } {
+	protected validate<T>(validations: T): void {
 		const errors = [];
 
 		for(const key in validations) {
@@ -23,11 +25,6 @@ export abstract class AbstractEntity<Props> {
 			}
 		}
 
-		const valid = errors.length === 0;
-
-		return {
-			valid,
-			errors: !valid ? errors.join(", ") : null
-		};
+		if(errors.length > 0) throw new DomainError(errors.join(","));
 	}
 }

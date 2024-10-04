@@ -26,9 +26,7 @@ export class UserVerificationCodeEntity extends AbstractEntity<UserVerificationC
             type: UserVerificationCodeTypeValueObject.create(props.type)
 		};
 
-		const result = this.validate(valueObjects);
-
-		if(!result.valid) throw new DomainError(result.errors);
+		this.validate(valueObjects);
 	}
 
 	public get type(): string {

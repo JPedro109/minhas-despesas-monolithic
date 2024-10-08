@@ -2,7 +2,8 @@ import { AbstractEntity } from "../abstract/abstract.entity";
 import {
     PlanNameValueObject,
     PlanDescriptionValueObject,
-    PlanAmountValueObject
+    PlanAmountValueObject,
+    PlanNameEnum
 } from "@/layers/domain";
 
 export type PlanActionProps = {
@@ -14,7 +15,7 @@ export type PlanActionProps = {
 }
 
 export type PlanProps = {
-    name: string;
+    name: PlanNameEnum;
     amount: number;
     description: string;
     actions: {

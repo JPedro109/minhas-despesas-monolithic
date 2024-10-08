@@ -1,9 +1,9 @@
-import { PlanNameValueObject, InvalidPlanNameError } from "@/layers/domain";
+import { PlanNameValueObject, PlanNameEnum, InvalidPlanNameError } from "@/layers/domain";
 
 describe(("Value Object - PlanNameValueObject"), () => {
     
 	test("Should not create PlanNameValueObject, because plan name is empty" , () => {
-		const invalidPlanName = "";
+		const invalidPlanName = "" as PlanNameEnum;
 
 		const sut = PlanNameValueObject.create(invalidPlanName);
 
@@ -11,7 +11,7 @@ describe(("Value Object - PlanNameValueObject"), () => {
 	});
 
 	test("Should not create PlanNameValueObject, because the plan name has more than 50 characters" , () => {
-		const invalidPlanName = "c".repeat(51);
+		const invalidPlanName = "c".repeat(51) as PlanNameEnum;
 
 		const sut = PlanNameValueObject.create(invalidPlanName);
 
@@ -19,7 +19,7 @@ describe(("Value Object - PlanNameValueObject"), () => {
 	});
 
 	test("Should create PlanNameValueObject" , () => {
-		const planName = "plan name";
+		const planName = PlanNameEnum.Free;
 
 		const sut = PlanNameValueObject.create(planName) as unknown as PlanNameValueObject;
 

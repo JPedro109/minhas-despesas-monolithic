@@ -1,9 +1,9 @@
-import { PlanEntity, DomainError, InvalidPlanDescriptionError } from "@/layers/domain";
+import { PlanEntity, DomainError, InvalidPlanDescriptionError, PlanNameEnum } from "@/layers/domain";
 
 describe("Entity - Plan", () => {
 
     test("Should not create PlanEntity, because plan name is not valid", () => {
-        const invalidName = "";
+        const invalidName = "" as PlanNameEnum;
         const description = "A valid description";
         const amount = 100;
         const actions = [];
@@ -19,7 +19,7 @@ describe("Entity - Plan", () => {
     });
 
     test("Should not create PlanEntity, because plan description is not valid", () => {
-        const name = "Valid Plan";
+        const name = PlanNameEnum.Free;
         const invalidPlanDescription = "";
         const amount = 100;
         const actions = [];
@@ -35,7 +35,7 @@ describe("Entity - Plan", () => {
     });
 
     test("Should not create PlanEntity, because plan amount is not valid", () => {
-      const name = "Valid Plan";
+      const name = PlanNameEnum.Free;
       const invalidPlanDescription = "";
       const invalidAmount = -100;
       const actions = [];
@@ -51,7 +51,7 @@ describe("Entity - Plan", () => {
   });
 
   test("Should create PlanEntity", () => {
-        const name = "Valid Plan";
+        const name = PlanNameEnum.Free;
         const description = "A valid description";
         const amount = 100;
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
@@ -74,7 +74,7 @@ describe("Entity - Plan", () => {
     });
 
     test("Should not update plan description, because it is invalid", () => {
-        const name = "Valid Plan";
+        const name = PlanNameEnum.Free;
         const description = "A valid description";
         const amount = 100;
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
@@ -91,7 +91,7 @@ describe("Entity - Plan", () => {
     });
 
     test("Should update plan description", () => {
-        const name = "Valid Plan";
+        const name = PlanNameEnum.Free;
         const description = "A valid description";
         const amount = 100;
         const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];

@@ -17,7 +17,7 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
     constructor(props: SubscriptionProps, id?: string, createdAt?: Date) {
 		super(props, id, createdAt);
 
-        if (this.endDate.getTime() <= this.startDate.getTime()) 
+        if (this.endDate?.getTime() <= this.startDate.getTime()) 
             throw new DomainError("A data de término da assinatura deve ser maior que a data de início");
 
         const valueObjects = {

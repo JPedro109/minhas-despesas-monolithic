@@ -15,8 +15,16 @@ import {
     MailBodyTypeEnum, 
     PaymentCurrencyEnum 
 } from "@/layers/application";
-import { CustomerEntity, PlanEntity, PlanNameEnum, SubscriptionEntity, UserConsentEntity, UserEntity, UserVerificationCodeEntity } from "@/layers/domain";
-import { testPlanEntity, testSubscriptionEntity, testUserEntity } from "./datas";
+import { 
+    CustomerEntity, 
+    PlanEntity, 
+    PlanNameEnum, 
+    SubscriptionEntity, 
+    UserConsentEntity, 
+    UserEntity, 
+    UserVerificationCodeEntity 
+} from "@/layers/domain";
+import { testCustomerEntity, testPlanEntity, testSubscriptionEntity, testUserEntity } from "./datas";
 
 export class CryptographyStub implements ICryptography {
     async toHash(value: string): Promise<string> {
@@ -66,6 +74,10 @@ export class CustomerRepositoryStub implements ICustomerRepository {
 
     async createCustomer(customer: CustomerEntity): Promise<CustomerEntity> {
         return customer;
+    }
+
+    async getCustomerByUserId(userId: string): Promise<CustomerEntity> {
+        return testCustomerEntity;
     }
 }
 

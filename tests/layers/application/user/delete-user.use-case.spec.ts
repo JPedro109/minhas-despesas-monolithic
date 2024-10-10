@@ -48,58 +48,65 @@ describe("Use case - DeleteUserUseCase", () => {
 
     test("Should not delete user because passwords do not match", async () => {
         const { sut } = makeSut();
-        const deleteUserDTO = {
-            id: "1",
-            password: "Password1234",
-            passwordConfirm: "Password12345"
-        };
+        const id = "1";
+        const password = "Password1234";
+        const passwordConfirm = "Password12345";
 
-        const result = sut.execute(deleteUserDTO);
+        const result = sut.execute({
+            id,
+            password,
+            passwordConfirm
+        });
 
         await expect(result).rejects.toThrow(InvalidParamError);
     });
 
     test("Should not delete user because user does not exist", async () => {
         const { sut, userRepositoryStub } = makeSut();
-        const deleteUserDTO = {
-            id: "2",
-            password: "Password1234",
-            passwordConfirm: "Password1234"
-        };
+        const id = "2";
+        const password = "Password1234";
+        const passwordConfirm = "Password1234";
         jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(Promise.resolve(null));
 
-        const result = sut.execute(deleteUserDTO);
+        const result = sut.execute({
+            id,
+            password,
+            passwordConfirm
+        });
 
         await expect(result).rejects.toThrow(NotFoundError);
     });
 
     test("Should not delete user because password is invalid", async () => {
         const { sut, userRepositoryStub, cryptographyStub } = makeSut();
-        const deleteUserDTO = {
-            id: "1",
-            password: "InvalidPassword",
-            passwordConfirm: "InvalidPassword"
-        };
-
+        const id = "1";
+        const password = "InvalidPassword";
+        const passwordConfirm = "InvalidPassword";
         jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(Promise.resolve(testUserEntity));
         jest.spyOn(cryptographyStub, "compareHash").mockReturnValueOnce(Promise.resolve(false));
 
-        const result = sut.execute(deleteUserDTO);
+        const result = sut.execute({
+            id,
+            password,
+            passwordConfirm
+        });
 
         await expect(result).rejects.toThrow(InvalidParamError);
     });
 
     test("Should delete user successfully", async () => {
         const { sut, userRepositoryStub } = makeSut();
-        const deleteUserDTO = {
-            id: "1",
-            password: "Password1234",
-            passwordConfirm: "Password1234"
-        };
+        const id = "1";
+        const password = "Password1234";
+        const passwordConfirm = "Password1234";
         jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(Promise.resolve(testUserEntity));
 
-        const result = await sut.execute(deleteUserDTO);
+        const result = await sut.execute({
+            id,
+            password,
+            passwordConfirm
+        });
 
-        expect(result).toBe(deleteUserDTO.id);
+        expect(result).toBe(id);
     });
 });

@@ -4,4 +4,5 @@ export interface IUserVerificationCodeRepository {
     setContext(context: unknown): void;
     createUserVerificationCode(userVerificationCode: UserVerificationCodeEntity): Promise<UserVerificationCodeEntity>;
     updateUserVerificationCode(userVerificationCode: UserVerificationCodeEntity): Promise<UserVerificationCodeEntity>;
+    getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity>;
 }

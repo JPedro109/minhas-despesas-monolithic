@@ -24,7 +24,7 @@ import {
     UserEntity, 
     UserVerificationCodeEntity 
 } from "@/layers/domain";
-import { testCustomerEntity, testPlanEntity, testSubscriptionEntity, testUserEntity } from "./datas";
+import { testCustomerEntity, testPlanEntity, testSubscriptionEntity, testUserEntity, testUserVerificationCodeEntity } from "./datas";
 
 export class CryptographyStub implements ICryptography {
     async toHash(value: string): Promise<string> {
@@ -193,5 +193,9 @@ export class UserVerificationCodeRepositoryStub implements IUserVerificationCode
 
     async updateUserVerificationCode(userVerificationCode: UserVerificationCodeEntity): Promise<UserVerificationCodeEntity> {
         return userVerificationCode;
+    }
+
+    async getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity> {
+        return testUserVerificationCodeEntity;
     }
 }

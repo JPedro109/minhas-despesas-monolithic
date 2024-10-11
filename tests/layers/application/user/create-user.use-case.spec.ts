@@ -9,17 +9,16 @@ import {
     UserConsentRepositoryStub,
     UserRepositoryStub,
     UserVerificationCodeRepositoryStub,
-    UnitOfWorkRepositoryStub,
-    testUserEntity
+    UnitOfWorkRepositoryStub
 } from "../__mocks__";
 import { ConflictedError, InvalidParamError, CreateUserUseCase } from "@/layers/application";
 import { DomainError } from "@/layers/domain";
 
-const makeSut = (): { 
-    sut: CreateUserUseCase, 
-    userRepositoryStub: UserRepositoryStub, 
-    customerRepositoryStub: CustomerRepositoryStub, 
-    mailStub: MailStub 
+const makeSut = (): {
+    sut: CreateUserUseCase,
+    userRepositoryStub: UserRepositoryStub,
+    customerRepositoryStub: CustomerRepositoryStub,
+    mailStub: MailStub
 } => {
     const userRepositoryStub = new UserRepositoryStub();
     const userConsentRepositoryStub = new UserConsentRepositoryStub();
@@ -96,10 +95,7 @@ describe("Use case - CreateUserUseCase", () => {
         const username = "username";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
-        const { sut, userRepositoryStub } = makeSut();
-        jest
-        .spyOn(userRepositoryStub, "getUserByEmail")
-        .mockReturnValueOnce(Promise.resolve(testUserEntity));
+        const { sut } = makeSut();
 
         const result = sut.execute({
             email,
@@ -115,14 +111,17 @@ describe("Use case - CreateUserUseCase", () => {
     });
 
     test("Should not create user, because create customer is failed", async () => {
-        const email = "email@used.com";
+        const email = "email@test.com";
         const username = "username";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
-        const { sut, customerRepositoryStub } = makeSut();
+        const { sut, userRepositoryStub, customerRepositoryStub } = makeSut();
         jest
-        .spyOn(customerRepositoryStub, "createCustomer")
-        .mockReturnValueOnce(Promise.reject(new Error()));
+            .spyOn(userRepositoryStub, "getUserByEmail")
+            .mockReturnValueOnce(null);
+        jest
+            .spyOn(customerRepositoryStub, "createCustomer")
+            .mockReturnValueOnce(Promise.reject(new Error()));
 
         const result = sut.execute({
             email,
@@ -142,10 +141,13 @@ describe("Use case - CreateUserUseCase", () => {
         const username = "username";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
-        const { sut, mailStub } = makeSut();
+        const { sut, userRepositoryStub, mailStub } = makeSut();
         jest
-        .spyOn(mailStub, "sendMail")
-        .mockReturnValueOnce(Promise.reject(new Error()));
+            .spyOn(userRepositoryStub, "getUserByEmail")
+            .mockReturnValueOnce(Promise.resolve(null));
+        jest
+            .spyOn(mailStub, "sendMail")
+            .mockReturnValueOnce(Promise.reject(new Error()));
 
         const result = sut.execute({
             email,
@@ -165,7 +167,10 @@ describe("Use case - CreateUserUseCase", () => {
         const username = "username";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
-        const { sut} = makeSut();
+        const { sut, userRepositoryStub } = makeSut();
+        jest
+        .spyOn(userRepositoryStub, "getUserByEmail")
+        .mockReturnValueOnce(null);
 
         const result = await sut.execute({
             email,

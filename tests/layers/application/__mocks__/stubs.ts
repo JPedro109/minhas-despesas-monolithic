@@ -109,6 +109,58 @@ export class SubscriptionRepositoryStub implements ISubscriptionRepository {
     }
 }
 
+export class UserConsentRepositoryStub implements IUserConsentRepository {
+    setContext(context: unknown): void { }
+
+    async createUserConsent(userConsent: UserConsentEntity): Promise<UserConsentEntity> {
+        return userConsent;
+    }
+}
+
+export class UserRepositoryStub implements IUserRepository {
+    setContext(context: unknown): void { }
+
+    async createUser(user: UserEntity): Promise<UserEntity> {
+        return user;
+    }
+
+    async getUserById(id: string): Promise<UserEntity | null> {
+        return testUserEntity;
+    }
+
+    async getUserByEmail(email: string): Promise<UserEntity | null> {
+        return testUserEntity;
+    }
+
+    async updateUserById(id: string, user: UserEntity): Promise<UserEntity> {
+        return user;
+    }
+
+    async updateUserByEmail(email: string, user: UserEntity): Promise<UserEntity> {
+        return user;
+    }
+
+    async deleteUserById(id: string): Promise<UserEntity> {
+        return testUserEntity;
+    }
+}
+
+export class UserVerificationCodeRepositoryStub implements IUserVerificationCodeRepository {
+    setContext(context: unknown): void { }
+
+    async createUserVerificationCode(userVerificationCode: UserVerificationCodeEntity): Promise<UserVerificationCodeEntity> {
+        return userVerificationCode;
+    }
+
+    async updateUserVerificationCode(userVerificationCode: UserVerificationCodeEntity): Promise<UserVerificationCodeEntity> {
+        return userVerificationCode;
+    }
+
+    async getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity> {
+        return testUserVerificationCodeEntity;
+    }
+}
+
 export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     constructor(
         private readonly userRepository: IUserRepository,
@@ -145,57 +197,5 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
 
     getSubscriptionRepository(): ISubscriptionRepository {
         return this.subscriptionRepository;
-    }
-}
-
-export class UserConsentRepositoryStub implements IUserConsentRepository {
-    setContext(context: unknown): void { }
-
-    async createUserConsent(userConsent: UserConsentEntity): Promise<UserConsentEntity> {
-        return userConsent;
-    }
-}
-
-export class UserRepositoryStub implements IUserRepository {
-    setContext(context: unknown): void { }
-
-    async createUser(user: UserEntity): Promise<UserEntity> {
-        return user;
-    }
-
-    async getUserById(id: string): Promise<UserEntity | null> {
-        return null;
-    }
-
-    async getUserByEmail(email: string): Promise<UserEntity | null> {
-        return null;
-    }
-
-    async updateUserById(id: string, user: UserEntity): Promise<UserEntity> {
-        return user;
-    }
-
-    async updateUserByEmail(email: string, user: UserEntity): Promise<UserEntity> {
-        return user;
-    }
-
-    async deleteUserById(id: string): Promise<UserEntity> {
-        return testUserEntity;
-    }
-}
-
-export class UserVerificationCodeRepositoryStub implements IUserVerificationCodeRepository {
-    setContext(context: unknown): void { }
-
-    async createUserVerificationCode(userVerificationCode: UserVerificationCodeEntity): Promise<UserVerificationCodeEntity> {
-        return userVerificationCode;
-    }
-
-    async updateUserVerificationCode(userVerificationCode: UserVerificationCodeEntity): Promise<UserVerificationCodeEntity> {
-        return userVerificationCode;
-    }
-
-    async getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity> {
-        return testUserVerificationCodeEntity;
     }
 }

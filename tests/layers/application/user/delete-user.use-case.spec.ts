@@ -7,15 +7,13 @@ import {
     UnitOfWorkRepositoryStub,
     UserConsentRepositoryStub,
     UserRepositoryStub,
-    UserVerificationCodeRepositoryStub,
-    testUserEntity
+    UserVerificationCodeRepositoryStub
 } from "../__mocks__";
 import { DeleteUserUseCase, InvalidParamError, NotFoundError } from "@/layers/application";
 
 const makeSut = (): {
     sut: DeleteUserUseCase,
     userRepositoryStub: UserRepositoryStub,
-    customerRepositoryStub: CustomerRepositoryStub,
     cryptographyStub: CryptographyStub
 } => {
     const userRepositoryStub = new UserRepositoryStub();
@@ -39,7 +37,6 @@ const makeSut = (): {
     return {
         sut,
         userRepositoryStub,
-        customerRepositoryStub,
         cryptographyStub
     };
 };
@@ -78,11 +75,10 @@ describe("Use case - DeleteUserUseCase", () => {
     });
 
     test("Should not delete user because password is invalid", async () => {
-        const { sut, userRepositoryStub, cryptographyStub } = makeSut();
+        const { sut, cryptographyStub } = makeSut();
         const id = "1";
         const password = "InvalidPassword";
         const passwordConfirm = "InvalidPassword";
-        jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(Promise.resolve(testUserEntity));
         jest.spyOn(cryptographyStub, "compareHash").mockReturnValueOnce(Promise.resolve(false));
 
         const result = sut.execute({
@@ -95,11 +91,10 @@ describe("Use case - DeleteUserUseCase", () => {
     });
 
     test("Should delete user successfully", async () => {
-        const { sut, userRepositoryStub } = makeSut();
+        const { sut } = makeSut();
         const id = "1";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
-        jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(Promise.resolve(testUserEntity));
 
         const result = await sut.execute({
             id,

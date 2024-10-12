@@ -25,3 +25,7 @@ export * from "./update-user-email/update-user-email.use-case";
 export * from "./update-user-password/update-user-password.dtos";
 export * from "./update-user-password/update-user-password-use-case.interface";
 export * from "./update-user-password/update-user-password.use-case";
+
+export * from "./update-username/update-username.dtos";
+export * from "./update-username/update-username-use-case.interface";
+export * from "./update-username/update-username.use-case";

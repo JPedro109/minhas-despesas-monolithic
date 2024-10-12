@@ -11,11 +11,11 @@ import {
 } from "../__mocks__";
 import {
     NotFoundError,
-    SendUserPasswordRecoveryUseCase,
+    SendUserPasswordRecoveryLinkUseCase,
 } from "@/layers/application";
 
 const makeSut = (): {
-    sut: SendUserPasswordRecoveryUseCase,
+    sut: SendUserPasswordRecoveryLinkUseCase,
     userRepositoryStub: UserRepositoryStub
 } => {
     const userRepositoryStub = new UserRepositoryStub();
@@ -34,7 +34,7 @@ const makeSut = (): {
     );
     const mailStub = new MailStub();
     const generationStub = new GenerationStub();
-    const sut = new SendUserPasswordRecoveryUseCase(
+    const sut = new SendUserPasswordRecoveryLinkUseCase(
         unitOfWorkRepositoryStub,
         mailStub,
         generationStub
@@ -46,7 +46,7 @@ const makeSut = (): {
     };
 };
 
-describe("Use case - SendUserPasswordRecoveryUseCase", () => {
+describe("Use case - SendUserPasswordRecoveryLinkUseCase", () => {
     test("Should not send password recovery link because email is not registered", async () => {
         const { sut, userRepositoryStub } = makeSut();
         jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(null);

@@ -10,7 +10,7 @@ import {
 } from "@/layers/application";
 import { UserVerificationCodeEntity, UserVerificationCodeTypeEnum } from "@/layers/domain";
 
-export class SendUserPasswordRecoveryUseCase implements ISendUserPasswordRecoveryLinkUseCase {
+export class SendUserPasswordRecoveryLinkUseCase implements ISendUserPasswordRecoveryLinkUseCase {
 
 	constructor(
 		private readonly unitOfWorkRepository: IUnitOfWorkRepository,

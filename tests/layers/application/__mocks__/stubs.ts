@@ -159,6 +159,13 @@ export class UserVerificationCodeRepositoryStub implements IUserVerificationCode
     async getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity> {
         return testUserVerificationCodeEntity;
     }
+    
+    async updateUserVerificationCodeById(
+        userVerificationCodeId : string, 
+        userVerificationCode: UserVerificationCodeEntity
+    ): Promise<UserVerificationCodeEntity> {
+        return testUserVerificationCodeEntity;
+    };
 }
 
 export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {

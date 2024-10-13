@@ -33,3 +33,7 @@ export * from "./update-username/update-username.use-case";
 export * from "./user-login/user-login.dtos";
 export * from "./user-login/user-login-use-case.interface";
 export * from "./user-login/user-login.use-case";
+
+export * from "./refresh-user-token/refresh-user-token.dtos";
+export * from "./refresh-user-token/refresh-user-token-use-case.interface";
+export * from "./refresh-user-token/refresh-user-token.use-case";

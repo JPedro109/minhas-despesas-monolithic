@@ -37,3 +37,7 @@ export * from "./user-login/user-login.use-case";
 export * from "./refresh-user-token/refresh-user-token.dtos";
 export * from "./refresh-user-token/refresh-user-token-use-case.interface";
 export * from "./refresh-user-token/refresh-user-token.use-case";
+
+export * from "./verify-user-email/verify-user-email.dtos";
+export * from "./verify-user-email/verify-user-email-use-case.interface";
+export * from "./verify-user-email/verify-user-email.use-case";

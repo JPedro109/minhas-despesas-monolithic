@@ -1,4 +1,4 @@
-export * from "./errors/domain.error";
+export * from "./errors";
 
 export * from "./entities/user";
 export * from "./entities/user-consent";

@@ -36,7 +36,8 @@ export class AuthenticationStub implements IAuthentication {
 	verifyJsonWebToken(token: string): JsonWebTokenType {
 		return {
 			id: "1",
-			email: "email@test.com"
+			email: "email@test.com",
+            type: "access_token"
 		};
 	}
 }

@@ -26,7 +26,7 @@ export class RefreshUserTokenUseCase implements IRefreshUserTokenUseCase {
 
 		if(!user) throw new UnauthorizedError("Token inválido");
 
-		const subscriptionActive = await subscriptionRepository.getSubscriptionByUserId(user.id);
+		const subscriptionActive = await subscriptionRepository.getActiveSubscriptionByUserId(user.id);
 		const planActive = await planRepository.getPlanById(subscriptionActive.planId);
 
 		const accessToken = this.authentication.createJsonWebToken(

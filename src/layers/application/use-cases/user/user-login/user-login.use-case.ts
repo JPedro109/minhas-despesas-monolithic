@@ -29,7 +29,7 @@ export class UserLoginUseCase implements IUserLoginUseCase {
 		const passwordIsEqual = await this.cryptography.compareHash(user.password, password);
 		if(!passwordIsEqual) throw new UnauthorizedError("Email ou senha incorreto(s)");
 
-		const subscriptionActive = await subscriptionRepository.getSubscriptionByUserId(user.id);
+		const subscriptionActive = await subscriptionRepository.getActiveSubscriptionByUserId(user.id);
 		const planActive = await planRepository.getPlanById(subscriptionActive.planId);
 
 		const accessToken = this.authentication.createJsonWebToken(

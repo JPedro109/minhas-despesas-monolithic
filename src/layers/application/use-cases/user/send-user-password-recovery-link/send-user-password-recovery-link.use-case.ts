@@ -35,12 +35,14 @@ export class SendUserPasswordRecoveryLinkUseCase implements ISendUserPasswordRec
 			verificationCode,
 			verificationCodeExpiryDate
 		});
-		await userVerificationCodeRepository.createUserVerificationCode(userVerificationCode);
 
-		await this.mail.sendMail(email, MailBodyTypeEnum.RecoveryUserPasswordBody, {
-			appUrl: environmentVariables.appUrl,
-			email,
-			code: verificationCode
+		await this.unitOfWorkRepository.transaction(async () => {
+			await userVerificationCodeRepository.createUserVerificationCode(userVerificationCode);
+			await this.mail.sendMail(email, MailBodyTypeEnum.RecoveryUserPasswordBody, {
+				appUrl: environmentVariables.appUrl,
+				email,
+				code: verificationCode
+			});
 		});
 
 		return user.email;

@@ -39,14 +39,16 @@ export class SendUserEmailUpdateLinkUseCase implements ISendUserEmailUpdateLinkU
 			verificationCode,
 			verificationCodeExpiryDate
 		});
-		await userVerificationCodeRepository.createUserVerificationCode(userVerificationCode);
 
-		await this.mail.sendMail(email, MailBodyTypeEnum.UpdateUserEmailBody, {
-			appUrl: environmentVariables.appUrl,
-			email,
-			code: verificationCode
+		await this.unitOfWorkRepository.transaction(async () => {
+			await userVerificationCodeRepository.createUserVerificationCode(userVerificationCode);
+			await this.mail.sendMail(email, MailBodyTypeEnum.UpdateUserEmailBody, {
+				appUrl: environmentVariables.appUrl,
+				email,
+				code: verificationCode
+			});
 		});
 
-		return email;
+		return user.email;
 	}
 }

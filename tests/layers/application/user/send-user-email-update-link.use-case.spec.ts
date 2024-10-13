@@ -80,6 +80,6 @@ describe("Use case - SendUserEmailUpdateLinkUseCase", () => {
             email: "newemail@test.com",
         });
 
-        expect(result).toBe("newemail@test.com");
+        expect(result).toBe("email@teste.com");
     });
 });

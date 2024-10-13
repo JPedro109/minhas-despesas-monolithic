@@ -114,6 +114,32 @@ export const testUserVerificationCodeEntityWithDateExpired = new UserVerificatio
     new Date("2024-01-01")
 );
 
+export const testUserVerificationCodeEntityWithDateExpiredAndWhoseUserEmailIsNotVerified = new UserVerificationCodeEntity(
+    {
+        type: UserVerificationCodeTypeEnum.VerifyUserEmail,
+        verificationCode: "123456",
+        valid: true,
+        user: testUserEntityWithEmailIsNotVerified,
+        verificationCodeExpiryDate: new Date("2000-01-01"),
+        updatedAt: new Date("2024-06-30")
+    }, 
+    "1", 
+    new Date("2024-01-01")
+);
+
+export const testUserVerificationCodeEntityWhoseUserEmailIsNotVerified = new UserVerificationCodeEntity(
+    {
+        type: UserVerificationCodeTypeEnum.VerifyUserEmail,
+        verificationCode: "123456",
+        valid: true,
+        user: testUserEntityWithEmailIsNotVerified,
+        verificationCodeExpiryDate: new Date("3000-01-01"),
+        updatedAt: new Date("2024-06-30")
+    }, 
+    "1", 
+    new Date("2024-01-01")
+);
+
 export const testCustomerEntity = new CustomerEntity(
     {
         userId: "1",

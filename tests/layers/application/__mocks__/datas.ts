@@ -48,6 +48,19 @@ export const testUserEntity = new UserEntity(
     new Date("2024-01-01")
 );
 
+export const testUserEntityWithEmailIsNotVerified = new UserEntity(
+    {
+        email: "emailnotverified@teste.com",
+        username: "Username",
+        password: "Joao2003",
+        verifiedEmail: false,
+        updatedAt: new Date("2024-06-30"),
+    }
+    , 
+    "1", 
+    new Date("2024-01-01")
+);
+
 export const testUserConsentEntity = new UserConsentEntity(
     {
         userId: "1",

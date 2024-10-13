@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { 
+    IAuthentication,
     ICryptography, 
     ICustomerRepository, 
     IGeneration, 
@@ -12,6 +13,7 @@ import {
     IUserConsentRepository, 
     IUserRepository, 
     IUserVerificationCodeRepository, 
+    JsonWebTokenType, 
     MailBodyTypeEnum, 
     PaymentCurrencyEnum 
 } from "@/layers/application";
@@ -25,6 +27,19 @@ import {
     UserVerificationCodeEntity 
 } from "@/layers/domain";
 import { testCustomerEntity, testPlanEntity, testSubscriptionEntity, testUserEntity, testUserVerificationCodeEntity } from "./datas";
+
+export class AuthenticationStub implements IAuthentication {
+	createJsonWebToken(payload: object, expiryTimeInSeconds: number): string {
+		return "token";
+	}
+
+	verifyJsonWebToken(token: string): JsonWebTokenType {
+		return {
+			id: "1",
+			email: "email@test.com"
+		};
+	}
+}
 
 export class CryptographyStub implements ICryptography {
     async toHash(value: string): Promise<string> {

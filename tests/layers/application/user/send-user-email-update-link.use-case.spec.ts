@@ -1,40 +1,20 @@
 import {
-    CustomerRepositoryStub,
-    GenerationStub,
-    MailStub,
-    PlanRepositoryStub,
-    SubscriptionRepositoryStub,
-    UnitOfWorkRepositoryStub,
-    UserConsentRepositoryStub,
-    UserRepositoryStub,
-    UserVerificationCodeRepositoryStub,
+    generationStub,
+    mailStub,
+    unitOfWorkRepositoryStub,
+    userRepositoryStub,
+    UserRepositoryStub
 } from "../__mocks__";
 import {
     ConflictedError,
     NotFoundError,
-    SendUserEmailUpdateLinkUseCase,
+    SendUserEmailUpdateLinkUseCase
 } from "@/layers/application";
 
 const makeSut = (): {
     sut: SendUserEmailUpdateLinkUseCase,
     userRepositoryStub: UserRepositoryStub
 } => {
-    const userRepositoryStub = new UserRepositoryStub();
-    const userConsentRepositoryStub = new UserConsentRepositoryStub();
-    const userVerificationCodeRepositoryStub = new UserVerificationCodeRepositoryStub();
-    const customerRepositoryStub = new CustomerRepositoryStub();
-    const planRepositoryStub = new PlanRepositoryStub();
-    const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
-    const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
-        userRepositoryStub,
-        userVerificationCodeRepositoryStub,
-        customerRepositoryStub,
-        planRepositoryStub,
-        subscriptionRepositoryStub,
-        userConsentRepositoryStub
-    );
-    const mailStub = new MailStub();
-    const generationStub = new GenerationStub();
     const sut = new SendUserEmailUpdateLinkUseCase(
         unitOfWorkRepositoryStub,
         mailStub,

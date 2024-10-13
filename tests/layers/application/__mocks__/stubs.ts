@@ -222,3 +222,23 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
         return this.subscriptionRepository;
     }
 }
+
+export const authenticationStub = new AuthenticationStub();
+export const cryptographyStub = new CryptographyStub();
+export const generationStub = new GenerationStub();
+export const mailStub = new MailStub();
+export const paymentStub = new PaymentStub();
+export const userRepositoryStub = new UserRepositoryStub();
+export const userConsentRepositoryStub = new UserConsentRepositoryStub();
+export const userVerificationCodeRepositoryStub = new UserVerificationCodeRepositoryStub();
+export const customerRepositoryStub = new CustomerRepositoryStub();
+export const planRepositoryStub = new PlanRepositoryStub();
+export const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
+export const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
+    userRepositoryStub,
+    userVerificationCodeRepositoryStub,
+    customerRepositoryStub,
+    planRepositoryStub,
+    subscriptionRepositoryStub,
+    userConsentRepositoryStub
+);

@@ -1,15 +1,14 @@
 import {
-    CryptographyStub,
-    GenerationStub,
     MailStub,
-    PaymentStub,
-    PlanRepositoryStub,
-    SubscriptionRepositoryStub,
     CustomerRepositoryStub,
-    UserConsentRepositoryStub,
     UserRepositoryStub,
-    UserVerificationCodeRepositoryStub,
-    UnitOfWorkRepositoryStub
+    unitOfWorkRepositoryStub,
+    mailStub,
+    cryptographyStub,
+    generationStub,
+    paymentStub,
+    userRepositoryStub,
+    customerRepositoryStub
 } from "../__mocks__";
 import { ConflictedError, InvalidParamError, CreateUserUseCase } from "@/layers/application";
 import { DomainError } from "@/layers/domain";
@@ -20,24 +19,6 @@ const makeSut = (): {
     customerRepositoryStub: CustomerRepositoryStub,
     mailStub: MailStub
 } => {
-    const userRepositoryStub = new UserRepositoryStub();
-    const userConsentRepositoryStub = new UserConsentRepositoryStub();
-    const userVerificationCodeRepositoryStub = new UserVerificationCodeRepositoryStub();
-    const customerRepositoryStub = new CustomerRepositoryStub();
-    const planRepositoryStub = new PlanRepositoryStub();
-    const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
-    const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
-        userRepositoryStub,
-        userVerificationCodeRepositoryStub,
-        customerRepositoryStub,
-        planRepositoryStub,
-        subscriptionRepositoryStub,
-        userConsentRepositoryStub
-    );
-    const mailStub = new MailStub();
-    const cryptographyStub = new CryptographyStub();
-    const generationStub = new GenerationStub();
-    const paymentStub = new PaymentStub();
     const sut = new CreateUserUseCase(unitOfWorkRepositoryStub, mailStub, cryptographyStub, generationStub, paymentStub);
 
     return {

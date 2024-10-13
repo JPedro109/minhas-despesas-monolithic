@@ -1,12 +1,13 @@
 import {
-    UnitOfWorkRepositoryStub,
     UserRepositoryStub,
     SubscriptionRepositoryStub,
     PlanRepositoryStub,
     AuthenticationStub,
-    UserConsentRepositoryStub,
-    UserVerificationCodeRepositoryStub,
-    CustomerRepositoryStub
+    unitOfWorkRepositoryStub,
+    authenticationStub,
+    userRepositoryStub,
+    subscriptionRepositoryStub,
+    planRepositoryStub
 } from "../__mocks__";
 import { UnauthorizedError, RefreshUserTokenUseCase, JsonWebTokenInvalidError } from "@/layers/application";
 
@@ -17,21 +18,6 @@ const makeSut = (): {
     planRepositoryStub: PlanRepositoryStub,
     authenticationStub: AuthenticationStub
 } => {
-    const userRepositoryStub = new UserRepositoryStub();
-    const userConsentRepositoryStub = new UserConsentRepositoryStub();
-    const userVerificationCodeRepositoryStub = new UserVerificationCodeRepositoryStub();
-    const customerRepositoryStub = new CustomerRepositoryStub();
-    const planRepositoryStub = new PlanRepositoryStub();
-    const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
-    const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
-        userRepositoryStub,
-        userVerificationCodeRepositoryStub,
-        customerRepositoryStub,
-        planRepositoryStub,
-        subscriptionRepositoryStub,
-        userConsentRepositoryStub
-    );
-    const authenticationStub = new AuthenticationStub();
     const sut = new RefreshUserTokenUseCase(unitOfWorkRepositoryStub, authenticationStub);
 
     return {

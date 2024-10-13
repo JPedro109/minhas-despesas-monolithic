@@ -1,15 +1,13 @@
 import {
-    CustomerRepositoryStub,
-    PaymentStub,
-    PlanRepositoryStub,
+    paymentStub,
     recoveryUserPasswordTestUserVerificationCodeEntity,
-    SubscriptionRepositoryStub,
-    UnitOfWorkRepositoryStub,
+    unitOfWorkRepositoryStub,
     updateUserEmailTestUserVerificationCodeEntity,
     updateUserEmailTestUserVerificationCodeEntityWithDateExpired,
-    UserConsentRepositoryStub,
+    userRepositoryStub,
     UserRepositoryStub,
-    UserVerificationCodeRepositoryStub,
+    userVerificationCodeRepositoryStub,
+    UserVerificationCodeRepositoryStub
 } from "../__mocks__";
 import {
     InvalidParamError,
@@ -21,27 +19,12 @@ const makeSut = (): {
     userRepositoryStub: UserRepositoryStub,
     userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub,
 } => {
-    const userRepositoryStub = new UserRepositoryStub();
-    const userConsentRepositoryStub = new UserConsentRepositoryStub();
-    const userVerificationCodeRepositoryStub = new UserVerificationCodeRepositoryStub();
-    const customerRepositoryStub = new CustomerRepositoryStub();
-    const planRepositoryStub = new PlanRepositoryStub();
-    const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
-    const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
-        userRepositoryStub,
-        userVerificationCodeRepositoryStub,
-        customerRepositoryStub,
-        planRepositoryStub,
-        subscriptionRepositoryStub,
-        userConsentRepositoryStub
-    );
-    const paymentStub = new PaymentStub();
     const sut = new UpdateUserEmailUseCase(unitOfWorkRepositoryStub, paymentStub);
 
     return {
         sut,
         userRepositoryStub,
-        userVerificationCodeRepositoryStub,
+        userVerificationCodeRepositoryStub
     };
 };
 

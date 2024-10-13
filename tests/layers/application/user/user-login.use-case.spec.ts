@@ -1,14 +1,11 @@
 import {
-    UnitOfWorkRepositoryStub,
     UserRepositoryStub,
-    SubscriptionRepositoryStub,
-    PlanRepositoryStub,
     CryptographyStub,
-    UserConsentRepositoryStub,
-    UserVerificationCodeRepositoryStub,
-    CustomerRepositoryStub,
-    AuthenticationStub,
-    testUserEntityWithEmailIsNotVerified
+    testUserEntityWithEmailIsNotVerified,
+    unitOfWorkRepositoryStub,
+    cryptographyStub,
+    authenticationStub,
+    userRepositoryStub
 } from "../__mocks__";
 import { UnauthorizedError, UserLoginUseCase } from "@/layers/application";
 
@@ -17,22 +14,6 @@ const makeSut = (): {
     userRepositoryStub: UserRepositoryStub,
     cryptographyStub: CryptographyStub
 } => {
-    const userRepositoryStub = new UserRepositoryStub();
-    const userConsentRepositoryStub = new UserConsentRepositoryStub();
-    const userVerificationCodeRepositoryStub = new UserVerificationCodeRepositoryStub();
-    const customerRepositoryStub = new CustomerRepositoryStub();
-    const planRepositoryStub = new PlanRepositoryStub();
-    const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
-    const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
-        userRepositoryStub,
-        userVerificationCodeRepositoryStub,
-        customerRepositoryStub,
-        planRepositoryStub,
-        subscriptionRepositoryStub,
-        userConsentRepositoryStub
-    );
-    const cryptographyStub = new CryptographyStub();
-    const authenticationStub = new AuthenticationStub();
     const sut = new UserLoginUseCase(unitOfWorkRepositoryStub, cryptographyStub, authenticationStub);
 
     return {

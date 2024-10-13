@@ -1,13 +1,10 @@
 import { 
-    CryptographyStub,
-    CustomerRepositoryStub,
-    PaymentStub,
-    PlanRepositoryStub,
-    SubscriptionRepositoryStub,
-    UnitOfWorkRepositoryStub,
-    UserConsentRepositoryStub,
     UserRepositoryStub,
-    UserVerificationCodeRepositoryStub
+    CryptographyStub,
+    cryptographyStub,
+    paymentStub,
+    unitOfWorkRepositoryStub,
+    userRepositoryStub
 } from "../__mocks__";
 import { DeleteUserUseCase, InvalidParamError, NotFoundError } from "@/layers/application";
 
@@ -16,22 +13,6 @@ const makeSut = (): {
     userRepositoryStub: UserRepositoryStub,
     cryptographyStub: CryptographyStub
 } => {
-    const userRepositoryStub = new UserRepositoryStub();
-    const userConsentRepositoryStub = new UserConsentRepositoryStub();
-    const userVerificationCodeRepositoryStub = new UserVerificationCodeRepositoryStub();
-    const customerRepositoryStub = new CustomerRepositoryStub();
-    const planRepositoryStub = new PlanRepositoryStub();
-    const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
-    const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
-        userRepositoryStub,
-        userVerificationCodeRepositoryStub,
-        customerRepositoryStub,
-        planRepositoryStub,
-        subscriptionRepositoryStub,
-        userConsentRepositoryStub
-    );
-    const cryptographyStub = new CryptographyStub();
-    const paymentStub = new PaymentStub();
     const sut = new DeleteUserUseCase(unitOfWorkRepositoryStub, cryptographyStub, paymentStub);
 
     return {

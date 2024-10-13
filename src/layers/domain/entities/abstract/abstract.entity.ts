@@ -25,6 +25,6 @@ export abstract class AbstractEntity<Props> {
 			}
 		}
 
-		if(errors.length > 0) throw new DomainError(errors.join(","));
+		if(errors.length > 0) throw new DomainError(errors.join(", "));
 	}
 }

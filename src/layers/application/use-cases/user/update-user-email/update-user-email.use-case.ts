@@ -1,5 +1,6 @@
 import {
 	IUnitOfWorkRepository,
+	IPayment,
 	UpdateUserEmailDTO,
 	IUpdateUserEmailUseCase,
 	InvalidParamError
@@ -8,12 +9,14 @@ import {
 export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
 
 	constructor(
-		private readonly unitOfWorkRepository: IUnitOfWorkRepository
+		private readonly unitOfWorkRepository: IUnitOfWorkRepository,
+		private readonly payment: IPayment,
 	) { }
 
 	async execute({ email, code }: UpdateUserEmailDTO): Promise<string> {
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
 		const userVerificationCodeRepository = this.unitOfWorkRepository.getUserVerificationCodeRepository();
+		const customerRepository = this.unitOfWorkRepository.getCustomerRepository();
 
 		const userVerificationCode = await userVerificationCodeRepository.getUserVerificationCodeByVerificationCode(code);
 		if(!userVerificationCode) throw new InvalidParamError("Código inválido"); 
@@ -25,10 +28,12 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
 		user.email = email;
 
 		await this.unitOfWorkRepository.transaction(async () => {
-			await userRepository.updateUserById(user.id, userVerificationCode.user);
-
-            userVerificationCode.valid = false;
+			userVerificationCode.valid = false;
 			await userVerificationCodeRepository.updateUserVerificationCodeById(userVerificationCode.id, userVerificationCode);
+			await userRepository.updateUserById(user.id, userVerificationCode.user);
+			
+			const customer = await customerRepository.getCustomerByUserId(user.id);
+			await this.payment.updateCustomerEmailByCustomerId(customer.customerId, email);
 		});
 
 		return user.email;

@@ -1,5 +1,6 @@
 import {
     CustomerRepositoryStub,
+    PaymentStub,
     PlanRepositoryStub,
     SubscriptionRepositoryStub,
     testUserVerificationCodeEntityWithDateExpired,
@@ -32,7 +33,8 @@ const makeSut = (): {
         subscriptionRepositoryStub,
         userConsentRepositoryStub
     );
-    const sut = new UpdateUserEmailUseCase(unitOfWorkRepositoryStub);
+    const paymentStub = new PaymentStub();
+    const sut = new UpdateUserEmailUseCase(unitOfWorkRepositoryStub, paymentStub);
 
     return {
         sut,

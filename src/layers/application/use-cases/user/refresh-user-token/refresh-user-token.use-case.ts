@@ -1,6 +1,7 @@
 import {
 	IUnitOfWorkRepository,
 	IAuthentication,
+	JsonWebTokenTypeEnum,
 	RefreshUserTokenDTO,
 	IRefreshUserTokenUseCase,
 	UnauthorizedError
@@ -16,7 +17,7 @@ export class RefreshUserTokenUseCase implements IRefreshUserTokenUseCase {
 	async execute({ refreshToken }: RefreshUserTokenDTO): Promise<string> {
 		const data = this.authentication.verifyJsonWebToken(refreshToken);
 
-		if(data.type !== "refresh_token") throw new UnauthorizedError("Token inválido");
+		if(data.type !== JsonWebTokenTypeEnum.RefreshToken) throw new UnauthorizedError("Token inválido");
 
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
 		const subscriptionRepository = this.unitOfWorkRepository.getSubscriptionRepository();
@@ -34,7 +35,7 @@ export class RefreshUserTokenUseCase implements IRefreshUserTokenUseCase {
 				sub: user.id,
 				plan: planActive.name,
 				actions: planActive.actions.map(x => x.name),
-				type: "access_token"
+				type: JsonWebTokenTypeEnum.AccessToken
 			}, 
 			3600 // 1 hour
 		);

@@ -1,6 +1,7 @@
 import {
 	IUnitOfWorkRepository,
 	IAuthentication,
+	JsonWebTokenTypeEnum,
 	ICryptography,
 	UserLoginDTO,
 	UserLoginResponseDTO,
@@ -37,7 +38,7 @@ export class UserLoginUseCase implements IUserLoginUseCase {
 				sub: user.id,
 				plan: planActive.name,
 				actions: planActive.actions.map(x => x.name),
-				type: "access_token"
+				type: JsonWebTokenTypeEnum.AccessToken
 			}, 
 			3600 // 1 hour
 		);
@@ -45,7 +46,7 @@ export class UserLoginUseCase implements IUserLoginUseCase {
 		const refreshToken = this.authentication.createJsonWebToken(
 			{ 
 				sub: user.id,
-				type: "refresh_token"
+				type: JsonWebTokenTypeEnum.RefreshToken
 			}, 
 			604800 // 7 days
 		);

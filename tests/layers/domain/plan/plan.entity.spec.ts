@@ -54,7 +54,7 @@ describe("Entity - Plan", () => {
         const name = PlanNameEnum.Free;
         const description = "A valid description";
         const amount = 100;
-        const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
+        const actions = [{ id: "1", name: "Action 1", description: "Action description", totalOperations: 1, createdAt: new Date() }];
 
         const sut = new PlanEntity({
           name, 
@@ -77,7 +77,7 @@ describe("Entity - Plan", () => {
         const name = PlanNameEnum.Free;
         const description = "A valid description";
         const amount = 100;
-        const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
+        const actions = [{ id: "1", name: "Action 1",  totalOperations: 1, description: "Action description", createdAt: new Date() }];
         const plan = new PlanEntity({
           name, 
           description, 
@@ -94,7 +94,7 @@ describe("Entity - Plan", () => {
         const name = PlanNameEnum.Free;
         const description = "A valid description";
         const amount = 100;
-        const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
+        const actions = [{ id: "1", name: "Action 1",  totalOperations: 1, description: "Action description", createdAt: new Date() }];
         const plan = new PlanEntity({
           name, 
           description, 

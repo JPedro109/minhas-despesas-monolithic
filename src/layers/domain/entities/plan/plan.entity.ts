@@ -10,6 +10,7 @@ export type PlanActionProps = {
     id: string;
     name: string;
     description: string;
+    totalOperations: number;
     createdAt: Date;
     updatedAt?: Date;
 }
@@ -18,13 +19,7 @@ export type PlanProps = {
     name: PlanNameEnum;
     amount: number;
     description: string;
-    actions: {
-        id: string;
-        name: string;
-        description: string;
-        createdAt: Date;
-        updatedAt?: Date;
-    }[];
+    actions: PlanActionProps[];
     updatedAt?: Date;
 }
 

@@ -2,9 +2,11 @@ import {
     CustomerRepositoryStub,
     PaymentStub,
     PlanRepositoryStub,
+    recoveryUserPasswordTestUserVerificationCodeEntity,
     SubscriptionRepositoryStub,
-    testUserVerificationCodeEntityWithDateExpired,
     UnitOfWorkRepositoryStub,
+    updateUserEmailTestUserVerificationCodeEntity,
+    updateUserEmailTestUserVerificationCodeEntityWithDateExpired,
     UserConsentRepositoryStub,
     UserRepositoryStub,
     UserVerificationCodeRepositoryStub,
@@ -45,8 +47,7 @@ const makeSut = (): {
 
 describe("Use case - UpdateUserEmailUseCase", () => {
     test("Should not update email because the verification code is invalid", async () => {
-        const { sut, userVerificationCodeRepositoryStub } = makeSut();
-        jest.spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode").mockReturnValueOnce(null);
+        const { sut } = makeSut();
 
         const result = sut.execute({
             email: "newemail@test.com",
@@ -56,11 +57,25 @@ describe("Use case - UpdateUserEmailUseCase", () => {
         await expect(result).rejects.toThrow(InvalidParamError);
     });
 
+    test("Should not update email because the verification code type is invalid", async () => {
+        const { sut, userVerificationCodeRepositoryStub } = makeSut();
+        jest
+            .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
+            .mockReturnValueOnce(Promise.resolve(recoveryUserPasswordTestUserVerificationCodeEntity));
+
+        const result = sut.execute({
+            email: "newemail@test.com",
+            code: "123458",
+        });
+
+        await expect(result).rejects.toThrow(InvalidParamError);
+    });
+
     test("Should not update email because the verification code is expired", async () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityWithDateExpired));
+            .mockReturnValueOnce(Promise.resolve(updateUserEmailTestUserVerificationCodeEntityWithDateExpired));
 
         const result = sut.execute({
             email: "newemail@test.com",
@@ -71,11 +86,14 @@ describe("Use case - UpdateUserEmailUseCase", () => {
     });
 
     test("Should update email successfully", async () => {
-        const { sut } = makeSut();
+        const { sut, userVerificationCodeRepositoryStub } = makeSut();
+        jest
+            .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
+            .mockReturnValueOnce(Promise.resolve(updateUserEmailTestUserVerificationCodeEntity));
 
         const result = await sut.execute({
             email: "newemail@test.com",
-            code: "valid-code",
+            code: "123456",
         });
 
         expect(result).toBe("newemail@test.com");

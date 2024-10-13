@@ -26,7 +26,7 @@ import {
     UserEntity, 
     UserVerificationCodeEntity 
 } from "@/layers/domain";
-import { testCustomerEntity, testPlanEntity, testSubscriptionEntity, testUserEntity, testUserVerificationCodeEntity } from "./datas";
+import { testCustomerEntity, testPlanEntity, testSubscriptionEntity, testUserEntity } from "./datas";
 
 export class AuthenticationStub implements IAuthentication {
 	createJsonWebToken(payload: object, expiryTimeInSeconds: number): string {
@@ -173,14 +173,14 @@ export class UserVerificationCodeRepositoryStub implements IUserVerificationCode
     }
 
     async getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity> {
-        return testUserVerificationCodeEntity;
+        return null;
     }
     
     async updateUserVerificationCodeById(
         userVerificationCodeId : string, 
         userVerificationCode: UserVerificationCodeEntity
     ): Promise<UserVerificationCodeEntity> {
-        return testUserVerificationCodeEntity;
+        return null;
     };
 }
 

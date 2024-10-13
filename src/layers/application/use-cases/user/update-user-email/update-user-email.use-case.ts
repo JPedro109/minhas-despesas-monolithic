@@ -5,6 +5,7 @@ import {
 	IUpdateUserEmailUseCase,
 	InvalidParamError
 } from "@/layers/application";
+import { UserVerificationCodeTypeEnum } from "@/layers/domain";
 
 export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
 
@@ -19,7 +20,8 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
 		const customerRepository = this.unitOfWorkRepository.getCustomerRepository();
 
 		const userVerificationCode = await userVerificationCodeRepository.getUserVerificationCodeByVerificationCode(code);
-		if(!userVerificationCode) throw new InvalidParamError("Código inválido"); 
+		if(!userVerificationCode || userVerificationCode.type !== UserVerificationCodeTypeEnum.UpdateUserEmail) 
+			throw new InvalidParamError("Código inválido"); 
 
 		const user = userVerificationCode.user;
 

@@ -5,6 +5,7 @@ import {
 	IRecoverUserPasswordUseCase,
 	InvalidParamError
 } from "@/layers/application";
+import { UserVerificationCodeTypeEnum } from "@/layers/domain";
 
 export class RecoverUserPasswordUseCase implements IRecoverUserPasswordUseCase {
 
@@ -20,7 +21,8 @@ export class RecoverUserPasswordUseCase implements IRecoverUserPasswordUseCase {
 		const userVerificationCodeRepository = this.unitOfWorkRepository.getUserVerificationCodeRepository();
 
 		const userVerificationCode = await userVerificationCodeRepository.getUserVerificationCodeByVerificationCode(code);
-		if(!userVerificationCode) throw new InvalidParamError("Código inválido"); 
+		if(!userVerificationCode || userVerificationCode.type !== UserVerificationCodeTypeEnum.RecoveryUserPassword) 
+			throw new InvalidParamError("Código inválido"); 
 
 		const user = userVerificationCode.user;
 
@@ -35,10 +37,9 @@ export class RecoverUserPasswordUseCase implements IRecoverUserPasswordUseCase {
         user.password = hashPassword;
 
 		await this.unitOfWorkRepository.transaction(async () => {
-			await userRepository.updateUserById(user.id, userVerificationCode.user);
-
-            userVerificationCode.valid = false;
+			userVerificationCode.valid = false;
 			await userVerificationCodeRepository.updateUserVerificationCodeById(userVerificationCode.id, userVerificationCode);
+			await userRepository.updateUserById(user.id, userVerificationCode.user);
 		});
 
 		return user.email;

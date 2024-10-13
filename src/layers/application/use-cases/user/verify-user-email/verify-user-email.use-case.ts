@@ -4,6 +4,7 @@ import {
 	IVerifyUserEmailUseCase,
 	InvalidParamError
 } from "@/layers/application";
+import { UserVerificationCodeTypeEnum } from "@/layers/domain";
 
 export class VerifyUserEmailUseCase implements IVerifyUserEmailUseCase {
 
@@ -16,7 +17,8 @@ export class VerifyUserEmailUseCase implements IVerifyUserEmailUseCase {
 		const userVerificationCodeRepository = this.unitOfWorkRepository.getUserVerificationCodeRepository();
 
 		const userVerificationCode = await userVerificationCodeRepository.getUserVerificationCodeByVerificationCode(code);
-		if(!userVerificationCode) throw new InvalidParamError("Código inválido"); 
+		if(!userVerificationCode || userVerificationCode.type !== UserVerificationCodeTypeEnum.VerifyUserEmail) 
+			throw new InvalidParamError("Código inválido"); 
 
 		const user = userVerificationCode.user;
 
@@ -25,10 +27,9 @@ export class VerifyUserEmailUseCase implements IVerifyUserEmailUseCase {
 		user.verifiedEmail = true;
 
 		await this.unitOfWorkRepository.transaction(async () => {
-			await userRepository.updateUserById(user.id, userVerificationCode.user);
-
-            userVerificationCode.valid = false;
+			userVerificationCode.valid = false;
 			await userVerificationCodeRepository.updateUserVerificationCodeById(userVerificationCode.id, userVerificationCode);
+			await userRepository.updateUserById(user.id, userVerificationCode.user);
 		});
 
 		return user.email;

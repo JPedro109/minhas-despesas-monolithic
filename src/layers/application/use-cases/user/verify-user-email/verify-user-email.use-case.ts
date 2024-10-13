@@ -21,9 +21,6 @@ export class VerifyUserEmailUseCase implements IVerifyUserEmailUseCase {
 			throw new InvalidParamError("Código inválido"); 
 
 		const user = userVerificationCode.user;
-
-		if(new Date().getTime() >= userVerificationCode.verificationCodeExpiryDate.getTime()) throw new InvalidParamError("Código expirado");
-
 		user.verifiedEmail = true;
 
 		await this.unitOfWorkRepository.transaction(async () => {

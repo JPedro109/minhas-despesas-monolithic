@@ -1,4 +1,4 @@
-import { SendUserEmailUpdateLinkDTO } from "./send-user-email-update-link.dtos";
+import { SendUserEmailUpdateLinkDTO } from "@/layers/application";
 
 export interface ISendUserEmailUpdateLinkUseCase {
     execute(dto: SendUserEmailUpdateLinkDTO): Promise<string>;

@@ -1,4 +1,4 @@
-import { UpdateUserPasswordDTO } from "./update-user-password.dtos";
+import { UpdateUserPasswordDTO } from "@/layers/application";
 
 export interface IUpdateUserPasswordUseCase {
     execute(dto: UpdateUserPasswordDTO): Promise<string>;

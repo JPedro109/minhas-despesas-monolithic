@@ -1,4 +1,4 @@
-import { DeleteUserDTO } from "./delete-user.dtos";
+import { DeleteUserDTO } from "@/layers/application";
 
 export interface IDeleteUserUseCase {
     execute(dto: DeleteUserDTO): Promise<string>;

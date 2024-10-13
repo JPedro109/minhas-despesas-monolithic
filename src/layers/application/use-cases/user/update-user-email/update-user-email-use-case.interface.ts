@@ -1,4 +1,4 @@
-import { UpdateUserEmailDTO } from "./update-user-email.dtos";
+import { UpdateUserEmailDTO } from "@/layers/application";
 
 export interface IUpdateUserEmailUseCase {
     execute(dto: UpdateUserEmailDTO): Promise<string>;

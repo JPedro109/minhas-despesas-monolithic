@@ -1,4 +1,4 @@
-import { RecoverUserPasswordDTO } from "./recover-user-password.dtos";
+import { RecoverUserPasswordDTO } from "@/layers/application";
 
 export interface IRecoverUserPasswordUseCase {
     execute(dto: RecoverUserPasswordDTO): Promise<string>;

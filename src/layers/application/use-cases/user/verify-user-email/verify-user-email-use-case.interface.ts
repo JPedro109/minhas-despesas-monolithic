@@ -1,4 +1,4 @@
-import { VerifyUserEmailDTO } from "./verify-user-email.dtos";
+import { VerifyUserEmailDTO } from "@/layers/application";
 
 export interface IVerifyUserEmailUseCase {
     execute(dto: VerifyUserEmailDTO): Promise<string>;

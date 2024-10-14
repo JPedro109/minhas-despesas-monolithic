@@ -73,9 +73,7 @@ export class PaymentStub implements IPayment {
 
     async updateCustomerEmailByCustomerId(customerId: string, email: string): Promise<void> { }
 
-    async deleteCustomer(customerId: string): Promise<void> {
-       
-    }
+    async deleteCustomer(customerId: string): Promise<void> { }
 
     async pay(
         customerId: string, 
@@ -92,7 +90,7 @@ export class CustomerRepositoryStub implements ICustomerRepository {
         return customer;
     }
 
-    async getCustomerByUserId(userId: string): Promise<CustomerEntity> {
+    async getCustomerByUserId(userId: string): Promise<CustomerEntity | null> {
         return testCustomerEntity;
     }
 }
@@ -116,7 +114,11 @@ export class SubscriptionRepositoryStub implements ISubscriptionRepository {
         return subscription;
     }
 
-    async getActiveSubscriptionByUserId(userId: string): Promise<SubscriptionEntity> {
+    async updateSubscriptionById(subscriptionId: string, subscription: SubscriptionEntity): Promise<SubscriptionEntity> {
+        return testSubscriptionEntity;
+    }
+
+    async getActiveSubscriptionByUserId(userId: string): Promise<SubscriptionEntity | null> {
         return testSubscriptionEntity;
     }
 
@@ -168,7 +170,7 @@ export class UserVerificationCodeRepositoryStub implements IUserVerificationCode
         return userVerificationCode;
     }
 
-    async getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity> {
+    async getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity | null> {
         return null;
     }
     

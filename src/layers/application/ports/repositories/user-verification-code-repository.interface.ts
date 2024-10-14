@@ -7,5 +7,5 @@ export interface IUserVerificationCodeRepository {
         userVerificationCodeId : string, 
         userVerificationCode: UserVerificationCodeEntity
     ): Promise<UserVerificationCodeEntity>;
-    getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity>;
+    getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity | null>;
 }

@@ -39,7 +39,7 @@ export class RecoverUserPasswordUseCase implements IRecoverUserPasswordUseCase {
 		await this.unitOfWorkRepository.transaction(async () => {
 			userVerificationCode.valid = false;
 			await userVerificationCodeRepository.updateUserVerificationCodeById(userVerificationCode.id, userVerificationCode);
-			await userRepository.updateUserById(user.id, userVerificationCode.user);
+			await userRepository.updateUserById(user.id, user);
 		});
 
 		return user.email;

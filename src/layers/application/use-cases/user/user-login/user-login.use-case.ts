@@ -37,7 +37,7 @@ export class UserLoginUseCase implements IUserLoginUseCase {
 			{ 
 				sub: user.id,
 				plan: planActive.name,
-				actions: planActive.actions.map(x => x.name),
+				actions: planActive.actions.map(x => ({ name: x.name, totalOperations: x.totalOperations })),
 				type: JsonWebTokenTypeEnum.AccessToken
 			}, 
 			3600 // 1 hour

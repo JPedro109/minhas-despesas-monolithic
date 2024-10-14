@@ -98,6 +98,10 @@ export class CustomerRepositoryStub implements ICustomerRepository {
 export class PlanRepositoryStub implements IPlanRepository {
     setContext(context: unknown): void { }
 
+    async getPlans(): Promise<PlanEntity[]> {
+        return [testPlanEntity];
+    }
+
     async getPlanByName(planName: PlanNameEnum): Promise<PlanEntity | null> {
         return testPlanEntity;
     }

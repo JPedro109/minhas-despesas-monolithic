@@ -1,8 +1,8 @@
 import { UnauthorizedError } from "@/layers/application/errors";
 
-export class JsonWebTokenInvalidError extends UnauthorizedError {
+export class InvalidJsonWebTokenError extends UnauthorizedError {
 	constructor(message: string) {
 		super(message);
-		this.name = "JsonWebTokenInvalidError";
+		this.name = "InvalidJsonWebTokenError";
 	}
 }

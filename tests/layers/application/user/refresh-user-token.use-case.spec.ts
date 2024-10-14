@@ -5,7 +5,7 @@ import {
     authenticationStub,
     userRepositoryStub
 } from "../__mocks__";
-import { UnauthorizedError, RefreshUserTokenUseCase, JsonWebTokenInvalidError } from "@/layers/application";
+import { UnauthorizedError, RefreshUserTokenUseCase, InvalidJsonWebTokenError } from "@/layers/application";
 
 const makeSut = (): {
     sut: RefreshUserTokenUseCase,
@@ -27,12 +27,12 @@ describe("Use case - RefreshUserTokenUseCase", () => {
         jest
             .spyOn(authenticationStub, "verifyJsonWebToken")
             .mockImplementationOnce(() => {
-                throw new JsonWebTokenInvalidError("Token is invalid");
+                throw new InvalidJsonWebTokenError("Token is invalid");
             });
 
         const result = sut.execute({ refreshToken: "invalid-token" });
 
-        expect(result).rejects.toThrow(JsonWebTokenInvalidError);
+        expect(result).rejects.toThrow(InvalidJsonWebTokenError);
     });
 
     test("Should throw error if refresh token is not of the right type", () => {

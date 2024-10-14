@@ -6,6 +6,5 @@ export interface IUserRepository {
     getUserById(id: string): Promise<UserEntity | null>;
     getUserByEmail(email: string): Promise<UserEntity| null>;
     updateUserById(id: string, user: UserEntity): Promise<UserEntity>;
-    updateUserByEmail(email: string, user: UserEntity): Promise<UserEntity>;
     deleteUserById(id: string): Promise<UserEntity>;
 }

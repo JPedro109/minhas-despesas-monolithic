@@ -152,10 +152,6 @@ export class UserRepositoryStub implements IUserRepository {
         return user;
     }
 
-    async updateUserByEmail(email: string, user: UserEntity): Promise<UserEntity> {
-        return user;
-    }
-
     async deleteUserById(id: string): Promise<UserEntity> {
         return testUserEntity;
     }

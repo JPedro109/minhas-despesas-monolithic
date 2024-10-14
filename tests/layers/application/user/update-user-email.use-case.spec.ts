@@ -4,8 +4,6 @@ import {
     unitOfWorkRepositoryStub,
     updateUserEmailTestUserVerificationCodeEntity,
     updateUserEmailTestUserVerificationCodeEntityWithDateExpired,
-    userRepositoryStub,
-    UserRepositoryStub,
     userVerificationCodeRepositoryStub,
     UserVerificationCodeRepositoryStub
 } from "../__mocks__";
@@ -16,14 +14,12 @@ import {
 
 const makeSut = (): {
     sut: UpdateUserEmailUseCase,
-    userRepositoryStub: UserRepositoryStub,
     userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub,
 } => {
     const sut = new UpdateUserEmailUseCase(unitOfWorkRepositoryStub, paymentStub);
 
     return {
         sut,
-        userRepositoryStub,
         userVerificationCodeRepositoryStub
     };
 };

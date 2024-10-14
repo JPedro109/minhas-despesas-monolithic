@@ -1,20 +1,17 @@
 import {
     CryptographyStub,
-    UserRepositoryStub,
     UserVerificationCodeRepositoryStub,
     recoveryUserPasswordTestUserVerificationCodeEntity,
     recoveryUserPasswordTestUserVerificationCodeEntityWithDateExpired,
     updateUserEmailTestUserVerificationCodeEntity,
     unitOfWorkRepositoryStub,
     cryptographyStub,
-    userRepositoryStub,
     userVerificationCodeRepositoryStub
 } from "../__mocks__";
 import { InvalidParamError, RecoverUserPasswordUseCase } from "@/layers/application";
 
 const makeSut = (): {
     sut: RecoverUserPasswordUseCase,
-    userRepositoryStub: UserRepositoryStub,
     userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub,
     cryptographyStub: CryptographyStub
 } => {
@@ -22,7 +19,6 @@ const makeSut = (): {
 
     return {
         sut,
-        userRepositoryStub,
         userVerificationCodeRepositoryStub,
         cryptographyStub
     };

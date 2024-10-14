@@ -1,43 +1,11 @@
-export * from "./create-user/create-user.dtos";
-export * from "./create-user/create-user-use-case.interface";
-export * from "./create-user/create-user.use-case";
-
-export * from "./delete-user/delete-user.dtos";
-export * from "./delete-user/delete-user-use-case.interface";
-export * from "./delete-user/delete-user.use-case";
-
-export * from "./recover-user-password/recover-user-password.dtos";
-export * from "./recover-user-password/recover-user-password-use-case.interface";
-export * from "./recover-user-password/recover-user-password.use-case";
-
-export * from "./send-user-email-update-link/send-user-email-update-link.dtos";
-export * from "./send-user-email-update-link/send-user-email-update-link-use-case.interface";
-export * from "./send-user-email-update-link/send-user-email-update-link.use-case";
-
-export * from "./send-user-password-recovery-link/send-user-password-recovery-link.dtos";
-export * from "./send-user-password-recovery-link/send-user-password-recovery-link-use-case.interface";
-export * from "./send-user-password-recovery-link/send-user-password-recovery-link.use-case";
-
-export * from "./update-user-email/update-user-email.dtos";
-export * from "./update-user-email/update-user-email-use-case.interface";
-export * from "./update-user-email/update-user-email.use-case";
-
-export * from "./update-user-password/update-user-password.dtos";
-export * from "./update-user-password/update-user-password-use-case.interface";
-export * from "./update-user-password/update-user-password.use-case";
-
-export * from "./update-username/update-username.dtos";
-export * from "./update-username/update-username-use-case.interface";
-export * from "./update-username/update-username.use-case";
-
-export * from "./user-login/user-login.dtos";
-export * from "./user-login/user-login-use-case.interface";
-export * from "./user-login/user-login.use-case";
-
-export * from "./refresh-user-token/refresh-user-token.dtos";
-export * from "./refresh-user-token/refresh-user-token-use-case.interface";
-export * from "./refresh-user-token/refresh-user-token.use-case";
-
-export * from "./verify-user-email/verify-user-email.dtos";
-export * from "./verify-user-email/verify-user-email-use-case.interface";
-export * from "./verify-user-email/verify-user-email.use-case";
+export * from "./create-user";
+export * from "./delete-user";
+export * from "./recover-user-password";
+export * from "./send-user-email-update-link";
+export * from "./send-user-password-recovery-link";
+export * from "./update-user-email";
+export * from "./update-user-password";
+export * from "./update-username";
+export * from "./user-login";
+export * from "./refresh-user-token";
+export * from "./verify-user-email";

@@ -16,7 +16,7 @@ export class UserEntity extends AbstractEntity<UserProps> {
 
 		const valueObjects = {
 			email: UserEmailValueObject.create(props.email),
-			username: UsernameValueObject.create(props.email),
+			username: UsernameValueObject.create(props.username),
 			password: UserPasswordValueObject.create(props.password),
 		};
 

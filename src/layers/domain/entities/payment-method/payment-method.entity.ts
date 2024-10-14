@@ -4,7 +4,7 @@ export type PaymentMethodProps = {
     userId: string;
     name: string;
     token: string;
-    updatedAt: Date;
+    updatedAt?: Date;
 }
 
 export class PaymentMethodEntity extends AbstractEntity<PaymentMethodProps> {
@@ -25,7 +25,7 @@ export class PaymentMethodEntity extends AbstractEntity<PaymentMethodProps> {
         return this.props.token;
     }
 
-    get updatedAt(): Date {
+    get updatedAt(): Date | null {
         return this.props.updatedAt;
     }
 }

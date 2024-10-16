@@ -6,7 +6,8 @@ import {
     SubscriptionEntity, 
     UserVerificationCodeTypeEnum,
     PlanEntity,
-    PlanNameEnum
+    PlanNameEnum,
+    PaymentMethodEntity
 } from "@/layers/domain";
 
 export const testPlanEntity = new PlanEntity(
@@ -162,3 +163,13 @@ export const testCustomerEntity = new CustomerEntity(
     "1", 
     new Date("2024-01-01")
 );
+
+export const testPaymentMethodEntity = new PaymentMethodEntity(
+    {
+        name: "Payment Method",
+        token: "token",
+        userId: "1"
+    },
+    "1", 
+    new Date("2024-01-01")
+); 

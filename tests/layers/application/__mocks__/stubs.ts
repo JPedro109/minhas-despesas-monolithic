@@ -77,6 +77,8 @@ export class PaymentStub implements IPayment {
 
     async deleteCustomer(customerId: string): Promise<void> { }
 
+    async createPaymentMethod(customerId: string, paymentMethodId: string): Promise<void> { }
+
     async pay(
         customerId: string, 
         paymentMethodId: string, 

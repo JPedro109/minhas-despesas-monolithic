@@ -17,6 +17,10 @@ export class PaymentMethodEntity extends AbstractEntity<PaymentMethodProps> {
         return this.props.userId;
     }
 
+    set name(name: string) {
+        this.props.name = name;
+    }
+
     get name(): string {
         return this.props.name;
     }

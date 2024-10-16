@@ -23,4 +23,21 @@ describe("Entity - PaymentMethod", () => {
         expect(sut.createdAt).not.toBeUndefined();
         expect(sut.updatedAt).not.toBeUndefined();
     });
+
+    test("Should update name", () => {
+        const userId = "1";
+        const name = "Updated Card One";
+        const token = "card_one_1";
+        const updatedAt = new Date();
+        const paymentMethod = new PaymentMethodEntity({
+            userId,
+            name,
+            token,
+            updatedAt
+        });
+
+        paymentMethod.name = name;
+
+        expect(paymentMethod.name).toBe(name);
+    });
 });

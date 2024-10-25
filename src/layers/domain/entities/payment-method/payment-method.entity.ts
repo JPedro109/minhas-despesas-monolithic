@@ -19,6 +19,7 @@ export class PaymentMethodEntity extends AbstractEntity<PaymentMethodProps> {
 
     set name(name: string) {
         this.props.name = name;
+        this.props.updatedAt = new Date();
     }
 
     get name(): string {

@@ -1,4 +1,4 @@
-import { PlanEntity, DomainError, InvalidPlanDescriptionError, PlanNameEnum } from "@/layers/domain";
+import { PlanEntity, DomainError, PlanNameEnum } from "@/layers/domain";
 
 describe("Entity - Plan", () => {
 
@@ -73,37 +73,4 @@ describe("Entity - Plan", () => {
         expect(sut.updatedAt).toBeUndefined();
     });
 
-    test("Should not update plan description, because it is invalid", () => {
-        const name = PlanNameEnum.Free;
-        const description = "A valid description";
-        const amount = 100;
-        const actions = [{ id: "1", name: "Action 1",  totalOperations: 1, description: "Action description", createdAt: new Date() }];
-        const plan = new PlanEntity({
-          name, 
-          description, 
-          amount,
-          actions
-        });
-
-        const sut = (): string => plan.description = "";
-
-        expect(sut).toThrow(InvalidPlanDescriptionError);
-    });
-
-    test("Should update plan description", () => {
-        const name = PlanNameEnum.Free;
-        const description = "A valid description";
-        const amount = 100;
-        const actions = [{ id: "1", name: "Action 1",  totalOperations: 1, description: "Action description", createdAt: new Date() }];
-        const plan = new PlanEntity({
-          name, 
-          description, 
-          amount,
-          actions
-        });
-
-        plan.description = "Updated description";
-
-        expect(plan.description).toBe("Updated description");
-    });
 });

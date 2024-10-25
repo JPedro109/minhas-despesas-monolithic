@@ -45,13 +45,6 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
         return this.props.description;
     }
 
-    set description(description: string) {
-        const result = PlanDescriptionValueObject.create(description);
-        if (result instanceof Error) throw result;
-        this.props.description = result.value;
-        this.props.updatedAt = new Date();
-    }
-
     get amount(): number {
         return this.props.amount;
     }

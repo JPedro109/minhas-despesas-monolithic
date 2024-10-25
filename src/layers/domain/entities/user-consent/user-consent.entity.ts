@@ -3,7 +3,6 @@ import { AbstractEntity } from "../abstract/abstract.entity";
 export type UserConsentProps = {
     userId: string;
     consentVersion: string;
-    consentDate: Date;
     ipAddress: string;
     userAgent: string;
 }
@@ -20,10 +19,6 @@ export class UserConsentEntity extends AbstractEntity<UserConsentProps> {
 
     get consentVersion(): string {
         return this.props.consentVersion;
-    }
-
-    get consentDate(): Date {
-        return this.props.consentDate;
     }
 
     get ipAddress(): string | undefined {

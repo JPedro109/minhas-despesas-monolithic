@@ -61,7 +61,6 @@ export class CreateUserUseCase implements ICreateUserUseCase {
 
 			const userConsent = new UserConsentEntity({
 				userId: userCreated.id,
-				consentDate: new Date(),
 				consentVersion,
 				ipAddress,
 				userAgent

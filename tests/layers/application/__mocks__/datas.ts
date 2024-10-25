@@ -68,7 +68,6 @@ export const testUserConsentEntity = new UserConsentEntity(
     {
         userId: "1",
         consentVersion: "v1.0",
-        consentDate: new Date("2024-06-30"),
         ipAddress: "192.168.1.1",
         userAgent: "Mozilla/5.0",
     }, 

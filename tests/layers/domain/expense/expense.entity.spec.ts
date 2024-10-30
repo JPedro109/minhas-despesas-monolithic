@@ -3,12 +3,14 @@ import { ExpenseEntity, DomainError, InvalidExpenseNameError, InvalidExpenseValu
 describe("Entity - Expense", () => {
 
 	test("Should not create ExpenseEntity, because expense name is not valid", () => {
+		const userId = "1";
 		const invalidExpenseName = "";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 
 		const sut = (): ExpenseEntity => new ExpenseEntity({
+			userId,
 			expenseName: invalidExpenseName,
 			expenseValue,
 			dueDate,
@@ -19,12 +21,14 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should not create ExpenseEntity, because expense value is not valid", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const invalidExpenseValue = -100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 
 		const sut = (): ExpenseEntity => new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue: invalidExpenseValue,
 			dueDate,
@@ -35,12 +39,14 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should not create ExpenseEntity, because due date is not valid", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const invalidDueDate = new Date("2000-01-01");
 		const paid = false;
 
 		const sut = (): ExpenseEntity => new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate: invalidDueDate,
@@ -51,12 +57,14 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should create ExpenseEntity", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 
 		const sut = new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate,
@@ -65,6 +73,7 @@ describe("Entity - Expense", () => {
 
 		expect(sut).toBeInstanceOf(ExpenseEntity);
 		expect(sut.id).not.toBeUndefined();
+		expect(sut.userId).toBe(userId);
 		expect(sut.expenseName).toBe(expenseName);
 		expect(sut.expenseValue).toBe(expenseValue);
 		expect(sut.dueDate).toBe(dueDate);
@@ -73,11 +82,13 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should not update expense name, because it is invalid", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 		const expense = new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate,
@@ -90,11 +101,13 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should update expense name", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 		const expense = new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate,
@@ -107,11 +120,13 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should not update expense value, because it is invalid", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 		const expense = new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate,
@@ -124,11 +139,13 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should update expense value", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 		const expense = new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate,
@@ -141,11 +158,13 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should not update due date, because it is invalid", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 		const expense = new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate,
@@ -158,11 +177,13 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should update due date", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 		const expense = new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate,
@@ -176,11 +197,13 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should not update paid status, because it is already false", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 		const expense = new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate,
@@ -193,11 +216,13 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should not update paid status, because it is already true", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = true;
 		const expense = new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate,
@@ -210,11 +235,13 @@ describe("Entity - Expense", () => {
 	});
 
 	test("Should update paid status", () => {
+		const userId = "1";
 		const expenseName = "Rent";
 		const expenseValue = 100;
 		const dueDate = new Date("3000-01-01");
 		const paid = false;
 		const expense = new ExpenseEntity({
+			userId,
 			expenseName,
 			expenseValue,
 			dueDate,

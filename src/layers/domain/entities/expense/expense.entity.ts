@@ -2,6 +2,7 @@ import { AbstractEntity } from "../abstract/abstract.entity";
 import { ExpenseNameValueObject, ExpenseValueValueObject, ExpenseDueDateValueObject, DomainError } from "@/layers/domain";
 
 export type ExpenseProps = {
+    userId: string;
     expenseName: string;
     expenseValue: number;
     dueDate: Date;
@@ -22,6 +23,10 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
         
 		this.validate(valueObjects);
 	}
+
+    get userId(): string {
+        return this.props.userId;
+    }
 
     get expenseName(): string {
         return this.props.expenseName;

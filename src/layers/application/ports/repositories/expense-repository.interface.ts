@@ -1,0 +1,12 @@
+import { ExpenseEntity } from "@/layers/domain";
+
+export interface IExpenseRepository {
+  setContext(context: unknown): void;
+  createExpense(expenseEntity: ExpenseEntity): Promise<ExpenseEntity>;
+  getExpenseById(id: string): Promise<ExpenseEntity | null>;
+  getExpensesByUserId(userId: string): Promise<ExpenseEntity[]>;
+  getExpensesByDueDate(dueDate: Date): Promise<ExpenseEntity[]>;
+  updateExpenseById(id: string, data: ExpenseEntity): Promise<ExpenseEntity>;
+  updatePaidExpensesToUnpaidByDueDateMonth(month: number): Promise<void>;
+  deleteExpenseById(id: string): Promise<ExpenseEntity>;
+}

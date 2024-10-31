@@ -4,6 +4,7 @@ import {
     IAuthentication,
     ICryptography, 
     ICustomerRepository, 
+    IExpenseRepository, 
     IGeneration, 
     IMail, 
     IPayment, 
@@ -20,6 +21,7 @@ import {
 } from "@/layers/application";
 import { 
     CustomerEntity, 
+    ExpenseEntity, 
     PaymentMethodEntity, 
     PlanEntity, 
     PlanNameEnum, 
@@ -28,7 +30,14 @@ import {
     UserEntity, 
     UserVerificationCodeEntity 
 } from "@/layers/domain";
-import { testCustomerEntity, testPaymentMethodEntity, testPlanEntity, testSubscriptionEntity, testUserEntity } from "./datas";
+import { 
+    testCustomerEntity, 
+    testExpenseEntity, 
+    testPaymentMethodEntity, 
+    testPlanEntity, 
+    testSubscriptionEntity, 
+    testUserEntity 
+} from "./datas";
 
 export class AuthenticationStub implements IAuthentication {
 	createJsonWebToken(payload: object, expiryTimeInSeconds: number): string {
@@ -216,6 +225,37 @@ export class PaymentMethodRepositoryStub implements IPaymentMethodRepository {
     }
 }
 
+export class ExpenseRepositoryStub implements IExpenseRepository {
+
+    setContext(context: unknown): void { }
+
+    async createExpense(expenseEntity: ExpenseEntity): Promise<ExpenseEntity> {
+        return testExpenseEntity;
+    }
+
+    async getExpenseById(id: string): Promise<ExpenseEntity | null> {
+        return testExpenseEntity;
+    }
+
+    async getExpensesByUserId(userId: string): Promise<ExpenseEntity[]> {
+        return [testExpenseEntity];
+    }
+
+    async getExpensesByDueDate(dueDate: Date): Promise<ExpenseEntity[]> {
+        return [testExpenseEntity];
+    }
+
+    async updateExpenseById(id: string, data: ExpenseEntity): Promise<ExpenseEntity> {
+        return testExpenseEntity;
+    }
+
+    async updatePaidExpensesToUnpaidByDueDateMonth(month: number): Promise<void> { }
+
+    async deleteExpenseById(id: string): Promise<ExpenseEntity> {
+        return testExpenseEntity;
+    }
+}
+
 export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     constructor(
         private readonly userRepository: IUserRepository,
@@ -224,7 +264,8 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
         private readonly planRepository: IPlanRepository,
         private readonly subscriptionRepository: ISubscriptionRepository,
         private readonly userConsentRepository: IUserConsentRepository,
-        private readonly paymentMethodRepository: IPaymentMethodRepository
+        private readonly paymentMethodRepository: IPaymentMethodRepository,
+        private readonly expenseRepository: IExpenseRepository
     ) { }
 
     async transaction(querys: () => Promise<void>): Promise<void> {
@@ -258,6 +299,10 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     getPaymentMethodRepository(): IPaymentMethodRepository {
         return this.paymentMethodRepository;
     }
+
+    getExpenseRepository(): IExpenseRepository {
+        return this.expenseRepository;
+    }
 }
 
 export const authenticationStub = new AuthenticationStub();
@@ -272,6 +317,7 @@ export const customerRepositoryStub = new CustomerRepositoryStub();
 export const planRepositoryStub = new PlanRepositoryStub();
 export const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
 export const paymentMethodRepositoryStub = new PaymentMethodRepositoryStub();
+export const expenseRepositoryStub = new ExpenseRepositoryStub();
 export const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
     userRepositoryStub,
     userVerificationCodeRepositoryStub,
@@ -279,5 +325,6 @@ export const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
     planRepositoryStub,
     subscriptionRepositoryStub,
     userConsentRepositoryStub,
-    paymentMethodRepositoryStub
+    paymentMethodRepositoryStub,
+    expenseRepositoryStub
 );

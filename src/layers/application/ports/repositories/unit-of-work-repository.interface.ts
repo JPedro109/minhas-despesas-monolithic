@@ -6,7 +6,8 @@ import {
     ISubscriptionRepository, 
     IUserConsentRepository,
     IExpenseRepository,
-    IPaymentMethodRepository
+    IPaymentMethodRepository,
+    IPaymentHistoryRepository
 } from "@/layers/application";
 
 export interface IUnitOfWorkRepository {
@@ -19,4 +20,5 @@ export interface IUnitOfWorkRepository {
     getSubscriptionRepository(): ISubscriptionRepository;
     getExpenseRepository(): IExpenseRepository;
     getPaymentMethodRepository(): IPaymentMethodRepository;
+    getPaymentHistory(): IPaymentHistoryRepository
 }

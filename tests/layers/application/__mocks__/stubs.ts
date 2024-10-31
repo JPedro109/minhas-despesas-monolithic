@@ -8,6 +8,7 @@ import {
     IGeneration, 
     IMail, 
     IPayment, 
+    IPaymentHistoryRepository, 
     IPaymentMethodRepository, 
     IPlanRepository, 
     ISubscriptionRepository, 
@@ -22,6 +23,7 @@ import {
 import { 
     CustomerEntity, 
     ExpenseEntity, 
+    PaymentHistoryEntity, 
     PaymentMethodEntity, 
     PlanEntity, 
     PlanNameEnum, 
@@ -33,6 +35,7 @@ import {
 import { 
     testCustomerEntity, 
     testExpenseEntity, 
+    testPaymentHistory, 
     testPaymentMethodEntity, 
     testPlanEntity, 
     testSubscriptionEntity, 
@@ -256,6 +259,32 @@ export class ExpenseRepositoryStub implements IExpenseRepository {
     }
 }
 
+export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
+
+    async createPaymentHistory(paymentHistory: PaymentHistoryEntity): Promise<PaymentHistoryEntity> {
+        return testPaymentHistory;
+    }
+
+    async getPaymentHistoriesByUserIdAndPaymentMonthAndPaymentYear(
+        userId: string, 
+        paymentMonth: number, 
+        paymentYear: number
+    ): Promise<PaymentHistoryEntity[]> {
+        return [testPaymentHistory];
+    }
+
+    async deletePaymentHistoriesByExpenseId(expenseId: string): Promise<void> { }
+
+    async deletePaymentHistoryByExpenseIdAndPaymentMonthAndPaymentYear(
+        expenseId: string, 
+        paymentMonth: number, 
+        paymentYear: number
+    ): Promise<PaymentHistoryEntity> {
+        return testPaymentHistory;
+    }
+
+}
+
 export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     constructor(
         private readonly userRepository: IUserRepository,
@@ -265,7 +294,8 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
         private readonly subscriptionRepository: ISubscriptionRepository,
         private readonly userConsentRepository: IUserConsentRepository,
         private readonly paymentMethodRepository: IPaymentMethodRepository,
-        private readonly expenseRepository: IExpenseRepository
+        private readonly expenseRepository: IExpenseRepository,
+        private readonly paymentHistory: IPaymentHistoryRepository
     ) { }
 
     async transaction(querys: () => Promise<void>): Promise<void> {
@@ -303,6 +333,10 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     getExpenseRepository(): IExpenseRepository {
         return this.expenseRepository;
     }
+
+    getPaymentHistory(): IPaymentHistoryRepository {
+        return this.paymentHistory;
+    }
 }
 
 export const authenticationStub = new AuthenticationStub();
@@ -318,6 +352,7 @@ export const planRepositoryStub = new PlanRepositoryStub();
 export const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
 export const paymentMethodRepositoryStub = new PaymentMethodRepositoryStub();
 export const expenseRepositoryStub = new ExpenseRepositoryStub();
+export const paymentHistoryRepositoryStub = new PaymentHistoryRepositoryStub(); 
 export const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
     userRepositoryStub,
     userVerificationCodeRepositoryStub,
@@ -326,5 +361,6 @@ export const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
     subscriptionRepositoryStub,
     userConsentRepositoryStub,
     paymentMethodRepositoryStub,
-    expenseRepositoryStub
+    expenseRepositoryStub,
+    paymentHistoryRepositoryStub
 );

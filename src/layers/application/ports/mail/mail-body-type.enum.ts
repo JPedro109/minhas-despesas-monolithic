@@ -1,5 +1,6 @@
 export enum MailBodyTypeEnum {
 	VerifyUserEmailBody = "verify_user_email_body",
 	UpdateUserEmailBody = "update_user_email_body",
-	RecoveryUserPasswordBody = "recovery_user_password_body"
+	RecoveryUserPasswordBody = "recovery_user_password_body",
+	NotifyExpenseThatIsDueBody = "notify_expense_that_is_due_body"
 }

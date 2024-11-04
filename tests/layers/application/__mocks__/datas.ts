@@ -175,13 +175,22 @@ export const testPaymentMethodEntity = new PaymentMethodEntity(
     new Date("2024-01-01")
 ); 
 
-export const testExpenseEntity = new ExpenseEntity({
+export const testExpenseEntityUnpaid = new ExpenseEntity({
     userId: "1",
     expenseName: "Expense",
     expenseValue: 100,
     dueDate: new Date("3000-01-01"),
     paid: false
 });
+
+export const testExpenseEntityPaid = new ExpenseEntity({
+    userId: "1",
+    expenseName: "Expense",
+    expenseValue: 100,
+    dueDate: new Date("3000-01-01"),
+    paid: true
+});
+
 
 export const testPaymentHistory = new PaymentHistoryEntity(
     {

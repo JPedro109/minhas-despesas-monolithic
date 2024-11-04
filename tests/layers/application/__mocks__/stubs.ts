@@ -168,6 +168,10 @@ export class UserRepositoryStub implements IUserRepository {
         return testUserEntity;
     }
 
+    async getUsersByIds(ids: string[]): Promise<UserEntity[]> {
+        return [testUserEntity];
+    }
+
     async getUserByEmail(email: string): Promise<UserEntity | null> {
         return testUserEntity;
     }

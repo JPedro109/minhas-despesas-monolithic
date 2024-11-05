@@ -8,6 +8,6 @@ export class UpdatePreviousMonthPaidExpensesToUnpaidUseCase implements IUpdatePr
 
     async execute(): Promise<void> {
         const expenseRepository = this.unitOfWorkRepository.getExpenseRepository();
-        await expenseRepository.updatePaidExpensesToUnpaidByDueDateMonth(new Date().getUTCMonth() - 1);
+        await expenseRepository.updatePaidExpensesToUnpaidAndSumOneInDueDateMonthByDueDateMonth(new Date().getUTCMonth() - 1);
     }
 }

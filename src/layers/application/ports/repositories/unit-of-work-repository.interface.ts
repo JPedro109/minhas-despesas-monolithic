@@ -20,5 +20,5 @@ export interface IUnitOfWorkRepository {
     getSubscriptionRepository(): ISubscriptionRepository;
     getExpenseRepository(): IExpenseRepository;
     getPaymentMethodRepository(): IPaymentMethodRepository;
-    getPaymentHistory(): IPaymentHistoryRepository
+    getPaymentHistoryRepository(): IPaymentHistoryRepository
 }

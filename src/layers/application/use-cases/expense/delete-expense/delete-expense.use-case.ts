@@ -6,7 +6,7 @@ export class DeleteExpenseUseCase implements IDeleteExpenseUseCase {
 
     async execute({ id, deleteExpensePaymentHistory }: DeleteExpenseDTO): Promise<string> {
         const expenseRepository = this.unitOfWorkRepository.getExpenseRepository();
-        const paymentHistoryRepository = this.unitOfWorkRepository.getPaymentHistory();
+        const paymentHistoryRepository = this.unitOfWorkRepository.getPaymentHistoryRepository();
 
         const expense = await expenseRepository.getExpenseById(id);
         if(!expense) throw new NotFoundError("Essa despesa não existe");

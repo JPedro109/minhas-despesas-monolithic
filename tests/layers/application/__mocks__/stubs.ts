@@ -257,7 +257,7 @@ export class ExpenseRepositoryStub implements IExpenseRepository {
         return testExpenseEntityUnpaid;
     }
 
-    async updatePaidExpensesToUnpaidByDueDateMonth(month: number): Promise<void> { }
+    async updatePaidExpensesToUnpaidAndSumOneInDueDateMonthByDueDateMonth(month: number): Promise<void> { }
 
     async deleteExpenseById(id: string): Promise<ExpenseEntity> {
         return testExpenseEntityUnpaid;
@@ -339,7 +339,7 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
         return this.expenseRepository;
     }
 
-    getPaymentHistory(): IPaymentHistoryRepository {
+    getPaymentHistoryRepository(): IPaymentHistoryRepository {
         return this.paymentHistory;
     }
 }

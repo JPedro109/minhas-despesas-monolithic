@@ -1,9 +1,9 @@
-import { 
-    UserEntity, 
-    UserConsentEntity, 
-    UserVerificationCodeEntity, 
-    CustomerEntity, 
-    SubscriptionEntity, 
+import {
+    UserEntity,
+    UserConsentEntity,
+    UserVerificationCodeEntity,
+    CustomerEntity,
+    SubscriptionEntity,
     UserVerificationCodeTypeEnum,
     PlanEntity,
     PlanNameEnum,
@@ -14,7 +14,7 @@ import {
 
 export const testPlanEntity = new PlanEntity(
     {
-        name: PlanNameEnum.Free, 
+        name: PlanNameEnum.Free,
         amount: 50,
         description: "Plano GOLD com benefícios exclusivos",
         actions: [
@@ -35,8 +35,8 @@ export const testPlanEntity = new PlanEntity(
                 updatedAt: new Date("2024-07-01"),
             },
         ]
-    }, 
-    "1", 
+    },
+    "1",
     new Date("2024-01-01")
 );
 
@@ -48,8 +48,8 @@ export const testUserEntity = new UserEntity(
         verifiedEmail: true,
         updatedAt: new Date("2024-06-30"),
     }
-    , 
-    "1", 
+    ,
+    "1",
     new Date("2024-01-01")
 );
 
@@ -61,8 +61,8 @@ export const testUserEntityWithEmailIsNotVerified = new UserEntity(
         verifiedEmail: false,
         updatedAt: new Date("2024-06-30"),
     }
-    , 
-    "1", 
+    ,
+    "1",
     new Date("2024-01-01")
 );
 
@@ -72,8 +72,8 @@ export const testUserConsentEntity = new UserConsentEntity(
         consentVersion: "v1.0",
         ipAddress: "192.168.1.1",
         userAgent: "Mozilla/5.0",
-    }, 
-    "1", 
+    },
+    "1",
     new Date("2024-01-01")
 );
 
@@ -87,8 +87,8 @@ export const testSubscriptionEntity = new SubscriptionEntity(
         startDate: new Date("2024-01-01"),
         endDate: new Date("2024-12-31"),
         updatedAt: new Date("2024-06-30"),
-    }, 
-    "1", 
+    },
+    "1",
     new Date("2024-01-01")
 );
 
@@ -99,8 +99,8 @@ export const verifyEmailTestUserVerificationCodeEntityWhoseUserEmailIsNotVerifie
         valid: true,
         user: testUserEntityWithEmailIsNotVerified,
         updatedAt: new Date("2024-06-30")
-    }, 
-    "1", 
+    },
+    "1",
     new Date("2024-01-01")
 );
 
@@ -112,8 +112,8 @@ export const updateUserEmailTestUserVerificationCodeEntity = new UserVerificatio
         user: testUserEntity,
         verificationCodeExpiryDate: new Date("3000-12-31"),
         updatedAt: new Date("2024-06-30"),
-    }, 
-    "1", 
+    },
+    "1",
     new Date("2024-01-01")
 );
 
@@ -125,8 +125,8 @@ export const updateUserEmailTestUserVerificationCodeEntityWithDateExpired = new 
         user: testUserEntity,
         verificationCodeExpiryDate: new Date("2000-01-01"),
         updatedAt: new Date("2024-06-30"),
-    }, 
-    "1", 
+    },
+    "1",
     new Date("2024-01-01")
 );
 
@@ -138,8 +138,8 @@ export const recoveryUserPasswordTestUserVerificationCodeEntity = new UserVerifi
         user: testUserEntity,
         verificationCodeExpiryDate: new Date("3000-12-31"),
         updatedAt: new Date("2024-06-30"),
-    }, 
-    "1", 
+    },
+    "1",
     new Date("2024-01-01")
 );
 
@@ -151,8 +151,8 @@ export const recoveryUserPasswordTestUserVerificationCodeEntityWithDateExpired =
         user: testUserEntity,
         verificationCodeExpiryDate: new Date("2000-01-01"),
         updatedAt: new Date("2024-06-30"),
-    }, 
-    "1", 
+    },
+    "1",
     new Date("2024-01-01")
 );
 
@@ -160,8 +160,8 @@ export const testCustomerEntity = new CustomerEntity(
     {
         userId: "1",
         customerId: "customer_123",
-    }, 
-    "1", 
+    },
+    "1",
     new Date("2024-01-01")
 );
 
@@ -171,26 +171,33 @@ export const testPaymentMethodEntity = new PaymentMethodEntity(
         token: "token",
         userId: "1"
     },
-    "1", 
+    "1",
     new Date("2024-01-01")
-); 
+);
 
-export const testExpenseEntityUnpaid = new ExpenseEntity({
-    userId: "1",
-    expenseName: "Expense",
-    expenseValue: 100,
-    dueDate: new Date("3000-01-01"),
-    paid: false
-});
+export const testExpenseEntityUnpaid = new ExpenseEntity(
+    {
+        userId: "1",
+        expenseName: "Expense",
+        expenseValue: 100,
+        dueDate: new Date("3000-01-01"),
+        paid: false
+    },
+    "1",
+    new Date("2024-01-01")
+);
 
-export const testExpenseEntityPaid = new ExpenseEntity({
-    userId: "1",
-    expenseName: "Expense",
-    expenseValue: 100,
-    dueDate: new Date("3000-01-01"),
-    paid: true
-});
-
+export const testExpenseEntityPaid = new ExpenseEntity(
+    {
+        userId: "1",
+        expenseName: "Expense",
+        expenseValue: 100,
+        dueDate: new Date("3000-01-01"),
+        paid: true
+    },
+    "2",
+    new Date("2024-01-01")
+);
 
 export const testPaymentHistory = new PaymentHistoryEntity(
     {

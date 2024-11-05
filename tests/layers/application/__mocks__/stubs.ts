@@ -34,6 +34,7 @@ import {
 } from "@/layers/domain";
 import { 
     testCustomerEntity, 
+    testExpenseEntityPaid, 
     testExpenseEntityUnpaid, 
     testPaymentHistory, 
     testPaymentMethodEntity, 
@@ -249,7 +250,7 @@ export class ExpenseRepositoryStub implements IExpenseRepository {
     }
 
     async getExpensesByDueDate(dueDate: Date): Promise<ExpenseEntity[]> {
-        return [testExpenseEntityUnpaid];
+        return [testExpenseEntityUnpaid, testExpenseEntityPaid];
     }
 
     async updateExpenseById(id: string, data: ExpenseEntity): Promise<ExpenseEntity> {

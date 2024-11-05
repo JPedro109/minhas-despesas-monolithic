@@ -1,5 +1,5 @@
 export type UpdateExpenseDTO = {
-    expenseId: string;
+    id: string;
     expenseName: string;
     expenseValue: number;
     dueDate: Date;

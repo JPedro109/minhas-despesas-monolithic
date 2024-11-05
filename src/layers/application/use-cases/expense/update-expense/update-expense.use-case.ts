@@ -3,17 +3,17 @@ import { IUpdateExpenseUseCase, IUnitOfWorkRepository, NotFoundError, UpdateExpe
 export class UpdateExpenseUseCase implements IUpdateExpenseUseCase {
     constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
 
-    async execute({ expenseId, expenseName, expenseValue, dueDate }: UpdateExpenseDTO): Promise<string> {
+    async execute({ id, expenseName, expenseValue, dueDate }: UpdateExpenseDTO): Promise<string> {
         const expenseRepository = this.unitOfWorkRepository.getExpenseRepository();
 
-        const expense = await expenseRepository.getExpenseById(expenseId);
+        const expense = await expenseRepository.getExpenseById(id);
         if(!expense) throw new NotFoundError("Essa despesa não existe");
 
         expense.expenseName = expenseName;
         expense.expenseValue = expenseValue;
         expense.dueDate = dueDate;
 
-        const expenseUpdated = await expenseRepository.updateExpenseById(expenseId, expense);
+        const expenseUpdated = await expenseRepository.updateExpenseById(id, expense);
 
         return expenseUpdated.id;
     }

@@ -1,7 +1,7 @@
 import { ExpenseEntity } from "@/layers/domain";
-import { IUnitOfWorkRepository, CreateExpenseDTO } from "@/layers/application";
+import { IUnitOfWorkRepository, CreateExpenseDTO, ICreateExpenseUseCase } from "@/layers/application";
 
-export class CreateExpenseUseCase {
+export class CreateExpenseUseCase implements ICreateExpenseUseCase {
     constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
 
     async execute({ userId, expenseName, expenseValue, dueDate }: CreateExpenseDTO): Promise<string> {

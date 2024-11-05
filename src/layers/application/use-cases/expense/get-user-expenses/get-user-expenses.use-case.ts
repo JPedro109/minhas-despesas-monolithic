@@ -1,6 +1,6 @@
-import { IUnitOfWorkRepository, GetUserExpensesDTO, GetUserExpensesResponseDTO } from "@/layers/application";
+import { IUnitOfWorkRepository, GetUserExpensesDTO, GetUserExpensesResponseDTO, IGetUserExpensesUseCase } from "@/layers/application";
 
-export class GetUserExpensesUseCase {
+export class GetUserExpensesUseCase implements IGetUserExpensesUseCase {
     constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
 
     async execute({ userId }: GetUserExpensesDTO): Promise<GetUserExpensesResponseDTO[]> {

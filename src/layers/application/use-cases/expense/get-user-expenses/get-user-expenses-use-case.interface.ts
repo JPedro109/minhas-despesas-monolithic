@@ -1,5 +1,5 @@
-import { GetUserExpensesDTO } from "@/layers/application";
+import { GetUserExpensesDTO, GetUserExpensesResponseDTO } from "@/layers/application";
 
 export interface IGetUserExpensesUseCase {
-    execute(dto: GetUserExpensesDTO): Promise<string>;
+    execute(dto: GetUserExpensesDTO): Promise<GetUserExpensesResponseDTO[]>;
 }

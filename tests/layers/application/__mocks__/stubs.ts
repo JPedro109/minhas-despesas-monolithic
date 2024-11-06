@@ -309,6 +309,10 @@ export class ExtractRepositoryStub implements IExtractRepository {
         return testExtractEntity;
     }
 
+    async getExtractById(id: string): Promise<ExtractEntity> {
+        return testExtractEntity;
+    }
+
     async getExtractsByUserId(userId: string): Promise<ExtractEntity[]> {
         return [testExtractEntity];
     }

@@ -5,6 +5,7 @@ import {
     ICryptography, 
     ICustomerRepository, 
     IExpenseRepository, 
+    IExtractRepository, 
     IGeneration, 
     IMail, 
     IPayment, 
@@ -23,6 +24,7 @@ import {
 import { 
     CustomerEntity, 
     ExpenseEntity, 
+    ExtractEntity, 
     PaymentHistoryEntity, 
     PaymentMethodEntity, 
     PlanEntity, 
@@ -36,6 +38,7 @@ import {
     testCustomerEntity, 
     testExpenseEntityPaid, 
     testExpenseEntityUnpaid, 
+    testExtractEntity, 
     testPaymentHistory, 
     testPaymentMethodEntity, 
     testPlanEntity, 
@@ -290,6 +293,24 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
 
 }
 
+export class ExtractRepositoryStub implements IExtractRepository {
+
+    async createExtract(extract: ExtractEntity): Promise<ExtractEntity> {
+        return testExtractEntity;
+    }
+
+    async updateExtract(extract: ExtractEntity): Promise<ExtractEntity> {
+        return testExtractEntity;
+    }
+
+    async getExtractsByUserId(userId: string): Promise<ExtractEntity[]> {
+        return [testExtractEntity];
+    }
+
+    async deleteExtractsWhenTheCurrentDateIsGreaterThanTheExpirationDate(): Promise<void> { }
+
+}
+
 export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     constructor(
         private readonly userRepository: IUserRepository,
@@ -300,7 +321,8 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
         private readonly userConsentRepository: IUserConsentRepository,
         private readonly paymentMethodRepository: IPaymentMethodRepository,
         private readonly expenseRepository: IExpenseRepository,
-        private readonly paymentHistory: IPaymentHistoryRepository
+        private readonly paymentHistory: IPaymentHistoryRepository,
+        private readonly extractRepository: IExtractRepository
     ) { }
 
     async transaction(querys: () => Promise<void>): Promise<void> {
@@ -342,6 +364,10 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     getPaymentHistoryRepository(): IPaymentHistoryRepository {
         return this.paymentHistory;
     }
+
+    getExtractRepository(): IExtractRepository {
+        return this.extractRepository;
+    }
 }
 
 export const authenticationStub = new AuthenticationStub();
@@ -358,6 +384,7 @@ export const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
 export const paymentMethodRepositoryStub = new PaymentMethodRepositoryStub();
 export const expenseRepositoryStub = new ExpenseRepositoryStub();
 export const paymentHistoryRepositoryStub = new PaymentHistoryRepositoryStub(); 
+export const extractRepositoryStub = new ExtractRepositoryStub();
 export const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
     userRepositoryStub,
     userVerificationCodeRepositoryStub,
@@ -367,5 +394,6 @@ export const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
     userConsentRepositoryStub,
     paymentMethodRepositoryStub,
     expenseRepositoryStub,
-    paymentHistoryRepositoryStub
+    paymentHistoryRepositoryStub,
+    extractRepositoryStub
 );

@@ -9,7 +9,8 @@ import {
     PlanNameEnum,
     PaymentMethodEntity,
     ExpenseEntity,
-    PaymentHistoryEntity
+    PaymentHistoryEntity,
+    ExtractEntity
 } from "@/layers/domain";
 
 export const testPlanEntity = new PlanEntity(
@@ -207,6 +208,17 @@ export const testPaymentHistory = new PaymentHistoryEntity(
         expenseValue: 100,
         dueDate: new Date("3000-01-01"),
         paidDate: new Date("3000-02-01")
+    },
+    "1",
+    new Date("2024-01-01")
+);
+
+export const testExtractEntity = new ExtractEntity(
+    {
+         url: "https://example.com",
+         referenceMonth: 1,
+         referenceYear: 2024,
+         expiryDate: new Date("3000-01-01")
     },
     "1",
     new Date("2024-01-01")

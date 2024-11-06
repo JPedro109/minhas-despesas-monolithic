@@ -6,9 +6,10 @@ import {
 } from "@/layers/domain";
 
 export type ExtractProps = {
-    url: string;
-    referenceMonth: number;
+	referenceMonth: number;
     referenceYear: number;
+    url?: string;
+    updatedAt?: Date;
 }
 
 export class ExtractEntity extends AbstractEntity<ExtractProps> {
@@ -17,10 +18,11 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 		super(props, id, createdAt);
 
 		const valueObjects = {
-			url: ExtractUrlValueObject.create(props.url),
 			referenceMonth: ExtractReferenceMonthValueObject.create(props.referenceMonth),
 			referenceYear: ExtractReferenceYearValueObject.create(props.referenceYear)
 		};
+
+		if(props.url !== undefined && props.url !== null) valueObjects["url"] = ExtractUrlValueObject.create(props.url);
 
 		this.validate(valueObjects);
 	}
@@ -35,5 +37,16 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 
 	public get url(): string {
 		return this.props.url;
+	}
+
+	public set url(url: string) {
+		const result = ExtractUrlValueObject.create(url);
+		if(result instanceof Error) throw result;
+		this.props.url = url;
+		this.props.updatedAt = new Date();
+	}
+
+	public get updatedAt(): Date {
+		return this.props.updatedAt;
 	}
 }

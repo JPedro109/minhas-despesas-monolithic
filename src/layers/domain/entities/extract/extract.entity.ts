@@ -2,12 +2,14 @@ import { AbstractEntity } from "../abstract/abstract.entity";
 import { 
     ExtractUrlValueObject,
 	ExtractReferenceMonthValueObject,
-	ExtractReferenceYearValueObject
+	ExtractReferenceYearValueObject,
+	DomainError
 } from "@/layers/domain";
 
 export type ExtractProps = {
 	referenceMonth: number;
     referenceYear: number;
+    expiryDate: Date;
     url?: string;
     updatedAt?: Date;
 }
@@ -16,6 +18,9 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 
 	constructor(props: ExtractProps, id?: string, createdAt?: Date) {
 		super(props, id, createdAt);
+
+		if (this.props.expiryDate?.getTime() <= (new Date()).getTime()) 
+            throw new DomainError("A data de expiração do extrato deve ser maior que a atual");
 
 		const valueObjects = {
 			referenceMonth: ExtractReferenceMonthValueObject.create(props.referenceMonth),

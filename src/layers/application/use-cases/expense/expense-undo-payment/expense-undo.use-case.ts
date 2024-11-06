@@ -1,10 +1,10 @@
 import { ExpenseEntity } from "@/layers/domain";
-import { IExpensePaymentUndoUseCase, IUnitOfWorkRepository, NotFoundError, ExpensePaymentUndoDTO } from "@/layers/application";
+import { IExpenseUndoPaymentUseCase, IUnitOfWorkRepository, NotFoundError, ExpenseUndoPaymentDTO } from "@/layers/application";
 
-export class ExpensePaymentUndoUseCase implements IExpensePaymentUndoUseCase {
+export class ExpenseUndoPaymentUseCase implements IExpenseUndoPaymentUseCase {
     constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
 
-    async execute({ id }: ExpensePaymentUndoDTO): Promise<string> {
+    async execute({ id }: ExpenseUndoPaymentDTO): Promise<string> {
         const expenseRepository = this.unitOfWorkRepository.getExpenseRepository();
         const paymentHistoryRepository = this.unitOfWorkRepository.getPaymentHistoryRepository();
 

@@ -1,5 +1,5 @@
 import { DomainError } from "@/layers/domain";
-import { ExpensePaymentUndoUseCase, NotFoundError } from "@/layers/application";
+import { ExpenseUndoPaymentUseCase, NotFoundError } from "@/layers/application";
 import {
     ExpenseRepositoryStub,
     unitOfWorkRepositoryStub,
@@ -8,10 +8,10 @@ import {
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: ExpensePaymentUndoUseCase,
+    sut: ExpenseUndoPaymentUseCase,
     expenseRepositoryStub: ExpenseRepositoryStub
 } => {
-    const sut = new ExpensePaymentUndoUseCase(unitOfWorkRepositoryStub);
+    const sut = new ExpenseUndoPaymentUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
@@ -19,7 +19,7 @@ const makeSut = (): {
     };
 };
 
-describe("Use case - ExpensePaymentUndoUseCase", () => {
+describe("Use case - ExpenseUndoPaymentUseCase", () => {
 
     test("Should not paid because expense does not exist", async () => {
         const { sut, expenseRepositoryStub } = makeSut();

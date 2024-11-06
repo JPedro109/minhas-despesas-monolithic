@@ -4,3 +4,4 @@ export * from "./mail";
 export * from "./payment";
 export * from "./repositories";
 export * from "./authentication";
+export * from "./extract";

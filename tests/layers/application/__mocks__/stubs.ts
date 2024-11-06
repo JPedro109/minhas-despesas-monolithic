@@ -5,6 +5,7 @@ import {
     ICryptography, 
     ICustomerRepository, 
     IExpenseRepository, 
+    IExtract, 
     IExtractRepository, 
     IGeneration, 
     IMail, 
@@ -45,6 +46,11 @@ import {
     testSubscriptionEntity, 
     testUserEntity 
 } from "./datas";
+
+export class ExtractStub implements IExtract {
+
+    async generateExtract<T>(props: T): Promise<void> { }
+}
 
 export class AuthenticationStub implements IAuthentication {
 	createJsonWebToken(payload: object, expiryTimeInSeconds: number): string {
@@ -370,6 +376,7 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     }
 }
 
+export const extractStub = new ExtractStub();
 export const authenticationStub = new AuthenticationStub();
 export const cryptographyStub = new CryptographyStub();
 export const generationStub = new GenerationStub();

@@ -10,6 +10,7 @@ export type ExtractProps = {
 	referenceMonth: number;
     referenceYear: number;
     expiryDate: Date;
+    userId: string;
     url?: string;
     updatedAt?: Date;
 }
@@ -38,6 +39,10 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 
 	public get referenceYear(): number {
 		return this.props.referenceYear;
+	}
+
+	public get userId(): string {
+		return this.props.userId;
 	}
 
 	public get url(): string {

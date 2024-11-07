@@ -81,7 +81,7 @@ export const testUserConsentEntity = new UserConsentEntity(
 export const testSubscriptionEntity = new SubscriptionEntity(
     {
         userId: "1",
-        planId: "1",
+        plan: testPlanEntity,
         amount: 100,
         active: true,
         renewable: true,
@@ -218,7 +218,8 @@ export const testExtractEntity = new ExtractEntity(
          url: "https://example.com",
          referenceMonth: 1,
          referenceYear: 2024,
-         expiryDate: new Date("3000-01-01")
+         expiryDate: new Date("3000-01-01"),
+         userId: "1"
     },
     "1",
     new Date("2024-01-01")

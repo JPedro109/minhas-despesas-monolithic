@@ -81,7 +81,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
 			const date = new Date();
 			const subspcription = new SubscriptionEntity({
 				userId: userCreated.id,
-				planId: planFree.id,
+				plan: planFree,
 				active: true,
 				renewable: false,
 				amount: planFree.amount,

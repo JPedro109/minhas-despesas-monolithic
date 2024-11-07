@@ -1,9 +1,9 @@
 import { AbstractEntity } from "../abstract/abstract.entity";
-import { DomainError, PlanAmountValueObject } from "@/layers/domain";
+import { DomainError, PlanAmountValueObject, PlanEntity } from "@/layers/domain";
 
 export type SubscriptionProps = {
     userId: string;
-    planId: string;
+    plan: PlanEntity;
     amount: number;
     active: boolean;
     renewable: boolean;
@@ -31,8 +31,8 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
         return this.props.userId;
     }
 
-    get planId(): string {
-        return this.props.planId;
+    get plan(): PlanEntity {
+        return this.props.plan;
     }
 
     get amount(): number {

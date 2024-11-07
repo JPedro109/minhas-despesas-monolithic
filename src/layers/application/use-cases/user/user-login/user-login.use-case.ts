@@ -20,7 +20,6 @@ export class UserLoginUseCase implements IUserLoginUseCase {
 	async execute({ email, password }: UserLoginDTO): Promise<UserLoginResponseDTO> {
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
 		const subscriptionRepository = this.unitOfWorkRepository.getSubscriptionRepository();
-		const planRepository = this.unitOfWorkRepository.getPlanRepository();
 
 		const user = await userRepository.getUserByEmail(email);
 
@@ -31,13 +30,12 @@ export class UserLoginUseCase implements IUserLoginUseCase {
 		if(!passwordIsEqual) throw new UnauthorizedError("Email ou senha incorreto(s)");
 
 		const subscriptionActive = await subscriptionRepository.getActiveSubscriptionByUserId(user.id);
-		const planActive = await planRepository.getPlanById(subscriptionActive.planId);
 
 		const accessToken = this.authentication.createJsonWebToken(
 			{ 
 				sub: user.id,
-				plan: planActive.name,
-				actions: planActive.actions.map(x => ({ name: x.name, totalOperations: x.totalOperations })),
+				plan: subscriptionActive.plan.name,
+				actions: subscriptionActive.plan.actions.map(x => ({ name: x.name, totalOperations: x.totalOperations })),
 				type: JsonWebTokenTypeEnum.AccessToken
 			}, 
 			3600 // 1 hour

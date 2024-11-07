@@ -1,10 +1,35 @@
-import { SubscriptionEntity, DomainError } from "@/layers/domain";
+import { SubscriptionEntity, DomainError, PlanEntity, PlanNameEnum } from "@/layers/domain";
+
+const plan = new PlanEntity(
+	{
+        name: PlanNameEnum.Free,
+        amount: 50,
+        description: "Plano GOLD com benefícios exclusivos",
+        actions: [
+            {
+                id: "1",
+                name: "Ação 1",
+                description: "Descrição da Ação 1",
+                totalOperations: 1,
+                createdAt: new Date("2024-01-01"),
+                updatedAt: new Date("2024-06-30"),
+            },
+            {
+                id: "2",
+                name: "Ação 2",
+                description: "Descrição da Ação 2",
+                totalOperations: 1,
+                createdAt: new Date("2024-01-15"),
+                updatedAt: new Date("2024-07-01"),
+            },
+        ]
+	}
+);
 
 describe("Entity - Subscription", () => {
 
 	test("Should not create SubscriptionEntity, because endDate is before startDate", () => {
 		const userId = "user123";
-		const planId = "plan123";
 		const amount = 100;
 		const active = true;
 		const renewable = true;
@@ -13,7 +38,7 @@ describe("Entity - Subscription", () => {
 
 		const sut = (): SubscriptionEntity => new SubscriptionEntity({
 			userId,
-			planId,
+			plan,
 			amount,
 			active,
 			renewable,
@@ -26,7 +51,6 @@ describe("Entity - Subscription", () => {
 
 	test("Should not create SubscriptionEntity, because amount is less than zero", () => {
 		const userId = "user123";
-		const planId = "plan123";
 		const invalidAmount = -1;
 		const active = true;
 		const renewable = true;
@@ -35,7 +59,7 @@ describe("Entity - Subscription", () => {
 
 		const sut = (): SubscriptionEntity => new SubscriptionEntity({
 			userId,
-			planId,
+			plan,
 			amount: invalidAmount,
 			active,
 			renewable,
@@ -48,7 +72,6 @@ describe("Entity - Subscription", () => {
 
 	test("Should create SubscriptionEntity", () => {
 		const userId = "user123";
-		const planId = "plan123";
 		const amount = 100;
 		const active = true;
 		const renewable = true;
@@ -57,7 +80,7 @@ describe("Entity - Subscription", () => {
 
 		const sut = new SubscriptionEntity({
 			userId,
-			planId,
+			plan,
 			amount,
 			active,
 			renewable,
@@ -68,7 +91,7 @@ describe("Entity - Subscription", () => {
 		expect(sut).toBeInstanceOf(SubscriptionEntity);
 		expect(sut.id).not.toBeUndefined();
 		expect(sut.userId).toBe(userId);
-		expect(sut.planId).toBe(planId);
+		expect(sut.plan).toBeInstanceOf(PlanEntity);
 		expect(sut.amount).toBe(amount);
 		expect(sut.active).toBe(active);
 		expect(sut.renewable).toBe(renewable);
@@ -78,13 +101,12 @@ describe("Entity - Subscription", () => {
 
 	test("Should not update active status, because it is already false", () => {
 		const userId = "user123";
-		const planId = "plan123";
 		const amount = 100;
 		const active = false;
 		const renewable = true;
 		const subscription = new SubscriptionEntity({
 			userId,
-			planId,
+			plan,
 			amount,
 			active,
 			renewable,
@@ -99,13 +121,12 @@ describe("Entity - Subscription", () => {
 
 	test("Should not update active status, because it is already true", () => {
 		const userId = "user123";
-		const planId = "plan123";
 		const amount = 100;
 		const active = true;
 		const renewable = true;
 		const subscription = new SubscriptionEntity({
 			userId,
-			planId,
+			plan,
 			amount,
 			active,
 			renewable,
@@ -120,13 +141,12 @@ describe("Entity - Subscription", () => {
 
 	test("Should update active status", () => {
 		const userId = "user123";
-		const planId = "plan123";
 		const amount = 100;
 		const active = false;
 		const renewable = true;
 		const subscription = new SubscriptionEntity({
 			userId,
-			planId,
+			plan,
 			amount,
 			active,
 			renewable,
@@ -141,13 +161,12 @@ describe("Entity - Subscription", () => {
 
 	test("Should not update renewable status, because it is already false", () => {
 		const userId = "user123";
-		const planId = "plan123";
 		const amount = 100;
 		const active = true;
 		const renewable = false;
 		const subscription = new SubscriptionEntity({
 			userId,
-			planId,
+			plan,
 			amount,
 			active,
 			renewable,
@@ -163,13 +182,12 @@ describe("Entity - Subscription", () => {
 
 	test("Should not update renewable status, because it is already true", () => {
 		const userId = "user123";
-		const planId = "plan123";
 		const amount = 100;
 		const active = true;
 		const renewable = true;
 		const subscription = new SubscriptionEntity({
 			userId,
-			planId,
+			plan,
 			amount,
 			active,
 			renewable,
@@ -184,13 +202,12 @@ describe("Entity - Subscription", () => {
 
 	test("Should update renewable status", () => {
 		const userId = "user123";
-		const planId = "plan123";
 		const amount = 100;
 		const active = true;
 		const renewable = true;
 		const subscription = new SubscriptionEntity({
 			userId,
-			planId,
+			plan,
 			amount,
 			active,
 			renewable,

@@ -1,5 +1,5 @@
 import { UpdateExtractUrlDTO } from "@/layers/application";
 
-export interface IUpdateExtractUrl {
+export interface IUpdateExtractUrlUseCase {
     execute(dto: UpdateExtractUrlDTO): Promise<string>;
 }

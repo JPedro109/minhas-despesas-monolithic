@@ -1,5 +1,5 @@
 import { CreateExtractDTO } from "@/layers/application";
 
-export interface ICreateExcract {
+export interface ICreateExtractUseCase {
     execute(dto: CreateExtractDTO): Promise<string>;
 }

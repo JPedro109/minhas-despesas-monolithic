@@ -1,6 +1,6 @@
-import { UpdateExtractUrlDTO, IUpdateExtractUrl, IUnitOfWorkRepository, NotFoundError } from "@/layers/application";
+import { UpdateExtractUrlDTO, IUpdateExtractUrlUseCase, IUnitOfWorkRepository, NotFoundError } from "@/layers/application";
 
-export class UpdateExtractUrl implements IUpdateExtractUrl {
+export class UpdateExtractUrlUseCase implements IUpdateExtractUrlUseCase {
 
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository

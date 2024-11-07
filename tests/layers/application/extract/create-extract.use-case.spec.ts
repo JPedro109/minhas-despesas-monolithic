@@ -1,4 +1,4 @@
-import { CreateExtract, NotFoundError } from "@/layers/application";
+import { CreateExtractUseCase, NotFoundError } from "@/layers/application";
 import { 
     UserRepositoryStub, 
     PaymentHistoryRepositoryStub,
@@ -9,11 +9,11 @@ import {
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: CreateExtract,
+    sut: CreateExtractUseCase,
     userRepositoryStub: UserRepositoryStub,
     paymentHistoryRepositoryStub: PaymentHistoryRepositoryStub
 } => {
-    const sut = new CreateExtract(unitOfWorkRepositoryStub, extractStub);
+    const sut = new CreateExtractUseCase(unitOfWorkRepositoryStub, extractStub);
     return { 
         sut,
         userRepositoryStub,
@@ -21,7 +21,7 @@ const makeSut = (): {
     };
 };
 
-describe("Use case - CreateExtract", () => {
+describe("Use case - CreateExtractUseCase", () => {
 
     test("Should not create extract because user does not exist", async () => {
         const { sut, userRepositoryStub } = makeSut();

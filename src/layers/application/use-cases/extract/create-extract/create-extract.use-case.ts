@@ -1,7 +1,7 @@
 import { ExtractEntity } from "@/layers/domain";
-import { CreateExtractDTO, ICreateExcract, IExtract, IUnitOfWorkRepository, NotFoundError } from "@/layers/application";
+import { CreateExtractDTO, ICreateExtractUseCase, IExtract, IUnitOfWorkRepository, NotFoundError } from "@/layers/application";
 
-export class CreateExtract implements ICreateExcract {
+export class CreateExtractUseCase implements ICreateExtractUseCase {
 
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository,

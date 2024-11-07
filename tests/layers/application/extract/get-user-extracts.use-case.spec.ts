@@ -29,7 +29,7 @@ describe("Use case - GetUserExtractsUseCase", () => {
         expect(result).rejects.toThrow(NotFoundError);
     });
 
-    test("Should update extract url", async () => {
+    test("Should get user extracts", async () => {
         const { sut } = makeSut();
         const userId = "1";
 

@@ -4,20 +4,20 @@ import {
     extractRepositoryStub
 } from "../__mocks__";
 import { InvalidExtractUrlError } from "@/layers/domain";
-import { NotFoundError, UpdateExtractUrl } from "@/layers/application";
+import { NotFoundError, UpdateExtractUrlUseCase } from "@/layers/application";
 
 const makeSut = (): {
-    sut: UpdateExtractUrl,
+    sut: UpdateExtractUrlUseCase,
     extractRepositoryStub: ExtractRepositoryStub
 } => {
-    const sut = new UpdateExtractUrl(unitOfWorkRepositoryStub);
+    const sut = new UpdateExtractUrlUseCase(unitOfWorkRepositoryStub);
     return { 
         sut,
         extractRepositoryStub
     };
 };
 
-describe("Use case - UpdateExtractUrl", () => {
+describe("Use case - UpdateExtractUrlUseCase", () => {
 
     test("Should not update extract url because extract is not exists", async () => {
         const { sut } = makeSut();

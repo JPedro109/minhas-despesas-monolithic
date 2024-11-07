@@ -93,7 +93,7 @@ export const testSubscriptionEntity = new SubscriptionEntity(
     new Date("2024-01-01")
 );
 
-export const verifyEmailTestUserVerificationCodeEntityWhoseUserEmailIsNotVerified = new UserVerificationCodeEntity(
+export const testVerifyEmailTestUserVerificationCodeEntityWhoseUserEmailIsNotVerified = new UserVerificationCodeEntity(
     {
         type: UserVerificationCodeTypeEnum.VerifyUserEmail,
         verificationCode: "123456",
@@ -105,7 +105,7 @@ export const verifyEmailTestUserVerificationCodeEntityWhoseUserEmailIsNotVerifie
     new Date("2024-01-01")
 );
 
-export const updateUserEmailTestUserVerificationCodeEntity = new UserVerificationCodeEntity(
+export const testUpdateUserEmailTestUserVerificationCodeEntity = new UserVerificationCodeEntity(
     {
         type: UserVerificationCodeTypeEnum.UpdateUserEmail,
         verificationCode: "123456",
@@ -118,7 +118,7 @@ export const updateUserEmailTestUserVerificationCodeEntity = new UserVerificatio
     new Date("2024-01-01")
 );
 
-export const updateUserEmailTestUserVerificationCodeEntityWithDateExpired = new UserVerificationCodeEntity(
+export const testUpdateUserEmailTestUserVerificationCodeEntityWithDateExpired = new UserVerificationCodeEntity(
     {
         type: UserVerificationCodeTypeEnum.UpdateUserEmail,
         verificationCode: "123456",
@@ -131,7 +131,7 @@ export const updateUserEmailTestUserVerificationCodeEntityWithDateExpired = new 
     new Date("2024-01-01")
 );
 
-export const recoveryUserPasswordTestUserVerificationCodeEntity = new UserVerificationCodeEntity(
+export const testRecoveryUserPasswordTestUserVerificationCodeEntity = new UserVerificationCodeEntity(
     {
         type: UserVerificationCodeTypeEnum.RecoveryUserPassword,
         verificationCode: "123456",
@@ -144,7 +144,7 @@ export const recoveryUserPasswordTestUserVerificationCodeEntity = new UserVerifi
     new Date("2024-01-01")
 );
 
-export const recoveryUserPasswordTestUserVerificationCodeEntityWithDateExpired = new UserVerificationCodeEntity(
+export const testRecoveryUserPasswordTestUserVerificationCodeEntityWithDateExpired = new UserVerificationCodeEntity(
     {
         type: UserVerificationCodeTypeEnum.RecoveryUserPassword,
         verificationCode: "123456",

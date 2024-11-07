@@ -1,7 +1,7 @@
 import {
     UserVerificationCodeRepositoryStub,
-    verifyEmailTestUserVerificationCodeEntityWhoseUserEmailIsNotVerified,
-    recoveryUserPasswordTestUserVerificationCodeEntity,
+    testVerifyEmailTestUserVerificationCodeEntityWhoseUserEmailIsNotVerified,
+    testRecoveryUserPasswordTestUserVerificationCodeEntity,
     unitOfWorkRepositoryStub,
     userVerificationCodeRepositoryStub
 } from "../__mocks__";
@@ -38,7 +38,7 @@ describe("Use case - VerifyUserEmailUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockResolvedValueOnce(recoveryUserPasswordTestUserVerificationCodeEntity);
+            .mockResolvedValueOnce(testRecoveryUserPasswordTestUserVerificationCodeEntity);
 
         const result = sut.execute({ code });
 
@@ -50,7 +50,7 @@ describe("Use case - VerifyUserEmailUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockResolvedValueOnce(verifyEmailTestUserVerificationCodeEntityWhoseUserEmailIsNotVerified);
+            .mockResolvedValueOnce(testVerifyEmailTestUserVerificationCodeEntityWhoseUserEmailIsNotVerified);
 
         const result = await sut.execute({ code });
 

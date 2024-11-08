@@ -1,3 +1,4 @@
+import { NotFoundError, ConflictedError, CreatePaymentMethodUseCase } from "@/layers/application";
 import {
     UserRepositoryStub,
     PaymentMethodRepositoryStub,
@@ -6,7 +7,6 @@ import {
     userRepositoryStub,
     paymentMethodRepositoryStub
 } from "../__mocks__";
-import { NotFoundError, ConflictedError, CreatePaymentMethodUseCase } from "@/layers/application";
 
 const makeSut = (): {
     sut: CreatePaymentMethodUseCase,

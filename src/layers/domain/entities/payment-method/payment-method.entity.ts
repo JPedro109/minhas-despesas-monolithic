@@ -30,6 +30,11 @@ export class PaymentMethodEntity extends AbstractEntity<PaymentMethodProps> {
         return this.props.token;
     }
 
+    set token(token: string) {
+        this.props.token = token;
+        this.props.updatedAt = new Date();
+    }
+
     get updatedAt(): Date | null {
         return this.props.updatedAt;
     }

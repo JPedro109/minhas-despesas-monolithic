@@ -147,15 +147,15 @@ export class SubscriptionRepositoryStub implements ISubscriptionRepository {
     }
 
     async updateSubscriptionById(subscriptionId: string, subscription: SubscriptionEntity): Promise<SubscriptionEntity> {
-        return testSubscriptionEntity;
+        return testSubscriptionEntity();
     }
 
     async getActiveSubscriptionByUserId(userId: string): Promise<SubscriptionEntity | null> {
-        return testSubscriptionEntity;
+        return testSubscriptionEntity();
     }
 
     async getActiveSubscriptionsByEndDate(endDate: Date): Promise<SubscriptionEntity[]> {
-        return [testSubscriptionEntity];
+        return [testSubscriptionEntity()];
     }
 }
 

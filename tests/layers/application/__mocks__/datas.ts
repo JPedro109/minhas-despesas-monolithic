@@ -35,7 +35,8 @@ export const testPlanEntity = new PlanEntity(
                 createdAt: new Date("2024-01-15"),
                 updatedAt: new Date("2024-07-01"),
             },
-        ]
+        ],
+        durationInDays: 30
     },
     "1",
     new Date("2024-01-01")
@@ -78,7 +79,7 @@ export const testUserConsentEntity = new UserConsentEntity(
     new Date("2024-01-01")
 );
 
-export const testSubscriptionEntity = new SubscriptionEntity(
+export const testSubscriptionEntity = (): SubscriptionEntity => new SubscriptionEntity(
     {
         userId: "1",
         plan: testPlanEntity,

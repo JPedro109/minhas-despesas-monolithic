@@ -6,13 +6,15 @@ describe("Entity - Plan", () => {
         const invalidName = "" as PlanNameEnum;
         const description = "A valid description";
         const amount = 100;
+        const durationInDays = 1;
         const actions = [];
       
         const sut = (): PlanEntity => new PlanEntity({
           name: invalidName, 
           description, 
           amount,
-          actions
+          actions,
+          durationInDays
         });
       
         expect(sut).toThrow(DomainError);
@@ -22,13 +24,15 @@ describe("Entity - Plan", () => {
         const name = PlanNameEnum.Free;
         const invalidPlanDescription = "";
         const amount = 100;
+        const durationInDays = 1;
         const actions = [];
 
         const sut = (): PlanEntity => new PlanEntity({
           name, 
           description: invalidPlanDescription, 
           amount,
-          actions
+          actions,
+          durationInDays
         });
 
         expect(sut).toThrow(DomainError);
@@ -38,13 +42,15 @@ describe("Entity - Plan", () => {
       const name = PlanNameEnum.Free;
       const invalidPlanDescription = "";
       const invalidAmount = -100;
+      const durationInDays = 1;
       const actions = [];
 
       const sut = (): PlanEntity => new PlanEntity({
         name, 
         description: invalidPlanDescription, 
         amount: invalidAmount,
-        actions
+        actions,
+        durationInDays
       });
 
       expect(sut).toThrow(DomainError);
@@ -54,13 +60,15 @@ describe("Entity - Plan", () => {
         const name = PlanNameEnum.Free;
         const description = "A valid description";
         const amount = 100;
+        const durationInDays = 1;
         const actions = [{ id: "1", name: "Action 1", description: "Action description", totalOperations: 1, createdAt: new Date() }];
 
         const sut = new PlanEntity({
           name, 
           description, 
           amount,
-          actions
+          actions,
+          durationInDays
         });
 
         expect(sut).toBeInstanceOf(PlanEntity);
@@ -68,6 +76,7 @@ describe("Entity - Plan", () => {
         expect(sut.name).toBe(name);
         expect(sut.description).toBe(description);
         expect(sut.amount).toBe(amount);
+        expect(sut.durationInDays).toBe(durationInDays);
         expect(sut.actions).toEqual(actions);
         expect(sut.createdAt).not.toBeUndefined();
         expect(sut.updatedAt).toBeUndefined();

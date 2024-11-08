@@ -19,6 +19,7 @@ export type PlanProps = {
     name: PlanNameEnum;
     amount: number;
     description: string;
+    durationInDays: number;
     actions: PlanActionProps[];
     updatedAt?: Date;
 }
@@ -47,6 +48,10 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
 
     get amount(): number {
         return this.props.amount;
+    }
+
+    get durationInDays(): number {
+        return this.props.durationInDays;
     }
 
     get actions(): PlanActionProps[] {

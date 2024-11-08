@@ -3,8 +3,9 @@ import { PaymentMethodEntity } from "@/layers/domain";
 export interface IPaymentMethodRepository {
     setContext(context: unknown): void;    
     createPaymentMethod(paymentMethod: PaymentMethodEntity): Promise<PaymentMethodEntity>;
-    getPaymentMethodById(name: string): Promise<PaymentMethodEntity | null>;
-    getPaymentMethodByUserId(name: string): Promise<PaymentMethodEntity | null>;
+    getPaymentMethodById(id: string): Promise<PaymentMethodEntity | null>;
+    getPaymentMethodByUserId(userId: string): Promise<PaymentMethodEntity | null>;
+    getPaymentMethodsByUserIds(userIds: string[]): Promise<PaymentMethodEntity[]>;
     updatePaymentMethodById(paymentMethodId: string, paymentMethod: PaymentMethodEntity): Promise<PaymentMethodEntity>;
     deletePaymentMethodById(paymentMethodId: string): Promise<PaymentMethodEntity>;
 }

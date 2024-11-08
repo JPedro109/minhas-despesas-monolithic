@@ -23,8 +23,8 @@ export class CreatePaymentMethodUseCase implements ICreatePaymentMethodUseCase {
 		const userExists = await userRepository.getUserById(userId);
 		if(!userExists) throw new NotFoundError("Esse usuário não existe");
 
-		const paymentMethodByNameExists = await paymentMethodRepository.getPaymentMethodByName(name);
-		if(paymentMethodByNameExists) throw new ConflictedError("Já existe um método de pagamento com esse nome");
+		const paymentMethodByNameExists = await paymentMethodRepository.getPaymentMethodByUserId(userId);
+		if(paymentMethodByNameExists) throw new ConflictedError("Já existe um método de pagamento para esse usuário");
 
 		const paymentMethod = new PaymentMethodEntity({
 			userId,
@@ -39,6 +39,6 @@ export class CreatePaymentMethodUseCase implements ICreatePaymentMethodUseCase {
 			await this.payment.createPaymentMethod(customer.customerId, token);
 		});
 
-		return paymentMethodCreated.name;
+		return paymentMethodCreated.id;
 	}
 }

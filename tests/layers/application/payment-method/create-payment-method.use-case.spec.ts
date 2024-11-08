@@ -52,10 +52,10 @@ describe("Use case - CreatePaymentMethodUseCase", () => {
         const userId = "1";
         const name = "Payment Method";
         const token = "payment_token";
-        jest.spyOn(paymentMethodRepositoryStub, "getPaymentMethodByName").mockReturnValueOnce(Promise.resolve(null));
+        jest.spyOn(paymentMethodRepositoryStub, "getPaymentMethodByUserId").mockReturnValueOnce(Promise.resolve(null));
 
         const result = await sut.execute({ userId, name, token });
 
-        expect(result).toBe(name);
+        expect(result).toBe("1");
     });
 });

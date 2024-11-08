@@ -225,7 +225,7 @@ export class PaymentMethodRepositoryStub implements IPaymentMethodRepository {
         return testPaymentMethodEntity;
     }
 
-    async getPaymentMethodByName(name: string): Promise<PaymentMethodEntity | null> {
+    async getPaymentMethodByUserId(name: string): Promise<PaymentMethodEntity | null> {
         return testPaymentMethodEntity;
     }
 

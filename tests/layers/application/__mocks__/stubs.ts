@@ -121,6 +121,10 @@ export class CustomerRepositoryStub implements ICustomerRepository {
     async getCustomerByUserId(userId: string): Promise<CustomerEntity | null> {
         return testCustomerEntity;
     }
+
+    async getCustomersByUserIds(userIds: string[]): Promise<CustomerEntity[]> {
+        return [testCustomerEntity];
+    }
 }
 
 export class PlanRepositoryStub implements IPlanRepository {

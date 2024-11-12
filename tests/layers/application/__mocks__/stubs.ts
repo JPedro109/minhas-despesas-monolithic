@@ -158,7 +158,7 @@ export class SubscriptionRepositoryStub implements ISubscriptionRepository {
         return testSubscriptionEntity();
     }
 
-    async getActiveSubscriptionsByEndDate(endDate: Date): Promise<SubscriptionEntity[]> {
+    async getActiveSubscriptionsByEndDate(endDate: Date, renewable: boolean): Promise<SubscriptionEntity[]> {
         return [testSubscriptionEntity()];
     }
 }

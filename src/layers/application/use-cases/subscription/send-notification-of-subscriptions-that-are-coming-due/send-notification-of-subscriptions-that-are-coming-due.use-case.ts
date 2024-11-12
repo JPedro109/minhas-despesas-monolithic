@@ -19,7 +19,7 @@ export class SendNotificationOfSubscriptionThatAreComingDue implements ISendNoti
         const today = new Date();
         const subscriptionsEndDate = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0);        
         subscriptionsEndDate.setDate(subscriptionsEndDate.getUTCDate() + 1);
-        const subscriptionActives = await subscriptionRepository.getActiveSubscriptionsByEndDate(subscriptionsEndDate);
+        const subscriptionActives = await subscriptionRepository.getActiveSubscriptionsByEndDate(subscriptionsEndDate, true);
 
         if(subscriptionActives.length === 0) return;
 

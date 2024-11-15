@@ -2,7 +2,7 @@ import {
     unitOfWorkRepositoryStub,
     SubscriptionRepositoryStub,
     subscriptionRepositoryStub,
-    testPlanEntity
+    testPlanFreeEntity
 } from "../__mocks__";
 import { GetUserPlanUseCase, NotFoundError } from "@/layers/application";
 
@@ -35,10 +35,10 @@ describe("Use case - GetUserPlanUseCase", () => {
         const result = await sut.execute({ userId: "1" });
 
         expect(result).toEqual({
-            planId: testPlanEntity.id,
-            planAmount: testPlanEntity.amount,
-            planDescription: testPlanEntity.description,
-            planName: testPlanEntity.name,
+            planId: testPlanFreeEntity().id,
+            planAmount: testPlanFreeEntity().amount,
+            planDescription: testPlanFreeEntity().description,
+            planName: testPlanFreeEntity().name,
         });
     });
 });

@@ -1,9 +1,9 @@
 import {
     paymentStub,
-    testRecoveryUserPasswordTestUserVerificationCodeEntity,
+    testUserVerificationCodeEntityOfTypeRecoveryUserPassword,
     unitOfWorkRepositoryStub,
-    testUpdateUserEmailTestUserVerificationCodeEntity,
-    testUpdateUserEmailTestUserVerificationCodeEntityWithDateExpired,
+    testUserVerificationCodeEntityOfTypeUpdateUserEmail,
+    testUserVerificationCodeEntityOfTypeUpdateUserEmailWithDateExpired,
     userVerificationCodeRepositoryStub,
     UserVerificationCodeRepositoryStub
 } from "../__mocks__";
@@ -40,7 +40,7 @@ describe("Use case - UpdateUserEmailUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testRecoveryUserPasswordTestUserVerificationCodeEntity));
+            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPassword()));
 
         const result = sut.execute({
             email: "newemail@test.com",
@@ -54,7 +54,7 @@ describe("Use case - UpdateUserEmailUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUpdateUserEmailTestUserVerificationCodeEntityWithDateExpired));
+            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeUpdateUserEmailWithDateExpired()));
 
         const result = sut.execute({
             email: "newemail@test.com",
@@ -68,7 +68,7 @@ describe("Use case - UpdateUserEmailUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUpdateUserEmailTestUserVerificationCodeEntity));
+            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeUpdateUserEmail()));
 
         const result = await sut.execute({
             email: "newemail@test.com",

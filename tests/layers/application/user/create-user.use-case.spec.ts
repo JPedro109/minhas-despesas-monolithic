@@ -10,8 +10,8 @@ import {
     userRepositoryStub,
     customerRepositoryStub
 } from "../__mocks__";
-import { ConflictedError, InvalidParamError, CreateUserUseCase } from "@/layers/application";
 import { DomainError } from "@/layers/domain";
+import { ConflictedError, InvalidParamError, CreateUserUseCase } from "@/layers/application";
 
 const makeSut = (): {
     sut: CreateUserUseCase,

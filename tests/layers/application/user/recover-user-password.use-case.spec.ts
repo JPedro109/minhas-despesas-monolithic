@@ -1,9 +1,9 @@
 import {
     CryptographyStub,
     UserVerificationCodeRepositoryStub,
-    testRecoveryUserPasswordTestUserVerificationCodeEntity,
-    testRecoveryUserPasswordTestUserVerificationCodeEntityWithDateExpired,
-    testUpdateUserEmailTestUserVerificationCodeEntity,
+    testUserVerificationCodeEntityOfTypeRecoveryUserPassword,
+    testUserVerificationCodeEntityOfTypeRecoveryUserPasswordWithDateExpired,
+    testUserVerificationCodeEntityOfTypeUpdateUserEmail,
     unitOfWorkRepositoryStub,
     cryptographyStub,
     userVerificationCodeRepositoryStub
@@ -33,7 +33,7 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testRecoveryUserPasswordTestUserVerificationCodeEntity));
+            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPassword()));
 
         const result = sut.execute({
             code,
@@ -66,7 +66,7 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUpdateUserEmailTestUserVerificationCodeEntity));
+            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeUpdateUserEmail()));
 
         const result = sut.execute({
             code,
@@ -84,7 +84,7 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testRecoveryUserPasswordTestUserVerificationCodeEntityWithDateExpired));
+            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPasswordWithDateExpired()));
 
         const result = sut.execute({
             code,
@@ -102,7 +102,7 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testRecoveryUserPasswordTestUserVerificationCodeEntity));
+            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPassword()));
 
         const result = sut.execute({
             code,
@@ -123,7 +123,7 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
             .mockReturnValueOnce(Promise.resolve(false));
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testRecoveryUserPasswordTestUserVerificationCodeEntity));
+            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPassword()));
 
         const result = await sut.execute({
             code,

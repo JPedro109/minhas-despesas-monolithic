@@ -1,6 +1,6 @@
+import { unitOfWorkRepositoryStub } from "../__mocks__";
 import { DomainError } from "@/layers/domain";
 import { CreateExpenseUseCase } from "@/layers/application";
-import { unitOfWorkRepositoryStub } from "../__mocks__";
 
 const makeSut = (): {
     sut: CreateExpenseUseCase

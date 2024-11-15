@@ -13,11 +13,11 @@ import {
     ExtractEntity
 } from "@/layers/domain";
 
-export const testPlanEntity = new PlanEntity(
+export const testPlanFreeEntity = (): PlanEntity => new PlanEntity(
     {
         name: PlanNameEnum.Free,
-        amount: 50,
-        description: "Plano GOLD com benefícios exclusivos",
+        amount: 0,
+        description: "Plano FREE",
         actions: [
             {
                 id: "1",
@@ -42,7 +42,7 @@ export const testPlanEntity = new PlanEntity(
     new Date("2024-01-01")
 );
 
-export const testUserEntity = new UserEntity(
+export const testUserEntity = (): UserEntity => new UserEntity(
     {
         email: "email@teste.com",
         username: "Username",
@@ -55,7 +55,7 @@ export const testUserEntity = new UserEntity(
     new Date("2024-01-01")
 );
 
-export const testUserEntityWithEmailIsNotVerified = new UserEntity(
+export const testUserEntityWithEmailIsNotVerified = (): UserEntity => new UserEntity(
     {
         email: "emailnotverified@teste.com",
         username: "Username",
@@ -68,7 +68,7 @@ export const testUserEntityWithEmailIsNotVerified = new UserEntity(
     new Date("2024-01-01")
 );
 
-export const testUserConsentEntity = new UserConsentEntity(
+export const testUserConsentEntity = (): UserConsentEntity => new UserConsentEntity(
     {
         userId: "1",
         consentVersion: "v1.0",
@@ -79,10 +79,76 @@ export const testUserConsentEntity = new UserConsentEntity(
     new Date("2024-01-01")
 );
 
+export const testUserVerificationCodeEntityOfTypeVerifyEmail = (): UserVerificationCodeEntity => new UserVerificationCodeEntity(
+    {
+        type: UserVerificationCodeTypeEnum.VerifyUserEmail,
+        verificationCode: "123456",
+        valid: true,
+        user: testUserEntityWithEmailIsNotVerified(),
+        updatedAt: new Date("2024-06-30")
+    },
+    "1",
+    new Date("2024-01-01")
+);
+
+export const testUserVerificationCodeEntityOfTypeUpdateUserEmail = (): UserVerificationCodeEntity => new UserVerificationCodeEntity(
+    {
+        type: UserVerificationCodeTypeEnum.UpdateUserEmail,
+        verificationCode: "123456",
+        valid: true,
+        user: testUserEntity(),
+        verificationCodeExpiryDate: new Date("3000-12-31"),
+        updatedAt: new Date("2024-06-30"),
+    },
+    "1",
+    new Date("2024-01-01")
+);
+
+export const testUserVerificationCodeEntityOfTypeUpdateUserEmailWithDateExpired 
+    = (): UserVerificationCodeEntity => new UserVerificationCodeEntity(
+    {
+        type: UserVerificationCodeTypeEnum.UpdateUserEmail,
+        verificationCode: "123456",
+        valid: true,
+        user: testUserEntity(),
+        verificationCodeExpiryDate: new Date("2000-01-01"),
+        updatedAt: new Date("2024-06-30"),
+    },
+    "1",
+    new Date("2024-01-01")
+);
+
+export const testUserVerificationCodeEntityOfTypeRecoveryUserPassword = (): UserVerificationCodeEntity => new UserVerificationCodeEntity(
+    {
+        type: UserVerificationCodeTypeEnum.RecoveryUserPassword,
+        verificationCode: "123456",
+        valid: true,
+        user: testUserEntity(),
+        verificationCodeExpiryDate: new Date("3000-12-31"),
+        updatedAt: new Date("2024-06-30"),
+    },
+    "1",
+    new Date("2024-01-01")
+);
+
+export const testUserVerificationCodeEntityOfTypeRecoveryUserPasswordWithDateExpired 
+    = (): UserVerificationCodeEntity => new UserVerificationCodeEntity(
+    {
+        type: UserVerificationCodeTypeEnum.RecoveryUserPassword,
+        verificationCode: "123456",
+        valid: true,
+        user: testUserEntity(),
+        verificationCodeExpiryDate: new Date("2000-01-01"),
+        updatedAt: new Date("2024-06-30"),
+    },
+    "1",
+    new Date("2024-01-01")
+);
+
 export const testSubscriptionEntity = (): SubscriptionEntity => new SubscriptionEntity(
     {
         userId: "1",
-        plan: testPlanEntity,
+        plan: testPlanFreeEntity(),
         amount: 100,
         active: true,
         renewable: true,
@@ -94,71 +160,7 @@ export const testSubscriptionEntity = (): SubscriptionEntity => new Subscription
     new Date("2024-01-01")
 );
 
-export const testVerifyEmailTestUserVerificationCodeEntityWhoseUserEmailIsNotVerified = new UserVerificationCodeEntity(
-    {
-        type: UserVerificationCodeTypeEnum.VerifyUserEmail,
-        verificationCode: "123456",
-        valid: true,
-        user: testUserEntityWithEmailIsNotVerified,
-        updatedAt: new Date("2024-06-30")
-    },
-    "1",
-    new Date("2024-01-01")
-);
-
-export const testUpdateUserEmailTestUserVerificationCodeEntity = new UserVerificationCodeEntity(
-    {
-        type: UserVerificationCodeTypeEnum.UpdateUserEmail,
-        verificationCode: "123456",
-        valid: true,
-        user: testUserEntity,
-        verificationCodeExpiryDate: new Date("3000-12-31"),
-        updatedAt: new Date("2024-06-30"),
-    },
-    "1",
-    new Date("2024-01-01")
-);
-
-export const testUpdateUserEmailTestUserVerificationCodeEntityWithDateExpired = new UserVerificationCodeEntity(
-    {
-        type: UserVerificationCodeTypeEnum.UpdateUserEmail,
-        verificationCode: "123456",
-        valid: true,
-        user: testUserEntity,
-        verificationCodeExpiryDate: new Date("2000-01-01"),
-        updatedAt: new Date("2024-06-30"),
-    },
-    "1",
-    new Date("2024-01-01")
-);
-
-export const testRecoveryUserPasswordTestUserVerificationCodeEntity = new UserVerificationCodeEntity(
-    {
-        type: UserVerificationCodeTypeEnum.RecoveryUserPassword,
-        verificationCode: "123456",
-        valid: true,
-        user: testUserEntity,
-        verificationCodeExpiryDate: new Date("3000-12-31"),
-        updatedAt: new Date("2024-06-30"),
-    },
-    "1",
-    new Date("2024-01-01")
-);
-
-export const testRecoveryUserPasswordTestUserVerificationCodeEntityWithDateExpired = new UserVerificationCodeEntity(
-    {
-        type: UserVerificationCodeTypeEnum.RecoveryUserPassword,
-        verificationCode: "123456",
-        valid: true,
-        user: testUserEntity,
-        verificationCodeExpiryDate: new Date("2000-01-01"),
-        updatedAt: new Date("2024-06-30"),
-    },
-    "1",
-    new Date("2024-01-01")
-);
-
-export const testCustomerEntity = new CustomerEntity(
+export const testCustomerEntity = (): CustomerEntity => new CustomerEntity(
     {
         userId: "1",
         customerId: "customer_123",
@@ -167,7 +169,7 @@ export const testCustomerEntity = new CustomerEntity(
     new Date("2024-01-01")
 );
 
-export const testPaymentMethodEntity = new PaymentMethodEntity(
+export const testPaymentMethodEntity = (): PaymentMethodEntity => new PaymentMethodEntity(
     {
         name: "Payment Method",
         token: "token",
@@ -177,7 +179,7 @@ export const testPaymentMethodEntity = new PaymentMethodEntity(
     new Date("2024-01-01")
 );
 
-export const testExpenseEntityUnpaid = new ExpenseEntity(
+export const testExpenseEntityUnpaid = (): ExpenseEntity => new ExpenseEntity(
     {
         userId: "1",
         expenseName: "Expense",
@@ -189,7 +191,7 @@ export const testExpenseEntityUnpaid = new ExpenseEntity(
     new Date("2024-01-01")
 );
 
-export const testExpenseEntityPaid = new ExpenseEntity(
+export const testExpenseEntityPaid = (): ExpenseEntity => new ExpenseEntity(
     {
         userId: "1",
         expenseName: "Expense",
@@ -201,7 +203,7 @@ export const testExpenseEntityPaid = new ExpenseEntity(
     new Date("2024-01-01")
 );
 
-export const testPaymentHistory = new PaymentHistoryEntity(
+export const testPaymentHistoryEntity = (): PaymentHistoryEntity => new PaymentHistoryEntity(
     {
         userId: "1",
         expenseId: "1",
@@ -214,7 +216,7 @@ export const testPaymentHistory = new PaymentHistoryEntity(
     new Date("2024-01-01")
 );
 
-export const testExtractEntity = new ExtractEntity(
+export const testExtractEntity = (): ExtractEntity => new ExtractEntity(
     {
          url: "https://example.com",
          referenceMonth: 1,

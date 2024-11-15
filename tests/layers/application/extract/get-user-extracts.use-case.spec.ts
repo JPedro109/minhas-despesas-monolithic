@@ -38,9 +38,9 @@ describe("Use case - GetUserExtractsUseCase", () => {
         expect(result).toEqual(
             [
                 {
-                    extractId: testExtractEntity.id,
-                    url: testExtractEntity.url,
-                    userId: testExtractEntity.userId
+                    extractId: testExtractEntity().id,
+                    url: testExtractEntity().url,
+                    userId: testExtractEntity().userId
                 }
             ]
         );

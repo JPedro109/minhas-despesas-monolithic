@@ -58,13 +58,13 @@ describe("Use case - SendNotificationOfExpensesThatAreComingDueUseCase", () => {
         await sut.execute();
 
         expect(sendMailSpy).toHaveBeenCalledWith(
-            testUserEntity.email,
+            testUserEntity().email,
             MailBodyTypeEnum.NotifyExpenseThatIsDueBody,
             expect.arrayContaining(
                 [ 
                     { 
-                        expenseName: testExpenseEntityUnpaid.expenseName, 
-                        expenseValue: testExpenseEntityUnpaid.expenseValue 
+                        expenseName: testExpenseEntityUnpaid().expenseName, 
+                        expenseValue: testExpenseEntityUnpaid().expenseValue 
                     } 
                 ]
             )

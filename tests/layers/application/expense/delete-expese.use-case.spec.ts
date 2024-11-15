@@ -1,4 +1,3 @@
-import { DeleteExpenseUseCase, NotFoundError } from "@/layers/application";
 import {
     ExpenseRepositoryStub,
     PaymentHistoryRepositoryStub,
@@ -6,6 +5,7 @@ import {
     expenseRepositoryStub,
     paymentHistoryRepositoryStub
 } from "../__mocks__";
+import { DeleteExpenseUseCase, NotFoundError } from "@/layers/application";
 
 const makeSut = (): {
     sut: DeleteExpenseUseCase,

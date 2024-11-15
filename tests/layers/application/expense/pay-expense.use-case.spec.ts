@@ -1,11 +1,11 @@
-import { DomainError } from "@/layers/domain";
-import { PayExpenseUseCase, NotFoundError } from "@/layers/application";
 import {
     ExpenseRepositoryStub,
     unitOfWorkRepositoryStub,
     expenseRepositoryStub,
     testExpenseEntityPaid
 } from "../__mocks__";
+import { DomainError } from "@/layers/domain";
+import { PayExpenseUseCase, NotFoundError } from "@/layers/application";
 
 const makeSut = (): {
     sut: PayExpenseUseCase,
@@ -32,7 +32,7 @@ describe("Use case - PayExpenseUseCase", () => {
 
     test("Should not paid because expense is already paid", async () => {
         const { sut, expenseRepositoryStub } = makeSut();
-        jest.spyOn(expenseRepositoryStub, "getExpenseById").mockResolvedValueOnce(testExpenseEntityPaid);
+        jest.spyOn(expenseRepositoryStub, "getExpenseById").mockResolvedValueOnce(testExpenseEntityPaid());
 
         const result = sut.execute({ id: "1" });
 

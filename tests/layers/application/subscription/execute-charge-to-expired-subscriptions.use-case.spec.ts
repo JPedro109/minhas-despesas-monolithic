@@ -47,8 +47,8 @@ describe("Use case - ExecuteChargeToExpiredSubscriptions", () => {
         await sut.execute();
 
         expect(paySpy).toHaveBeenCalledWith(
-            testCustomerEntity.customerId, 
-            testPaymentMethodEntity.token, 
+            testCustomerEntity().customerId, 
+            testPaymentMethodEntity().token, 
             testSubscriptionEntity().amount, 
             PaymentCurrencyEnum.BRL
         );

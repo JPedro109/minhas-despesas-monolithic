@@ -6,7 +6,7 @@ import {
     subscriptionRepositoryStub,
     mailStub,
     testUserEntity,
-    testPlanEntity,
+    testPlanFreeEntity,
     testSubscriptionEntity
 } from "../__mocks__";
 
@@ -55,10 +55,10 @@ describe("Use case - SendNotificationOfSubscriptionThatAreComingDue", () => {
         await sut.execute();
 
         expect(sendMailSpy).toHaveBeenCalledWith(
-            testUserEntity.email,
+            testUserEntity().email,
             MailBodyTypeEnum.NotifySubscriptionThatIsDueBody,
             { 
-                planName: testPlanEntity.name, 
+                planName: testPlanFreeEntity().name, 
                 value: testSubscriptionEntity().amount 
             } 
         );

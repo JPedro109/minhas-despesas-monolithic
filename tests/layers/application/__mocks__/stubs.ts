@@ -40,11 +40,11 @@ import {
     testExpenseEntityPaid, 
     testExpenseEntityUnpaid, 
     testExtractEntity, 
-    testPaymentHistory, 
+    testPaymentHistoryEntity, 
     testPaymentMethodEntity, 
-    testPlanEntity, 
+    testPlanFreeEntity, 
     testSubscriptionEntity, 
-    testUserEntity 
+    testUserEntity
 } from "./datas";
 
 export class ExtractStub implements IExtract {
@@ -119,11 +119,11 @@ export class CustomerRepositoryStub implements ICustomerRepository {
     }
 
     async getCustomerByUserId(userId: string): Promise<CustomerEntity | null> {
-        return testCustomerEntity;
+        return testCustomerEntity();
     }
 
     async getCustomersByUserIds(userIds: string[]): Promise<CustomerEntity[]> {
-        return [testCustomerEntity];
+        return [testCustomerEntity()];
     }
 }
 
@@ -131,15 +131,15 @@ export class PlanRepositoryStub implements IPlanRepository {
     setContext(context: unknown): void { }
 
     async getPlans(): Promise<PlanEntity[]> {
-        return [testPlanEntity];
+        return [testPlanFreeEntity()];
     }
 
     async getPlanByName(planName: PlanNameEnum): Promise<PlanEntity | null> {
-        return testPlanEntity;
+        return testPlanFreeEntity();
     }
 
     async getPlanById(planId: string): Promise<PlanEntity | null> {
-        return testPlanEntity;
+        return testPlanFreeEntity();
     }
 }
 
@@ -179,15 +179,15 @@ export class UserRepositoryStub implements IUserRepository {
     }
 
     async getUserById(id: string): Promise<UserEntity | null> {
-        return testUserEntity;
+        return testUserEntity();
     }
 
     async getUsersByIds(ids: string[]): Promise<UserEntity[]> {
-        return [testUserEntity];
+        return [testUserEntity()];
     }
 
     async getUserByEmail(email: string): Promise<UserEntity | null> {
-        return testUserEntity;
+        return testUserEntity();
     }
 
     async updateUserById(id: string, user: UserEntity): Promise<UserEntity> {
@@ -195,7 +195,7 @@ export class UserRepositoryStub implements IUserRepository {
     }
 
     async deleteUserById(id: string): Promise<UserEntity> {
-        return testUserEntity;
+        return testUserEntity();
     }
 }
 
@@ -226,27 +226,27 @@ export class PaymentMethodRepositoryStub implements IPaymentMethodRepository {
     setContext(context: unknown): void { }
 
     async createPaymentMethod(paymentMethod: PaymentMethodEntity): Promise<PaymentMethodEntity> {
-        return testPaymentMethodEntity;
+        return testPaymentMethodEntity();
     }
 
     async getPaymentMethodByUserId(userId: string): Promise<PaymentMethodEntity | null> {
-        return testPaymentMethodEntity;
+        return testPaymentMethodEntity();
     }
 
     async getPaymentMethodsByUserIds(userIds: string[]): Promise<PaymentMethodEntity[]> {
-        return [testPaymentMethodEntity];
+        return [testPaymentMethodEntity()];
     }
 
     async getPaymentMethodById(id: string): Promise<PaymentMethodEntity | null> {
-        return testPaymentMethodEntity;
+        return testPaymentMethodEntity();
     }
 
     async updatePaymentMethodById(paymentMethodId: string, paymentMethod: PaymentMethodEntity): Promise<PaymentMethodEntity> {
-        return testPaymentMethodEntity;
+        return testPaymentMethodEntity();
     }
 
     async deletePaymentMethodById(paymentMethodId: string): Promise<PaymentMethodEntity> {
-        return testPaymentMethodEntity;
+        return testPaymentMethodEntity();
     }
 }
 
@@ -255,36 +255,36 @@ export class ExpenseRepositoryStub implements IExpenseRepository {
     setContext(context: unknown): void { }
 
     async createExpense(expenseEntity: ExpenseEntity): Promise<ExpenseEntity> {
-        return testExpenseEntityUnpaid;
+        return testExpenseEntityUnpaid();
     }
 
     async getExpenseById(id: string): Promise<ExpenseEntity | null> {
-        return testExpenseEntityUnpaid;
+        return testExpenseEntityUnpaid();
     }
 
     async getExpensesByUserId(userId: string): Promise<ExpenseEntity[]> {
-        return [testExpenseEntityUnpaid];
+        return [testExpenseEntityUnpaid()];
     }
 
     async getExpensesByDueDate(dueDate: Date): Promise<ExpenseEntity[]> {
-        return [testExpenseEntityUnpaid, testExpenseEntityPaid];
+        return [testExpenseEntityUnpaid(), testExpenseEntityPaid()];
     }
 
     async updateExpenseById(id: string, data: ExpenseEntity): Promise<ExpenseEntity> {
-        return testExpenseEntityUnpaid;
+        return testExpenseEntityUnpaid();
     }
 
     async updatePaidExpensesToUnpaidAndSumOneInDueDateMonthByDueDateMonth(month: number): Promise<void> { }
 
     async deleteExpenseById(id: string): Promise<ExpenseEntity> {
-        return testExpenseEntityUnpaid;
+        return testExpenseEntityUnpaid();
     }
 }
 
 export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
 
     async createPaymentHistory(paymentHistory: PaymentHistoryEntity): Promise<PaymentHistoryEntity> {
-        return testPaymentHistory;
+        return testPaymentHistoryEntity();
     }
 
     async getPaymentHistoriesByUserIdAndPaymentMonthAndPaymentYear(
@@ -292,7 +292,7 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
         paymentMonth: number, 
         paymentYear: number
     ): Promise<PaymentHistoryEntity[]> {
-        return [testPaymentHistory];
+        return [testPaymentHistoryEntity()];
     }
 
     async deletePaymentHistoriesByExpenseId(expenseId: string): Promise<void> { }
@@ -302,7 +302,7 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
         paymentMonth: number, 
         paymentYear: number
     ): Promise<PaymentHistoryEntity> {
-        return testPaymentHistory;
+        return testPaymentHistoryEntity();
     }
 
 }
@@ -310,19 +310,19 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
 export class ExtractRepositoryStub implements IExtractRepository {
 
     async createExtract(extract: ExtractEntity): Promise<ExtractEntity> {
-        return testExtractEntity;
+        return testExtractEntity();
     }
 
     async updateExtract(extract: ExtractEntity): Promise<ExtractEntity> {
-        return testExtractEntity;
+        return testExtractEntity();
     }
 
     async getExtractById(id: string): Promise<ExtractEntity> {
-        return testExtractEntity;
+        return testExtractEntity();
     }
 
     async getExtractsByUserId(userId: string): Promise<ExtractEntity[]> {
-        return [testExtractEntity];
+        return [testExtractEntity()];
     }
 
     async deleteExtractsWhenTheCurrentDateIsGreaterThanTheExpirationDate(): Promise<void> { }

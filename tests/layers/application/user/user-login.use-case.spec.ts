@@ -35,7 +35,7 @@ describe("Use case - UserLoginUseCase", () => {
 
     test("Should throw error if user's email is not verified", async () => {
         const { sut, userRepositoryStub } = makeSut();
-        jest.spyOn(userRepositoryStub, "getUserByEmail").mockResolvedValueOnce(testUserEntityWithEmailIsNotVerified);
+        jest.spyOn(userRepositoryStub, "getUserByEmail").mockResolvedValueOnce(testUserEntityWithEmailIsNotVerified());
 
         const result = sut.execute({ email: "user@test.com", password: "password" });
 

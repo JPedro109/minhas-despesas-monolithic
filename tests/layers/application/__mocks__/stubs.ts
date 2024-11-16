@@ -251,7 +251,6 @@ export class PaymentMethodRepositoryStub implements IPaymentMethodRepository {
 }
 
 export class ExpenseRepositoryStub implements IExpenseRepository {
-
     setContext(context: unknown): void { }
 
     async createExpense(expenseEntity: ExpenseEntity): Promise<ExpenseEntity> {
@@ -279,6 +278,8 @@ export class ExpenseRepositoryStub implements IExpenseRepository {
     async deleteExpenseById(id: string): Promise<ExpenseEntity> {
         return testExpenseEntityUnpaid();
     }
+
+    async deleteExpensesByUserId(userId: string): Promise<void> { }
 }
 
 export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {

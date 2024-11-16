@@ -13,35 +13,6 @@ import {
     ExtractEntity
 } from "@/layers/domain";
 
-export const testPlanFreeEntity = (): PlanEntity => new PlanEntity(
-    {
-        name: PlanNameEnum.Free,
-        amount: 0,
-        description: "Plano FREE",
-        actions: [
-            {
-                id: "1",
-                name: "Ação 1",
-                description: "Descrição da Ação 1",
-                totalOperations: 1,
-                createdAt: new Date("2024-01-01"),
-                updatedAt: new Date("2024-06-30"),
-            },
-            {
-                id: "2",
-                name: "Ação 2",
-                description: "Descrição da Ação 2",
-                totalOperations: 1,
-                createdAt: new Date("2024-01-15"),
-                updatedAt: new Date("2024-07-01"),
-            },
-        ],
-        durationInDays: 30
-    },
-    "1",
-    new Date("2024-01-01")
-);
-
 export const testUserEntity = (): UserEntity => new UserEntity(
     {
         email: "email@teste.com",
@@ -145,18 +116,136 @@ export const testUserVerificationCodeEntityOfTypeRecoveryUserPasswordWithDateExp
     new Date("2024-01-01")
 );
 
-export const testSubscriptionEntity = (): SubscriptionEntity => new SubscriptionEntity(
+export const testPlanFreeEntity = (): PlanEntity => new PlanEntity(
+    {
+        name: PlanNameEnum.Free,
+        amount: 0,
+        description: "Plano FREE",
+        actions: [
+            {
+                id: "1",
+                name: "create:expense",
+                description: "create:expense",
+                totalOperations: 2,
+                createdAt: new Date("2024-01-01"),
+                updatedAt: new Date("2024-06-30"),
+            }
+        ],
+        durationInDays: 30
+    },
+    "1",
+    new Date("2024-01-01")
+);
+
+export const testPlanGoldEntity = (): PlanEntity => new PlanEntity(
+    {
+        name: PlanNameEnum.Gold,
+        amount: 500,
+        description: "Plano GOLD",
+        actions: [
+            {
+                id: "1",
+                name: "create:expense",
+                description: "create:expense",
+                totalOperations: 5,
+                createdAt: new Date("2024-01-01"),
+                updatedAt: new Date("2024-06-30"),
+            }
+        ],
+        durationInDays: 30
+    },
+    "2",
+    new Date("2024-01-01")
+);
+
+export const testPlanDiamondEntity = (): PlanEntity => new PlanEntity(
+    {
+        name: PlanNameEnum.Diamond,
+        amount: 1000,
+        description: "Plano DIAMOND",
+        actions: [
+            {
+                id: "1",
+                name: "create:expense",
+                description: "create:expense",
+                totalOperations: 10,
+                createdAt: new Date("2024-01-01"),
+                updatedAt: new Date("2024-06-30"),
+            }
+        ],
+        durationInDays: 30
+    },
+    "3",
+    new Date("2024-01-01")
+);
+
+export const testSubscriptionEntityWithPlanFree = (): SubscriptionEntity => new SubscriptionEntity(
     {
         userId: "1",
         plan: testPlanFreeEntity(),
-        amount: 100,
+        amount: testPlanFreeEntity().amount,
         active: true,
         renewable: true,
-        startDate: new Date("2024-01-01"),
-        endDate: new Date("2024-12-31"),
-        updatedAt: new Date("2024-06-30"),
+        startDate: new Date("3000-01-01"),
+        endDate: new Date("3000-02-01"),
     },
     "1",
+    new Date("2024-01-01")
+);
+
+export const testSubscriptionEntityWithPlanGoldWithoutAmount = (): SubscriptionEntity => new SubscriptionEntity(
+    {
+        userId: "1",
+        plan: testPlanGoldEntity(),
+        amount: 0,
+        active: true,
+        renewable: true,
+        startDate: new Date("3000-01-01"),
+        endDate: new Date("3000-02-01")
+    },
+    "4",
+    new Date("2024-01-01")
+);
+
+export const testSubscriptionEntityWithPlanGold = (): SubscriptionEntity => new SubscriptionEntity(
+    {
+        userId: "1",
+        plan: testPlanGoldEntity(),
+        amount: testPlanGoldEntity().amount,
+        active: true,
+        renewable: true,
+        startDate: new Date("3000-01-01"),
+        endDate: new Date("3000-02-01")
+    },
+    "2",
+    new Date("2024-01-01")
+);
+
+export const testSubscriptionEntityWithPlanDiamond = (): SubscriptionEntity => new SubscriptionEntity(
+    {
+        userId: "1",
+        plan: testPlanDiamondEntity(),
+        amount: testPlanDiamondEntity().amount,
+        active: true,
+        renewable: true,
+        startDate: new Date("3000-01-01"),
+        endDate: new Date("3000-02-01")
+    },
+    "3",
+    new Date("2024-01-01")
+);
+
+export const testSubscriptionEntityWithPlanDiamondExpired = (): SubscriptionEntity => new SubscriptionEntity(
+    {
+        userId: "1",
+        plan: testPlanDiamondEntity(),
+        amount: testPlanDiamondEntity().amount,
+        active: true,
+        renewable: true,
+        startDate: new Date("3000-01-01"),
+        endDate: new Date("3000-02-01")
+    },
+    "5",
     new Date("2024-01-01")
 );
 

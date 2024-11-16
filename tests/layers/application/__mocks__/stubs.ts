@@ -43,7 +43,7 @@ import {
     testPaymentHistoryEntity, 
     testPaymentMethodEntity, 
     testPlanFreeEntity, 
-    testSubscriptionEntity, 
+    testSubscriptionEntityWithPlanFree, 
     testUserEntity
 } from "./datas";
 
@@ -151,15 +151,15 @@ export class SubscriptionRepositoryStub implements ISubscriptionRepository {
     }
 
     async updateSubscriptionById(subscriptionId: string, subscription: SubscriptionEntity): Promise<SubscriptionEntity> {
-        return testSubscriptionEntity();
+        return testSubscriptionEntityWithPlanFree();
     }
 
     async getActiveSubscriptionByUserId(userId: string): Promise<SubscriptionEntity | null> {
-        return testSubscriptionEntity();
+        return testSubscriptionEntityWithPlanFree();
     }
 
     async getActiveSubscriptionsByEndDate(endDate: Date, renewable: boolean): Promise<SubscriptionEntity[]> {
-        return [testSubscriptionEntity()];
+        return [testSubscriptionEntityWithPlanFree()];
     }
 }
 

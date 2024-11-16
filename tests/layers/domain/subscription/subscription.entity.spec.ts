@@ -22,7 +22,8 @@ const plan = new PlanEntity(
                 createdAt: new Date("2024-01-15"),
                 updatedAt: new Date("2024-07-01"),
             },
-        ]
+        ],
+		durationInDays: 30
 	}
 );
 

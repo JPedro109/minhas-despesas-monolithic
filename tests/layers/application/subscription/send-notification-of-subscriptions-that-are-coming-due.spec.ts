@@ -7,7 +7,7 @@ import {
     mailStub,
     testUserEntity,
     testPlanFreeEntity,
-    testSubscriptionEntity
+    testSubscriptionEntityWithPlanFree
 } from "../__mocks__";
 
 const makeSut = (): {
@@ -59,7 +59,7 @@ describe("Use case - SendNotificationOfSubscriptionThatAreComingDue", () => {
             MailBodyTypeEnum.NotifySubscriptionThatIsDueBody,
             { 
                 planName: testPlanFreeEntity().name, 
-                value: testSubscriptionEntity().amount 
+                value: testSubscriptionEntityWithPlanFree().amount 
             } 
         );
     });

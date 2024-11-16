@@ -235,13 +235,13 @@ export const testSubscriptionEntityWithPlanDiamond = (): SubscriptionEntity => n
     new Date("2024-01-01")
 );
 
-export const testSubscriptionEntityWithPlanDiamondExpired = (): SubscriptionEntity => new SubscriptionEntity(
+export const testSubscriptionEntityWithPlanDiamondNotRenewable = (): SubscriptionEntity => new SubscriptionEntity(
     {
         userId: "1",
         plan: testPlanDiamondEntity(),
         amount: testPlanDiamondEntity().amount,
         active: true,
-        renewable: true,
+        renewable: false,
         startDate: new Date("3000-01-01"),
         endDate: new Date("3000-02-01")
     },

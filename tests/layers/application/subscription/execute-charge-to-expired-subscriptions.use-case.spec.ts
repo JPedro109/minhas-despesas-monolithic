@@ -4,7 +4,7 @@ import {
     SubscriptionRepositoryStub,
     unitOfWorkRepositoryStub,
     paymentStub,
-    testSubscriptionEntity,
+    testSubscriptionEntityWithPlanFree,
     testPaymentMethodEntity,
     testCustomerEntity,
     subscriptionRepositoryStub,
@@ -49,7 +49,7 @@ describe("Use case - ExecuteChargeToExpiredSubscriptions", () => {
         expect(paySpy).toHaveBeenCalledWith(
             testCustomerEntity().customerId, 
             testPaymentMethodEntity().token, 
-            testSubscriptionEntity().amount, 
+            testSubscriptionEntityWithPlanFree().amount, 
             PaymentCurrencyEnum.BRL
         );
     });

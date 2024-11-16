@@ -1,6 +1,6 @@
 import {
     unitOfWorkRepositoryStub,
-    testSubscriptionEntity
+    testSubscriptionEntityWithPlanFree
 } from "../__mocks__";
 import { GetActiveNonRenewableSubscriptionsUseCase } from "@/layers/application";
 
@@ -23,13 +23,13 @@ describe("Use case - GetActiveNonRenewableSubscriptionsUseCase", () => {
         expect(result).toEqual(
             [
                 {
-                    subscriptionId: testSubscriptionEntity().id,
-                    userId: testSubscriptionEntity().userId,
-                    amount: testSubscriptionEntity().amount,
-                    active: testSubscriptionEntity().active,
-                    renewable: testSubscriptionEntity().renewable,
-                    startDate: testSubscriptionEntity().startDate,
-                    endDate: testSubscriptionEntity().endDate,
+                    subscriptionId: testSubscriptionEntityWithPlanFree().id,
+                    userId: testSubscriptionEntityWithPlanFree().userId,
+                    amount: testSubscriptionEntityWithPlanFree().amount,
+                    active: testSubscriptionEntityWithPlanFree().active,
+                    renewable: testSubscriptionEntityWithPlanFree().renewable,
+                    startDate: testSubscriptionEntityWithPlanFree().startDate,
+                    endDate: testSubscriptionEntityWithPlanFree().endDate,
                 }
             ]
         );

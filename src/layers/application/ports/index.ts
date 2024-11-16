@@ -5,3 +5,4 @@ export * from "./payment";
 export * from "./repositories";
 export * from "./authentication";
 export * from "./extract";
+export * from "./bucket";

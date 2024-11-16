@@ -1,69 +1,75 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { 
+import {
     IAuthentication,
-    ICryptography, 
-    ICustomerRepository, 
-    IExpenseRepository, 
-    IExtract, 
-    IExtractRepository, 
-    IGeneration, 
-    IMail, 
-    IPayment, 
-    IPaymentHistoryRepository, 
-    IPaymentMethodRepository, 
-    IPlanRepository, 
-    ISubscriptionRepository, 
-    IUnitOfWorkRepository, 
-    IUserConsentRepository, 
-    IUserRepository, 
-    IUserVerificationCodeRepository, 
-    JsonWebTokenType, 
-    MailBodyTypeEnum, 
-    PaymentCurrencyEnum 
+    IBucket,
+    ICryptography,
+    ICustomerRepository,
+    IExpenseRepository,
+    IExtract,
+    IExtractRepository,
+    IGeneration,
+    IMail,
+    IPayment,
+    IPaymentHistoryRepository,
+    IPaymentMethodRepository,
+    IPlanRepository,
+    ISubscriptionRepository,
+    IUnitOfWorkRepository,
+    IUserConsentRepository,
+    IUserRepository,
+    IUserVerificationCodeRepository,
+    JsonWebTokenType,
+    MailBodyTypeEnum,
+    PaymentCurrencyEnum
 } from "@/layers/application";
-import { 
-    CustomerEntity, 
-    ExpenseEntity, 
-    ExtractEntity, 
-    PaymentHistoryEntity, 
-    PaymentMethodEntity, 
-    PlanEntity, 
-    PlanNameEnum, 
-    SubscriptionEntity, 
-    UserConsentEntity, 
-    UserEntity, 
-    UserVerificationCodeEntity 
+import {
+    CustomerEntity,
+    ExpenseEntity,
+    ExtractEntity,
+    PaymentHistoryEntity,
+    PaymentMethodEntity,
+    PlanEntity,
+    PlanNameEnum,
+    SubscriptionEntity,
+    UserConsentEntity,
+    UserEntity,
+    UserVerificationCodeEntity
 } from "@/layers/domain";
-import { 
-    testCustomerEntity, 
-    testExpenseEntityPaid, 
-    testExpenseEntityUnpaid, 
-    testExtractEntity, 
-    testPaymentHistoryEntity, 
-    testPaymentMethodEntity, 
-    testPlanFreeEntity, 
-    testSubscriptionEntityWithPlanFree, 
+import {
+    testCustomerEntity,
+    testExpenseEntityPaid,
+    testExpenseEntityUnpaid,
+    testExtractEntity,
+    testPaymentHistoryEntity,
+    testPaymentMethodEntity,
+    testPlanFreeEntity,
+    testSubscriptionEntityWithPlanFree,
     testUserEntity
 } from "./datas";
 
-export class ExtractStub implements IExtract {
+export class BucketStub implements IBucket {
+    async uploadFile(fileName: string, fileContent: Buffer): Promise<string> {
+        return "https://www.example.com";
+    }
+}
 
+export class ExtractStub implements IExtract {
     async generateExtract<T>(props: T): Promise<void> { }
 }
 
 export class AuthenticationStub implements IAuthentication {
-	createJsonWebToken(payload: object, expiryTimeInSeconds: number): string {
-		return "token";
-	}
+    createJsonWebToken(payload: object, expiryTimeInSeconds: number): string {
+        return "token";
+    }
 
-	verifyJsonWebToken(token: string): JsonWebTokenType {
-		return {
-			id: "1",
-			email: "email@test.com",
+    verifyJsonWebToken(token: string): JsonWebTokenType {
+        return {
+            id: "1",
+            email: "email@test.com",
             type: "access_token"
-		};
-	}
+        };
+    }
 }
 
 export class CryptographyStub implements ICryptography {
@@ -104,9 +110,9 @@ export class PaymentStub implements IPayment {
     async deletePaymentMethod(paymentMethodId: string): Promise<void> { }
 
     async pay(
-        customerId: string, 
-        paymentMethodId: string, 
-        amount: number, 
+        customerId: string,
+        paymentMethodId: string,
+        amount: number,
         currency: PaymentCurrencyEnum
     ): Promise<void> { }
 }
@@ -213,9 +219,9 @@ export class UserVerificationCodeRepositoryStub implements IUserVerificationCode
     async getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity | null> {
         return null;
     }
-    
+
     async updateUserVerificationCodeById(
-        userVerificationCodeId : string, 
+        userVerificationCodeId: string,
         userVerificationCode: UserVerificationCodeEntity
     ): Promise<UserVerificationCodeEntity> {
         return null;
@@ -289,8 +295,8 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
     }
 
     async getPaymentHistoriesByUserIdAndPaymentMonthAndPaymentYear(
-        userId: string, 
-        paymentMonth: number, 
+        userId: string,
+        paymentMonth: number,
         paymentYear: number
     ): Promise<PaymentHistoryEntity[]> {
         return [testPaymentHistoryEntity()];
@@ -299,8 +305,8 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
     async deletePaymentHistoriesByExpenseId(expenseId: string): Promise<void> { }
 
     async deletePaymentHistoryByExpenseIdAndPaymentMonthAndPaymentYear(
-        expenseId: string, 
-        paymentMonth: number, 
+        expenseId: string,
+        paymentMonth: number,
         paymentYear: number
     ): Promise<PaymentHistoryEntity> {
         return testPaymentHistoryEntity();
@@ -389,6 +395,7 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     }
 }
 
+export const bucketStub = new BucketStub();
 export const extractStub = new ExtractStub();
 export const authenticationStub = new AuthenticationStub();
 export const cryptographyStub = new CryptographyStub();
@@ -403,7 +410,7 @@ export const planRepositoryStub = new PlanRepositoryStub();
 export const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
 export const paymentMethodRepositoryStub = new PaymentMethodRepositoryStub();
 export const expenseRepositoryStub = new ExpenseRepositoryStub();
-export const paymentHistoryRepositoryStub = new PaymentHistoryRepositoryStub(); 
+export const paymentHistoryRepositoryStub = new PaymentHistoryRepositoryStub();
 export const extractRepositoryStub = new ExtractRepositoryStub();
 export const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
     userRepositoryStub,

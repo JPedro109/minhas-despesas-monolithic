@@ -1,23 +1,22 @@
+import { DeleteExpenseUseCase, NotFoundError } from "@/layers/application";
 import {
     ExpenseRepositoryStub,
     PaymentHistoryRepositoryStub,
-    unitOfWorkRepositoryStub,
-    expenseRepositoryStub,
-    paymentHistoryRepositoryStub
+    unitOfWorkRepositoryStubFactory
 } from "../__mocks__";
-import { DeleteExpenseUseCase, NotFoundError } from "@/layers/application";
 
 const makeSut = (): {
     sut: DeleteExpenseUseCase,
     expenseRepositoryStub: ExpenseRepositoryStub,
     paymentHistoryRepositoryStub: PaymentHistoryRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new DeleteExpenseUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        expenseRepositoryStub,
-        paymentHistoryRepositoryStub
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository(),
+        paymentHistoryRepositoryStub: unitOfWorkRepositoryStub.getPaymentHistoryRepository()
     };
 };
 

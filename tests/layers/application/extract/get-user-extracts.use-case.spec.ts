@@ -1,19 +1,20 @@
+import { NotFoundError, GetUserExtractsUseCase } from "@/layers/application";
 import {
     UserRepositoryStub,
-    unitOfWorkRepositoryStub,
-    userRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
     testExtractEntity
 } from "../__mocks__";
-import { NotFoundError, GetUserExtractsUseCase } from "@/layers/application";
 
 const makeSut = (): {
     sut: GetUserExtractsUseCase,
     userRepositoryStub: UserRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new GetUserExtractsUseCase(unitOfWorkRepositoryStub);
+    
     return {
         sut,
-        userRepositoryStub
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository()
     };
 };
 

@@ -1,19 +1,19 @@
-import {
-    unitOfWorkRepositoryStub,
-    expenseRepositoryStub,
-    ExpenseRepositoryStub
-} from "../__mocks__";
 import { UpdatePreviousMonthPaidExpensesToUnpaidUseCase } from "@/layers/application";
+import {
+    ExpenseRepositoryStub,
+    unitOfWorkRepositoryStubFactory
+} from "../__mocks__";
 
 const makeSut = (): {
     sut: UpdatePreviousMonthPaidExpensesToUnpaidUseCase,
     expenseRepositoryStub: ExpenseRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdatePreviousMonthPaidExpensesToUnpaidUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        expenseRepositoryStub
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository()
     };
 };
 

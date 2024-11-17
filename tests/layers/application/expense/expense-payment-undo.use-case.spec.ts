@@ -1,21 +1,21 @@
-import {
-    ExpenseRepositoryStub,
-    unitOfWorkRepositoryStub,
-    expenseRepositoryStub,
-    testExpenseEntityPaid
-} from "../__mocks__";
 import { DomainError } from "@/layers/domain";
 import { ExpenseUndoPaymentUseCase, NotFoundError } from "@/layers/application";
+import {
+    ExpenseRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
+    testExpenseEntityPaid
+} from "../__mocks__";
 
 const makeSut = (): {
     sut: ExpenseUndoPaymentUseCase,
     expenseRepositoryStub: ExpenseRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new ExpenseUndoPaymentUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        expenseRepositoryStub
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository()
     };
 };
 
@@ -39,7 +39,7 @@ describe("Use case - ExpenseUndoPaymentUseCase", () => {
     });
 
     test("Should mark expense as unpaid and delete a payment history", async () => {
-        const { sut } = makeSut();
+        const { sut, expenseRepositoryStub } = makeSut();
         jest.spyOn(expenseRepositoryStub, "getExpenseById").mockResolvedValueOnce(testExpenseEntityPaid());
 
         const result = await sut.execute({ id: "1" });

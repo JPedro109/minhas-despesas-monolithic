@@ -2,9 +2,8 @@ import { SendNotificationOfSubscriptionThatAreComingDue, MailBodyTypeEnum } from
 import {
     SubscriptionRepositoryStub,
     MailStub,
-    unitOfWorkRepositoryStub,
-    subscriptionRepositoryStub,
-    mailStub,
+    unitOfWorkRepositoryStubFactory,
+    mailStubFactory,
     testUserEntity,
     testPlanFreeEntity,
     testSubscriptionEntityWithPlanFree
@@ -15,6 +14,8 @@ const makeSut = (): {
     subscriptionRepositoryStub: SubscriptionRepositoryStub,
     mailStub: MailStub
 } => {
+    const mailStub = mailStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new SendNotificationOfSubscriptionThatAreComingDue(
         unitOfWorkRepositoryStub,
         mailStub
@@ -22,7 +23,7 @@ const makeSut = (): {
 
     return {
         sut,
-        subscriptionRepositoryStub,
+        subscriptionRepositoryStub: unitOfWorkRepositoryStub.getSubscriptionRepository(),
         mailStub
     };
 };

@@ -2,11 +2,9 @@ import { CreateExtractUseCase, NotFoundError } from "@/layers/application";
 import { 
     UserRepositoryStub, 
     PaymentHistoryRepositoryStub,
-    unitOfWorkRepositoryStub, 
-    userRepositoryStub, 
-    extractStub,  
-    paymentHistoryRepositoryStub, 
-    bucketStub
+    unitOfWorkRepositoryStubFactory, 
+    extractStubFactory,  
+    bucketStubFactory
 } from "../__mocks__";
 
 const makeSut = (): {
@@ -14,11 +12,15 @@ const makeSut = (): {
     userRepositoryStub: UserRepositoryStub,
     paymentHistoryRepositoryStub: PaymentHistoryRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
+    const extractStub = extractStubFactory();
+    const bucketStub = bucketStubFactory();
     const sut = new CreateExtractUseCase(unitOfWorkRepositoryStub, extractStub, bucketStub);
+
     return { 
         sut,
-        userRepositoryStub,
-        paymentHistoryRepositoryStub
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
+        paymentHistoryRepositoryStub: unitOfWorkRepositoryStub.getPaymentHistoryRepository()
     };
 };
 

@@ -1,15 +1,17 @@
+import { GetActiveNonRenewableSubscriptionsUseCase } from "@/layers/application";
 import {
-    unitOfWorkRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
     testSubscriptionEntityWithPlanFree
 } from "../__mocks__";
-import { GetActiveNonRenewableSubscriptionsUseCase } from "@/layers/application";
 
 const makeSut = (): {
     sut: GetActiveNonRenewableSubscriptionsUseCase,
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new GetActiveNonRenewableSubscriptionsUseCase(unitOfWorkRepositoryStub);
+    
     return {
-        sut,
+        sut
     };
 };
 

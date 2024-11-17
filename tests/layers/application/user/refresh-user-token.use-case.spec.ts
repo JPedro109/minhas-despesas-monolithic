@@ -1,22 +1,23 @@
+import { UnauthorizedError, RefreshUserTokenUseCase, InvalidJsonWebTokenError } from "@/layers/application";
 import {
     UserRepositoryStub,
     AuthenticationStub,
-    unitOfWorkRepositoryStub,
-    authenticationStub,
-    userRepositoryStub
+    unitOfWorkRepositoryStubFactory,
+    authenticationStubFactory
 } from "../__mocks__";
-import { UnauthorizedError, RefreshUserTokenUseCase, InvalidJsonWebTokenError } from "@/layers/application";
 
 const makeSut = (): {
     sut: RefreshUserTokenUseCase,
     userRepositoryStub: UserRepositoryStub,
     authenticationStub: AuthenticationStub
 } => {
+    const authenticationStub = authenticationStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new RefreshUserTokenUseCase(unitOfWorkRepositoryStub, authenticationStub);
 
     return {
         sut,
-        userRepositoryStub,
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
         authenticationStub
     };
 };

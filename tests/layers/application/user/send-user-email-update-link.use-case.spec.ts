@@ -1,20 +1,22 @@
 import {
-    generationStub,
-    mailStub,
-    unitOfWorkRepositoryStub,
-    userRepositoryStub,
-    UserRepositoryStub
-} from "../__mocks__";
-import {
     ConflictedError,
     NotFoundError,
     SendUserEmailUpdateLinkUseCase
 } from "@/layers/application";
+import {
+    UserRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
+    generationStubFactory,
+    mailStubFactory
+} from "../__mocks__";
 
 const makeSut = (): {
     sut: SendUserEmailUpdateLinkUseCase,
     userRepositoryStub: UserRepositoryStub
 } => {
+    const generationStub = generationStubFactory();
+    const mailStub = mailStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new SendUserEmailUpdateLinkUseCase(
         unitOfWorkRepositoryStub,
         mailStub,
@@ -23,7 +25,7 @@ const makeSut = (): {
 
     return {
         sut,
-        userRepositoryStub
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository()
     };
 };
 

@@ -1,25 +1,26 @@
+import { InvalidParamError, RecoverUserPasswordUseCase } from "@/layers/application";
 import {
     CryptographyStub,
     UserVerificationCodeRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
+    cryptographyStubFactory,
     testUserVerificationCodeEntityOfTypeRecoveryUserPassword,
     testUserVerificationCodeEntityOfTypeRecoveryUserPasswordWithDateExpired,
-    testUserVerificationCodeEntityOfTypeUpdateUserEmail,
-    unitOfWorkRepositoryStub,
-    cryptographyStub,
-    userVerificationCodeRepositoryStub
+    testUserVerificationCodeEntityOfTypeUpdateUserEmail
 } from "../__mocks__";
-import { InvalidParamError, RecoverUserPasswordUseCase } from "@/layers/application";
 
 const makeSut = (): {
     sut: RecoverUserPasswordUseCase,
     userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub,
     cryptographyStub: CryptographyStub
 } => {
+    const cryptographyStub = cryptographyStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new RecoverUserPasswordUseCase(unitOfWorkRepositoryStub, cryptographyStub);
 
     return {
         sut,
-        userVerificationCodeRepositoryStub,
+        userVerificationCodeRepositoryStub: unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
         cryptographyStub
     };
 };

@@ -1,19 +1,19 @@
-import {
-    unitOfWorkRepositoryStub,
-    ExtractRepositoryStub,
-    extractRepositoryStub
-} from "../__mocks__";
 import { DeleteExpiredExtractsUseCase } from "@/layers/application";
+import {
+    ExtractRepositoryStub,
+    unitOfWorkRepositoryStubFactory
+} from "../__mocks__";
 
 const makeSut = (): {
     sut: DeleteExpiredExtractsUseCase,
     extractRepositoryStub: ExtractRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new DeleteExpiredExtractsUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        extractRepositoryStub
+        extractRepositoryStub: unitOfWorkRepositoryStub.getExtractRepository()
     };
 };
 

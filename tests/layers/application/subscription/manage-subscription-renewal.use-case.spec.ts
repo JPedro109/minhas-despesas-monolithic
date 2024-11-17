@@ -2,9 +2,7 @@ import { NotFoundError, ManageSubscriptionRenewalUseCase } from "@/layers/applic
 import {
     SubscriptionRepositoryStub,
     ExpenseRepositoryStub,
-    unitOfWorkRepositoryStub,
-    subscriptionRepositoryStub,
-    expenseRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
     testSubscriptionEntityWithPlanDiamond,
     testSubscriptionEntityWithPlanDiamondNotRenewable
 } from "../__mocks__";
@@ -14,12 +12,13 @@ const makeSut = (): {
     subscriptionRepositoryStub: SubscriptionRepositoryStub,
     expenseRepositoryStub: ExpenseRepositoryStub,
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new ManageSubscriptionRenewalUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        subscriptionRepositoryStub,
-        expenseRepositoryStub
+        subscriptionRepositoryStub: unitOfWorkRepositoryStub.getSubscriptionRepository(),
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository()
     };
 };
 

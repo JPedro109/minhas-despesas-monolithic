@@ -2,10 +2,8 @@ import { NotFoundError, ConflictedError, CreatePaymentMethodUseCase } from "@/la
 import {
     UserRepositoryStub,
     PaymentMethodRepositoryStub,
-    unitOfWorkRepositoryStub,
-    paymentStub,
-    userRepositoryStub,
-    paymentMethodRepositoryStub
+    unitOfWorkRepositoryStubFactory,
+    paymentStubFactory
 } from "../__mocks__";
 
 const makeSut = (): {
@@ -13,12 +11,14 @@ const makeSut = (): {
     userRepositoryStub: UserRepositoryStub
     paymentMethodRepositoryStub: PaymentMethodRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
+    const paymentStub = paymentStubFactory();
     const sut = new CreatePaymentMethodUseCase(unitOfWorkRepositoryStub, paymentStub);
 
     return {
         sut,
-        userRepositoryStub,
-        paymentMethodRepositoryStub
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
+        paymentMethodRepositoryStub: unitOfWorkRepositoryStub.getPaymentMethodRepository()
     };
 };
 

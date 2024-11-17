@@ -1,17 +1,15 @@
+import { DomainError } from "@/layers/domain";
+import { ConflictedError, InvalidParamError, CreateUserUseCase } from "@/layers/application";
 import {
     MailStub,
     CustomerRepositoryStub,
     UserRepositoryStub,
-    unitOfWorkRepositoryStub,
-    mailStub,
-    cryptographyStub,
-    generationStub,
-    paymentStub,
-    userRepositoryStub,
-    customerRepositoryStub
+    unitOfWorkRepositoryStubFactory,
+    mailStubFactory,
+    cryptographyStubFactory,
+    generationStubFactory,
+    paymentStubFactory
 } from "../__mocks__";
-import { DomainError } from "@/layers/domain";
-import { ConflictedError, InvalidParamError, CreateUserUseCase } from "@/layers/application";
 
 const makeSut = (): {
     sut: CreateUserUseCase,
@@ -19,12 +17,17 @@ const makeSut = (): {
     customerRepositoryStub: CustomerRepositoryStub,
     mailStub: MailStub
 } => {
+    const mailStub = mailStubFactory();
+    const cryptographyStub = cryptographyStubFactory();
+    const generationStub = generationStubFactory();
+    const paymentStub = paymentStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new CreateUserUseCase(unitOfWorkRepositoryStub, mailStub, cryptographyStub, generationStub, paymentStub);
 
     return {
         sut,
-        userRepositoryStub,
-        customerRepositoryStub,
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
+        customerRepositoryStub: unitOfWorkRepositoryStub.getCustomerRepository(),
         mailStub
     };
 };

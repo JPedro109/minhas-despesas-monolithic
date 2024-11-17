@@ -1,10 +1,12 @@
-import { testPlanFreeEntity, unitOfWorkRepositoryStub } from "../__mocks__";
 import { GetPlansUseCase } from "@/layers/application";
+import { testPlanFreeEntity, unitOfWorkRepositoryStubFactory } from "../__mocks__";
 
 const makeSut = (): {
     sut: GetPlansUseCase
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new GetPlansUseCase(unitOfWorkRepositoryStub);
+    
     return {
         sut
     };

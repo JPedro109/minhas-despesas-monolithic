@@ -1,22 +1,18 @@
+import { ConflictedError, ForbiddenError, UpdateSubscriptionUseCase } from "@/layers/application";
 import {
     PlanRepositoryStub,
     SubscriptionRepositoryStub,
     ExpenseRepositoryStub,
     PaymentStub,
     PaymentMethodRepositoryStub,
-    unitOfWorkRepositoryStub,
-    paymentStub,
-    subscriptionRepositoryStub,
-    planRepositoryStub,
-    expenseRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
+    paymentStubFactory,
     testPlanGoldEntity,
     testSubscriptionEntityWithPlanGold,
     testSubscriptionEntityWithPlanDiamond,
     testExpenseEntityPaid,
-    testSubscriptionEntityWithPlanGoldWithoutAmount,
-    paymentMethodRepositoryStub,
+    testSubscriptionEntityWithPlanGoldWithoutAmount
 } from "../__mocks__";
-import { ConflictedError, ForbiddenError, UpdateSubscriptionUseCase } from "@/layers/application";
 
 const makeSut = (): {
     sut: UpdateSubscriptionUseCase,
@@ -26,14 +22,17 @@ const makeSut = (): {
     paymentStub: PaymentStub,
     paymentMethodRepositoryStub: PaymentMethodRepositoryStub
 } => {
+    const paymentStub = paymentStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdateSubscriptionUseCase(unitOfWorkRepositoryStub, paymentStub);
+    
     return {
         sut,
-        planRepositoryStub,
-        subscriptionRepositoryStub,
-        expenseRepositoryStub,
-        paymentStub,
-        paymentMethodRepositoryStub
+        planRepositoryStub: unitOfWorkRepositoryStub.getPlanRepository(),
+        subscriptionRepositoryStub: unitOfWorkRepositoryStub.getSubscriptionRepository(),
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository(),
+        paymentMethodRepositoryStub: unitOfWorkRepositoryStub.getPaymentMethodRepository(),
+        paymentStub
     };
 };
 

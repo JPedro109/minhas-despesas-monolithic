@@ -1,19 +1,20 @@
-import {
-    unitOfWorkRepositoryStub,
-    expenseRepositoryStub
-} from "../__mocks__";
 import { InvalidExpenseDueDateError, InvalidExpenseNameError, InvalidExpenseValueError } from "@/layers/domain";
 import { NotFoundError, UpdateExpenseUseCase } from "@/layers/application";
+import {
+    ExpenseRepositoryStub,
+    unitOfWorkRepositoryStubFactory
+} from "../__mocks__";
 
 const makeSut = (): {
     sut: UpdateExpenseUseCase,
-    expenseRepositoryStub: typeof expenseRepositoryStub
+    expenseRepositoryStub: ExpenseRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdateExpenseUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        expenseRepositoryStub
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository()
     };
 };
 

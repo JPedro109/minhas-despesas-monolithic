@@ -1,19 +1,19 @@
+import { NotFoundError, UpdatePaymentMethodNameUseCase } from "@/layers/application";
 import {
     PaymentMethodRepositoryStub,
-    unitOfWorkRepositoryStub,
-    paymentMethodRepositoryStub
+    unitOfWorkRepositoryStubFactory
 } from "../__mocks__";
-import { NotFoundError, UpdatePaymentMethodNameUseCase } from "@/layers/application";
 
 const makeSut = (): {
     sut: UpdatePaymentMethodNameUseCase,
     paymentMethodRepositoryStub: PaymentMethodRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdatePaymentMethodNameUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        paymentMethodRepositoryStub
+        paymentMethodRepositoryStub: unitOfWorkRepositoryStub.getPaymentMethodRepository()
     };
 };
 

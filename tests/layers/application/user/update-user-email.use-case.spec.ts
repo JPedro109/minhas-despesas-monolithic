@@ -1,26 +1,27 @@
 import {
-    paymentStub,
-    testUserVerificationCodeEntityOfTypeRecoveryUserPassword,
-    unitOfWorkRepositoryStub,
-    testUserVerificationCodeEntityOfTypeUpdateUserEmail,
-    testUserVerificationCodeEntityOfTypeUpdateUserEmailWithDateExpired,
-    userVerificationCodeRepositoryStub,
-    UserVerificationCodeRepositoryStub
-} from "../__mocks__";
-import {
     InvalidParamError,
     UpdateUserEmailUseCase,
 } from "@/layers/application";
+import {
+    UserVerificationCodeRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
+    paymentStubFactory,
+    testUserVerificationCodeEntityOfTypeRecoveryUserPassword,
+    testUserVerificationCodeEntityOfTypeUpdateUserEmail,
+    testUserVerificationCodeEntityOfTypeUpdateUserEmailWithDateExpired
+} from "../__mocks__";
 
 const makeSut = (): {
     sut: UpdateUserEmailUseCase,
     userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub,
 } => {
+    const paymentStub = paymentStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdateUserEmailUseCase(unitOfWorkRepositoryStub, paymentStub);
 
     return {
         sut,
-        userVerificationCodeRepositoryStub
+        userVerificationCodeRepositoryStub: unitOfWorkRepositoryStub.getUserVerificationCodeRepository()
     };
 };
 

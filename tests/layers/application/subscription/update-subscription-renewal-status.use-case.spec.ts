@@ -1,11 +1,9 @@
 import { DomainError } from "@/layers/domain";
 import { ForbiddenError, NotFoundError, UpdateSubscriptionRenewalStatusUseCase } from "@/layers/application";
 import {
-    unitOfWorkRepositoryStub,
     SubscriptionRepositoryStub,
     PaymentMethodRepositoryStub,
-    subscriptionRepositoryStub,
-    paymentMethodRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
     testSubscriptionEntityWithPlanDiamondNotRenewable
 } from "../__mocks__";
 
@@ -14,12 +12,13 @@ const makeSut = (): {
     subscriptionRepositoryStub: SubscriptionRepositoryStub,
     paymentMethodRepositoryStub: PaymentMethodRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdateSubscriptionRenewalStatusUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        subscriptionRepositoryStub,
-        paymentMethodRepositoryStub
+        subscriptionRepositoryStub: unitOfWorkRepositoryStub.getSubscriptionRepository(),
+        paymentMethodRepositoryStub: unitOfWorkRepositoryStub.getPaymentMethodRepository()
     };
 };
 

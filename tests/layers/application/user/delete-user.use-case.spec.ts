@@ -1,23 +1,25 @@
+import { DeleteUserUseCase, InvalidParamError, NotFoundError } from "@/layers/application";
 import { 
     UserRepositoryStub,
     CryptographyStub,
-    cryptographyStub,
-    paymentStub,
-    unitOfWorkRepositoryStub,
-    userRepositoryStub
+    unitOfWorkRepositoryStubFactory,
+    cryptographyStubFactory,
+    paymentStubFactory
 } from "../__mocks__";
-import { DeleteUserUseCase, InvalidParamError, NotFoundError } from "@/layers/application";
 
 const makeSut = (): {
     sut: DeleteUserUseCase,
     userRepositoryStub: UserRepositoryStub,
     cryptographyStub: CryptographyStub
 } => {
+    const cryptographyStub = cryptographyStubFactory();
+    const paymentStub = paymentStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new DeleteUserUseCase(unitOfWorkRepositoryStub, cryptographyStub, paymentStub);
 
     return {
         sut,
-        userRepositoryStub,
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
         cryptographyStub
     };
 };

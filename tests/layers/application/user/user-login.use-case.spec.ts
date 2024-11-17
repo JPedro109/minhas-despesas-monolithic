@@ -1,24 +1,26 @@
+import { UnauthorizedError, UserLoginUseCase } from "@/layers/application";
 import {
     UserRepositoryStub,
     CryptographyStub,
     testUserEntityWithEmailIsNotVerified,
-    unitOfWorkRepositoryStub,
-    cryptographyStub,
-    authenticationStub,
-    userRepositoryStub
+    unitOfWorkRepositoryStubFactory,
+    cryptographyStubFactory,
+    authenticationStubFactory
 } from "../__mocks__";
-import { UnauthorizedError, UserLoginUseCase } from "@/layers/application";
 
 const makeSut = (): {
     sut: UserLoginUseCase,
     userRepositoryStub: UserRepositoryStub,
     cryptographyStub: CryptographyStub
 } => {
+    const cryptographyStub = cryptographyStubFactory();
+    const authenticationStub = authenticationStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UserLoginUseCase(unitOfWorkRepositoryStub, cryptographyStub, authenticationStub);
 
     return {
         sut,
-        userRepositoryStub,
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
         cryptographyStub
     };
 };

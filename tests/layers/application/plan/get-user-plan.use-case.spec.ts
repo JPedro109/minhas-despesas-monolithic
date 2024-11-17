@@ -1,20 +1,20 @@
+import { GetUserPlanUseCase, NotFoundError } from "@/layers/application";
 import {
-    unitOfWorkRepositoryStub,
     SubscriptionRepositoryStub,
-    subscriptionRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
     testPlanFreeEntity
 } from "../__mocks__";
-import { GetUserPlanUseCase, NotFoundError } from "@/layers/application";
 
 const makeSut = (): {
     sut: GetUserPlanUseCase,
     subscriptionRepositoryStub: SubscriptionRepositoryStub,
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new GetUserPlanUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        subscriptionRepositoryStub
+        subscriptionRepositoryStub: unitOfWorkRepositoryStub.getSubscriptionRepository()
     };
 };
 

@@ -215,10 +215,6 @@ export class UserVerificationCodeRepositoryStub implements IUserVerificationCode
         return userVerificationCode;
     }
 
-    async updateUserVerificationCode(userVerificationCode: UserVerificationCodeEntity): Promise<UserVerificationCodeEntity> {
-        return userVerificationCode;
-    }
-
     async getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity | null> {
         return null;
     }
@@ -398,32 +394,32 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     }
 }
 
-export const bucketStub = new BucketStub();
-export const extractStub = new ExtractStub();
-export const authenticationStub = new AuthenticationStub();
-export const cryptographyStub = new CryptographyStub();
-export const generationStub = new GenerationStub();
-export const mailStub = new MailStub();
-export const paymentStub = new PaymentStub();
-export const userRepositoryStub = new UserRepositoryStub();
-export const userConsentRepositoryStub = new UserConsentRepositoryStub();
-export const userVerificationCodeRepositoryStub = new UserVerificationCodeRepositoryStub();
-export const customerRepositoryStub = new CustomerRepositoryStub();
-export const planRepositoryStub = new PlanRepositoryStub();
-export const subscriptionRepositoryStub = new SubscriptionRepositoryStub();
-export const paymentMethodRepositoryStub = new PaymentMethodRepositoryStub();
-export const expenseRepositoryStub = new ExpenseRepositoryStub();
-export const paymentHistoryRepositoryStub = new PaymentHistoryRepositoryStub();
-export const extractRepositoryStub = new ExtractRepositoryStub();
-export const unitOfWorkRepositoryStub = new UnitOfWorkRepositoryStub(
-    userRepositoryStub,
-    userVerificationCodeRepositoryStub,
-    customerRepositoryStub,
-    planRepositoryStub,
-    subscriptionRepositoryStub,
-    userConsentRepositoryStub,
-    paymentMethodRepositoryStub,
-    expenseRepositoryStub,
-    paymentHistoryRepositoryStub,
-    extractRepositoryStub
+export const bucketStubFactory = (): BucketStub => new BucketStub();
+export const extractStubFactory = (): ExtractStub => new ExtractStub();
+export const authenticationStubFactory = (): AuthenticationStub => new AuthenticationStub();
+export const cryptographyStubFactory = (): CryptographyStub => new CryptographyStub();
+export const generationStubFactory = (): GenerationStub => new GenerationStub();
+export const mailStubFactory = (): MailStub => new MailStub();
+export const paymentStubFactory = (): PaymentStub => new PaymentStub();
+export const userRepositoryStubFactory = (): UserRepositoryStub => new UserRepositoryStub();
+export const userConsentRepositoryStubFactory = (): UserConsentRepositoryStub => new UserConsentRepositoryStub();
+export const userVerificationCodeRepositoryStubFactory = (): UserVerificationCodeRepositoryStub => new UserVerificationCodeRepositoryStub();
+export const customerRepositoryStubFactory = (): CustomerRepositoryStub => new CustomerRepositoryStub();
+export const planRepositoryStubFactory = (): PlanRepositoryStub => new PlanRepositoryStub();
+export const subscriptionRepositoryStubFactory = (): SubscriptionRepositoryStub => new SubscriptionRepositoryStub();
+export const paymentMethodRepositoryStubFactory = (): PaymentMethodRepositoryStub => new PaymentMethodRepositoryStub();
+export const expenseRepositoryStubFactory = (): ExpenseRepositoryStub => new ExpenseRepositoryStub();
+export const paymentHistoryRepositoryStubFactory = (): PaymentHistoryRepositoryStub => new PaymentHistoryRepositoryStub();
+export const extractRepositoryStubFactory = (): ExtractRepositoryStub => new ExtractRepositoryStub();
+export const unitOfWorkRepositoryStubFactory = (): UnitOfWorkRepositoryStub => new UnitOfWorkRepositoryStub(
+    userRepositoryStubFactory(),
+    userVerificationCodeRepositoryStubFactory(),
+    customerRepositoryStubFactory(),
+    planRepositoryStubFactory(),
+    subscriptionRepositoryStubFactory(),
+    userConsentRepositoryStubFactory(),
+    paymentMethodRepositoryStubFactory(),
+    expenseRepositoryStubFactory(),
+    paymentHistoryRepositoryStubFactory(),
+    extractRepositoryStubFactory()
 );

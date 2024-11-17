@@ -1,22 +1,22 @@
 import {
-    unitOfWorkRepositoryStub,
-    userRepositoryStub,
-    UserRepositoryStub
-} from "../__mocks__";
-import {
     NotFoundError,
     UpdateUsernameUseCase
 } from "@/layers/application";
+import {
+    UserRepositoryStub,
+    unitOfWorkRepositoryStubFactory
+} from "../__mocks__";
 
 const makeSut = (): {
     sut: UpdateUsernameUseCase,
     userRepositoryStub: UserRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdateUsernameUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        userRepositoryStub
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository()
     };
 };
 

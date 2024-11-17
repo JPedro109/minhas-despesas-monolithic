@@ -2,12 +2,11 @@ import { ExecuteChargeToExpiredSubscriptions, PaymentCurrencyEnum } from "@/laye
 import {
     PaymentStub,
     SubscriptionRepositoryStub,
-    unitOfWorkRepositoryStub,
-    paymentStub,
+    unitOfWorkRepositoryStubFactory,
+    paymentStubFactory,
     testSubscriptionEntityWithPlanFree,
     testPaymentMethodEntity,
-    testCustomerEntity,
-    subscriptionRepositoryStub,
+    testCustomerEntity
 } from "../__mocks__";
 
 const makeSut = (): {
@@ -15,6 +14,8 @@ const makeSut = (): {
     paymentStub: PaymentStub,
     subscriptionRepositoryStub: SubscriptionRepositoryStub
 } => {
+    const paymentStub = paymentStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new ExecuteChargeToExpiredSubscriptions(
         unitOfWorkRepositoryStub,
         paymentStub
@@ -23,14 +24,14 @@ const makeSut = (): {
     return {
         sut,
         paymentStub,
-        subscriptionRepositoryStub
+        subscriptionRepositoryStub: unitOfWorkRepositoryStub.getSubscriptionRepository()
     };
 };
 
 describe("Use case - ExecuteChargeToExpiredSubscriptions", () => {
 
     test("Should not execute charge if there are no subscriptions due soon", async () => {
-        const { sut, subscriptionRepositoryStub } = makeSut();
+        const { sut, subscriptionRepositoryStub, paymentStub } = makeSut();
         const paySpy = jest.spyOn(paymentStub, "pay");
         jest.spyOn(subscriptionRepositoryStub, "getActiveSubscriptionsByEndDate").mockResolvedValueOnce([]);
 

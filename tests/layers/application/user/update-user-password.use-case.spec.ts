@@ -1,26 +1,27 @@
 import {
-    UserRepositoryStub,
-    CryptographyStub,
-    unitOfWorkRepositoryStub,
-    cryptographyStub,
-    userRepositoryStub
-} from "../__mocks__";
-import {
     InvalidParamError,
     NotFoundError,
     UpdateUserPasswordUseCase
 } from "@/layers/application";
+import {
+    UserRepositoryStub,
+    CryptographyStub,
+    unitOfWorkRepositoryStubFactory,
+    cryptographyStubFactory
+} from "../__mocks__";
 
 const makeSut = (): {
     sut: UpdateUserPasswordUseCase,
     userRepositoryStub: UserRepositoryStub,
     cryptographyStub: CryptographyStub
 } => {
+    const cryptographyStub = cryptographyStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdateUserPasswordUseCase(unitOfWorkRepositoryStub, cryptographyStub);
 
     return {
         sut,
-        userRepositoryStub,
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
         cryptographyStub
     };
 };

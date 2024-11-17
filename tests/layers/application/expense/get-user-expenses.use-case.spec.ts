@@ -1,11 +1,12 @@
-import {
-    unitOfWorkRepositoryStub
-} from "../__mocks__";
 import { GetUserExpensesUseCase } from "@/layers/application";
+import {
+    unitOfWorkRepositoryStubFactory
+} from "../__mocks__";
 
 const makeSut = (): {
     sut: GetUserExpensesUseCase,
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new GetUserExpensesUseCase(unitOfWorkRepositoryStub);
 
     return {

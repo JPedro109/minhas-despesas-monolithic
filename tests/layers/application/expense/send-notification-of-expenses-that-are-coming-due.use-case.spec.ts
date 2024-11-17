@@ -3,10 +3,8 @@ import {
     ExpenseRepositoryStub,
     UserRepositoryStub,
     MailStub,
-    unitOfWorkRepositoryStub,
-    expenseRepositoryStub,
-    userRepositoryStub,
-    mailStub,
+    unitOfWorkRepositoryStubFactory,
+    mailStubFactory,
     testUserEntity,
     testExpenseEntityUnpaid
 } from "../__mocks__";
@@ -17,6 +15,8 @@ const makeSut = (): {
     userRepositoryStub: UserRepositoryStub,
     mailStub: MailStub
 } => {
+    const mailStub = mailStubFactory();
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new SendNotificationOfExpensesThatAreComingDueUseCase(
         unitOfWorkRepositoryStub,
         mailStub
@@ -24,8 +24,8 @@ const makeSut = (): {
 
     return {
         sut,
-        expenseRepositoryStub,
-        userRepositoryStub,
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository(),
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
         mailStub
     };
 };

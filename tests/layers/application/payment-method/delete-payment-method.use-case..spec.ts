@@ -1,26 +1,26 @@
+import { NotFoundError, DeletePaymentMethodUseCase, ForbiddenError } from "@/layers/application";
 import {
-    PaymentMethodRepositoryStub,
-    unitOfWorkRepositoryStub,
     SubscriptionRepositoryStub,
-    paymentMethodRepositoryStub,
-    paymentStub,
-    subscriptionRepositoryStub,
+    PaymentMethodRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
+    paymentStubFactory,
     testSubscriptionEntityWithPlanDiamondNotRenewable,
     testSubscriptionEntityWithPlanDiamond,
 } from "../__mocks__";
-import { NotFoundError, DeletePaymentMethodUseCase, ForbiddenError } from "@/layers/application";
 
 const makeSut = (): {
     sut: DeletePaymentMethodUseCase,
     paymentMethodRepositoryStub: PaymentMethodRepositoryStub,
     subscriptionRepositoryStub: SubscriptionRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
+    const paymentStub = paymentStubFactory();
     const sut = new DeletePaymentMethodUseCase(unitOfWorkRepositoryStub, paymentStub);
 
     return {
         sut,
-        paymentMethodRepositoryStub,
-        subscriptionRepositoryStub
+        paymentMethodRepositoryStub: unitOfWorkRepositoryStub.getPaymentMethodRepository(),
+        subscriptionRepositoryStub: unitOfWorkRepositoryStub.getSubscriptionRepository()
     };
 };
 

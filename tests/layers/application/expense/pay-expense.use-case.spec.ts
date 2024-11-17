@@ -1,21 +1,21 @@
-import {
-    ExpenseRepositoryStub,
-    unitOfWorkRepositoryStub,
-    expenseRepositoryStub,
-    testExpenseEntityPaid
-} from "../__mocks__";
 import { DomainError } from "@/layers/domain";
 import { PayExpenseUseCase, NotFoundError } from "@/layers/application";
+import {
+    ExpenseRepositoryStub,
+    unitOfWorkRepositoryStubFactory,
+    testExpenseEntityPaid
+} from "../__mocks__";
 
 const makeSut = (): {
     sut: PayExpenseUseCase,
     expenseRepositoryStub: ExpenseRepositoryStub
 } => {
+    const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new PayExpenseUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        expenseRepositoryStub
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository()
     };
 };
 

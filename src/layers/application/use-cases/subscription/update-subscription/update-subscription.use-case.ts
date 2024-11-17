@@ -53,6 +53,7 @@ export class UpdateSubscriptionUseCase implements IUpdateSubscriptionUseCase {
             if (newSubscriptionCreated.amount > 0) {
                 const customer = await customerRepository.getCustomerByUserId(userId);
                 const paymentMethod = await paymentMethodRepository.getPaymentMethodByUserId(userId);
+                if(!paymentMethod) throw new ForbiddenError("Não é possível atualizar o plano sem um método de pagamento");
                 await this.payment.pay(
                     customer.customerId,
                     paymentMethod.token,

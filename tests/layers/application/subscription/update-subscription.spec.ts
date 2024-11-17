@@ -3,6 +3,7 @@ import {
     SubscriptionRepositoryStub,
     ExpenseRepositoryStub,
     PaymentStub,
+    PaymentMethodRepositoryStub,
     unitOfWorkRepositoryStub,
     paymentStub,
     subscriptionRepositoryStub,
@@ -13,6 +14,7 @@ import {
     testSubscriptionEntityWithPlanDiamond,
     testExpenseEntityPaid,
     testSubscriptionEntityWithPlanGoldWithoutAmount,
+    paymentMethodRepositoryStub,
 } from "../__mocks__";
 import { ConflictedError, ForbiddenError, UpdateSubscriptionUseCase } from "@/layers/application";
 
@@ -21,7 +23,8 @@ const makeSut = (): {
     planRepositoryStub: PlanRepositoryStub,
     subscriptionRepositoryStub: SubscriptionRepositoryStub,
     expenseRepositoryStub: ExpenseRepositoryStub,
-    paymentStub: PaymentStub
+    paymentStub: PaymentStub,
+    paymentMethodRepositoryStub: PaymentMethodRepositoryStub
 } => {
     const sut = new UpdateSubscriptionUseCase(unitOfWorkRepositoryStub, paymentStub);
     return {
@@ -29,7 +32,8 @@ const makeSut = (): {
         planRepositoryStub,
         subscriptionRepositoryStub,
         expenseRepositoryStub,
-        paymentStub
+        paymentStub,
+        paymentMethodRepositoryStub
     };
 };
 
@@ -139,6 +143,38 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
         expect(paySpy).not.toHaveBeenCalled();
     });
 
+    test("Should not process subscription downgrade with payment because because payment method does not exists", async () => {
+        const { sut, subscriptionRepositoryStub, planRepositoryStub, paymentMethodRepositoryStub } = makeSut();
+        jest
+            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
+            .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
+        jest
+            .spyOn(subscriptionRepositoryStub, "createSubscription")
+            .mockResolvedValueOnce(testSubscriptionEntityWithPlanGold());
+        jest
+            .spyOn(paymentMethodRepositoryStub, "getPaymentMethodByUserId")
+            .mockResolvedValueOnce(null);
+        jest
+            .spyOn(planRepositoryStub, "getPlanById")
+            .mockResolvedValueOnce(testPlanGoldEntity());
+        jest
+            .spyOn(Date.prototype, "getUTCFullYear")
+            .mockReturnValueOnce(3000);
+        jest
+            .spyOn(Date.prototype, "getUTCMonth")
+            .mockReturnValueOnce(0);
+        jest
+            .spyOn(Date.prototype, "getUTCDate")
+            .mockReturnValueOnce(30);
+
+        const result = sut.execute({
+            userId: "1",
+            newPlanId: "2"
+        });
+
+        expect(result).rejects.toThrow(ForbiddenError);
+    });
+
     test("Should process subscription downgrade with payment", async () => {
         const { sut, subscriptionRepositoryStub, planRepositoryStub, paymentStub } = makeSut();
         jest
@@ -169,6 +205,32 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
 
         expect(result).toBe("2");
         expect(paySpy).toHaveBeenCalled();
+    });
+
+    test("Should not process subscription upgrade with payment because because payment method does not exists", async () => {
+        const { sut, planRepositoryStub, paymentMethodRepositoryStub } = makeSut();
+        jest
+            .spyOn(paymentMethodRepositoryStub, "getPaymentMethodByUserId")
+            .mockResolvedValueOnce(null);
+        jest
+            .spyOn(planRepositoryStub, "getPlanById")
+            .mockResolvedValueOnce(testPlanGoldEntity());
+        jest
+            .spyOn(Date.prototype, "getUTCFullYear")
+            .mockReturnValueOnce(3000);
+        jest
+            .spyOn(Date.prototype, "getUTCMonth")
+            .mockReturnValueOnce(0);
+        jest
+            .spyOn(Date.prototype, "getUTCDate")
+            .mockReturnValueOnce(15);
+
+        const result = sut.execute({
+            userId: "1",
+            newPlanId: "3"
+        });
+
+        expect(result).rejects.toThrow(ForbiddenError);
     });
 
     test("Should process subscription upgrade with payment", async () => {

@@ -1,3 +1,5 @@
+import { ExpenseExtractProps } from "./extract.types";
+
 export interface IExtract {
-    generateExtract<T>(props: T): Promise<void>;
+    generateExpensesExtract(props: ExpenseExtractProps): Promise<Buffer>;
 }

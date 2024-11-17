@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import {
+    ExpenseExtractProps,
     IAuthentication,
     IBucket,
     ICryptography,
@@ -55,7 +56,9 @@ export class BucketStub implements IBucket {
 }
 
 export class ExtractStub implements IExtract {
-    async generateExtract<T>(props: T): Promise<void> { }
+    async generateExpensesExtract(props: ExpenseExtractProps): Promise<Buffer> {
+        return Buffer.from("Mocked PDF content for expenses extract", "utf-8");
+    }
 }
 
 export class AuthenticationStub implements IAuthentication {

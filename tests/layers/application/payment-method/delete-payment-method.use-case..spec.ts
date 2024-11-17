@@ -6,6 +6,7 @@ import {
     paymentStub,
     subscriptionRepositoryStub,
     testSubscriptionEntityWithPlanDiamondNotRenewable,
+    testSubscriptionEntityWithPlanDiamond,
 } from "../__mocks__";
 import { NotFoundError, DeletePaymentMethodUseCase, ForbiddenError } from "@/layers/application";
 
@@ -34,7 +35,7 @@ describe("Use case - DeletePaymentMethodUseCase", () => {
 
         expect(result).rejects.toThrow(NotFoundError);
     });
-    
+
     test("Should not delete payment method because is not exists subscription active", async () => {
         const { sut, subscriptionRepositoryStub } = makeSut();
         const id = "1";
@@ -48,8 +49,11 @@ describe("Use case - DeletePaymentMethodUseCase", () => {
     });
 
     test("Should not delete payment method because subscription is renewable", async () => {
-        const { sut } = makeSut();
+        const { sut, subscriptionRepositoryStub } = makeSut();
         const id = "1";
+        jest
+            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
+            .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
 
         const result = sut.execute({ id });
 

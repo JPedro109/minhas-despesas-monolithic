@@ -185,7 +185,7 @@ export const testSubscriptionEntityWithPlanFree = (): SubscriptionEntity => new 
         plan: testPlanFreeEntity(),
         amount: testPlanFreeEntity().amount,
         active: true,
-        renewable: true,
+        renewable: false,
         startDate: new Date("3000-01-01"),
         endDate: new Date("3000-02-01"),
     },

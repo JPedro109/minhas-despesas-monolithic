@@ -25,10 +25,9 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 
 		const valueObjects = {
 			referenceMonth: ExtractReferenceMonthValueObject.create(props.referenceMonth),
-			referenceYear: ExtractReferenceYearValueObject.create(props.referenceYear)
+			referenceYear: ExtractReferenceYearValueObject.create(props.referenceYear),
+			url: ExtractUrlValueObject.create(props.url)
 		};
-
-		if(props.url !== undefined && props.url !== null) valueObjects["url"] = ExtractUrlValueObject.create(props.url);
 
 		this.validate(valueObjects);
 	}
@@ -47,13 +46,6 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 
 	public get url(): string {
 		return this.props.url;
-	}
-
-	public set url(url: string) {
-		const result = ExtractUrlValueObject.create(url);
-		if(result instanceof Error) throw result;
-		this.props.url = url;
-		this.props.updatedAt = new Date();
 	}
 
 	public get updatedAt(): Date {

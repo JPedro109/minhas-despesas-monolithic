@@ -1,4 +1,4 @@
-import { ExtractEntity, DomainError, InvalidExtractUrlError } from "@/layers/domain";
+import { ExtractEntity, DomainError } from "@/layers/domain";
 
 describe("Entity - Extract", () => {
 
@@ -97,43 +97,5 @@ describe("Entity - Extract", () => {
     expect(sut.userId).toBe(userId);
     expect(sut.createdAt).not.toBeUndefined();
     expect(sut.updatedAt).toBeUndefined();
-  });
-
-  test("Should not update url, because it is invalid", () => {
-    const url = "https://example.com";
-    const referenceMonth = 1;
-    const referenceYear = 2024;
-    const userId = "1";
-    const expiryDate = new Date("3000-01-01");
-    const extract = new ExtractEntity({
-      url,
-      referenceMonth,
-      referenceYear,
-      userId,
-      expiryDate
-    });
-
-    const sut = (): string => extract.url = "";
-
-    expect(sut).toThrow(InvalidExtractUrlError);
-  });
-
-  test("Should update url", () => {
-    const url = "https://example.com";
-    const referenceMonth = 1;
-    const referenceYear = 2024;
-    const userId = "1";
-    const expiryDate = new Date("3000-01-01");
-    const extract = new ExtractEntity({
-      url,
-      referenceMonth,
-      referenceYear,
-      userId,
-      expiryDate
-    });
-
-    extract.url = "https://example2.com";
-
-    expect(extract.url).toBe("https://example2.com");
   });
 });

@@ -5,7 +5,8 @@ import {
     unitOfWorkRepositoryStub, 
     userRepositoryStub, 
     extractStub,  
-    paymentHistoryRepositoryStub 
+    paymentHistoryRepositoryStub, 
+    bucketStub
 } from "../__mocks__";
 
 const makeSut = (): {
@@ -13,7 +14,7 @@ const makeSut = (): {
     userRepositoryStub: UserRepositoryStub,
     paymentHistoryRepositoryStub: PaymentHistoryRepositoryStub
 } => {
-    const sut = new CreateExtractUseCase(unitOfWorkRepositoryStub, extractStub);
+    const sut = new CreateExtractUseCase(unitOfWorkRepositoryStub, extractStub, bucketStub);
     return { 
         sut,
         userRepositoryStub,

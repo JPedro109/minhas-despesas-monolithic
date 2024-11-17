@@ -1,11 +1,19 @@
 import { ExtractEntity } from "@/layers/domain";
-import { CreateExtractDTO, ICreateExtractUseCase, IExtract, IUnitOfWorkRepository, NotFoundError } from "@/layers/application";
+import { 
+    CreateExtractDTO, 
+    IBucket, 
+    ICreateExtractUseCase, 
+    IExtract, 
+    IUnitOfWorkRepository, 
+    NotFoundError
+} from "@/layers/application";
 
 export class CreateExtractUseCase implements ICreateExtractUseCase {
 
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository,
-        private readonly extract: IExtract
+        private readonly extract: IExtract,
+        private readonly bucket: IBucket,
     ) { }
 
     async execute({ userId, referenceMonth, referenceYear }: CreateExtractDTO): Promise<string> {
@@ -28,44 +36,34 @@ export class CreateExtractUseCase implements ICreateExtractUseCase {
         const today = new Date();
         const expiryDateExtract = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0);
         expiryDateExtract.setDate(expiryDateExtract.getUTCDate() + 8);
-        const extract = new ExtractEntity({
-            userId,
-            referenceMonth,
-            referenceYear,
-            expiryDate: expiryDateExtract
-        });
 
         let extractCreated: ExtractEntity;
         await this.unitOfWorkRepository.transaction(async () => {
-            extractCreated = await extractRepository.createExtract(extract);
             const paymentHistoriesFormated = paymentHistories.map(x => ({
-                userId: x.userId,
                 expenseId: x.expenseId,
                 expenseName: x.expenseName,
                 expenseValue: x.expenseValue,
                 dueDate: x.dueDate,
                 paidDate: x.paidDate
             }));
-            await this.extract.generateExtract<{
-                extractId: string,
-                referenceMonth: number,
-                referenceYear: number,
-                data: {
-                    userId: string;
-                    expenseId: string;
-                    expenseName: string;
-                    expenseValue: number;
-                    dueDate: Date;
-                    paidDate: Date;
-                }[]
-            }>(
+            const file = await this.extract.generateExpensesExtract(
                 {
-                    extractId: extractCreated.id,
                     referenceMonth,
                     referenceYear,
                     data: paymentHistoriesFormated
                 }
             );
+
+            const url = await this.bucket.uploadFile(`extract-expense-${userId}-${Date.now()}`, file);
+
+            const extract = new ExtractEntity({
+                userId,
+                referenceMonth,
+                referenceYear,
+                expiryDate: expiryDateExtract,
+                url
+            });
+            extractCreated = await extractRepository.createExtract(extract);
         });
 
         return extractCreated.id;

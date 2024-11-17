@@ -79,15 +79,15 @@ export class CreateUserUseCase implements ICreateUserUseCase {
 			const planFree = await planRepository.getPlanByName(PlanNameEnum.Free);
 
 			const date = new Date();
-			const subspcription = new SubscriptionEntity({
+			const subscription = new SubscriptionEntity({
 				userId: userCreated.id,
 				plan: planFree,
 				active: true,
 				renewable: false,
 				amount: planFree.amount,
-				startDate: new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
+				startDate: new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0)
 			});
-			await subscriptionRepository.createSubscription(subspcription);
+			await subscriptionRepository.createSubscription(subscription);
 
 			const customerId = await this.payment.createCustomer(email);
 			try {

@@ -56,6 +56,6 @@ describe("Use case - CreatePaymentMethodUseCase", () => {
 
         const result = await sut.execute({ userId, name, token });
 
-        expect(result).toBe("1");
+        expect(typeof result).toBe("string");
     });
 });

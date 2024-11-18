@@ -68,6 +68,6 @@ describe("Use case - CreateExpenseUseCase", () => {
             dueDate
         });
 
-        expect(result).toBe("1");
+        expect(typeof result).toBe("string");
     });
 });

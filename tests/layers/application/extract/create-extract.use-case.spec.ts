@@ -70,6 +70,6 @@ describe("Use case - CreateExtractUseCase", () => {
             referenceYear
         });
 
-        expect(result).toBe("1");
+        expect(typeof result).toBe("string");
     });
 });

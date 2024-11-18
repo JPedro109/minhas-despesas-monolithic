@@ -1,5 +1,5 @@
 import { ExpenseEntity } from "@/layers/domain";
-import { IUnitOfWorkRepository, CreateExpenseDTO, ICreateExpenseUseCase } from "@/layers/application";
+import { IUnitOfWorkRepository, CreateExpenseDTO, ICreateExpenseUseCase, NotFoundError } from "@/layers/application";
 
 export class CreateExpenseUseCase implements ICreateExpenseUseCase {
     constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
@@ -14,6 +14,10 @@ export class CreateExpenseUseCase implements ICreateExpenseUseCase {
         });
 
         const expenseRepository = this.unitOfWorkRepository.getExpenseRepository();
+        const userRepository = this.unitOfWorkRepository.getUserRepository();
+
+        const userExists = await userRepository.getUserById(userId);
+        if(!userExists) throw new NotFoundError("O usuário não existe");
 
         const expenseCreated = await expenseRepository.createExpense(expense);
 

@@ -2,13 +2,13 @@ import { PaymentHistoryEntity } from "@/layers/domain";
 
 export interface IPaymentHistoryRepository {
     createPaymentHistory(paymentHistory: PaymentHistoryEntity): Promise<PaymentHistoryEntity>;
-    getPaymentHistoriesByUserIdAndPaymentMonthAndPaymentYear(
+    getPaymentHistoriesByUserIdAndDueMonthAndDueYear(
         userId: string, 
         paymentMonth: number, 
         paymentYear: number
     ): Promise<PaymentHistoryEntity[]>;
     deletePaymentHistoriesByExpenseId(expenseId: string): Promise<void>;
-    deletePaymentHistoryByExpenseIdAndPaymentMonthAndPaymentYear(
+    deletePaymentHistoryByExpenseIdAndDueMonthAndDueYear(
         expenseId: string, 
         paymentMonth: number,
         paymentYear: number

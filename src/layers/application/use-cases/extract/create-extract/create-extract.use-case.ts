@@ -25,7 +25,7 @@ export class CreateExtractUseCase implements ICreateExtractUseCase {
 
         if (!userExists) throw new NotFoundError("O usuário não existe");
 
-        const paymentHistories = await paymentHistoryRepository.getPaymentHistoriesByUserIdAndPaymentMonthAndPaymentYear(
+        const paymentHistories = await paymentHistoryRepository.getPaymentHistoriesByUserIdAndDueMonthAndDueYear(
             userId,
             referenceMonth,
             referenceYear

@@ -47,7 +47,7 @@ describe("Use case - CreateExtractUseCase", () => {
         const userId = "1";
         const referenceMonth = 12;
         const referenceYear = 3000;        
-        jest.spyOn(paymentHistoryRepositoryStub, "getPaymentHistoriesByUserIdAndPaymentMonthAndPaymentYear").mockResolvedValueOnce([]);
+        jest.spyOn(paymentHistoryRepositoryStub, "getPaymentHistoriesByUserIdAndDueMonthAndDueYear").mockResolvedValueOnce([]);
 
         const result = sut.execute({
             userId,

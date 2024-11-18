@@ -46,14 +46,14 @@ describe("Use case - ExpenseUndoPaymentUseCase", () => {
     test("Should mark expense as unpaid and delete a payment history", async () => {
         const { sut, expenseRepositoryStub, paymentHistoryRepositoryStub } = makeSut();
         const updateExpenseByIdSpy = jest.spyOn(expenseRepositoryStub, "updateExpenseById");
-        const deletePaymentHistoryByExpenseIdAndPaymentMonthAndPaymentYearSpy = 
-            jest.spyOn(paymentHistoryRepositoryStub, "deletePaymentHistoryByExpenseIdAndPaymentMonthAndPaymentYear");
+        const deletePaymentHistoryByExpenseIdAndDueMonthAndDueYearSpy = 
+            jest.spyOn(paymentHistoryRepositoryStub, "deletePaymentHistoryByExpenseIdAndDueMonthAndDueYear");
         const id = "1";
         jest.spyOn(expenseRepositoryStub, "getExpenseById").mockResolvedValueOnce(testExpenseEntityPaid());
 
         await sut.execute({ id });
 
         expect(updateExpenseByIdSpy).toHaveBeenCalled();
-        expect(deletePaymentHistoryByExpenseIdAndPaymentMonthAndPaymentYearSpy).toHaveBeenCalled();
+        expect(deletePaymentHistoryByExpenseIdAndDueMonthAndDueYearSpy).toHaveBeenCalled();
     });
 });

@@ -15,7 +15,7 @@ export class ExpenseUndoPaymentUseCase implements IExpenseUndoPaymentUseCase {
         await this.unitOfWorkRepository.transaction(async () => {
             await expenseRepository.updateExpenseById(id, expense);
             const date = new Date();
-            await paymentHistoryRepository.deletePaymentHistoryByExpenseIdAndPaymentMonthAndPaymentYear(
+            await paymentHistoryRepository.deletePaymentHistoryByExpenseIdAndDueMonthAndDueYear(
                 id,
                 date.getUTCMonth(),
                 date.getUTCFullYear(),

@@ -277,7 +277,7 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
         return testPaymentHistoryEntity();
     }
 
-    async getPaymentHistoriesByUserIdAndPaymentMonthAndPaymentYear(
+    async getPaymentHistoriesByUserIdAndDueMonthAndDueYear(
         userId: string,
         paymentMonth: number,
         paymentYear: number
@@ -287,7 +287,7 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
 
     async deletePaymentHistoriesByExpenseId(expenseId: string): Promise<void> { }
 
-    async deletePaymentHistoryByExpenseIdAndPaymentMonthAndPaymentYear(
+    async deletePaymentHistoryByExpenseIdAndDueMonthAndDueYear(
         expenseId: string,
         paymentMonth: number,
         paymentYear: number

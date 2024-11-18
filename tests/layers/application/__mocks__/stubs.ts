@@ -264,7 +264,7 @@ export class ExpenseRepositoryStub implements IExpenseRepository {
 
     async updateExpenseById(id: string, data: ExpenseEntity): Promise<void> { }
 
-    async updatePaidExpensesToUnpaidAndSumOneInDueDateMonthByDueDateMonth(month: number): Promise<void> { }
+    async updatePaidExpensesToUnpaidAndSumOneInDueMonthByDueMonth(month: number): Promise<void> { }
 
     async deleteExpenseById(id: string): Promise<void> { }
 

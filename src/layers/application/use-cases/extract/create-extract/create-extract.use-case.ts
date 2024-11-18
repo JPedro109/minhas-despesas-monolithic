@@ -34,8 +34,14 @@ export class CreateExtractUseCase implements ICreateExtractUseCase {
         if (paymentHistories.length === 0) throw new NotFoundError("Não existe histórico de despesas para o mês e ano de referência");
 
         const today = new Date();
+        const extractExpirationDate = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0);
+        extractExpirationDate.setDate(extractExpirationDate.getUTCDate() + 30);
+
         const expiryDateExtract = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0);
         expiryDateExtract.setDate(expiryDateExtract.getUTCDate() + 30);
+
+        const urlExpiryDateExtract = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0);
+        urlExpiryDateExtract.setDate(urlExpiryDateExtract.getUTCDate() + 5);
 
         let extractCreated: ExtractEntity;
         await this.unitOfWorkRepository.transaction(async () => {
@@ -61,6 +67,7 @@ export class CreateExtractUseCase implements ICreateExtractUseCase {
                 referenceMonth,
                 referenceYear,
                 expiryDate: expiryDateExtract,
+                urlExpiryDate: urlExpiryDateExtract,
                 url
             });
             extractCreated = await extractRepository.createExtract(extract);

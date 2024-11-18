@@ -311,6 +311,7 @@ export const testExtractEntity = (): ExtractEntity => new ExtractEntity(
          referenceMonth: 1,
          referenceYear: 2024,
          expiryDate: new Date("3000-01-01"),
+         urlExpiryDate: new Date("3000-01-01"),
          userId: "1"
     },
     "1",

@@ -28,7 +28,7 @@ export class DeletePaymentMethodUseCase implements IDeletePaymentMethodUseCase {
 
 		await this.unitOfWorkRepository.transaction(async () => {
 			await paymentMethodRepository.deletePaymentMethodById(id); 
-			await this.payment.deletePaymentMethod(paymentMethod.token);
+			await this.payment.deletePaymentMethodByToken(paymentMethod.token);
 		});
 	}
 }

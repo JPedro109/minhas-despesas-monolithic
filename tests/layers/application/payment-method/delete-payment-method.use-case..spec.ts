@@ -66,7 +66,7 @@ describe("Use case - DeletePaymentMethodUseCase", () => {
     test("Should delete payment method successfully", async () => {
         const { sut, subscriptionRepositoryStub, paymentStub, paymentMethodRepositoryStub } = makeSut();
         const id = "1";
-        const deletePaymentMethodSpy = jest.spyOn(paymentStub, "deletePaymentMethod");
+        const deletePaymentMethodSpy = jest.spyOn(paymentStub, "deletePaymentMethodByToken");
         const deletePaymentMethodByIdSpy = jest.spyOn(paymentMethodRepositoryStub, "deletePaymentMethodById");
         jest
             .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")

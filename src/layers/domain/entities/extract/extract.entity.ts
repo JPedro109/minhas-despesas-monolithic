@@ -21,10 +21,10 @@ export class ExtractEntity extends AbstractEntity<ExtractProps> {
 	constructor(props: ExtractProps, id?: string, createdAt?: Date) {
 		super(props, id, createdAt);
 
-		if (this.props.expiryDate.getTime() <= (new Date()).getTime())
+		if (this.props.expiryDate.getTime() <= Date.now())
 			throw new DomainError("A data de expiração do extrato deve ser maior que a data atual");
 
-		if (this.props.urlExpiryDate.getTime() <= (new Date()).getTime())
+		if (this.props.urlExpiryDate.getTime() <= Date.now())
 			throw new DomainError("A data de expiração da url deve ser maior que a data atual");
 
 		const valueObjects = {

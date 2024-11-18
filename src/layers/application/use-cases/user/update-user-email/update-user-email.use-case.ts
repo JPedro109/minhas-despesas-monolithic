@@ -25,7 +25,7 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
 
 		const user = userVerificationCode.user;
 
-		if(new Date().getTime() >= userVerificationCode.verificationCodeExpiryDate.getTime()) throw new InvalidParamError("Código expirado");
+		if(Date.now() >= userVerificationCode.verificationCodeExpiryDate.getTime()) throw new InvalidParamError("Código expirado");
 
 		user.email = email;
 

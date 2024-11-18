@@ -26,7 +26,7 @@ export class RecoverUserPasswordUseCase implements IRecoverUserPasswordUseCase {
 
 		const user = userVerificationCode.user;
 
-		if(new Date().getTime() >= userVerificationCode.verificationCodeExpiryDate.getTime()) throw new InvalidParamError("Código expirado");
+		if(Date.now() >= userVerificationCode.verificationCodeExpiryDate.getTime()) throw new InvalidParamError("Código expirado");
 
 		const passwordEqual = await this.cryptography.compareHash(user.password, password);
 

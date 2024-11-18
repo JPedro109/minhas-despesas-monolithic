@@ -11,7 +11,7 @@ export class UpdatePaymentMethodTokenUseCase implements IUpdatePaymentMethodToke
 		private readonly unitOfWorkRepository: IUnitOfWorkRepository
 	) { }
 
-	async execute({ id, token }: UpdatePaymentMethodTokenDTO): Promise<string> {
+	async execute({ id, token }: UpdatePaymentMethodTokenDTO): Promise<void> {
 		const paymentMethodRepository = this.unitOfWorkRepository.getPaymentMethodRepository();
 
 		const paymentMethod = await paymentMethodRepository.getPaymentMethodById(id);
@@ -19,7 +19,5 @@ export class UpdatePaymentMethodTokenUseCase implements IUpdatePaymentMethodToke
 
 		paymentMethod.token = token;
 		await paymentMethodRepository.updatePaymentMethodById(paymentMethod.id, paymentMethod); 
-
-		return paymentMethod.token;
 	}
 }

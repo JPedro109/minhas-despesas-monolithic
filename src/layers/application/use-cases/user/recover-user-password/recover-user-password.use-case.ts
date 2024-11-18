@@ -1,3 +1,4 @@
+import { UserVerificationCodeTypeEnum } from "@/layers/domain";
 import {
 	IUnitOfWorkRepository,
 	ICryptography,
@@ -5,7 +6,6 @@ import {
 	IRecoverUserPasswordUseCase,
 	InvalidParamError
 } from "@/layers/application";
-import { UserVerificationCodeTypeEnum } from "@/layers/domain";
 
 export class RecoverUserPasswordUseCase implements IRecoverUserPasswordUseCase {
 
@@ -14,7 +14,7 @@ export class RecoverUserPasswordUseCase implements IRecoverUserPasswordUseCase {
 		private readonly cryptography: ICryptography
 	) { }
 
-	async execute({ code, password, passwordConfirm }: RecoverUserPasswordDTO): Promise<string> {
+	async execute({ code, password, passwordConfirm }: RecoverUserPasswordDTO): Promise<void> {
 		if(password !== passwordConfirm) throw new InvalidParamError("As senhas não coincidem");
 
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
@@ -41,7 +41,5 @@ export class RecoverUserPasswordUseCase implements IRecoverUserPasswordUseCase {
 			await userVerificationCodeRepository.updateUserVerificationCodeById(userVerificationCode.id, userVerificationCode);
 			await userRepository.updateUserById(user.id, user);
 		});
-
-		return user.email;
 	}
 }

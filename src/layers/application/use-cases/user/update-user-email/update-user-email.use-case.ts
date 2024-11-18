@@ -1,3 +1,4 @@
+import { UserVerificationCodeTypeEnum } from "@/layers/domain";
 import {
 	IUnitOfWorkRepository,
 	IPayment,
@@ -5,7 +6,6 @@ import {
 	IUpdateUserEmailUseCase,
 	InvalidParamError
 } from "@/layers/application";
-import { UserVerificationCodeTypeEnum } from "@/layers/domain";
 
 export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
 
@@ -14,7 +14,7 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
 		private readonly payment: IPayment,
 	) { }
 
-	async execute({ email, code }: UpdateUserEmailDTO): Promise<string> {
+	async execute({ email, code }: UpdateUserEmailDTO): Promise<void> {
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
 		const userVerificationCodeRepository = this.unitOfWorkRepository.getUserVerificationCodeRepository();
 		const customerRepository = this.unitOfWorkRepository.getCustomerRepository();
@@ -37,7 +37,5 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
 			const customer = await customerRepository.getCustomerByUserId(user.id);
 			await this.payment.updateCustomerEmailByCustomerId(customer.customerId, email);
 		});
-
-		return user.email;
 	}
 }

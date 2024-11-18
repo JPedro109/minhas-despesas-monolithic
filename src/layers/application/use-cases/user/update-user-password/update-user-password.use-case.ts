@@ -14,7 +14,7 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
 		private readonly cryptography: ICryptography
 	) { }
 
-	async execute({ id, password, newPassword, newPasswordConfirm }: UpdateUserPasswordDTO): Promise<string> {
+	async execute({ id, password, newPassword, newPasswordConfirm }: UpdateUserPasswordDTO): Promise<void> {
 		if(newPassword !== newPasswordConfirm) throw new InvalidParamError("As senhas não coincidem");
 
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
@@ -30,7 +30,5 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
         user.password = hashPassword;
 
 		await userRepository.updateUserById(user.id, user);
-
-		return user.email;
 	}
 }

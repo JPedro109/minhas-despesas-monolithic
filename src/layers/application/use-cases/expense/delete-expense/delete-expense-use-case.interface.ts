@@ -1,5 +1,5 @@
 import { DeleteExpenseDTO } from "@/layers/application";
 
 export interface IDeleteExpenseUseCase {
-    execute(dto: DeleteExpenseDTO): Promise<string>;
+    execute(dto: DeleteExpenseDTO): Promise<void>;
 }

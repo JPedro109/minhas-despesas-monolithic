@@ -31,12 +31,13 @@ describe("Use case - UpdatePaymentMethodNameUseCase", () => {
     });
 
     test("Should update payment method name successfully", async () => {
-        const { sut } = makeSut();
+        const { sut, paymentMethodRepositoryStub } = makeSut();
+        const updatePaymentMethodByIdSpy = jest.spyOn(paymentMethodRepositoryStub, "updatePaymentMethodById");
         const id = "1";
         const name = "Updated Payment Method Name";
 
-        const result = await sut.execute({ id, name });
+        await sut.execute({ id, name });
 
-        expect(result).toBe(name);
+        expect(updatePaymentMethodByIdSpy).toHaveBeenCalled();
     });
 });

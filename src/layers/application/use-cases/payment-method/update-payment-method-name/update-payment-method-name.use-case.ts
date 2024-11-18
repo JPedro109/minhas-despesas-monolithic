@@ -11,7 +11,7 @@ export class UpdatePaymentMethodNameUseCase implements IUpdatePaymentMethodNameU
 		private readonly unitOfWorkRepository: IUnitOfWorkRepository
 	) { }
 
-	async execute({ id, name }: UpdatePaymentMethodNameDTO): Promise<string> {
+	async execute({ id, name }: UpdatePaymentMethodNameDTO): Promise<void> {
 		const paymentMethodRepository = this.unitOfWorkRepository.getPaymentMethodRepository();
 
 		const paymentMethod = await paymentMethodRepository.getPaymentMethodById(id);
@@ -19,7 +19,5 @@ export class UpdatePaymentMethodNameUseCase implements IUpdatePaymentMethodNameU
 
 		paymentMethod.name = name;
 		await paymentMethodRepository.updatePaymentMethodById(paymentMethod.id, paymentMethod); 
-
-		return paymentMethod.name;
 	}
 }

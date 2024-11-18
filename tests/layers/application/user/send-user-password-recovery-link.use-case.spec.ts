@@ -4,6 +4,8 @@ import {
 } from "@/layers/application";
 import {
     UserRepositoryStub,
+    UserVerificationCodeRepositoryStub,
+    MailStub,
     unitOfWorkRepositoryStubFactory,
     generationStubFactory,
     mailStubFactory
@@ -11,7 +13,9 @@ import {
 
 const makeSut = (): {
     sut: SendUserPasswordRecoveryLinkUseCase,
-    userRepositoryStub: UserRepositoryStub
+    userRepositoryStub: UserRepositoryStub,
+    userVerificationCodeStub: UserVerificationCodeRepositoryStub,
+    mailStub: MailStub
 } => {
     const generationStub = generationStubFactory();
     const mailStub = mailStubFactory();
@@ -24,29 +28,36 @@ const makeSut = (): {
 
     return {
         sut,
-        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository()
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
+        userVerificationCodeStub: unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
+        mailStub
     };
 };
 
 describe("Use case - SendUserPasswordRecoveryLinkUseCase", () => {
     test("Should not send password recovery link because email is not registered", async () => {
         const { sut, userRepositoryStub } = makeSut();
+        const email = "nonexistentemail@test.com";
         jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(null);
 
         const result = sut.execute({
-            email: "nonexistentemail@test.com",
+            email
         });
 
         await expect(result).rejects.toThrow(NotFoundError);
     });
 
     test("Should send password recovery link successfully", async () => {
-        const { sut } = makeSut();
+        const { sut, userVerificationCodeStub, mailStub } = makeSut();
+        const email = "email@teste.com";
+        const createUserVerificationCodeSpy = jest.spyOn(userVerificationCodeStub, "createUserVerificationCode");
+        const sendMailSpy = jest.spyOn(mailStub, "sendMail");
 
-        const result = await sut.execute({
-            email: "email@teste.com",
+        await sut.execute({
+            email
         });
 
-        expect(result).toBe("email@teste.com");
+        expect(createUserVerificationCodeSpy).toHaveBeenCalled();
+        expect(sendMailSpy).toHaveBeenCalled();
     });
 });

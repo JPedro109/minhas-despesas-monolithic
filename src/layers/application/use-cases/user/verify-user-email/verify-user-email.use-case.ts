@@ -12,7 +12,7 @@ export class VerifyUserEmailUseCase implements IVerifyUserEmailUseCase {
 		private readonly unitOfWorkRepository: IUnitOfWorkRepository
 	) { }
 
-	async execute({ code }: VerifyUserEmailDTO): Promise<string> {
+	async execute({ code }: VerifyUserEmailDTO): Promise<void> {
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
 		const userVerificationCodeRepository = this.unitOfWorkRepository.getUserVerificationCodeRepository();
 
@@ -28,7 +28,5 @@ export class VerifyUserEmailUseCase implements IVerifyUserEmailUseCase {
 			await userVerificationCodeRepository.updateUserVerificationCodeById(userVerificationCode.id, userVerificationCode);
 			await userRepository.updateUserById(user.id, user);
 		});
-
-		return user.email;
 	}
 }

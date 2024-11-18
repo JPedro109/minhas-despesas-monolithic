@@ -11,7 +11,7 @@ export class UpdateSubscriptionRenewalStatusUseCase implements IUpdateSubscripti
 
     constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
 
-    async execute({ userId, renewable }: UpdateSubscriptionRenewalStatusDTO): Promise<string> {
+    async execute({ userId, renewable }: UpdateSubscriptionRenewalStatusDTO): Promise<void> {
         const subscriptionRepository = this.unitOfWorkRepository.getSubscriptionRepository();
         const paymentMethodRepository = this.unitOfWorkRepository.getPaymentMethodRepository();
 
@@ -30,7 +30,5 @@ export class UpdateSubscriptionRenewalStatusUseCase implements IUpdateSubscripti
 
         subscriptionActive.renewable = renewable;
         await subscriptionRepository.updateSubscriptionById(subscriptionActive.id, subscriptionActive);
-
-        return subscriptionActive.id;
     }
 }

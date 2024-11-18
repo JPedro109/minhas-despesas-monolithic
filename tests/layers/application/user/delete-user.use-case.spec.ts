@@ -1,6 +1,7 @@
 import { DeleteUserUseCase, InvalidParamError, NotFoundError } from "@/layers/application";
 import { 
     UserRepositoryStub,
+    PaymentStub,
     CryptographyStub,
     unitOfWorkRepositoryStubFactory,
     cryptographyStubFactory,
@@ -10,17 +11,21 @@ import {
 const makeSut = (): {
     sut: DeleteUserUseCase,
     userRepositoryStub: UserRepositoryStub,
-    cryptographyStub: CryptographyStub
+    cryptographyStub: CryptographyStub,
+    paymentStub: PaymentStub,
+    userRepository: UserRepositoryStub
 } => {
-    const cryptographyStub = cryptographyStubFactory();
     const paymentStub = paymentStubFactory();
+    const cryptographyStub = cryptographyStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new DeleteUserUseCase(unitOfWorkRepositoryStub, cryptographyStub, paymentStub);
 
     return {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        cryptographyStub
+        cryptographyStub,
+        paymentStub,
+        userRepository: unitOfWorkRepositoryStub.getUserRepository()
     };
 };
 
@@ -74,17 +79,20 @@ describe("Use case - DeleteUserUseCase", () => {
     });
 
     test("Should delete user successfully", async () => {
-        const { sut } = makeSut();
+        const { sut, paymentStub, userRepository } = makeSut();
         const id = "1";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
+        const updateCustomerEmailByCustomerIdSpy = jest.spyOn(paymentStub, "updateCustomerEmailByCustomerId");
+        const deleteUserByIdSpy = jest.spyOn(userRepository, "deleteUserById");
 
-        const result = await sut.execute({
+        await sut.execute({
             id,
             password,
             passwordConfirm
         });
 
-        expect(result).toBe(id);
+        expect(updateCustomerEmailByCustomerIdSpy).toHaveBeenCalled();
+        expect(deleteUserByIdSpy).toHaveBeenCalled();
     });
 });

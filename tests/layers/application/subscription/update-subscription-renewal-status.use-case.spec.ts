@@ -34,7 +34,7 @@ describe("Use case - UpdateSubscriptionRenewalStatusUseCase", () => {
 
         const result = sut.execute({ userId, renewable });
 
-        expect(result).rejects.toThrow(NotFoundError);
+        await expect(result).rejects.toThrow(NotFoundError);
     });
 
     test("Should not update the subscription renewal status because subscription plan is FREE", async () => {
@@ -44,7 +44,7 @@ describe("Use case - UpdateSubscriptionRenewalStatusUseCase", () => {
 
         const result = sut.execute({ userId, renewable });
 
-        expect(result).rejects.toThrow(ForbiddenError);
+        await expect(result).rejects.toThrow(ForbiddenError);
     });
 
     test("Should not update the subscription renewal status because payment method does not exist", async () => {
@@ -60,7 +60,7 @@ describe("Use case - UpdateSubscriptionRenewalStatusUseCase", () => {
 
         const result = sut.execute({ userId, renewable });
 
-        expect(result).rejects.toThrow(ForbiddenError);
+        await expect(result).rejects.toThrow(ForbiddenError);
     });
 
     test("Should not update if renewable status is already the same", async () => {
@@ -83,9 +83,10 @@ describe("Use case - UpdateSubscriptionRenewalStatusUseCase", () => {
         jest
             .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
             .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamondNotRenewable());
+        const updateSubscriptionByIdSpy = jest.spyOn(subscriptionRepositoryStub, "updateSubscriptionById");
 
-        const result = await sut.execute({ userId, renewable });
+        await sut.execute({ userId, renewable });
 
-        expect(result).toBe("5");
+        expect(updateSubscriptionByIdSpy).toHaveBeenCalled();
     });
 });

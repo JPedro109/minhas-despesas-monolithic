@@ -31,12 +31,13 @@ describe("Use case - UpdatePaymentMethodTokenUseCase", () => {
     });
 
     test("Should update payment method token successfully", async () => {
-        const { sut } = makeSut();
+        const { sut, paymentMethodRepositoryStub } = makeSut();
+        const updatePaymentMethodByIdSpy = jest.spyOn(paymentMethodRepositoryStub, "updatePaymentMethodById");
         const id = "1";
         const token = "payment_method_updated";
 
-        const result = await sut.execute({ id, token });
+        await sut.execute({ id, token });
 
-        expect(result).toBe(token);
+        expect(updatePaymentMethodByIdSpy).toHaveBeenCalled();
     });
 });

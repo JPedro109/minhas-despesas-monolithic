@@ -16,7 +16,7 @@ export class DeleteUserUseCase implements IDeleteUserUseCase {
 		private readonly payment: IPayment
 	) { }
 
-	async execute({ id, password, passwordConfirm }: DeleteUserDTO): Promise<string> {
+	async execute({ id, password, passwordConfirm }: DeleteUserDTO): Promise<void> {
 		if(password !== passwordConfirm) throw new InvalidParamError("As senhas não coincidem");
 
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
@@ -37,7 +37,5 @@ export class DeleteUserUseCase implements IDeleteUserUseCase {
 			await this.payment.updateCustomerEmailByCustomerId(customer.customerId, hashEmail);
 			await userRepository.deleteUserById(id);
 		});
-
-		return user.id;
 	}
 }

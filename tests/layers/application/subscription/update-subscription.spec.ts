@@ -25,7 +25,7 @@ const makeSut = (): {
     const paymentStub = paymentStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdateSubscriptionUseCase(unitOfWorkRepositoryStub, paymentStub);
-    
+
     return {
         sut,
         planRepositoryStub: unitOfWorkRepositoryStub.getPlanRepository(),
@@ -44,10 +44,12 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
 
     test("Should not update subscription, because user is already on this plan", async () => {
         const { sut } = makeSut();
+        const userId = "1";
+        const newPlanId = "1";
 
         const result = sut.execute({
-            userId: "1",
-            newPlanId: "1"
+            userId,
+            newPlanId
         });
 
         expect(result).rejects.toThrow(ConflictedError);
@@ -55,11 +57,13 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
 
     test("Should not update subscription, because subscription is expiry", async () => {
         const { sut } = makeSut();
+        const userId = "1";
+        const newPlanId = "1";
         jest.spyOn(Date, "now").mockImplementationOnce(() => new Date("4000-01-01").getTime());
 
         const result = sut.execute({
-            userId: "1",
-            newPlanId: "1"
+            userId,
+            newPlanId
         });
 
         expect(result).rejects.toThrow(ForbiddenError);
@@ -67,13 +71,15 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
 
     test("Should not update subscription, because downgrade to Free plan is restricted", async () => {
         const { sut, subscriptionRepositoryStub } = makeSut();
+        const userId = "1";
+        const newPlanId = "1";
         jest
             .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
             .mockResolvedValueOnce(testSubscriptionEntityWithPlanGold());
 
         const result = sut.execute({
-            userId: "1",
-            newPlanId: "1"
+            userId,
+            newPlanId
         });
 
         expect(result).rejects.toThrow(ForbiddenError);
@@ -81,6 +87,8 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
 
     test("Should not update subscription, because there are more expenses than the plan allows", async () => {
         const { sut, subscriptionRepositoryStub, planRepositoryStub, expenseRepositoryStub } = makeSut();
+        const userId = "1";
+        const newPlanId = "2";
         jest
             .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
             .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
@@ -103,8 +111,8 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
             );
 
         const result = sut.execute({
-            userId: "1",
-            newPlanId: "2"
+            userId,
+            newPlanId
         });
 
         expect(result).rejects.toThrow(ForbiddenError);
@@ -112,6 +120,10 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
 
     test("Should process subscription downgrade without payment", async () => {
         const { sut, subscriptionRepositoryStub, planRepositoryStub, paymentStub } = makeSut();
+        const userId = "1";
+        const newPlanId = "2";
+        const updateSubscriptionByIdSpy = jest.spyOn(subscriptionRepositoryStub, "updateSubscriptionById");
+        const createSubscriptionSpy = jest.spyOn(subscriptionRepositoryStub, "createSubscription");
         jest
             .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
             .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
@@ -133,17 +145,20 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
         const paySpy = jest
             .spyOn(paymentStub, "pay");
 
-        const result = await sut.execute({
-            userId: "1",
-            newPlanId: "2"
+        await sut.execute({
+            userId,
+            newPlanId
         });
 
-        expect(result).toBe("4");
+        expect(updateSubscriptionByIdSpy).toHaveBeenCalled();
+        expect(createSubscriptionSpy).toHaveBeenCalled();
         expect(paySpy).not.toHaveBeenCalled();
     });
 
     test("Should not process subscription downgrade with payment because because payment method does not exists", async () => {
         const { sut, subscriptionRepositoryStub, planRepositoryStub, paymentMethodRepositoryStub } = makeSut();
+        const userId = "1";
+        const newPlanId = "2";
         jest
             .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
             .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
@@ -167,8 +182,8 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
             .mockReturnValueOnce(30);
 
         const result = sut.execute({
-            userId: "1",
-            newPlanId: "2"
+            userId,
+            newPlanId
         });
 
         expect(result).rejects.toThrow(ForbiddenError);
@@ -176,6 +191,10 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
 
     test("Should process subscription downgrade with payment", async () => {
         const { sut, subscriptionRepositoryStub, planRepositoryStub, paymentStub } = makeSut();
+        const userId = "1";
+        const newPlanId = "2";
+        const updateSubscriptionByIdSpy = jest.spyOn(subscriptionRepositoryStub, "updateSubscriptionById");
+        const createSubscriptionSpy = jest.spyOn(subscriptionRepositoryStub, "createSubscription");
         jest
             .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
             .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
@@ -197,17 +216,20 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
         const paySpy = jest
             .spyOn(paymentStub, "pay");
 
-        const result = await sut.execute({
-            userId: "1",
-            newPlanId: "2"
+        await sut.execute({
+            userId,
+            newPlanId
         });
 
-        expect(result).toBe("2");
+        expect(updateSubscriptionByIdSpy).toHaveBeenCalled();
+        expect(createSubscriptionSpy).toHaveBeenCalled();
         expect(paySpy).toHaveBeenCalled();
     });
 
     test("Should not process subscription upgrade with payment because because payment method does not exists", async () => {
         const { sut, planRepositoryStub, paymentMethodRepositoryStub } = makeSut();
+        const userId = "1";
+        const newPlanId = "3";
         jest
             .spyOn(paymentMethodRepositoryStub, "getPaymentMethodByUserId")
             .mockResolvedValueOnce(null);
@@ -225,15 +247,19 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
             .mockReturnValueOnce(15);
 
         const result = sut.execute({
-            userId: "1",
-            newPlanId: "3"
+            userId,
+            newPlanId
         });
 
         expect(result).rejects.toThrow(ForbiddenError);
     });
 
     test("Should process subscription upgrade with payment", async () => {
-        const { sut, planRepositoryStub, paymentStub } = makeSut();
+        const { sut, planRepositoryStub, paymentStub, subscriptionRepositoryStub } = makeSut();
+        const userId = "1";
+        const newPlanId = "3";
+        const updateSubscriptionByIdSpy = jest.spyOn(subscriptionRepositoryStub, "updateSubscriptionById");
+        const createSubscriptionSpy = jest.spyOn(subscriptionRepositoryStub, "createSubscription");
         jest
             .spyOn(planRepositoryStub, "getPlanById")
             .mockResolvedValueOnce(testPlanGoldEntity());
@@ -249,12 +275,13 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
         const paySpy = jest
             .spyOn(paymentStub, "pay");
 
-        const result = await sut.execute({
-            userId: "1",
-            newPlanId: "3"
+        await sut.execute({
+            userId,
+            newPlanId
         });
 
-        expect(result).toBe("1");
+        expect(updateSubscriptionByIdSpy).toHaveBeenCalled();
+        expect(createSubscriptionSpy).toHaveBeenCalled();
         expect(paySpy).toHaveBeenCalled();
     });
 });

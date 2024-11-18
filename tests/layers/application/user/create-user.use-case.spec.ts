@@ -39,6 +39,9 @@ describe("Use case - CreateUserUseCase", () => {
         const username = "u".repeat(300);
         const password = "password";
         const passwordConfirm = "password";
+        const consentVersion = "1.0";
+        const userAgent = "Mozilla";
+        const ipAddress = "127.0.0.1";
         const { sut } = makeSut();
 
         const result = sut.execute({
@@ -46,9 +49,9 @@ describe("Use case - CreateUserUseCase", () => {
             username,
             password,
             passwordConfirm,
-            consentVersion: "1.0",
-            userAgent: "Mozilla",
-            ipAddress: "127.0.0.1"
+            consentVersion,
+            userAgent,
+            ipAddress
         });
 
         await expect(result).rejects.toThrow(DomainError);
@@ -59,6 +62,9 @@ describe("Use case - CreateUserUseCase", () => {
         const username = "username";
         const password = "Password1234";
         const invalidPasswordConfirm = "Password123456";
+        const consentVersion = "1.0";
+        const userAgent = "Mozilla";
+        const ipAddress = "127.0.0.1";
         const { sut } = makeSut();
 
         const result = sut.execute({
@@ -66,9 +72,9 @@ describe("Use case - CreateUserUseCase", () => {
             username,
             password,
             passwordConfirm: invalidPasswordConfirm,
-            consentVersion: "1.0",
-            userAgent: "Mozilla",
-            ipAddress: "127.0.0.1"
+            consentVersion,
+            userAgent,
+            ipAddress
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -79,6 +85,9 @@ describe("Use case - CreateUserUseCase", () => {
         const username = "username";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
+        const consentVersion = "1.0";
+        const userAgent = "Mozilla";
+        const ipAddress = "127.0.0.1";
         const { sut } = makeSut();
 
         const result = sut.execute({
@@ -86,9 +95,9 @@ describe("Use case - CreateUserUseCase", () => {
             username,
             password,
             passwordConfirm,
-            consentVersion: "1.0",
-            userAgent: "Mozilla",
-            ipAddress: "127.0.0.1"
+            consentVersion,
+            userAgent,
+            ipAddress
         });
 
         await expect(result).rejects.toThrow(ConflictedError);
@@ -99,6 +108,9 @@ describe("Use case - CreateUserUseCase", () => {
         const username = "username";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
+        const consentVersion = "1.0";
+        const userAgent = "Mozilla";
+        const ipAddress = "127.0.0.1";
         const { sut, userRepositoryStub, customerRepositoryStub } = makeSut();
         jest
             .spyOn(userRepositoryStub, "getUserByEmail")
@@ -112,9 +124,9 @@ describe("Use case - CreateUserUseCase", () => {
             username,
             password,
             passwordConfirm,
-            consentVersion: "1.0",
-            userAgent: "Mozilla",
-            ipAddress: "127.0.0.1"
+            consentVersion,
+            userAgent,
+            ipAddress
         });
 
         await expect(result).rejects.toThrow(Error);
@@ -125,6 +137,9 @@ describe("Use case - CreateUserUseCase", () => {
         const username = "username";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
+        const consentVersion = "1.0";
+        const userAgent = "Mozilla";
+        const ipAddress = "127.0.0.1";
         const { sut, userRepositoryStub, mailStub } = makeSut();
         jest
             .spyOn(userRepositoryStub, "getUserByEmail")
@@ -138,9 +153,9 @@ describe("Use case - CreateUserUseCase", () => {
             username,
             password,
             passwordConfirm,
-            consentVersion: "1.0",
-            userAgent: "Mozilla",
-            ipAddress: "127.0.0.1"
+            consentVersion,
+            userAgent,
+            ipAddress
         });
 
         await expect(result).rejects.toThrow(Error);
@@ -151,21 +166,24 @@ describe("Use case - CreateUserUseCase", () => {
         const username = "username";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
+        const consentVersion = "1.0";
+        const userAgent = "Mozilla";
+        const ipAddress = "127.0.0.1";
         const { sut, userRepositoryStub } = makeSut();
         jest
-        .spyOn(userRepositoryStub, "getUserByEmail")
-        .mockReturnValueOnce(null);
+            .spyOn(userRepositoryStub, "getUserByEmail")
+            .mockReturnValueOnce(null);
 
         const result = await sut.execute({
             email,
             username,
             password,
             passwordConfirm,
-            consentVersion: "1.0",
-            userAgent: "Mozilla",
-            ipAddress: "127.0.0.1"
+            consentVersion,
+            userAgent,
+            ipAddress
         });
 
-        expect(result).toBe(email);
+        expect(typeof result).toBe("string");
     });
 });

@@ -1,4 +1,5 @@
 import { environmentVariables } from "@/shared";
+import { UserVerificationCodeEntity, UserVerificationCodeTypeEnum } from "@/layers/domain";
 import {
 	IUnitOfWorkRepository,
 	IMail,
@@ -9,7 +10,6 @@ import {
 	ISendUserEmailUpdateLinkUseCase,
 	NotFoundError
 } from "@/layers/application";
-import { UserVerificationCodeEntity, UserVerificationCodeTypeEnum } from "@/layers/domain";
 
 export class SendUserEmailUpdateLinkUseCase implements ISendUserEmailUpdateLinkUseCase {
 
@@ -19,7 +19,7 @@ export class SendUserEmailUpdateLinkUseCase implements ISendUserEmailUpdateLinkU
 		private readonly generation: IGeneration
 	) { }
 
-	async execute({ id, email }: SendUserEmailUpdateLinkDTO): Promise<string> {
+	async execute({ id, email }: SendUserEmailUpdateLinkDTO): Promise<void> {
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
 		const userVerificationCodeRepository = this.unitOfWorkRepository.getUserVerificationCodeRepository();
 
@@ -48,7 +48,5 @@ export class SendUserEmailUpdateLinkUseCase implements ISendUserEmailUpdateLinkU
 				code: verificationCode
 			});
 		});
-
-		return user.email;
 	}
 }

@@ -34,7 +34,7 @@ describe("Use case - UpdateExpenseUseCase", () => {
             dueDate
         });
 
-        expect(result).rejects.toThrow(InvalidExpenseNameError);
+        await expect(result).rejects.toThrow(InvalidExpenseNameError);
     });
 
     test("Should not update expense because expense value is invalid", async () => {
@@ -51,7 +51,7 @@ describe("Use case - UpdateExpenseUseCase", () => {
             dueDate
         });
 
-        expect(result).rejects.toThrow(InvalidExpenseValueError);
+        await expect(result).rejects.toThrow(InvalidExpenseValueError);
     });
 
     test("Should not update expense because due date is invalid", async () => {
@@ -68,7 +68,7 @@ describe("Use case - UpdateExpenseUseCase", () => {
             dueDate
         });
 
-        expect(result).rejects.toThrow(InvalidExpenseDueDateError);
+        await expect(result).rejects.toThrow(InvalidExpenseDueDateError);
     });
 
     test("Should not update expense because expense does not exists", async () => {
@@ -86,23 +86,24 @@ describe("Use case - UpdateExpenseUseCase", () => {
             dueDate
         });
 
-        expect(result).rejects.toThrow(NotFoundError);
+        await expect(result).rejects.toThrow(NotFoundError);
     });
 
     test("Should update an existing expense successfully", async () => {
-        const { sut } = makeSut();
+        const { sut, expenseRepositoryStub } = makeSut();
+        const updateExpenseByIdSpy = jest.spyOn(expenseRepositoryStub, "updateExpenseById");
         const id = "1";
         const expenseName = "Updated Expense Name";
         const expenseValue = 500;
         const dueDate = new Date("3000-01-01");
 
-        const result = await sut.execute({
+        await sut.execute({
             id,
             expenseName,
             expenseValue,
             dueDate
         });
 
-        expect(result).toBe(id);
+        expect(updateExpenseByIdSpy).toHaveBeenCalled();
     });
 });

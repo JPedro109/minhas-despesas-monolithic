@@ -108,6 +108,6 @@ export class CreateUserUseCase implements ICreateUserUseCase {
 			}
 		});
 
-		return userCreated.email;
+		return userCreated.id;
 	}
 }

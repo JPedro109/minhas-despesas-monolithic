@@ -23,24 +23,29 @@ const makeSut = (): {
 describe("Use case - UpdateUsernameUseCase", () => {
     test("Should throw error if user does not exist", async () => {
         const { sut, userRepositoryStub } = makeSut();
+        const id = "2";
+        const username = "new-username";
         jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(null);
 
         const result = sut.execute({
-            id: "2",
-            username: "new-username"
+            id,
+            username
         });
 
         await expect(result).rejects.toThrow(NotFoundError);
     });
 
     test("Should update username successfully", async () => {
-        const { sut } = makeSut();
+        const { sut, userRepositoryStub } = makeSut();
+        const id = "1";
+        const username = "new-username";
+        const updateUserByIdSpy = jest.spyOn(userRepositoryStub, "updateUserById");
 
-        const result = await sut.execute({
-            id: "1",
-            username: "new-username"
+        await sut.execute({
+            id,
+            username
         });
 
-        expect(result).toBe("email@teste.com");
+        expect(updateUserByIdSpy).toHaveBeenCalled();
     });
 });

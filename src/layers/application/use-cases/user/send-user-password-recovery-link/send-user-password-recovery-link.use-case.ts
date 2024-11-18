@@ -1,4 +1,5 @@
 import { environmentVariables } from "@/shared";
+import { UserVerificationCodeEntity, UserVerificationCodeTypeEnum } from "@/layers/domain";
 import {
 	IUnitOfWorkRepository,
 	IMail,
@@ -8,7 +9,6 @@ import {
 	ISendUserPasswordRecoveryLinkUseCase,
 	NotFoundError
 } from "@/layers/application";
-import { UserVerificationCodeEntity, UserVerificationCodeTypeEnum } from "@/layers/domain";
 
 export class SendUserPasswordRecoveryLinkUseCase implements ISendUserPasswordRecoveryLinkUseCase {
 
@@ -18,7 +18,7 @@ export class SendUserPasswordRecoveryLinkUseCase implements ISendUserPasswordRec
 		private readonly generation: IGeneration
 	) { }
 
-	async execute({ email }: SendUserPasswordRecoveryLinkDTO): Promise<string> {
+	async execute({ email }: SendUserPasswordRecoveryLinkDTO): Promise<void> {
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
 		const userVerificationCodeRepository = this.unitOfWorkRepository.getUserVerificationCodeRepository();
 	
@@ -44,7 +44,5 @@ export class SendUserPasswordRecoveryLinkUseCase implements ISendUserPasswordRec
 				code: verificationCode
 			});
 		});
-
-		return user.email;
 	}
 }

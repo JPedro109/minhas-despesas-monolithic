@@ -14,7 +14,7 @@ export class DeletePaymentMethodUseCase implements IDeletePaymentMethodUseCase {
 		private readonly payment: IPayment
 	) { }
 
-	async execute({ id }: DeletePaymentMethodDTO): Promise<string> {
+	async execute({ id }: DeletePaymentMethodDTO): Promise<void> {
 		const paymentMethodRepository = this.unitOfWorkRepository.getPaymentMethodRepository();
 		const subscriptionRepository = this.unitOfWorkRepository.getSubscriptionRepository();
 
@@ -30,7 +30,5 @@ export class DeletePaymentMethodUseCase implements IDeletePaymentMethodUseCase {
 			await paymentMethodRepository.deletePaymentMethodById(id); 
 			await this.payment.deletePaymentMethod(paymentMethod.token);
 		});
-
-		return paymentMethod.name;
 	}
 }

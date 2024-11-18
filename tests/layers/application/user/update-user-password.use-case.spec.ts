@@ -29,12 +29,16 @@ const makeSut = (): {
 describe("Use case - UpdateUserPasswordUseCase", () => {
     test("Should throw error if new passwords do not match", async () => {
         const { sut } = makeSut();
+        const id = "1";
+        const password = "old-password";
+        const newPassword = "NewPassword123";
+        const newPasswordConfirm = "different-NewPassword123";
 
         const result = sut.execute({
-            id: "1",
-            password: "old-password",
-            newPassword: "NewPassword123",
-            newPasswordConfirm: "different-NewPassword123"
+            id,
+            password,
+            newPassword,
+            newPasswordConfirm
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -42,13 +46,17 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
 
     test("Should throw error if user does not exist", async () => {
         const { sut, userRepositoryStub } = makeSut();
+        const id = "2";
+        const password = "old-password";
+        const newPassword = "NewPassword123";
+        const newPasswordConfirm = "NewPassword123";
         jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(null);
 
         const result = sut.execute({
-            id: "2",
-            password: "old-password",
-            newPassword: "NewPassword123",
-            newPasswordConfirm: "NewPassword123"
+            id,
+            password,
+            newPassword,
+            newPasswordConfirm
         });
 
         await expect(result).rejects.toThrow(NotFoundError);
@@ -56,28 +64,37 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
 
     test("Should throw error if new password is equal to the old password", async () => {
         const { sut } = makeSut();
+        const id = "1";
+        const password = "old-password";
+        const newPassword = "old-password";
+        const newPasswordConfirm = "old-password";
 
         const result = sut.execute({
-            id: "1",
-            password: "old-password",
-            newPassword: "old-password",
-            newPasswordConfirm: "old-password"
+            id,
+            password,
+            newPassword,
+            newPasswordConfirm
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
     });
 
     test("Should update password successfully", async () => {
-        const { sut, cryptographyStub } = makeSut();
+        const { sut, cryptographyStub, userRepositoryStub } = makeSut();
+        const id = "1";
+        const password = "Password1234";
+        const newPassword = "NewPassword123";
+        const newPasswordConfirm = "NewPassword123";
         jest.spyOn(cryptographyStub, "compareHash").mockResolvedValueOnce(false); 
+        const updateUserByIdSpy = jest.spyOn(userRepositoryStub, "updateUserById");
 
-        const result = await sut.execute({
-            id: "1",
-            password: "Password1234",
-            newPassword: "NewPassword123",
-            newPasswordConfirm: "NewPassword123"
+        await sut.execute({
+            id,
+            password,
+            newPassword,
+            newPasswordConfirm
         });
 
-        expect(result).toBe("email@teste.com");
+        expect(updateUserByIdSpy).toHaveBeenCalled();
     });
 });

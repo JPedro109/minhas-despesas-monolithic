@@ -3,7 +3,7 @@ import { IDeleteExpenseUseCase, IUnitOfWorkRepository, NotFoundError, DeleteExpe
 export class DeleteExpenseUseCase implements IDeleteExpenseUseCase {
     constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
 
-    async execute({ id, deleteExpensePaymentHistory }: DeleteExpenseDTO): Promise<string> {
+    async execute({ id, deleteExpensePaymentHistory }: DeleteExpenseDTO): Promise<void> {
         const expenseRepository = this.unitOfWorkRepository.getExpenseRepository();
         const paymentHistoryRepository = this.unitOfWorkRepository.getPaymentHistoryRepository();
 
@@ -14,7 +14,5 @@ export class DeleteExpenseUseCase implements IDeleteExpenseUseCase {
            await expenseRepository.deleteExpenseById(id);
            if(deleteExpensePaymentHistory) await paymentHistoryRepository.deletePaymentHistoriesByExpenseId(id);
         });
-
-        return id;
     }
 }

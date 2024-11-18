@@ -16,7 +16,7 @@ export class UpdateSubscriptionUseCase implements IUpdateSubscriptionUseCase {
         private readonly payment: IPayment
     ) { }
 
-    async execute({ userId, newPlanId }: UpdateSubscriptionDTO): Promise<string> {
+    async execute({ userId, newPlanId }: UpdateSubscriptionDTO): Promise<void> {
         const subscriptionRepository = this.unitOfWorkRepository.getSubscriptionRepository();
         const planRepository = this.unitOfWorkRepository.getPlanRepository();
         const customerRepository = this.unitOfWorkRepository.getCustomerRepository();
@@ -62,8 +62,6 @@ export class UpdateSubscriptionUseCase implements IUpdateSubscriptionUseCase {
                 );
             }
         });
-
-        return newSubscriptionCreated.id;
     }
 
     private upgradePlan(

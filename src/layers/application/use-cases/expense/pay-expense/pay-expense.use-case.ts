@@ -4,7 +4,7 @@ import { IPayExpenseUseCase, IUnitOfWorkRepository, NotFoundError, PayExpenseDTO
 export class PayExpenseUseCase implements IPayExpenseUseCase {
     constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
 
-    async execute({ id }: PayExpenseDTO): Promise<string> {
+    async execute({ id }: PayExpenseDTO): Promise<void> {
         const expenseRepository = this.unitOfWorkRepository.getExpenseRepository();
         const paymentHistoryRepository = this.unitOfWorkRepository.getPaymentHistoryRepository();
 
@@ -26,7 +26,5 @@ export class PayExpenseUseCase implements IPayExpenseUseCase {
             await expenseRepository.updateExpenseById(id, expense);
             await paymentHistoryRepository.createPaymentHistory(paymentHistory);
         });
-
-        return id;
     }
 }

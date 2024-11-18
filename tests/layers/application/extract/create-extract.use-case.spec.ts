@@ -39,7 +39,7 @@ describe("Use case - CreateExtractUseCase", () => {
             referenceYear
         });
 
-        expect(result).rejects.toThrow(NotFoundError);
+        await expect(result).rejects.toThrow(NotFoundError);
     });
 
     test("Should not create extract because are no payment histories for the given month and year", async () => {
@@ -55,7 +55,7 @@ describe("Use case - CreateExtractUseCase", () => {
             referenceYear
         });
 
-        expect(result).rejects.toThrow(NotFoundError);
+        await expect(result).rejects.toThrow(NotFoundError);
     });
 
     test("Should create an extract and generate it with the formatted payment histories", async () => {

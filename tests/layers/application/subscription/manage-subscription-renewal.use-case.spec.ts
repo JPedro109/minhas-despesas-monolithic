@@ -38,7 +38,7 @@ describe("Use case - ManageSubscriptionRenewalUseCase", () => {
 
         const result = sut.execute({ userId, renew });
 
-        expect(result).rejects.toThrow(NotFoundError);
+        await expect(result).rejects.toThrow(NotFoundError);
     });
 
     test("Should not downgrade the plan", async () => {

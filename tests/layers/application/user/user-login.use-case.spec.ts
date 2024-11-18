@@ -28,35 +28,43 @@ const makeSut = (): {
 describe("Use case - UserLoginUseCase", () => {
     test("Should throw error if user does not exist", async () => {
         const { sut, userRepositoryStub } = makeSut();
+        const email = "nonexistent@test.com";
+        const password = "password";
         jest.spyOn(userRepositoryStub, "getUserByEmail").mockResolvedValueOnce(null);
 
-        const result = sut.execute({ email: "nonexistent@test.com", password: "password" });
+        const result = sut.execute({ email, password });
 
         await expect(result).rejects.toThrow(UnauthorizedError);
     });
 
     test("Should throw error if user's email is not verified", async () => {
         const { sut, userRepositoryStub } = makeSut();
+        const email = "user@test.com";
+        const password = "password";
         jest.spyOn(userRepositoryStub, "getUserByEmail").mockResolvedValueOnce(testUserEntityWithEmailIsNotVerified());
 
-        const result = sut.execute({ email: "user@test.com", password: "password" });
+        const result = sut.execute({ email, password });
 
         await expect(result).rejects.toThrow(UnauthorizedError);
     });
 
     test("Should throw error if password does not match", async () => {
         const { sut, cryptographyStub } = makeSut();
+        const email = "user@test.com"; 
+        const password = "wrong-password";
         jest.spyOn(cryptographyStub, "compareHash").mockResolvedValueOnce(false);
 
-        const result = sut.execute({ email: "user@test.com", password: "wrong-password" });
+        const result = sut.execute({ email, password });
 
         await expect(result).rejects.toThrow(UnauthorizedError);
     });
 
     test("Should return access token and refresh token on successful login", async () => {
         const { sut } = makeSut();
+        const email = "user@test.com";
+        const password = "Password1234";
 
-        const result = await sut.execute({ email: "user@test.com", password: "Password1234" });
+        const result = await sut.execute({ email, password });
 
         expect(result).toEqual({
             accessToken: "token",

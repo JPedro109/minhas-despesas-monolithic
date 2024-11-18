@@ -27,7 +27,7 @@ describe("Use case - GetUserExtractsUseCase", () => {
 
         const result = sut.execute({ userId });
 
-        expect(result).rejects.toThrow(NotFoundError);
+        await expect(result).rejects.toThrow(NotFoundError);
     });
 
     test("Should get user extracts", async () => {

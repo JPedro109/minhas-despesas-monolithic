@@ -6,19 +6,22 @@ import {
     UserVerificationCodeRepositoryStub,
     unitOfWorkRepositoryStubFactory,
     testUserVerificationCodeEntityOfTypeVerifyEmail,
-    testUserVerificationCodeEntityOfTypeUpdateUserEmail
+    testUserVerificationCodeEntityOfTypeUpdateUserEmail,
+    UserRepositoryStub
 } from "../__mocks__";
 
 const makeSut = (): {
     sut: VerifyUserEmailUseCase,
-    userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub
+    userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub,
+    userRepository: UserRepositoryStub
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new VerifyUserEmailUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        userVerificationCodeRepositoryStub: unitOfWorkRepositoryStub.getUserVerificationCodeRepository()
+        userVerificationCodeRepositoryStub: unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
+        userRepository: unitOfWorkRepositoryStub.getUserRepository()
     };
 };
 
@@ -47,13 +50,16 @@ describe("Use case - VerifyUserEmailUseCase", () => {
 
     test("Should verify user email and return user email", async () => {
         const code = "123456";
-        const { sut, userVerificationCodeRepositoryStub } = makeSut();
+        const { sut, userVerificationCodeRepositoryStub, userRepository } = makeSut();
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
             .mockResolvedValueOnce(testUserVerificationCodeEntityOfTypeVerifyEmail());
+        const updateUserVerificationCodeByIdSpy = jest.spyOn(userVerificationCodeRepositoryStub, "updateUserVerificationCodeById");
+        const updateUserByIdSpy = jest.spyOn(userRepository, "updateUserById");
 
-        const result = await sut.execute({ code });
+        await sut.execute({ code });
 
-        expect(result).toBe("emailnotverified@teste.com");
+        expect(updateUserVerificationCodeByIdSpy).toHaveBeenCalled();
+        expect(updateUserByIdSpy).toHaveBeenCalled();
     });
 });

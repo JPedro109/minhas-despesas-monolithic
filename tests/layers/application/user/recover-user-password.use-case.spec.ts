@@ -2,6 +2,7 @@ import { InvalidParamError, RecoverUserPasswordUseCase } from "@/layers/applicat
 import {
     CryptographyStub,
     UserVerificationCodeRepositoryStub,
+    UserRepositoryStub,
     unitOfWorkRepositoryStubFactory,
     cryptographyStubFactory,
     testUserVerificationCodeEntityOfTypeRecoveryUserPassword,
@@ -11,6 +12,7 @@ import {
 
 const makeSut = (): {
     sut: RecoverUserPasswordUseCase,
+    userRepositoryStub: UserRepositoryStub,
     userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub,
     cryptographyStub: CryptographyStub
 } => {
@@ -20,6 +22,7 @@ const makeSut = (): {
 
     return {
         sut,
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
         userVerificationCodeRepositoryStub: unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
         cryptographyStub
     };
@@ -118,20 +121,23 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
         const code = "123456";
         const password = "NewPassword123";
         const passwordConfirm = "NewPassword123";
-        const { sut, cryptographyStub, userVerificationCodeRepositoryStub } = makeSut();
+        const { sut, cryptographyStub, userRepositoryStub, userVerificationCodeRepositoryStub } = makeSut();
         jest
             .spyOn(cryptographyStub, "compareHash")
             .mockReturnValueOnce(Promise.resolve(false));
         jest
             .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
             .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPassword()));
+        const updateUserVerificationCodeByIdSpy = jest.spyOn(userVerificationCodeRepositoryStub, "updateUserVerificationCodeById");
+        const updateUserSpy = jest.spyOn(userRepositoryStub, "updateUserById");
 
-        const result = await sut.execute({
+        await sut.execute({
             code,
             password,
             passwordConfirm
         });
 
-        expect(result).toBe("email@teste.com");
+        expect(updateUserVerificationCodeByIdSpy).toHaveBeenCalled();
+        expect(updateUserSpy).toHaveBeenCalled();
     });
 });

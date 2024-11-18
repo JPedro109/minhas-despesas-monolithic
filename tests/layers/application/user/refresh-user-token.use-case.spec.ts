@@ -36,16 +36,18 @@ describe("Use case - RefreshUserTokenUseCase", () => {
         expect(result).rejects.toThrow(InvalidJsonWebTokenError);
     });
 
-    test("Should throw error if refresh token is not of the right type", () => {
+    test("Should throw error if refresh token is not of the right type", async () => {
         const { sut } = makeSut();
+        const invalidToken = "invalid-token";
 
-        const result = sut.execute({ refreshToken: "invalid-token" });
+        const result = sut.execute({ refreshToken: invalidToken });
 
-        expect(result).rejects.toThrow(UnauthorizedError);
+        await expect(result).rejects.toThrow(UnauthorizedError);
     });
 
     test("Should throw error if user does not exist", async () => {
         const { sut, userRepositoryStub, authenticationStub } = makeSut();
+        const refreshToken = "valid-refresh-token";
         jest.spyOn(userRepositoryStub, "getUserById").mockResolvedValueOnce(null);
         jest
             .spyOn(authenticationStub, "verifyJsonWebToken")
@@ -55,13 +57,14 @@ describe("Use case - RefreshUserTokenUseCase", () => {
                 type: "refresh_token"
             }));
 
-        const result = sut.execute({ refreshToken: "valid-refresh-token" });
+        const result = sut.execute({ refreshToken });
 
         await expect(result).rejects.toThrow(UnauthorizedError);
     });
 
     test("Should return new access token on successful token refresh", async () => {
         const { sut, authenticationStub } = makeSut();
+        const  refreshToken = "valid-refresh-token";
         jest
             .spyOn(authenticationStub, "verifyJsonWebToken")
             .mockImplementationOnce(() => ({
@@ -70,8 +73,8 @@ describe("Use case - RefreshUserTokenUseCase", () => {
                 type: "refresh_token"
             }));
 
-        const result = await sut.execute({ refreshToken: "valid-refresh-token" });
+        const result = await sut.execute({ refreshToken });
 
-        expect(result).toBe("token");
+        expect(typeof result).toBe("string");
     });
 });

@@ -30,26 +30,30 @@ describe("Use case - DeleteExpenseUseCase", () => {
 
         const result = sut.execute({ id, deleteExpensePaymentHistory });
 
-        expect(result).rejects.toBeInstanceOf(NotFoundError);
+        await expect(result).rejects.toBeInstanceOf(NotFoundError);
     });
 
     test("Should delete expense by id", async () => {
-        const { sut } = makeSut();
+        const { sut, expenseRepositoryStub } = makeSut();
+        const deleteExpenseByIdSpy = jest.spyOn(expenseRepositoryStub, "deleteExpenseById");
         const id = "1";
         const deleteExpensePaymentHistory = false;
 
-        const result = await sut.execute({ id, deleteExpensePaymentHistory });
+        await sut.execute({ id, deleteExpensePaymentHistory });
 
-        expect(result).toBe("1");
+        expect(deleteExpenseByIdSpy).toHaveBeenCalled();
     });
 
     test("Should delete expense and its payment history if deleteExpensePaymentHistory is true", async () => {
-        const { sut } = makeSut();
+        const { sut, expenseRepositoryStub, paymentHistoryRepositoryStub } = makeSut();
+        const deleteExpenseByIdSpy = jest.spyOn(expenseRepositoryStub, "deleteExpenseById");
+        const deletePaymentHistoriesByExpenseId = jest.spyOn(paymentHistoryRepositoryStub, "deletePaymentHistoriesByExpenseId");
         const id = "1";
         const deleteExpensePaymentHistory = true;
 
-        const result = await sut.execute({ id, deleteExpensePaymentHistory });
+        await sut.execute({ id, deleteExpensePaymentHistory });
 
-        expect(result).toBe("1");
+        expect(deleteExpenseByIdSpy).toHaveBeenCalled();
+        expect(deletePaymentHistoriesByExpenseId).toHaveBeenCalled();
     });
 });

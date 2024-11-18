@@ -3,7 +3,7 @@ import { IExpenseUndoPaymentUseCase, IUnitOfWorkRepository, NotFoundError, Expen
 export class ExpenseUndoPaymentUseCase implements IExpenseUndoPaymentUseCase {
     constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
 
-    async execute({ id }: ExpenseUndoPaymentDTO): Promise<string> {
+    async execute({ id }: ExpenseUndoPaymentDTO): Promise<void> {
         const expenseRepository = this.unitOfWorkRepository.getExpenseRepository();
         const paymentHistoryRepository = this.unitOfWorkRepository.getPaymentHistoryRepository();
 
@@ -21,7 +21,5 @@ export class ExpenseUndoPaymentUseCase implements IExpenseUndoPaymentUseCase {
                 date.getUTCFullYear(),
             );
         });
-
-        return id;
     }
 }

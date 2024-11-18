@@ -48,7 +48,7 @@ describe("Use case - SendNotificationOfExpensesThatAreComingDueUseCase", () => {
 
         const result = sut.execute();
 
-        expect(result).rejects.toThrow(Error);
+        await expect(result).rejects.toThrow(Error);
     });
 
     test("Should send notification emails for expenses due soon", async () => {

@@ -11,7 +11,7 @@ export class UpdateUsernameUseCase implements IUpdateUsernameUseCase {
 		private readonly unitOfWorkRepository: IUnitOfWorkRepository
 	) { }
 
-	async execute({ id, username }: UpdateUsernameDTO): Promise<string> {
+	async execute({ id, username }: UpdateUsernameDTO): Promise<void> {
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
 
 		const user = await userRepository.getUserById(id);
@@ -19,7 +19,5 @@ export class UpdateUsernameUseCase implements IUpdateUsernameUseCase {
 
         user.username = username;
 		await userRepository.updateUserById(user.id, user);
-
-		return user.email;
 	}
 }

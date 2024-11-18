@@ -1,20 +1,35 @@
-import { GetUserExpensesUseCase } from "@/layers/application";
+import { GetUserExpensesUseCase, NotFoundError } from "@/layers/application";
 import {
+    UserRepositoryStub,
     unitOfWorkRepositoryStubFactory
 } from "../__mocks__";
 
 const makeSut = (): {
     sut: GetUserExpensesUseCase,
+    userRepositoryStub: UserRepositoryStub
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new GetUserExpensesUseCase(unitOfWorkRepositoryStub);
 
     return {
-        sut
+        sut,
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository()
     };
 };
 
 describe("Use case - GetUserExpensesUseCase", () => {
+
+    test("Should not return user expenses because user is not exists", async () => {
+        const { sut, userRepositoryStub } = makeSut();
+        const userId = "2";
+        jest
+            .spyOn(userRepositoryStub, "getUserById")
+            .mockResolvedValueOnce(null);
+
+        const result = sut.execute({ userId });
+
+        await expect(result).rejects.toThrow(NotFoundError);
+    });
 
     test("Should return user expenses successfully", async () => {
         const { sut } = makeSut();

@@ -6,8 +6,8 @@ export interface IExpenseRepository {
   getExpenseById(id: string): Promise<ExpenseEntity | null>;
   getExpensesByUserId(userId: string): Promise<ExpenseEntity[]>;
   getExpensesByDueDate(dueDate: Date): Promise<ExpenseEntity[]>;
-  updateExpenseById(id: string, data: ExpenseEntity): Promise<ExpenseEntity>;
+  updateExpenseById(id: string, data: ExpenseEntity): Promise<void>;
   updatePaidExpensesToUnpaidAndSumOneInDueDateMonthByDueDateMonth(month: number): Promise<void>;
-  deleteExpenseById(id: string): Promise<ExpenseEntity>;
+  deleteExpenseById(id: string): Promise<void>;
   deleteExpensesByUserId(userId: string): Promise<void>;
 }

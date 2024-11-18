@@ -13,8 +13,8 @@ export class UpdateExpenseUseCase implements IUpdateExpenseUseCase {
         expense.expenseValue = expenseValue;
         expense.dueDate = dueDate;
 
-        const expenseUpdated = await expenseRepository.updateExpenseById(id, expense);
+        await expenseRepository.updateExpenseById(id, expense);
 
-        return expenseUpdated.id;
+        return id;
     }
 }

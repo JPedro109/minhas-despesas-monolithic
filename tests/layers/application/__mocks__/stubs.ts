@@ -159,9 +159,7 @@ export class SubscriptionRepositoryStub implements ISubscriptionRepository {
         return subscription;
     }
 
-    async updateSubscriptionById(subscriptionId: string, subscription: SubscriptionEntity): Promise<SubscriptionEntity> {
-        return testSubscriptionEntityWithPlanFree();
-    }
+    async updateSubscriptionById(subscriptionId: string, subscription: SubscriptionEntity): Promise<void> { }
 
     async getActiveSubscriptionByUserId(userId: string): Promise<SubscriptionEntity | null> {
         return testSubscriptionEntityWithPlanFree();
@@ -199,13 +197,9 @@ export class UserRepositoryStub implements IUserRepository {
         return testUserEntity();
     }
 
-    async updateUserById(id: string, user: UserEntity): Promise<UserEntity> {
-        return user;
-    }
+    async updateUserById(id: string, user: UserEntity): Promise<void> { }
 
-    async deleteUserById(id: string): Promise<UserEntity> {
-        return testUserEntity();
-    }
+    async deleteUserById(id: string): Promise<void> { }
 }
 
 export class UserVerificationCodeRepositoryStub implements IUserVerificationCodeRepository {
@@ -222,9 +216,7 @@ export class UserVerificationCodeRepositoryStub implements IUserVerificationCode
     async updateUserVerificationCodeById(
         userVerificationCodeId: string,
         userVerificationCode: UserVerificationCodeEntity
-    ): Promise<UserVerificationCodeEntity> {
-        return null;
-    };
+    ): Promise<void> { };
 }
 
 export class PaymentMethodRepositoryStub implements IPaymentMethodRepository {
@@ -246,13 +238,9 @@ export class PaymentMethodRepositoryStub implements IPaymentMethodRepository {
         return testPaymentMethodEntity();
     }
 
-    async updatePaymentMethodById(paymentMethodId: string, paymentMethod: PaymentMethodEntity): Promise<PaymentMethodEntity> {
-        return testPaymentMethodEntity();
-    }
+    async updatePaymentMethodById(paymentMethodId: string, paymentMethod: PaymentMethodEntity): Promise<void> { }
 
-    async deletePaymentMethodById(paymentMethodId: string): Promise<PaymentMethodEntity> {
-        return testPaymentMethodEntity();
-    }
+    async deletePaymentMethodById(paymentMethodId: string): Promise<void> { }
 }
 
 export class ExpenseRepositoryStub implements IExpenseRepository {
@@ -274,15 +262,11 @@ export class ExpenseRepositoryStub implements IExpenseRepository {
         return [testExpenseEntityUnpaid(), testExpenseEntityPaid()];
     }
 
-    async updateExpenseById(id: string, data: ExpenseEntity): Promise<ExpenseEntity> {
-        return testExpenseEntityUnpaid();
-    }
+    async updateExpenseById(id: string, data: ExpenseEntity): Promise<void> { }
 
     async updatePaidExpensesToUnpaidAndSumOneInDueDateMonthByDueDateMonth(month: number): Promise<void> { }
 
-    async deleteExpenseById(id: string): Promise<ExpenseEntity> {
-        return testExpenseEntityUnpaid();
-    }
+    async deleteExpenseById(id: string): Promise<void> { }
 
     async deleteExpensesByUserId(userId: string): Promise<void> { }
 }
@@ -307,9 +291,7 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
         expenseId: string,
         paymentMonth: number,
         paymentYear: number
-    ): Promise<PaymentHistoryEntity> {
-        return testPaymentHistoryEntity();
-    }
+    ): Promise<void> {  }
 
 }
 
@@ -319,9 +301,7 @@ export class ExtractRepositoryStub implements IExtractRepository {
         return testExtractEntity();
     }
 
-    async updateExtract(extract: ExtractEntity): Promise<ExtractEntity> {
-        return testExtractEntity();
-    }
+    async updateExtract(extract: ExtractEntity): Promise<void> { }
 
     async getExtractById(id: string): Promise<ExtractEntity> {
         return testExtractEntity();

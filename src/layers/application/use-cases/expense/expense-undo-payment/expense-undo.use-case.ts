@@ -1,4 +1,3 @@
-import { ExpenseEntity } from "@/layers/domain";
 import { IExpenseUndoPaymentUseCase, IUnitOfWorkRepository, NotFoundError, ExpenseUndoPaymentDTO } from "@/layers/application";
 
 export class ExpenseUndoPaymentUseCase implements IExpenseUndoPaymentUseCase {
@@ -13,10 +12,8 @@ export class ExpenseUndoPaymentUseCase implements IExpenseUndoPaymentUseCase {
 
         expense.paid = false;
 
-        let unpaidExpense: ExpenseEntity; 
-        
         await this.unitOfWorkRepository.transaction(async () => {
-            unpaidExpense = await expenseRepository.updateExpenseById(id, expense);
+            await expenseRepository.updateExpenseById(id, expense);
             const date = new Date();
             await paymentHistoryRepository.deletePaymentHistoryByExpenseIdAndPaymentMonthAndPaymentYear(
                 id,
@@ -25,6 +22,6 @@ export class ExpenseUndoPaymentUseCase implements IExpenseUndoPaymentUseCase {
             );
         });
 
-        return unpaidExpense.id;
+        return id;
     }
 }

@@ -27,7 +27,7 @@ export class DeletePaymentMethodUseCase implements IDeletePaymentMethodUseCase {
 			throw new ForbiddenError("Não possível excluir o método de pagamento pois existe uma assinatura ativa, cancele a assinatura para excluir o método de pagamento");
 
 		await this.unitOfWorkRepository.transaction(async () => {
-			const paymentMethod = await paymentMethodRepository.deletePaymentMethodById(id); 
+			await paymentMethodRepository.deletePaymentMethodById(id); 
 			await this.payment.deletePaymentMethod(paymentMethod.token);
 		});
 

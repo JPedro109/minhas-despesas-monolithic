@@ -6,6 +6,6 @@ export interface IPaymentMethodRepository {
     getPaymentMethodById(id: string): Promise<PaymentMethodEntity | null>;
     getPaymentMethodByUserId(userId: string): Promise<PaymentMethodEntity | null>;
     getPaymentMethodsByUserIds(userIds: string[]): Promise<PaymentMethodEntity[]>;
-    updatePaymentMethodById(paymentMethodId: string, paymentMethod: PaymentMethodEntity): Promise<PaymentMethodEntity>;
-    deletePaymentMethodById(paymentMethodId: string): Promise<PaymentMethodEntity>;
+    updatePaymentMethodById(paymentMethodId: string, paymentMethod: PaymentMethodEntity): Promise<void>;
+    deletePaymentMethodById(paymentMethodId: string): Promise<void>;
 }

@@ -12,5 +12,5 @@ export interface IPaymentHistoryRepository {
         expenseId: string, 
         paymentMonth: number,
         paymentYear: number
-    ): Promise<PaymentHistoryEntity>;
+    ): Promise<void>;
 }

@@ -1,4 +1,4 @@
-import { ExpenseEntity, PaymentHistoryEntity } from "@/layers/domain";
+import { PaymentHistoryEntity } from "@/layers/domain";
 import { IPayExpenseUseCase, IUnitOfWorkRepository, NotFoundError, PayExpenseDTO } from "@/layers/application";
 
 export class PayExpenseUseCase implements IPayExpenseUseCase {
@@ -22,13 +22,11 @@ export class PayExpenseUseCase implements IPayExpenseUseCase {
             userId: expense.userId
         });
 
-        let paidExpense: ExpenseEntity; 
-        
         await this.unitOfWorkRepository.transaction(async () => {
-            paidExpense = await expenseRepository.updateExpenseById(id, expense);
+            await expenseRepository.updateExpenseById(id, expense);
             await paymentHistoryRepository.createPaymentHistory(paymentHistory);
         });
 
-        return paidExpense.id;
+        return id;
     }
 }

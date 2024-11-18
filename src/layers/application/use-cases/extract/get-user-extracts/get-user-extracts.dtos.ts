@@ -6,4 +6,6 @@ export type GetUserExtractsResponseDTO = {
     extractId: string;
     url: string;
     userId: string;
+    expiryDate: Date;
+    urlExpiryDate: Date;
 }

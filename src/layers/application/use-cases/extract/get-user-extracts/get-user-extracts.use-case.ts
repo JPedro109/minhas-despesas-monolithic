@@ -23,7 +23,9 @@ export class GetUserExtractsUseCase implements IGetUserExtractsUseCase {
         return extracts.map(x => ({
             extractId: x.id,
             url: x.url,
-            userId: x.userId
+            userId: x.userId,
+            expiryDate: x.expiryDate,
+            urlExpiryDate: x.urlExpiryDate
         }));
     }
 }

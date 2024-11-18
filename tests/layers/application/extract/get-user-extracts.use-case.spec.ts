@@ -41,7 +41,9 @@ describe("Use case - GetUserExtractsUseCase", () => {
                 {
                     extractId: testExtractEntity().id,
                     url: testExtractEntity().url,
-                    userId: testExtractEntity().userId
+                    userId: testExtractEntity().userId,
+                    expiryDate: testExtractEntity().expiryDate,
+                    urlExpiryDate: testExtractEntity().urlExpiryDate
                 }
             ]
         );

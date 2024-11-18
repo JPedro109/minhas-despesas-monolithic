@@ -35,7 +35,7 @@ export class CreateExtractUseCase implements ICreateExtractUseCase {
 
         const today = new Date();
         const expiryDateExtract = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0);
-        expiryDateExtract.setDate(expiryDateExtract.getUTCDate() + 8);
+        expiryDateExtract.setDate(expiryDateExtract.getUTCDate() + 30);
 
         let extractCreated: ExtractEntity;
         await this.unitOfWorkRepository.transaction(async () => {

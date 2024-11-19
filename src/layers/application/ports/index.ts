@@ -6,3 +6,4 @@ export * from "./repositories";
 export * from "./authentication";
 export * from "./extract";
 export * from "./bucket";
+export * from "./log";

@@ -10,6 +10,7 @@ import {
     IExtract,
     IExtractRepository,
     IGeneration,
+    ILog,
     IMail,
     IPayment,
     IPaymentHistoryRepository,
@@ -48,6 +49,16 @@ import {
     testSubscriptionEntityWithPlanFree,
     testUserEntity
 } from "./datas";
+
+export class LogStub implements ILog {
+    trace(message: string, trace: string): void { }
+
+    info(message: string): void { }
+
+    warning(message: string): void { }
+
+    error(message: string, error: Error): void { }
+}
 
 export class BucketStub implements IBucket {
     async uploadFile(fileName: string, fileContent: Buffer): Promise<string> {
@@ -374,6 +385,7 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
     }
 }
 
+export const logStubFactory = (): LogStub => new LogStub();
 export const bucketStubFactory = (): BucketStub => new BucketStub();
 export const extractStubFactory = (): ExtractStub => new ExtractStub();
 export const authenticationStubFactory = (): AuthenticationStub => new AuthenticationStub();

@@ -73,6 +73,16 @@ export class HttpHelper {
 		};
 	}
 
+	static unprocessableEntity(error: Error): HttpResponse {
+		return {
+			statusCode: 422,
+			response: {
+				message: error.message,
+				code: error.name
+			}
+		};
+	}
+
 	static serverError(error: Error = new InternalServerError()): HttpResponse {
 		return {
 			statusCode: 500,

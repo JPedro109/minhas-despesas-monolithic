@@ -6,6 +6,8 @@ export type HttpRequest = {
 	userId?: string;
 	method?: string;
 	path?: string;
+	ipAddress?: string;
+	userAgent?: string;
 }
 
 export type HttpResponse = {

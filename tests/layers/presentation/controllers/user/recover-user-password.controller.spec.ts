@@ -24,7 +24,7 @@ const makeSut = (): {
 
 describe("Controller - RecoverUserPasswordController", () => {
 
-    test("Should not recover user password request because schema is invalid", async () => {
+    test("Should not recover user password because schema is invalid", async () => {
         const { sut } = makeSut();
         const code = "";
         const password = "";

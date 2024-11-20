@@ -24,7 +24,7 @@ const makeSut = (): {
 
 describe("Controller - CreateUserController", () => {
 
-    test("Should not create user request schema is invalid", async () => {
+    test("Should not create user schema is invalid", async () => {
         const { sut } = makeSut();
         const email = "";
         const username = "";

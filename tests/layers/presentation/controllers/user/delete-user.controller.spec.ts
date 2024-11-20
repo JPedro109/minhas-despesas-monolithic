@@ -24,7 +24,7 @@ const makeSut = (): {
 
 describe("Controller - DeleteUserController", () => {
 
-    test("Should not delete user request because schema is invalid", async () => {
+    test("Should not delete user because schema is invalid", async () => {
         const { sut } = makeSut();
         const id = "";
         const password = "";

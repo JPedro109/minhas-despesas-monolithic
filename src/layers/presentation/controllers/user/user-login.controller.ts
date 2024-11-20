@@ -1,10 +1,10 @@
-import { IUpdateUserEmailUseCase, ILog } from "@/layers/application";
+import { IUserLoginUseCase, ILog } from "@/layers/application";
 import { AbstractController, HttpRequest, HttpResponse, HttpHelper } from "@/layers/presentation";
 
-export class UpdateUserEmailController extends AbstractController {
+export class UserLoginController extends AbstractController {
 
     constructor(
-        private readonly useCase: IUpdateUserEmailUseCase,
+        private readonly useCase: IUserLoginUseCase,
         log: ILog
     ) { 
         super(
@@ -14,27 +14,27 @@ export class UpdateUserEmailController extends AbstractController {
                     type: "string",
                     optional: false
                 },
-                code: {
+                password: {
                     type: "string",
                     optional: false
                 }
             },
-            "UpdateUserEmail"
+            "UserLogin"
         );
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { code, email } = request.data;
+        const { email, password } = request.data;
 
         const body = {
-            code, 
-            email 
+            email,
+            password
         };
 
         this.validateRequestSchema(body);
 
-        await this.useCase.execute(body);
+        const response = await this.useCase.execute(body);
 
-        return HttpHelper.noBody();
+        return HttpHelper.ok(response);
     }
 }

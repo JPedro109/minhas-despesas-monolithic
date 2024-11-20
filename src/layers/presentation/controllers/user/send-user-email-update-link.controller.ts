@@ -1,0 +1,40 @@
+import { ISendUserEmailUpdateLinkUseCase, ILog } from "@/layers/application";
+import { AbstractController, HttpRequest, HttpResponse, HttpHelper } from "@/layers/presentation";
+
+export class SendUserEmailUpdateLinkController extends AbstractController {
+
+    constructor(
+        private readonly useCase: ISendUserEmailUpdateLinkUseCase,
+        log: ILog
+    ) { 
+        super(
+            log,
+            {
+                id: {
+                    type: "string",
+                    optional: false
+                },
+                email: {
+                    type: "string",
+                    optional: false
+                }
+            },
+            "SendUserEmailUpdateLink"
+        );
+    }
+
+    protected async handler(request: HttpRequest): Promise<HttpResponse> {
+        const { email } = request.data;
+
+        const body = { 
+            id: request.userId, 
+            email 
+        };
+
+        this.validateRequestSchema(body);
+
+        await this.useCase.execute(body);
+
+        return HttpHelper.noBody();
+    }
+}

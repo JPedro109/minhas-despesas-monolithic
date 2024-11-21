@@ -17,6 +17,7 @@ class TestController extends AbstractController {
     ) {
         super(
             log,
+            "Test",
             {
                 account: {
                     type: {
@@ -52,8 +53,7 @@ class TestController extends AbstractController {
                     },
                     optional: true
                 }
-            },
-            "Test"
+            }
         );
     }
 

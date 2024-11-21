@@ -9,6 +9,7 @@ export class SendUserEmailUpdateLinkController extends AbstractController {
     ) { 
         super(
             log,
+            "SendUserEmailUpdateLink",
             {
                 id: {
                     type: "string",
@@ -18,8 +19,7 @@ export class SendUserEmailUpdateLinkController extends AbstractController {
                     type: "string",
                     optional: false
                 }
-            },
-            "SendUserEmailUpdateLink"
+            }
         );
     }
 

@@ -9,13 +9,13 @@ export class SendUserPasswordRecoveryLinkController extends AbstractController {
     ) { 
         super(
             log,
+            "SendUserPasswordRecoveryLink",
             {
                 email: {
                     type: "string",
                     optional: false
                 }
-            },
-            "SendUserPasswordRecoveryLink"
+            }
         );
     }
 

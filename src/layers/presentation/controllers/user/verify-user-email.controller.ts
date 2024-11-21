@@ -9,13 +9,13 @@ export class VerifyUserEmailController extends AbstractController {
     ) { 
         super(
             log,
+            "VerifyUserEmail",
             {
                 code: {
                     type: "string",
                     optional: false
                 }
-            },
-            "VerifyUserEmail"
+            }
         );
     }
 

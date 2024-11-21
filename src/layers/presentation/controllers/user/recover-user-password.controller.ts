@@ -9,6 +9,7 @@ export class RecoverUserPasswordController extends AbstractController {
     ) { 
         super(
             log,
+            "RecoverUserPassword",
             {
                 code: {
                     type: "string",
@@ -22,8 +23,7 @@ export class RecoverUserPasswordController extends AbstractController {
                     type: "string",
                     optional: false
                 }
-            },
-            "RecoverUserPassword"
+            }
         );
     }
 

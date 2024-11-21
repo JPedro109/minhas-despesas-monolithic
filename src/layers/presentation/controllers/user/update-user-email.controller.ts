@@ -9,6 +9,7 @@ export class UpdateUserEmailController extends AbstractController {
     ) { 
         super(
             log,
+            "UpdateUserEmail",
             {
                 email: {
                     type: "string",
@@ -18,8 +19,7 @@ export class UpdateUserEmailController extends AbstractController {
                     type: "string",
                     optional: false
                 }
-            },
-            "UpdateUserEmail"
+            }
         );
     }
 

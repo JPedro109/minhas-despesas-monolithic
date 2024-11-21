@@ -9,13 +9,13 @@ export class RefreshUserTokenController extends AbstractController {
     ) { 
         super(
             log,
+            "RefreshUserToken",
             {
                 refreshToken: {
                     type: "string",
                     optional: false
                 }
-            },
-            "RefreshUserToken"
+            }
         );
     }
 

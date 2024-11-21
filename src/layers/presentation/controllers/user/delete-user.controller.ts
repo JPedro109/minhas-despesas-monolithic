@@ -9,6 +9,7 @@ export class DeleteUserController extends AbstractController {
     ) { 
         super(
             log,
+            "DeleteUser",
             {
                 id: {
                     type: "string",
@@ -22,8 +23,7 @@ export class DeleteUserController extends AbstractController {
                     type: "string",
                     optional: false
                 }
-            },
-            "DeleteUser"
+            }
         );
     }
 

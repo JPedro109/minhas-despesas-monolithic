@@ -14,8 +14,8 @@ export abstract class AbstractController implements IHttp {
 
     constructor(
         protected readonly log: ILog,
-        protected readonly schema: RequestSchema,
-        protected readonly event: string
+        protected readonly event: string,
+        protected readonly schema?: RequestSchema
     ) { }
 
     public async http(request: HttpRequest): Promise<HttpResponse> {
@@ -41,7 +41,10 @@ export abstract class AbstractController implements IHttp {
     }
 
     protected validateRequestSchema(body: object): void {
-        (this.mountZodObjet(this.schema, {}) as z.AnyZodObject).parse(body);
+        const schema = this.schema;
+        if(schema) {
+            (this.mountZodObjet(schema, {}) as z.AnyZodObject).parse(body);
+        };
     }
 
     protected abstract handler(request: HttpRequest): Promise<HttpResponse>;

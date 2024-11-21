@@ -9,6 +9,7 @@ export class UpdateUserPasswordController extends AbstractController {
     ) { 
         super(
             log,
+            "UpdateUserPassword",
             {
                 id: {
                     type: "string",
@@ -26,8 +27,7 @@ export class UpdateUserPasswordController extends AbstractController {
                     type: "string",
                     optional: false
                 }
-            },
-            "UpdateUserPassword"
+            }
         );
     }
 

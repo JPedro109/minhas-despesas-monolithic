@@ -41,10 +41,7 @@ export abstract class AbstractController implements IHttp {
     }
 
     protected validateRequestSchema(body: object): void {
-        const schema = this.schema;
-        if(schema) {
-            (this.mountZodObjet(schema, {}) as z.AnyZodObject).parse(body);
-        };
+        (this.mountZodObjet(this.schema, {}) as z.AnyZodObject).parse(body);
     }
 
     protected abstract handler(request: HttpRequest): Promise<HttpResponse>;

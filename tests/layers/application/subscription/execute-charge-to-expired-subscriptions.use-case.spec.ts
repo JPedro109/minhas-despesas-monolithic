@@ -1,4 +1,4 @@
-import { ExecuteChargeToExpiredSubscriptions, PaymentCurrencyEnum } from "@/layers/application";
+import { ExecuteChargeToExpiredSubscriptionsUseCase, PaymentCurrencyEnum } from "@/layers/application";
 import {
     PaymentStub,
     SubscriptionRepositoryStub,
@@ -10,13 +10,13 @@ import {
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: ExecuteChargeToExpiredSubscriptions,
+    sut: ExecuteChargeToExpiredSubscriptionsUseCase,
     paymentStub: PaymentStub,
     subscriptionRepositoryStub: SubscriptionRepositoryStub
 } => {
     const paymentStub = paymentStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new ExecuteChargeToExpiredSubscriptions(
+    const sut = new ExecuteChargeToExpiredSubscriptionsUseCase(
         unitOfWorkRepositoryStub,
         paymentStub
     );
@@ -28,7 +28,7 @@ const makeSut = (): {
     };
 };
 
-describe("Use case - ExecuteChargeToExpiredSubscriptions", () => {
+describe("Use case - ExecuteChargeToExpiredSubscriptionsUseCase", () => {
 
     test("Should not execute charge if there are no subscriptions due soon", async () => {
         const { sut, subscriptionRepositoryStub, paymentStub } = makeSut();

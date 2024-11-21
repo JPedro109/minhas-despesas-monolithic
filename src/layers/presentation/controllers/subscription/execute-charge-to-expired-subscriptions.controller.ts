@@ -1,10 +1,10 @@
-import { IExecuteChargeToExpiredSubscriptions, ILog } from "@/layers/application";
+import { IExecuteChargeToExpiredSubscriptionsUseCase, ILog } from "@/layers/application";
 import { AbstractController, HttpResponse, HttpHelper } from "@/layers/presentation";
 
 export class ExecuteChargeToExpiredSubscriptionsController extends AbstractController {
 
     constructor(
-        private readonly useCase: IExecuteChargeToExpiredSubscriptions,
+        private readonly useCase: IExecuteChargeToExpiredSubscriptionsUseCase,
         log: ILog
     ) { 
         super(

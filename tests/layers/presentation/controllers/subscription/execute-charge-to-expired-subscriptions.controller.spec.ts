@@ -1,12 +1,12 @@
-import { IExecuteChargeToExpiredSubscriptions } from "@/layers/application";
+import { IExecuteChargeToExpiredSubscriptionsUseCase } from "@/layers/application";
 import { ExecuteChargeToExpiredSubscriptionsController } from "@/layers/presentation";
 import { logStubFactory } from "../__mocks__";
 
 const makeSut = (): {
     sut: ExecuteChargeToExpiredSubscriptionsController,
-    mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IExecuteChargeToExpiredSubscriptions>
+    mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IExecuteChargeToExpiredSubscriptionsUseCase>
 } => {
-    const mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IExecuteChargeToExpiredSubscriptions> = {
+    const mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IExecuteChargeToExpiredSubscriptionsUseCase> = {
         execute: jest.fn()
     };
     const logStub = logStubFactory();

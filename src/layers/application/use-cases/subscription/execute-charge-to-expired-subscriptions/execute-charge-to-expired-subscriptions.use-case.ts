@@ -1,11 +1,11 @@
 import { 
     IPayment, 
-    IExecuteChargeToExpiredSubscriptions, 
+    IExecuteChargeToExpiredSubscriptionsUseCase, 
     IUnitOfWorkRepository, 
     PaymentCurrencyEnum
 } from "@/layers/application";
 
-export class ExecuteChargeToExpiredSubscriptions implements IExecuteChargeToExpiredSubscriptions {
+export class ExecuteChargeToExpiredSubscriptionsUseCase implements IExecuteChargeToExpiredSubscriptionsUseCase {
     
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository,

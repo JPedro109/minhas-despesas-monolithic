@@ -1,3 +1,3 @@
-export interface IExecuteChargeToExpiredSubscriptions {
+export interface IExecuteChargeToExpiredSubscriptionsUseCase {
     execute(): Promise<void>;
 }

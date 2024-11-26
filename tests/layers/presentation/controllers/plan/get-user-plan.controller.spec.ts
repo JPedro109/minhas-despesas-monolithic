@@ -4,9 +4,9 @@ import { logStubFactory } from "../__mocks__";
 
 const makeSut = (): {
     sut: GetUserPlanController,
-    mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IGetUserPlanUseCase>
+    mockGetUserPlanUseCase: jest.Mocked<IGetUserPlanUseCase>
 } => {
-    const mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IGetUserPlanUseCase> = {
+    const mockGetUserPlanUseCase: jest.Mocked<IGetUserPlanUseCase> = {
         execute: jest.fn().mockResolvedValueOnce({
             planId: "1",
             planName: "Name",
@@ -17,13 +17,13 @@ const makeSut = (): {
     const logStub = logStubFactory();
 
     const sut = new GetUserPlanController(
-        mockExecuteChargeToExpiredSubscriptionUseCase, 
+        mockGetUserPlanUseCase, 
         logStub
     );
 
     return {
         sut,
-        mockExecuteChargeToExpiredSubscriptionUseCase
+        mockGetUserPlanUseCase
     };
 };
 

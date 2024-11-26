@@ -4,21 +4,21 @@ import { logStubFactory } from "../__mocks__";
 
 const makeSut = (): {
     sut: SendNotificationOfSubscriptionThatAreComingDueController,
-    mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<ISendNotificationOfSubscriptionThatAreComingDue>
+    mockSendNotificationOfSubscriptionThatAreComingDueUseCase: jest.Mocked<ISendNotificationOfSubscriptionThatAreComingDue>
 } => {
-    const mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<ISendNotificationOfSubscriptionThatAreComingDue> = {
+    const mockSendNotificationOfSubscriptionThatAreComingDueUseCase: jest.Mocked<ISendNotificationOfSubscriptionThatAreComingDue> = {
         execute: jest.fn()
     };
     const logStub = logStubFactory();
 
     const sut = new SendNotificationOfSubscriptionThatAreComingDueController(
-        mockExecuteChargeToExpiredSubscriptionUseCase, 
+        mockSendNotificationOfSubscriptionThatAreComingDueUseCase, 
         logStub
     );
 
     return {
         sut,
-        mockExecuteChargeToExpiredSubscriptionUseCase
+        mockSendNotificationOfSubscriptionThatAreComingDueUseCase
     };
 };
 

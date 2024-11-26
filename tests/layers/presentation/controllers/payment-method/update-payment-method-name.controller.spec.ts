@@ -4,21 +4,21 @@ import { logStubFactory } from "../__mocks__";
 
 const makeSut = (): {
     sut: UpdatePaymentMethodNameController,
-    mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IUpdatePaymentMethodNameUseCase>
+    mockUpdatePaymentMethodNameUseCase: jest.Mocked<IUpdatePaymentMethodNameUseCase>
 } => {
-    const mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IUpdatePaymentMethodNameUseCase> = {
+    const mockUpdatePaymentMethodNameUseCase: jest.Mocked<IUpdatePaymentMethodNameUseCase> = {
         execute: jest.fn()
     };
     const logStub = logStubFactory();
 
     const sut = new UpdatePaymentMethodNameController(
-        mockExecuteChargeToExpiredSubscriptionUseCase, 
+        mockUpdatePaymentMethodNameUseCase, 
         logStub
     );
 
     return {
         sut,
-        mockExecuteChargeToExpiredSubscriptionUseCase
+        mockUpdatePaymentMethodNameUseCase
     };
 };
 

@@ -4,21 +4,21 @@ import { logStubFactory } from "../__mocks__";
 
 const makeSut = (): {
     sut: ManageSubscriptionRenewalController,
-    mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IManageSubscriptionRenewalUseCase>
+    mockManageSubscriptionRenewalUseCase: jest.Mocked<IManageSubscriptionRenewalUseCase>
 } => {
-    const mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IManageSubscriptionRenewalUseCase> = {
+    const mockManageSubscriptionRenewalUseCase: jest.Mocked<IManageSubscriptionRenewalUseCase> = {
         execute: jest.fn()
     };
     const logStub = logStubFactory();
 
     const sut = new ManageSubscriptionRenewalController(
-        mockExecuteChargeToExpiredSubscriptionUseCase, 
+        mockManageSubscriptionRenewalUseCase, 
         logStub
     );
 
     return {
         sut,
-        mockExecuteChargeToExpiredSubscriptionUseCase
+        mockManageSubscriptionRenewalUseCase
     };
 };
 

@@ -4,25 +4,25 @@ import { logStubFactory } from "../__mocks__";
 
 const makeSut = (): {
     sut: DeleteExpiredExtractsConstroller,
-    mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IDeleteExpiredExtractsUseCase>
+    mockDeleteExpiredExtractsUseCase: jest.Mocked<IDeleteExpiredExtractsUseCase>
 } => {
-    const mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IDeleteExpiredExtractsUseCase> = {
+    const mockDeleteExpiredExtractsUseCase: jest.Mocked<IDeleteExpiredExtractsUseCase> = {
         execute: jest.fn()
     };
     const logStub = logStubFactory();
 
     const sut = new DeleteExpiredExtractsConstroller(
-        mockExecuteChargeToExpiredSubscriptionUseCase, 
+        mockDeleteExpiredExtractsUseCase, 
         logStub
     );
 
     return {
         sut,
-        mockExecuteChargeToExpiredSubscriptionUseCase
+        mockDeleteExpiredExtractsUseCase
     };
 };
 
-describe("Controller - ExecuteChargeToExpiredSubscriptionController", () => {
+describe("Controller - DeleteExpiredExtractsController", () => {
 
     test("Should delete expired extracts", async () => {
         const { sut } = makeSut();

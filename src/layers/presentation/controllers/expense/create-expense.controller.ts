@@ -5,7 +5,7 @@ export class CreateExpenseController extends AbstractController {
 
     constructor(
         private readonly useCase: ICreateExpenseUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) {
         super(
             log,

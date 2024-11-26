@@ -5,7 +5,7 @@ export class CreatePaymentMethodController extends AbstractController {
 
     constructor(
         private readonly useCase: ICreatePaymentMethodUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

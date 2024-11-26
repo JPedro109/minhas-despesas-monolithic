@@ -5,7 +5,7 @@ export class UpdatePreviousMonthPaidExpensesToUnpaidController extends AbstractC
 
     constructor(
         private readonly useCase: IUpdatePreviousMonthPaidExpensesToUnpaidUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) {
         super(
             log,

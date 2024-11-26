@@ -5,7 +5,7 @@ export class GetPlansController extends AbstractController {
 
     constructor(
         private readonly useCase: IGetPlansUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

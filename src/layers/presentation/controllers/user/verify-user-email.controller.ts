@@ -5,7 +5,7 @@ export class VerifyUserEmailController extends AbstractController {
 
     constructor(
         private readonly useCase: IVerifyUserEmailUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

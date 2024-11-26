@@ -5,7 +5,7 @@ export class UpdateSubscriptionController extends AbstractController {
 
     constructor(
         private readonly useCase: IUpdateSubscriptionUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

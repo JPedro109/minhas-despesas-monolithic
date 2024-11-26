@@ -5,7 +5,7 @@ export class UpdateUserPasswordController extends AbstractController {
 
     constructor(
         private readonly useCase: IUpdateUserPasswordUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

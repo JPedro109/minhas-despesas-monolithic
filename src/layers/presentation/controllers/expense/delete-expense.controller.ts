@@ -5,7 +5,7 @@ export class DeleteExpenseController extends AbstractController {
 
     constructor(
         private readonly useCase: IDeleteExpenseUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) {
         super(
             log,

@@ -5,7 +5,7 @@ export class UpdatePaymentMethodTokenController extends AbstractController {
 
     constructor(
         private readonly useCase: IUpdatePaymentMethodTokenUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

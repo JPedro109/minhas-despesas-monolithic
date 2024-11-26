@@ -5,7 +5,7 @@ export class ManageSubscriptionRenewalController extends AbstractController {
 
     constructor(
         private readonly useCase: IManageSubscriptionRenewalUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

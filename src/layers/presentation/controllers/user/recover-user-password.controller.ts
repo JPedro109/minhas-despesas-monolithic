@@ -5,7 +5,7 @@ export class RecoverUserPasswordController extends AbstractController {
 
     constructor(
         private readonly useCase: IRecoverUserPasswordUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

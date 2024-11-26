@@ -5,7 +5,7 @@ export class ExpenseUndoPaymentController extends AbstractController {
 
     constructor(
         private readonly useCase: IExpenseUndoPaymentUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) {
         super(
             log,

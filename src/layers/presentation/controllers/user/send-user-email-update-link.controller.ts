@@ -5,7 +5,7 @@ export class SendUserEmailUpdateLinkController extends AbstractController {
 
     constructor(
         private readonly useCase: ISendUserEmailUpdateLinkUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

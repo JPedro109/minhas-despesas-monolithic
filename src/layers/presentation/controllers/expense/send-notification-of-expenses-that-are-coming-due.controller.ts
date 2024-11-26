@@ -5,7 +5,7 @@ export class SendNotificationOfExpensesThatAreComingDueController extends Abstra
 
     constructor(
         private readonly useCase: ISendNotificationOfExpensesThatAreComingDueUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) {
         super(
             log,

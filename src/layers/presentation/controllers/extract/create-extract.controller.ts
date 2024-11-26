@@ -5,7 +5,7 @@ export class CreateExtractController extends AbstractController {
 
     constructor(
         private readonly useCase: ICreateExtractUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

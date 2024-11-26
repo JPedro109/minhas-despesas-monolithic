@@ -5,7 +5,7 @@ export class ExecuteChargeToExpiredSubscriptionsController extends AbstractContr
 
     constructor(
         private readonly useCase: IExecuteChargeToExpiredSubscriptionsUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

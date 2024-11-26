@@ -10,7 +10,7 @@ export class SetFreePlanForNonRenewableSubscriptionsController extends AbstractC
     constructor(
         private readonly getActiveNonRenewableSubscriptionsUseCase: IGetActiveNonRenewableSubscriptionsUseCase, 
         private readonly manageSubscriptionRenewalUseCase: IManageSubscriptionRenewalUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

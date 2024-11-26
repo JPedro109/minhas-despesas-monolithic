@@ -5,7 +5,7 @@ export class RefreshUserTokenController extends AbstractController {
 
     constructor(
         private readonly useCase: IRefreshUserTokenUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

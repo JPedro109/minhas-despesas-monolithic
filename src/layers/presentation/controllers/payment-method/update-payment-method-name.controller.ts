@@ -5,7 +5,7 @@ export class UpdatePaymentMethodNameController extends AbstractController {
 
     constructor(
         private readonly useCase: IUpdatePaymentMethodNameUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

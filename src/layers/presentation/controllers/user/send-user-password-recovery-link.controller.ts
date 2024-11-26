@@ -5,7 +5,7 @@ export class SendUserPasswordRecoveryLinkController extends AbstractController {
 
     constructor(
         private readonly useCase: ISendUserPasswordRecoveryLinkUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

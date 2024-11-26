@@ -5,7 +5,7 @@ export class DeletePaymentMethodController extends AbstractController {
 
     constructor(
         private readonly useCase: IDeletePaymentMethodUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

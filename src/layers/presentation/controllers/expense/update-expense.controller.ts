@@ -5,7 +5,7 @@ export class UpdateExpenseController extends AbstractController {
 
     constructor(
         private readonly useCase: IUpdateExpenseUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) {
         super(
             log,

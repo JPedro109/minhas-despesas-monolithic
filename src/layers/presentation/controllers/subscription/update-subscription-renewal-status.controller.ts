@@ -5,7 +5,7 @@ export class UpdateSubscriptionRenewalStatusController extends AbstractControlle
 
     constructor(
         private readonly useCase: IUpdateSubscriptionRenewalStatusUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

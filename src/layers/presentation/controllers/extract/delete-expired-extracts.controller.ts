@@ -5,7 +5,7 @@ export class DeleteExpiredExtractsConstroller extends AbstractController {
 
     constructor(
         private readonly useCase: IDeleteExpiredExtractsUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

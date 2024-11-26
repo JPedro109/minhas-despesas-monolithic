@@ -5,7 +5,7 @@ export class CreateUserController extends AbstractController {
 
     constructor(
         private readonly useCase: ICreateUserUseCase,
-        log: ILog
+        protected readonly log: ILog
     ) { 
         super(
             log,

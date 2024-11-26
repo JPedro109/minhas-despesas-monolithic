@@ -7,7 +7,7 @@ const makeSut = (): {
     mockDeleteExpenseUseCase: jest.Mocked<IDeleteExpenseUseCase>
 } => {
     const mockDeleteExpenseUseCase: jest.Mocked<IDeleteExpenseUseCase> = {
-        execute: jest.fn().mockResolvedValue("1")
+        execute: jest.fn()
     };
     const logStub = logStubFactory();
 

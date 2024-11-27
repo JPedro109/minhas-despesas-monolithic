@@ -7,7 +7,7 @@ const makeSut = (): {
     mockCreatePaymentMethodUseCase: jest.Mocked<ICreatePaymentMethodUseCase>
 } => {
     const mockCreatePaymentMethodUseCase: jest.Mocked<ICreatePaymentMethodUseCase> = {
-        execute: jest.fn()
+        execute: jest.fn().mockResolvedValueOnce("1")
     };
     const logStub = logStubFactory();
 

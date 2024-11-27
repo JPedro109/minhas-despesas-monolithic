@@ -1,6 +1,6 @@
 import { IUpdatePaymentMethodTokenUseCase } from "@/layers/application";
 import { UpdatePaymentMethodTokenController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: UpdatePaymentMethodTokenController,

@@ -1,6 +1,6 @@
 import { ISendNotificationOfExpensesThatAreComingDueUseCase } from "@/layers/application";
 import { SendNotificationOfExpensesThatAreComingDueController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: SendNotificationOfExpensesThatAreComingDueController,

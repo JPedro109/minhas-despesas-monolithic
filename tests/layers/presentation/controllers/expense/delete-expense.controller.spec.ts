@@ -1,6 +1,6 @@
 import { IDeleteExpenseUseCase } from "@/layers/application";
 import { DeleteExpenseController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: DeleteExpenseController,

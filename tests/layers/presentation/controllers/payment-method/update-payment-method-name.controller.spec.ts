@@ -1,6 +1,6 @@
 import { IUpdatePaymentMethodNameUseCase } from "@/layers/application";
 import { UpdatePaymentMethodNameController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: UpdatePaymentMethodNameController,

@@ -1,6 +1,6 @@
 import { IManageSubscriptionRenewalUseCase } from "@/layers/application";
 import { ManageSubscriptionRenewalController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: ManageSubscriptionRenewalController,

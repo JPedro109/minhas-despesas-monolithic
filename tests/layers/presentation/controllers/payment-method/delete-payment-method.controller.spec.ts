@@ -1,6 +1,6 @@
 import { IDeletePaymentMethodUseCase } from "@/layers/application";
 import { DeletePaymentMethodController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: DeletePaymentMethodController,

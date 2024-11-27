@@ -1,6 +1,6 @@
 import { IGetUserExpensesUseCase } from "@/layers/application";
 import { GetUserExpensesController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: GetUserExpensesController,

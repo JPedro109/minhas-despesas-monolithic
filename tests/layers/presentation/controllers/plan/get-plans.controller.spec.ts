@@ -1,6 +1,6 @@
 import { IGetPlansUseCase } from "@/layers/application";
 import { GetPlansController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: GetPlansController,

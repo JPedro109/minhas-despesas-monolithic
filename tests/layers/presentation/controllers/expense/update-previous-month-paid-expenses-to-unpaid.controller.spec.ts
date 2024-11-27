@@ -1,6 +1,6 @@
 import { IUpdatePreviousMonthPaidExpensesToUnpaidUseCase } from "@/layers/application";
 import { UpdatePreviousMonthPaidExpensesToUnpaidController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: UpdatePreviousMonthPaidExpensesToUnpaidController,

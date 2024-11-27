@@ -1,6 +1,6 @@
 import { IVerifyUserEmailUseCase } from "@/layers/application";
 import { VerifyUserEmailController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: VerifyUserEmailController,

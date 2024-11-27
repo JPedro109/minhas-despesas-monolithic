@@ -1,6 +1,6 @@
 import { ICreateExtractUseCase } from "@/layers/application";
 import { CreateExtractController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: CreateExtractController,

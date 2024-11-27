@@ -1,6 +1,6 @@
 import { IExecuteChargeToExpiredSubscriptionsUseCase } from "@/layers/application";
 import { ExecuteChargeToExpiredSubscriptionsController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: ExecuteChargeToExpiredSubscriptionsController,

@@ -1,6 +1,6 @@
 import { IRefreshUserTokenUseCase } from "@/layers/application";
 import { RefreshUserTokenController } from "@/layers/presentation";
-import { logStubFactory } from "../__mocks__";
+import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
     sut: RefreshUserTokenController,

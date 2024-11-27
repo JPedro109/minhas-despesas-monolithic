@@ -1,6 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { ILog } from "@/layers/application";
+import { IAuthentication, ILog, JsonWebTokenType } from "@/layers/application";
+
+export class AuthenticationStub implements IAuthentication {
+    createJsonWebToken(payload: object, expiryTimeInSeconds: number): string {
+        return "token";
+    }
+
+    verifyJsonWebToken(token: string): JsonWebTokenType {
+        return {
+            id: "1",
+            email: "email@test.com",
+            type: "access_token"
+        };
+    }
+}
+
 
 export class LogStub implements ILog {
     trace(message: string, trace: string): void { }

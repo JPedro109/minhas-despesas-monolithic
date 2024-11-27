@@ -1,12 +1,12 @@
 import { 
     GetUserPaymentMethodDTO, 
     GetUserPaymentMethodResponseDTO, 
-    IGetUserPaymentMethod, 
+    IGetUserPaymentMethodUseCase, 
     IUnitOfWorkRepository, 
     NotFoundError
 } from "@/layers/application";
 
-export class GetUserPaymentMethodUseCase implements IGetUserPaymentMethod {
+export class GetUserPaymentMethodUseCase implements IGetUserPaymentMethodUseCase {
     
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository

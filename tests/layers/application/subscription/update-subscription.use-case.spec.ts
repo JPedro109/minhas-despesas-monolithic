@@ -10,7 +10,6 @@ import {
     testPlanGoldEntity,
     testSubscriptionEntityWithPlanGold,
     testSubscriptionEntityWithPlanDiamond,
-    testExpenseEntityPaid,
     testSubscriptionEntityWithPlanGoldWithoutAmount
 } from "../__mocks__";
 
@@ -76,39 +75,6 @@ describe("Use case - UpdateSubscriptionUseCase", () => {
         jest
             .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
             .mockResolvedValueOnce(testSubscriptionEntityWithPlanGold());
-
-        const result = sut.execute({
-            userId,
-            newPlanId
-        });
-
-        expect(result).rejects.toThrow(ForbiddenError);
-    });
-
-    test("Should not update subscription, because there are more expenses than the plan allows", async () => {
-        const { sut, subscriptionRepositoryStub, planRepositoryStub, expenseRepositoryStub } = makeSut();
-        const userId = "1";
-        const newPlanId = "2";
-        jest
-            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
-            .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
-        jest
-            .spyOn(planRepositoryStub, "getPlanById")
-            .mockResolvedValueOnce(testPlanGoldEntity());
-        jest
-            .spyOn(expenseRepositoryStub, "getExpensesByUserId")
-            .mockResolvedValueOnce(
-                [
-                    testExpenseEntityPaid(),
-                    testExpenseEntityPaid(),
-                    testExpenseEntityPaid(),
-                    testExpenseEntityPaid(),
-                    testExpenseEntityPaid(),
-                    testExpenseEntityPaid(),
-                    testExpenseEntityPaid(),
-                    testExpenseEntityPaid()
-                ]
-            );
 
         const result = sut.execute({
             userId,

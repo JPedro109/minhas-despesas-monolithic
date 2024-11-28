@@ -1,4 +1,4 @@
-import { ExpenseEntity, PlanEntity, PlanNameEnum, SubscriptionEntity } from "@/layers/domain";
+import { PlanEntity, PlanNameEnum, SubscriptionEntity } from "@/layers/domain";
 import {
     ConflictedError,
     ForbiddenError,
@@ -21,7 +21,6 @@ export class UpdateSubscriptionUseCase implements IUpdateSubscriptionUseCase {
         const planRepository = this.unitOfWorkRepository.getPlanRepository();
         const customerRepository = this.unitOfWorkRepository.getCustomerRepository();
         const paymentMethodRepository = this.unitOfWorkRepository.getPaymentMethodRepository();
-        const expenseRepository = this.unitOfWorkRepository.getExpenseRepository();
 
         const subscriptionActive = await subscriptionRepository.getActiveSubscriptionByUserId(userId);
 
@@ -39,8 +38,7 @@ export class UpdateSubscriptionUseCase implements IUpdateSubscriptionUseCase {
         if (newPlan.amount > subscriptionActive.plan.amount) {
             newSubscription = this.upgradePlan(userId, subscriptionActive, newPlan, startOfToday);
         } else {
-            const userExpenses = await expenseRepository.getExpensesByUserId(userId);
-            newSubscription = this.downgradePlan(userId, subscriptionActive, userExpenses, newPlan, startOfToday);
+            newSubscription = this.downgradePlan(userId, subscriptionActive, newPlan, startOfToday);
         }
 
         let newSubscriptionCreated: SubscriptionEntity;
@@ -107,17 +105,11 @@ export class UpdateSubscriptionUseCase implements IUpdateSubscriptionUseCase {
     private downgradePlan(
         userId: string,
         subscriptionActive: SubscriptionEntity,
-        userExpenses: ExpenseEntity[],
         newPlan: PlanEntity,
         startOfToday: Date
     ): SubscriptionEntity {
         if (newPlan.name === PlanNameEnum.Free)
             throw new ForbiddenError(`Só é possível voltar ao plano ${PlanNameEnum.Free} desativando a renovação da assinatura atual e ao fim dela sua conta retornará ao plano ${PlanNameEnum.Free}`);
-
-        const totalOperations = newPlan.actions.find(x => x.name === "create:expense").totalOperations;
-        const totalExpenses = userExpenses.length;
-        if (totalExpenses > totalOperations)
-            throw new ForbiddenError(`Para atualizar para esse plano você deve apagar ${totalExpenses - totalOperations} despesas, pois no seu plano só pode conter ${totalOperations} despesas`);
 
         const timeRemainingUntilTheEndOfTheSubscriptionInDays
             = Math.floor((subscriptionActive.endDate.getTime() - startOfToday.getTime()) / 1000 / 60 / 60 / 24);

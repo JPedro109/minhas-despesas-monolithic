@@ -42,6 +42,7 @@ describe("Use case - GetUserSubscriptionUseCase", () => {
 
         expect(result).toEqual(
             {
+                subscriptionId: testSubscriptionEntityWithPlanDiamond().id,
                 userId: testSubscriptionEntityWithPlanDiamond().userId,
                 amount: testSubscriptionEntityWithPlanDiamond().amount,
                 active: testSubscriptionEntityWithPlanDiamond().active,
@@ -49,12 +50,13 @@ describe("Use case - GetUserSubscriptionUseCase", () => {
                 startDate: testSubscriptionEntityWithPlanDiamond().startDate,
                 endDate: testSubscriptionEntityWithPlanDiamond().endDate,
                 plan: {
+                    planId: testSubscriptionEntityWithPlanDiamond().plan.id,
                     name: testSubscriptionEntityWithPlanDiamond().plan.name,
                     amount: testSubscriptionEntityWithPlanDiamond().plan.amount,
                     description: testSubscriptionEntityWithPlanDiamond().plan.description,
                     durationInDays: testSubscriptionEntityWithPlanDiamond().plan.durationInDays,
                     actions: testSubscriptionEntityWithPlanDiamond().plan.actions.map(action => ({
-                        id: action.id,
+                        actionId: action.id,
                         name: action.name,
                         description: action.description,
                         totalOperations: action.totalOperations

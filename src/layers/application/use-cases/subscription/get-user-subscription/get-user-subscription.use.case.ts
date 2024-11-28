@@ -20,6 +20,7 @@ export class GetUserSubscriptionUseCase implements IGetUserSubscriptionUseCase {
         const subscription = await subscriptionRepository.getActiveSubscriptionByUserId(userId);
 
         return {
+            subscriptionId: subscription.id,
             userId: subscription.userId,
             amount: subscription.amount,
             active: subscription.active,
@@ -27,12 +28,13 @@ export class GetUserSubscriptionUseCase implements IGetUserSubscriptionUseCase {
             startDate: subscription.startDate,
             endDate: subscription.endDate,
             plan: {
+                planId: subscription.plan.id,
                 name: subscription.plan.name,
                 amount: subscription.plan.amount,
                 description: subscription.plan.description,
                 durationInDays: subscription.plan.durationInDays,
                 actions: subscription.plan.actions.map(action => ({
-                    id: action.id,
+                    actionId: action.id,
                     name: action.name,
                     description: action.description,
                     totalOperations: action.totalOperations

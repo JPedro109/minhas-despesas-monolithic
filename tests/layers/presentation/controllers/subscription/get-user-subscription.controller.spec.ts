@@ -8,8 +8,8 @@ const makeSut = (): {
 } => {
     const mockGetUserSubscriptionUseCase: jest.Mocked<IGetUserSubscriptionUseCase> = {
         execute: jest.fn().mockResolvedValue({
-            userId: "1",
             subscriptionId: "1",
+            userId: "1",
             amount: "amount",
             active: "active",
             renewable: "renewable",
@@ -23,7 +23,7 @@ const makeSut = (): {
                 durationInDays: 30,
                 actions: [
                     {
-                        id: "",
+                        actionId: "1",
                         name: "Name",
                         description: "Desc",
                         totalOperations: 10

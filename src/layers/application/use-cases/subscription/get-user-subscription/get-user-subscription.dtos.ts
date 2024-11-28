@@ -3,14 +3,16 @@ export type GetUserSubscriptionDTO = {
 }
 
 export type GetUserSubscriptionResponseDTO = {
+    subscriptionId: string;
     userId: string;
     plan: {
+        planId: string;
         name: string;
         amount: number;
         description: string;
         durationInDays: number;
         actions: {
-            id: string;
+            actionId: string;
             name: string;
             description: string;
             totalOperations: number;

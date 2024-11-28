@@ -1,7 +1,7 @@
 import { IGetUserSubscriptionUseCase, ILog } from "@/layers/application";
 import { AbstractController, HttpResponse, HttpHelper, HttpRequest } from "@/layers/presentation";
 
-export class GetUserUserSubscriptionController extends AbstractController {
+export class GetUserSubscriptionController extends AbstractController {
 
     constructor(
         private readonly useCase: IGetUserSubscriptionUseCase,

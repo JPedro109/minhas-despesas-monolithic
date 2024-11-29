@@ -126,7 +126,6 @@ export const testPlanFreeEntity = (): PlanEntity => new PlanEntity(
                 id: "1",
                 name: "create:expense",
                 description: "create:expense",
-                totalOperations: 2,
                 createdAt: new Date("2024-01-01"),
                 updatedAt: new Date("2024-06-30"),
             }
@@ -147,7 +146,6 @@ export const testPlanGoldEntity = (): PlanEntity => new PlanEntity(
                 id: "1",
                 name: "create:expense",
                 description: "create:expense",
-                totalOperations: 5,
                 createdAt: new Date("2024-01-01"),
                 updatedAt: new Date("2024-06-30"),
             }
@@ -168,7 +166,6 @@ export const testPlanDiamondEntity = (): PlanEntity => new PlanEntity(
                 id: "1",
                 name: "create:expense",
                 description: "create:expense",
-                totalOperations: 10,
                 createdAt: new Date("2024-01-01"),
                 updatedAt: new Date("2024-06-30"),
             }

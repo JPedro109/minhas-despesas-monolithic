@@ -58,8 +58,7 @@ describe("Use case - GetUserSubscriptionUseCase", () => {
                     actions: testSubscriptionEntityWithPlanDiamond().plan.actions.map(action => ({
                         actionId: action.id,
                         name: action.name,
-                        description: action.description,
-                        totalOperations: action.totalOperations
+                        description: action.description
                     }))
                 }
             }

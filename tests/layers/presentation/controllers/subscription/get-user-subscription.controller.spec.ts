@@ -25,8 +25,7 @@ const makeSut = (): {
                     {
                         actionId: "1",
                         name: "Name",
-                        description: "Desc",
-                        totalOperations: 10
+                        description: "Desc"
                     }
                 ]
             }

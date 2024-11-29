@@ -36,8 +36,7 @@ export class GetUserSubscriptionUseCase implements IGetUserSubscriptionUseCase {
                 actions: subscription.plan.actions.map(action => ({
                     actionId: action.id,
                     name: action.name,
-                    description: action.description,
-                    totalOperations: action.totalOperations
+                    description: action.description
                 }))
             }
         };

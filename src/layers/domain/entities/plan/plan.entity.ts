@@ -10,7 +10,6 @@ export type PlanActionProps = {
     id: string;
     name: string;
     description: string;
-    totalOperations: number;
     createdAt: Date;
     updatedAt?: Date;
 }

@@ -61,7 +61,7 @@ describe("Entity - Plan", () => {
         const description = "A valid description";
         const amount = 100;
         const durationInDays = 1;
-        const actions = [{ id: "1", name: "Action 1", description: "Action description", totalOperations: 1, createdAt: new Date() }];
+        const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
 
         const sut = new PlanEntity({
           name, 

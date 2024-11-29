@@ -15,7 +15,6 @@ export type GetUserSubscriptionResponseDTO = {
             actionId: string;
             name: string;
             description: string;
-            totalOperations: number;
         }[];
     };
     amount: number;

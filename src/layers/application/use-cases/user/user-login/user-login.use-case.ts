@@ -19,7 +19,6 @@ export class UserLoginUseCase implements IUserLoginUseCase {
 
 	async execute({ email, password }: UserLoginDTO): Promise<UserLoginResponseDTO> {
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
-		const subscriptionRepository = this.unitOfWorkRepository.getSubscriptionRepository();
 
 		const user = await userRepository.getUserByEmail(email);
 
@@ -29,13 +28,9 @@ export class UserLoginUseCase implements IUserLoginUseCase {
 		const passwordIsEqual = await this.cryptography.compareHash(user.password, password);
 		if(!passwordIsEqual) throw new UnauthorizedError("Email ou senha incorreto(s)");
 
-		const subscriptionActive = await subscriptionRepository.getActiveSubscriptionByUserId(user.id);
-
 		const accessToken = this.authentication.createJsonWebToken(
 			{ 
 				sub: user.id,
-				plan: subscriptionActive.plan.name,
-				actions: subscriptionActive.plan.actions.map(x => ({ name: x.name })),
 				type: JsonWebTokenTypeEnum.AccessToken
 			}, 
 			3600 // 1 hour

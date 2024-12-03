@@ -1,6 +1,7 @@
 import { ExtractEntity } from "@/layers/domain";
 import { 
     CreateExtractDTO, 
+    ForbiddenError, 
     IBucket, 
     ICreateExtractUseCase, 
     IExtract, 
@@ -32,6 +33,9 @@ export class CreateExtractUseCase implements ICreateExtractUseCase {
         );
 
         if (paymentHistories.length === 0) throw new NotFoundError("Não existe histórico de despesas para o mês e ano de referência");
+
+        const extracts = await extractRepository.getExtractsByUserId(userId);
+        if(extracts.length === 1) throw new ForbiddenError("Você já tem o número máximo de extratos");
 
         const today = new Date();
         const extractExpirationDate = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0);

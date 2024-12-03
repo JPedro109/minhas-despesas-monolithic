@@ -29,6 +29,10 @@ class TestController extends AbstractController {
                             type: "string",
                             optional: false
                         },
+                        dateOfBirth: {
+                            type: "date",
+                            optional: false
+                        }
                     },
                     optional: false
                 },
@@ -100,7 +104,8 @@ describe("Controller - CreateUserController", () => {
         const { sut, useCase } = makeSut();
         const account = {
             email: "email@test.com",
-            password: "Password1234"
+            password: "Password1234",
+            dateOfBirth: "2000-01-01"
         };
         const address = {
             street: "Street One",
@@ -124,7 +129,8 @@ describe("Controller - CreateUserController", () => {
         const { sut, useCase } = makeSut();
         const account = {
             email: "email@test.com",
-            password: "Password1234"
+            password: "Password1234",
+            dateOfBirth: "2000-01-01"
         };
         const address = {
             street: "Street One",
@@ -148,7 +154,8 @@ describe("Controller - CreateUserController", () => {
         const { sut, useCase } = makeSut();
         const account = {
             email: "email@test.com",
-            password: "Password1234"
+            password: "Password1234",
+            dateOfBirth: "2000-01-01"
         };
         const address = {
             street: "Street One",
@@ -172,7 +179,8 @@ describe("Controller - CreateUserController", () => {
         const { sut, useCase } = makeSut();
         const account = {
             email: "email@test.com",
-            password: "Password1234"
+            password: "Password1234",
+            dateOfBirth: "2000-01-01"
         };
         const address = {
             street: "Street One",
@@ -196,7 +204,8 @@ describe("Controller - CreateUserController", () => {
         const { sut, useCase } = makeSut();
         const account = {
             email: "email@test.com",
-            password: "Password1234"
+            password: "Password1234",
+            dateOfBirth: "2000-01-01"
         };
         const address = {
             street: "Street One",
@@ -220,7 +229,8 @@ describe("Controller - CreateUserController", () => {
         const { sut, useCase } = makeSut();
         const account = {
             email: "email@test.com",
-            password: "Password1234"
+            password: "Password1234",
+            dateOfBirth: "2000-01-01"
         };
         const address = {
             street: "Street One",
@@ -244,7 +254,8 @@ describe("Controller - CreateUserController", () => {
         const { sut } = makeSut();
         const account = {
             email: "",
-            password: ""
+            password: "",
+            dateOfBirth: ""
         };
         const address = {
             street: "",
@@ -267,7 +278,8 @@ describe("Controller - CreateUserController", () => {
         const { sut } = makeSut();
         const account = {
             email: "email@test.com",
-            password: "Password1234"
+            password: "Password1234",
+            dateOfBirth: "2000-01-01"
         };
         const address = {
             street: "Street One",
@@ -291,7 +303,8 @@ describe("Controller - CreateUserController", () => {
         const { sut } = makeSut();
         const account = {
             email: "email@test.com",
-            password: "Password1234"
+            password: "Password1234",
+            dateOfBirth: "2000-01-01"
         };
         const address = {
             street: "Street One",
@@ -314,7 +327,8 @@ describe("Controller - CreateUserController", () => {
         const { sut } = makeSut();
         const account = {
             email: "email@test.com",
-            password: "Password1234"
+            password: "Password1234",
+            dateOfBirth: "2000-01-01"
         };
         const address = {
             street: "Street One",

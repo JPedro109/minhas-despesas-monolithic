@@ -24,7 +24,7 @@ export class CreateExpenseController extends AbstractController {
                     optional: false
                 },
                 dueDate: {
-                    type: "string",
+                    type: "date",
                     optional: false
                 }
             }

@@ -5,7 +5,7 @@ import { z } from "zod";
 
 type RequestSchema = {
     [field: string]: {
-        type: "string" | "number" | "boolean" | RequestSchema,
+        type: "string" | "number" | "boolean" | "date" | RequestSchema,
         optional: boolean
     }
 }
@@ -50,13 +50,19 @@ export abstract class AbstractController implements IHttp {
         const typesDict = {
             string: z.string().min(1),
             number: z.number(),
-            boolean: z.boolean()
+            boolean: z.boolean(),
+            date: z
+                .string()
+                .refine((value) => !isNaN(Date.parse(value)), {
+                    message: "The date must be in a valid format (ISO 8601)"
+                })
+                .transform((value) => new Date(value))
         };
 
         for (const field in schema) {
             const props = schema[field];
 
-            if (props.type != "string" && props.type != "number" && props.type != "boolean") {
+            if (props.type != "string" && props.type != "number" && props.type != "boolean" && props.type != "date") {
                 zodObject[field] =
                     props.optional ?
                         (this.mountZodObjet(props.type as unknown as RequestSchema, {}) as z.ZodAny).optional() :

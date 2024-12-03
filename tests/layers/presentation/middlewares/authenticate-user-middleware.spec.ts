@@ -1,12 +1,12 @@
 import { UnauthorizedError } from "@/layers/application";
 import { AuthenticateUserMiddleware } from "@/layers/presentation";
-import { AuthenticationStub } from "../__mocks__";
+import { SecurityStub } from "../__mocks__";
 
 const makeSut = (): {
     sut: AuthenticateUserMiddleware
-    authenticationStub: AuthenticationStub
+    authenticationStub: SecurityStub
 } => {
-    const authenticationStub = new AuthenticationStub();
+    const authenticationStub = new SecurityStub();
     const sut = new AuthenticateUserMiddleware(authenticationStub);
 
     return {

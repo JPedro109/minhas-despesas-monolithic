@@ -5,7 +5,7 @@ import {
     testUserEntityWithEmailIsNotVerified,
     unitOfWorkRepositoryStubFactory,
     cryptographyStubFactory,
-    authenticationStubFactory
+    securityStubFactory
 } from "../__mocks__";
 
 const makeSut = (): {
@@ -14,7 +14,7 @@ const makeSut = (): {
     cryptographyStub: CryptographyStub
 } => {
     const cryptographyStub = cryptographyStubFactory();
-    const authenticationStub = authenticationStubFactory();
+    const authenticationStub = securityStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UserLoginUseCase(unitOfWorkRepositoryStub, cryptographyStub, authenticationStub);
 

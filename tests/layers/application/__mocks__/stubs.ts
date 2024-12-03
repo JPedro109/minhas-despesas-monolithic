@@ -2,7 +2,7 @@
 
 import {
     ExpenseExtractProps,
-    IAuthentication,
+    ISecurity,
     IBucket,
     ICryptography,
     ICustomerRepository,
@@ -62,7 +62,7 @@ export class ExtractStub implements IExtract {
     }
 }
 
-export class AuthenticationStub implements IAuthentication {
+export class SecurityStub implements ISecurity {
     createJsonWebToken(payload: object, expiryTimeInSeconds: number): string {
         return "token";
     }
@@ -377,7 +377,7 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
 
 export const bucketStubFactory = (): BucketStub => new BucketStub();
 export const extractStubFactory = (): ExtractStub => new ExtractStub();
-export const authenticationStubFactory = (): AuthenticationStub => new AuthenticationStub();
+export const securityStubFactory = (): SecurityStub => new SecurityStub();
 export const cryptographyStubFactory = (): CryptographyStub => new CryptographyStub();
 export const generationStubFactory = (): GenerationStub => new GenerationStub();
 export const mailStubFactory = (): MailStub => new MailStub();

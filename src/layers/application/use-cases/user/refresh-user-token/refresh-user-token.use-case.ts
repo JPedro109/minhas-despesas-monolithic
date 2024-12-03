@@ -1,6 +1,6 @@
 import {
 	IUnitOfWorkRepository,
-	IAuthentication,
+	ISecurity,
 	JsonWebTokenTypeEnum,
 	RefreshUserTokenDTO,
 	IRefreshUserTokenUseCase,
@@ -11,7 +11,7 @@ export class RefreshUserTokenUseCase implements IRefreshUserTokenUseCase {
 
 	constructor(
 		private readonly unitOfWorkRepository: IUnitOfWorkRepository,
-		private readonly authentication: IAuthentication
+		private readonly authentication: ISecurity
 	) { }
 
 	async execute({ refreshToken }: RefreshUserTokenDTO): Promise<string> {

@@ -1,9 +1,9 @@
-import { IAuthentication, UnauthorizedError } from "@/layers/application";
+import { ISecurity, UnauthorizedError } from "@/layers/application";
 import { HttpRequest, HttpResponse, HttpHelper, AbstractMiddleware } from "@/layers/presentation";
 
 export class AuthenticateUserMiddleware extends AbstractMiddleware {
 
-	constructor(private readonly jsonWebToken: IAuthentication) { 
+	constructor(private readonly jsonWebToken: ISecurity) { 
 		super();
 	}
 

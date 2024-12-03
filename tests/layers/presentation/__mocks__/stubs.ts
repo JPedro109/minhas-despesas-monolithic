@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { IAuthentication, ILog, JsonWebTokenType } from "@/layers/application";
+import { ISecurity, ILog, JsonWebTokenType } from "@/layers/application";
 
-export class AuthenticationStub implements IAuthentication {
+export class SecurityStub implements ISecurity {
     createJsonWebToken(payload: object, expiryTimeInSeconds: number): string {
         return "token";
     }

@@ -1,17 +1,17 @@
 import { UnauthorizedError, RefreshUserTokenUseCase, InvalidJsonWebTokenError } from "@/layers/application";
 import {
     UserRepositoryStub,
-    AuthenticationStub,
+    SecurityStub,
     unitOfWorkRepositoryStubFactory,
-    authenticationStubFactory
+    securityStubFactory
 } from "../__mocks__";
 
 const makeSut = (): {
     sut: RefreshUserTokenUseCase,
     userRepositoryStub: UserRepositoryStub,
-    authenticationStub: AuthenticationStub
+    authenticationStub: SecurityStub
 } => {
-    const authenticationStub = authenticationStubFactory();
+    const authenticationStub = securityStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new RefreshUserTokenUseCase(unitOfWorkRepositoryStub, authenticationStub);
 

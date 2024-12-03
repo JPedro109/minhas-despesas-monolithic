@@ -1,6 +1,6 @@
 import {
 	IUnitOfWorkRepository,
-	IAuthentication,
+	ISecurity,
 	JsonWebTokenTypeEnum,
 	ICryptography,
 	UserLoginDTO,
@@ -14,7 +14,7 @@ export class UserLoginUseCase implements IUserLoginUseCase {
 	constructor(
 		private readonly unitOfWorkRepository: IUnitOfWorkRepository,
 		private readonly cryptography: ICryptography,
-		private readonly authentication: IAuthentication
+		private readonly authentication: ISecurity
 	) { }
 
 	async execute({ email, password }: UserLoginDTO): Promise<UserLoginResponseDTO> {

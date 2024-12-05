@@ -14,9 +14,9 @@ const makeSut = (): {
     cryptographyStub: CryptographyStub
 } => {
     const cryptographyStub = cryptographyStubFactory();
-    const authenticationStub = securityStubFactory();
+    const securityStub = securityStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new UserLoginUseCase(unitOfWorkRepositoryStub, cryptographyStub, authenticationStub);
+    const sut = new UserLoginUseCase(unitOfWorkRepositoryStub, cryptographyStub, securityStub);
 
     return {
         sut,

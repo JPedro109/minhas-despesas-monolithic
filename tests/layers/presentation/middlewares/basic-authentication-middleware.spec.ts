@@ -1,13 +1,12 @@
-import { UnauthorizedError } from "@/layers/application";
-import { AuthenticateUserMiddleware } from "@/layers/presentation";
+import { BasicAuthenticationMiddleware } from "@/layers/presentation";
 import { SecurityStub } from "../__mocks__";
 
 const makeSut = (): {
-    sut: AuthenticateUserMiddleware
+    sut: BasicAuthenticationMiddleware
     securityStub: SecurityStub
 } => {
     const securityStub = new SecurityStub();
-    const sut = new AuthenticateUserMiddleware(securityStub);
+    const sut = new BasicAuthenticationMiddleware(securityStub);
 
     return {
         sut,
@@ -15,9 +14,9 @@ const makeSut = (): {
     };
 };
 
-describe("Presentation - AuthenticateUserMiddleware", () => {
+describe("Presentation - BasicAuthenticationMiddleware", () => {
 
-    test("Should not authenticate user, because token is empty", async () => {
+    test("Should not authenticate user, because credential is empty", async () => {
         const authorization = "";
         const { sut } = makeSut();
 
@@ -32,8 +31,8 @@ describe("Presentation - AuthenticateUserMiddleware", () => {
         expect(result.statusCode).toBe(401);
     });
 
-    test("Should not authenticate user, because Bearer is invalid ", async () => {
-        const authorization = "B token";
+    test("Should not authenticate user, because Basic is invalid ", async () => {
+        const authorization = "B credential";
         const { sut } = makeSut();
 
         const result = await sut.http(
@@ -47,10 +46,10 @@ describe("Presentation - AuthenticateUserMiddleware", () => {
         expect(result.statusCode).toBe(401);
     });
 
-    test("Should not authenticate user, because token is invalid", async () => {
-        const authorization = "Bearer invalid_token";
+    test("Should not authenticate user, because credential is invalid", async () => {
+        const authorization = "Basic invalid_credential";
         const { sut, securityStub } = makeSut();
-        jest.spyOn(securityStub, "verifyJsonWebToken").mockImplementationOnce(() => { throw new UnauthorizedError("Error"); });
+        jest.spyOn(securityStub, "verifyBasicAuthenticationCredential").mockImplementationOnce(() => false);
 
         const result = await sut.http(
             {
@@ -64,7 +63,7 @@ describe("Presentation - AuthenticateUserMiddleware", () => {
     });
 
     test("Should authenticate user", async () => {
-        const authorization = "Bearer token";
+        const authorization = "Basic credential";
         const { sut } = makeSut();
 
         const result = await sut.http(

@@ -9,24 +9,24 @@ import {
 const makeSut = (): {
     sut: RefreshUserTokenUseCase,
     userRepositoryStub: UserRepositoryStub,
-    authenticationStub: SecurityStub
+    securityStub: SecurityStub
 } => {
-    const authenticationStub = securityStubFactory();
+    const securityStub = securityStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new RefreshUserTokenUseCase(unitOfWorkRepositoryStub, authenticationStub);
+    const sut = new RefreshUserTokenUseCase(unitOfWorkRepositoryStub, securityStub);
 
     return {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        authenticationStub
+        securityStub
     };
 };
 
 describe("Use case - RefreshUserTokenUseCase", () => {
     test("Should throw error if refresh token is invalid", () => {
-        const { sut, authenticationStub } = makeSut();
+        const { sut, securityStub } = makeSut();
         jest
-            .spyOn(authenticationStub, "verifyJsonWebToken")
+            .spyOn(securityStub, "verifyJsonWebToken")
             .mockImplementationOnce(() => {
                 throw new InvalidJsonWebTokenError("Token is invalid");
             });
@@ -46,11 +46,11 @@ describe("Use case - RefreshUserTokenUseCase", () => {
     });
 
     test("Should throw error if user does not exist", async () => {
-        const { sut, userRepositoryStub, authenticationStub } = makeSut();
+        const { sut, userRepositoryStub, securityStub } = makeSut();
         const refreshToken = "valid-refresh-token";
         jest.spyOn(userRepositoryStub, "getUserById").mockResolvedValueOnce(null);
         jest
-            .spyOn(authenticationStub, "verifyJsonWebToken")
+            .spyOn(securityStub, "verifyJsonWebToken")
             .mockImplementationOnce(() => ({
                 id: "1",
                 email: "email@test.com",
@@ -63,10 +63,10 @@ describe("Use case - RefreshUserTokenUseCase", () => {
     });
 
     test("Should return new access token on successful token refresh", async () => {
-        const { sut, authenticationStub } = makeSut();
+        const { sut, securityStub } = makeSut();
         const  refreshToken = "valid-refresh-token";
         jest
-            .spyOn(authenticationStub, "verifyJsonWebToken")
+            .spyOn(securityStub, "verifyJsonWebToken")
             .mockImplementationOnce(() => ({
                 id: "1",
                 email: "email@test.com",

@@ -3,7 +3,7 @@ import { HttpRequest, HttpResponse, HttpHelper, AbstractMiddleware } from "@/lay
 
 export class AuthenticateUserMiddleware extends AbstractMiddleware {
 
-	constructor(private readonly jsonWebToken: ISecurity) { 
+	constructor(private readonly secutiry: ISecurity) { 
 		super();
 	}
 
@@ -16,7 +16,7 @@ export class AuthenticateUserMiddleware extends AbstractMiddleware {
 
 		if(bearer !== "Bearer") return HttpHelper.unauthorized(new UnauthorizedError("Token inválido"));
     
-		const decode = this.jsonWebToken.verifyJsonWebToken(token);
+		const decode = this.secutiry.verifyJsonWebToken(token);
 
 		request.userId = decode.id as string;
 

@@ -74,6 +74,10 @@ export class SecurityStub implements ISecurity {
             type: "access_token"
         };
     }
+
+    verifyBasicAuthenticationCredential(credential: string): boolean {
+        return true;
+    }
 }
 
 export class CryptographyStub implements ICryptography {

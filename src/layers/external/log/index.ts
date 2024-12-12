@@ -1,1 +1,1 @@
-export * from "./winston-adapter";
+export * from "./winston.adapter";

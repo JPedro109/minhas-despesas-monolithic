@@ -5,20 +5,20 @@ import {
 import {
     UserRepositoryStub,
     UserVerificationCodeRepositoryStub,
-    MailStub,
+    NotificationStub,
     unitOfWorkRepositoryStubFactory,
     generationStubFactory,
-    mailStubFactory
+    notificationStubFactory
 } from "../__mocks__";
 
 const makeSut = (): {
     sut: SendUserPasswordRecoveryLinkUseCase,
     userRepositoryStub: UserRepositoryStub,
     userVerificationCodeStub: UserVerificationCodeRepositoryStub,
-    mailStub: MailStub
+    mailStub: NotificationStub
 } => {
     const generationStub = generationStubFactory();
-    const mailStub = mailStubFactory();
+    const mailStub = notificationStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new SendUserPasswordRecoveryLinkUseCase(
         unitOfWorkRepositoryStub,

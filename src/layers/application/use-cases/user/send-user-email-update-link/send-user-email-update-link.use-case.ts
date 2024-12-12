@@ -2,7 +2,7 @@ import { environmentVariables } from "@/shared";
 import { UserVerificationCodeEntity, UserVerificationCodeTypeEnum } from "@/layers/domain";
 import {
 	IUnitOfWorkRepository,
-	IMail,
+	INotification,
 	IGeneration,
 	ConflictedError,
 	MailBodyTypeEnum,
@@ -15,7 +15,7 @@ export class SendUserEmailUpdateLinkUseCase implements ISendUserEmailUpdateLinkU
 
 	constructor(
 		private readonly unitOfWorkRepository: IUnitOfWorkRepository,
-		private readonly mail: IMail,
+		private readonly notification: INotification,
 		private readonly generation: IGeneration
 	) { }
 
@@ -42,7 +42,7 @@ export class SendUserEmailUpdateLinkUseCase implements ISendUserEmailUpdateLinkU
 
 		await this.unitOfWorkRepository.transaction(async () => {
 			await userVerificationCodeRepository.createUserVerificationCode(userVerificationCode);
-			await this.mail.sendMail(email, MailBodyTypeEnum.UpdateUserEmailBody, {
+			await this.notification.sendMail(email, MailBodyTypeEnum.UpdateUserEmailBody, {
 				appUrl: environmentVariables.appUrl,
 				email,
 				code: verificationCode

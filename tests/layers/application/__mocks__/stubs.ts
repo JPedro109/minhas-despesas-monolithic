@@ -11,7 +11,7 @@ import {
     IExtractRepository,
     IGeneration,
     ILog,
-    IMail,
+    INotification,
     IPayment,
     IPaymentHistoryRepository,
     IPaymentMethodRepository,
@@ -100,7 +100,7 @@ export class GenerationStub implements IGeneration {
     }
 }
 
-export class MailStub implements IMail {
+export class NotificationStub implements INotification {
     async sendMail(to: string, type: MailBodyTypeEnum, props?: object): Promise<void> { }
 }
 
@@ -384,7 +384,7 @@ export const extractStubFactory = (): ExtractStub => new ExtractStub();
 export const securityStubFactory = (): SecurityStub => new SecurityStub();
 export const cryptographyStubFactory = (): CryptographyStub => new CryptographyStub();
 export const generationStubFactory = (): GenerationStub => new GenerationStub();
-export const mailStubFactory = (): MailStub => new MailStub();
+export const notificationStubFactory = (): NotificationStub => new NotificationStub();
 export const paymentStubFactory = (): PaymentStub => new PaymentStub();
 export const userRepositoryStubFactory = (): UserRepositoryStub => new UserRepositoryStub();
 export const userConsentRepositoryStubFactory = (): UserConsentRepositoryStub => new UserConsentRepositoryStub();

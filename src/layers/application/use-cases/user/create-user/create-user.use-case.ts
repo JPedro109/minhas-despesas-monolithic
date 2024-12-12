@@ -10,7 +10,7 @@ import {
 } from "@/layers/domain";
 import {
 	IUnitOfWorkRepository,
-	IMail,
+	INotification,
 	ICryptography,
 	IGeneration,
 	IPayment,
@@ -25,7 +25,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
 
 	constructor(
 		private readonly unitOfWorkRepository: IUnitOfWorkRepository,
-		private readonly mail: IMail,
+		private readonly notification: INotification,
 		private readonly cryptography: ICryptography,
 		private readonly generation: IGeneration,
 		private readonly payment: IPayment
@@ -96,7 +96,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
 					customerId
 				});
 				await customerRepository.createCustomer(customer);
-				await this.mail.sendMail(email, MailBodyTypeEnum.VerifyUserEmailBody, {
+				await this.notification.sendMail(email, MailBodyTypeEnum.VerifyUserEmailBody, {
 					appUrl: environmentVariables.appUrl,
 					email,
 					username,

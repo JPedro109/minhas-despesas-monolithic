@@ -1,9 +1,9 @@
 import { SendNotificationOfSubscriptionThatAreComingDue, MailBodyTypeEnum } from "@/layers/application";
 import {
     SubscriptionRepositoryStub,
-    MailStub,
+    NotificationStub,
     unitOfWorkRepositoryStubFactory,
-    mailStubFactory,
+    notificationStubFactory,
     testUserEntity,
     testPlanFreeEntity,
     testSubscriptionEntityWithPlanFree
@@ -12,9 +12,9 @@ import {
 const makeSut = (): {
     sut: SendNotificationOfSubscriptionThatAreComingDue,
     subscriptionRepositoryStub: SubscriptionRepositoryStub,
-    mailStub: MailStub
+    mailStub: NotificationStub
 } => {
-    const mailStub = mailStubFactory();
+    const mailStub = notificationStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new SendNotificationOfSubscriptionThatAreComingDue(
         unitOfWorkRepositoryStub,

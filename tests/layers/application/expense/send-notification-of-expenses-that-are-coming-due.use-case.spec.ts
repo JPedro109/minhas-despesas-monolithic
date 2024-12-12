@@ -2,9 +2,9 @@ import { SendNotificationOfExpensesThatAreComingDueUseCase, MailBodyTypeEnum } f
 import {
     ExpenseRepositoryStub,
     UserRepositoryStub,
-    MailStub,
+    NotificationStub,
     unitOfWorkRepositoryStubFactory,
-    mailStubFactory,
+    notificationStubFactory,
     testUserEntity,
     testExpenseEntityUnpaid
 } from "../__mocks__";
@@ -13,9 +13,9 @@ const makeSut = (): {
     sut: SendNotificationOfExpensesThatAreComingDueUseCase,
     expenseRepositoryStub: ExpenseRepositoryStub,
     userRepositoryStub: UserRepositoryStub,
-    mailStub: MailStub
+    mailStub: NotificationStub
 } => {
-    const mailStub = mailStubFactory();
+    const mailStub = notificationStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new SendNotificationOfExpensesThatAreComingDueUseCase(
         unitOfWorkRepositoryStub,

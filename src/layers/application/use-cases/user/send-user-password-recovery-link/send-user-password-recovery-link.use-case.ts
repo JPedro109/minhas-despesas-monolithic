@@ -2,7 +2,7 @@ import { environmentVariables } from "@/shared";
 import { UserVerificationCodeEntity, UserVerificationCodeTypeEnum } from "@/layers/domain";
 import {
 	IUnitOfWorkRepository,
-	IMail,
+	INotification,
 	IGeneration,
 	MailBodyTypeEnum,
 	SendUserPasswordRecoveryLinkDTO,
@@ -14,7 +14,7 @@ export class SendUserPasswordRecoveryLinkUseCase implements ISendUserPasswordRec
 
 	constructor(
 		private readonly unitOfWorkRepository: IUnitOfWorkRepository,
-		private readonly mail: IMail,
+		private readonly notification: INotification,
 		private readonly generation: IGeneration
 	) { }
 
@@ -38,7 +38,7 @@ export class SendUserPasswordRecoveryLinkUseCase implements ISendUserPasswordRec
 
 		await this.unitOfWorkRepository.transaction(async () => {
 			await userVerificationCodeRepository.createUserVerificationCode(userVerificationCode);
-			await this.mail.sendMail(email, MailBodyTypeEnum.RecoveryUserPasswordBody, {
+			await this.notification.sendMail(email, MailBodyTypeEnum.RecoveryUserPasswordBody, {
 				appUrl: environmentVariables.appUrl,
 				email,
 				code: verificationCode

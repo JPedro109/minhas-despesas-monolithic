@@ -1,11 +1,11 @@
 import { DomainError } from "@/layers/domain";
 import { ConflictedError, InvalidParamError, CreateUserUseCase } from "@/layers/application";
 import {
-    MailStub,
+    NotificationStub,
     CustomerRepositoryStub,
     UserRepositoryStub,
     unitOfWorkRepositoryStubFactory,
-    mailStubFactory,
+    notificationStubFactory,
     cryptographyStubFactory,
     generationStubFactory,
     paymentStubFactory
@@ -15,9 +15,9 @@ const makeSut = (): {
     sut: CreateUserUseCase,
     userRepositoryStub: UserRepositoryStub,
     customerRepositoryStub: CustomerRepositoryStub,
-    mailStub: MailStub
+    mailStub: NotificationStub
 } => {
-    const mailStub = mailStubFactory();
+    const mailStub = notificationStubFactory();
     const cryptographyStub = cryptographyStubFactory();
     const generationStub = generationStubFactory();
     const paymentStub = paymentStubFactory();

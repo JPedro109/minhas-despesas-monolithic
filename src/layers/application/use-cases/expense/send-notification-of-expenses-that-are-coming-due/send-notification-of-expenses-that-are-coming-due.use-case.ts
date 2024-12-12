@@ -1,5 +1,5 @@
 import { 
-    IMail,
+    INotification,
     ISendNotificationOfExpensesThatAreComingDueUseCase, 
     IUnitOfWorkRepository,
     MailBodyTypeEnum
@@ -8,7 +8,7 @@ import {
 export class SendNotificationOfExpensesThatAreComingDueUseCase implements ISendNotificationOfExpensesThatAreComingDueUseCase {
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository,
-        private readonly mail: IMail
+        private readonly notification: INotification
     ) { }
 
     async execute(): Promise<void> {
@@ -45,7 +45,7 @@ export class SendNotificationOfExpensesThatAreComingDueUseCase implements ISendN
         const emails = [];
         users.forEach(user => {
             const expenses = expensesMap.get(user.id);
-            const email = this.mail.sendMail(user.email, MailBodyTypeEnum.NotifyExpenseThatIsDueBody, expenses);
+            const email = this.notification.sendMail(user.email, MailBodyTypeEnum.NotifyExpenseThatIsDueBody, expenses);
             emails.push(email);
         });
 

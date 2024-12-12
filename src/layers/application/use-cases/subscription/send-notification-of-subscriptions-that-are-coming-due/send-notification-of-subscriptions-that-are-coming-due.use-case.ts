@@ -1,5 +1,5 @@
 import { 
-    IMail,
+    INotification,
     ISendNotificationOfSubscriptionThatAreComingDue, 
     IUnitOfWorkRepository, 
     MailBodyTypeEnum
@@ -9,7 +9,7 @@ export class SendNotificationOfSubscriptionThatAreComingDue implements ISendNoti
 
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository,
-        private readonly mail: IMail
+        private readonly notification: INotification
     ) { }
 
     async execute(): Promise<void> {
@@ -36,7 +36,7 @@ export class SendNotificationOfSubscriptionThatAreComingDue implements ISendNoti
         const emails = [];
         users.forEach(user => {
             const expenses = subscriptionsMap.get(user.id);
-            const email = this.mail.sendMail(user.email, MailBodyTypeEnum.NotifySubscriptionThatIsDueBody, expenses);
+            const email = this.notification.sendMail(user.email, MailBodyTypeEnum.NotifySubscriptionThatIsDueBody, expenses);
             emails.push(email);
         });
 

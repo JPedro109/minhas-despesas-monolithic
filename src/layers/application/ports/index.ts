@@ -1,6 +1,6 @@
 export * from "./cryptography";
 export * from "./generation";
-export * from "./mail";
+export * from "./notification";
 export * from "./payment";
 export * from "./repositories";
 export * from "./security";

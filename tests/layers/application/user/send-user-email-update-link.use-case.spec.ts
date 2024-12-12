@@ -5,21 +5,21 @@ import {
 } from "@/layers/application";
 import {
     UserRepositoryStub,
-    MailStub,
+    NotificationStub,
     UserVerificationCodeRepositoryStub,
     unitOfWorkRepositoryStubFactory,
     generationStubFactory,
-    mailStubFactory,
+    notificationStubFactory,
 } from "../__mocks__";
 
 const makeSut = (): {
     sut: SendUserEmailUpdateLinkUseCase,
     userRepositoryStub: UserRepositoryStub,
     userVerificationCodeStub: UserVerificationCodeRepositoryStub,
-    mailStub: MailStub
+    mailStub: NotificationStub
 } => {
     const generationStub = generationStubFactory();
-    const mailStub = mailStubFactory();
+    const mailStub = notificationStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new SendUserEmailUpdateLinkUseCase(
         unitOfWorkRepositoryStub,

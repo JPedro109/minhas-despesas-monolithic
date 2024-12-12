@@ -11,6 +11,7 @@ type EnvironmentVariables = {
     awsRegion: string;
     awsBucketName: string;
     sendMailQueue: string;
+    stripeSecretKey: string;
 }
 
 export const environmentVariables: EnvironmentVariables = {
@@ -23,5 +24,6 @@ export const environmentVariables: EnvironmentVariables = {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     awsRegion: process.env.AWS_REGION,
     awsBucketName: process.env.AWS_BUCKET_NAME,
-    sendMailQueue: process.env.SEND_MAIL_QUEUE
+    sendMailQueue: process.env.SEND_MAIL_QUEUE,
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY
 };

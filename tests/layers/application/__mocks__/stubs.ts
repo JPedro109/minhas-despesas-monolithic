@@ -113,7 +113,9 @@ export class PaymentStub implements IPayment {
 
     async deleteCustomer(customerId: string): Promise<void> { }
 
-    async createPaymentMethod(customerId: string, paymentMethodId: string): Promise<void> { }
+    async createPaymentMethod(customerId: string, paymentMethodId: string): Promise<string> {
+        return "1";
+    }
 
     async deletePaymentMethodByToken(paymentMethodId: string): Promise<void> { }
 
@@ -296,7 +298,7 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
         expenseId: string,
         paymentMonth: number,
         paymentYear: number
-    ): Promise<void> {  }
+    ): Promise<void> { }
 
 }
 

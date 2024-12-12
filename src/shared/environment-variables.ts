@@ -10,6 +10,7 @@ type EnvironmentVariables = {
     secretAccessKey: string;
     awsRegion: string;
     awsBucketName: string;
+    sendMailQueue: string;
 }
 
 export const environmentVariables: EnvironmentVariables = {
@@ -21,5 +22,6 @@ export const environmentVariables: EnvironmentVariables = {
     awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     awsRegion: process.env.AWS_REGION,
-    awsBucketName: process.env.AWS_BUCKET_NAME
+    awsBucketName: process.env.AWS_BUCKET_NAME,
+    sendMailQueue: process.env.SEND_MAIL_QUEUE
 };

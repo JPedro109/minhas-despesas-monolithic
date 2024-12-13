@@ -6,7 +6,7 @@
   "repository": "https://github.com/JPedro109/minhas-despesas-api.git",
   "license": "MIT",
   "scripts": {
-    "postinstall": "husky init",
+    "postinstall": "husky",
     "test": "jest --passWithNoTests --detectOpenHandles --silent",
     "test:coverage": "yarn test --coverage",
     "test:staged": "yarn test --findRelatedTests",
@@ -20,8 +20,7 @@
     "test:unit:verbose": "yarn test:verbose -c jest-unit-config.js",
     "test:integration:verbose": "yarn test:verbose -c jest-integration-config.js",
     "test:unit:watch:verbose": "yarn test:verbose --watchAll -c jest-unit-config.js",
-    "test:integration:watch:verbose": "yarn test:verbose --watchAll -c jest-integration-config.js",
-    "prepare": "husky"
+    "test:integration:watch:verbose": "yarn test:verbose --watchAll -c jest-integration-config.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.1",

@@ -6,6 +6,8 @@
   "repository": "https://github.com/JPedro109/minhas-despesas-api.git",
   "license": "MIT",
   "scripts": {
+    "migrate:generate": "prisma migrate dev && prisma generate",
+    "migrate:execute": "prisma generate && prisma migrate deploy",
     "postinstall": "husky",
     "test": "jest --passWithNoTests --detectOpenHandles --silent",
     "test:coverage": "yarn test --coverage",

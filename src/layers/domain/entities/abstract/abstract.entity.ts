@@ -1,9 +1,10 @@
 import { DomainError } from "@/layers/domain";
+import { randomUUID } from "node:crypto";
 
 export abstract class AbstractEntity<Props> {
 	constructor(
         protected props: Props, 
-        private readonly entityId: string = "1",
+        private readonly entityId: string = randomUUID(),
         private readonly entityCreatedAt: Date = new Date()
 	) { }
 

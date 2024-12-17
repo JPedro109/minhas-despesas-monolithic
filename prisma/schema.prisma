@@ -33,7 +33,7 @@ model PrismaExpense {
   id           String     @id @db.Uuid
   userId       String     @map("user_id") @db.Uuid
   user         PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  expenseName  String     @map("expense_name") @db.VarChar(12)
+  expenseName  String     @map("expense_name") @db.VarChar(60)
   expenseValue Float      @map("expense_value")
   dueDate      DateTime   @map("due_date") @db.Date
   paid         Boolean
@@ -82,7 +82,7 @@ model PrismaUserVerificationCode {
   userId                     String     @map("user_id") @db.Uuid
   user                       PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   type                       String     @db.VarChar(10)
-  verificationCode           String     @map("verification_code") @db.VarChar(60)
+  verificationCode           String     @map("verification_code") @db.VarChar(6)
   verificationCodeExpiryDate DateTime   @map("verification_code_expiry_date")
   valid                      Boolean
   createdAt                  DateTime   @map("created_at")
@@ -96,7 +96,7 @@ model PrismaPaymentHistory {
   userId       String     @map("user_id") @db.Uuid
   expenseId    String     @map("expense_id") @db.Uuid
   user         PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  expenseName  String     @map("expense_name") @db.VarChar(12)
+  expenseName  String     @map("expense_name") @db.VarChar(60)
   expenseValue Float      @map("expense_value")
   dueDate      DateTime   @map("due_date") @db.Date
   paymentDate  DateTime   @map("payment_date")
@@ -116,6 +116,7 @@ model PrismaSubscription {
   startDate DateTime   @map("start_date")
   endDate   DateTime?  @map("end_date")
   createdAt DateTime   @map("created_at")
+  updatedAt DateTime   @map("updated_at")
 
   @@map("subscriptions")
 }
@@ -128,6 +129,7 @@ model PrismaExtract {
   referenceYear  Int        @map("reference_year")
   referenceMonth Int        @map("reference_month")
   expiryDate     DateTime   @map("expiry_date")
+  urlExpiryDate  DateTime   @map("url_expiry_date")
   createdAt      DateTime   @map("created_at")
   updatedAt      DateTime?  @map("updated_at")
 

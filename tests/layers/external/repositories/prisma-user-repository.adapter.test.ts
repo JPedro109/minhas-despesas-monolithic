@@ -45,7 +45,7 @@ describe("External - PrismaUserRepositoryAdapter", () => {
 
     describe("getUserById", () => {
         test("Should get null", async () => {
-            const id = "00000000-0000-0000-0000-000000000001";
+            const id = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             const sut = new PrismaUserRepositoryAdapter(databaseSQLHelper);
     
             const result = await sut.getUserById(id);

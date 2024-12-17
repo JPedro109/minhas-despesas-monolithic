@@ -1,4 +1,4 @@
-import { CustomerEntity, UserEntity } from "@/layers/domain";
+import { CustomerEntity, ExpenseEntity, UserEntity } from "@/layers/domain";
 
 export const testUserEntity = (): UserEntity => new UserEntity(
     {
@@ -26,4 +26,16 @@ export const testCustomerEntity = (): CustomerEntity => new CustomerEntity(
         customerId: "1"
     },
     "00000000-0000-0000-0000-000000000000"
+);
+
+export const testExpenseEntityPaid = (): ExpenseEntity => new ExpenseEntity(
+    {
+        userId: "00000000-0000-0000-0000-000000000000",
+        expenseName: "Expense",
+        expenseValue: 100,
+        dueDate: new Date("3000-01-01"),
+        paid: true
+    },
+    "00000000-0000-0000-0000-000000000000",
+    new Date("3000-01-01")
 );

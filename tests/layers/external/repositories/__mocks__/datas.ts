@@ -1,4 +1,4 @@
-import { CustomerEntity, ExpenseEntity, UserEntity } from "@/layers/domain";
+import { CustomerEntity, ExpenseEntity, ExtractEntity, UserEntity } from "@/layers/domain";
 
 export const testUserEntity = (): UserEntity => new UserEntity(
     {
@@ -38,4 +38,30 @@ export const testExpenseEntityPaid = (): ExpenseEntity => new ExpenseEntity(
     },
     "00000000-0000-0000-0000-000000000000",
     new Date("3000-01-01")
+);
+
+export const testExtractEntity = (): ExtractEntity => new ExtractEntity(
+    {
+        userId: "00000000-0000-0000-0000-000000000000",
+        url: "https://url.com",
+        expiryDate: new Date("3000-01-01"),
+        urlExpiryDate: new Date("3000-01-01"),
+        referenceMonth: 1,
+        referenceYear: 2024
+    },
+    "00000000-0000-0000-0000-000000000000",
+    new Date()
+);
+
+export const testExtractEntityExpired = (): ExtractEntity => new ExtractEntity(
+    {
+        userId: "00000000-0000-0000-0000-000000000000",
+        url: "https://url.com",
+        expiryDate: new Date("2000-01-01"),
+        urlExpiryDate: new Date("2000-01-01"),
+        referenceMonth: 1,
+        referenceYear: 2024
+    },
+    "00000000-0000-0000-0000-000000000001",
+    new Date()
 );

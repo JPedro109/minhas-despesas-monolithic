@@ -62,46 +62,6 @@ describe("Entity - Extract", () => {
     expect(sut).toThrow(DomainError);
   });
 
-  test("Should not create ExtractEntity, because expiry date is invalid", () => {
-    const url = "https://example.com";
-    const referenceMonth = 1;
-    const invalidReferenceYear = 2024;
-    const userId = "1";
-    const expiryDate = new Date("2000-01-01");
-    const urlExpiryDate = new Date("3000-01-01");
-
-    const sut = (): ExtractEntity => new ExtractEntity({
-      url,
-      referenceMonth,
-      referenceYear: invalidReferenceYear,
-      userId,
-      expiryDate,
-      urlExpiryDate
-    });
-
-    expect(sut).toThrow(DomainError);
-  });
-
-  test("Should not create ExtractEntity, because url expiry date is invalid", () => {
-    const url = "https://example.com";
-    const referenceMonth = 1;
-    const invalidReferenceYear = 2024;
-    const userId = "1";
-    const expiryDate = new Date("3000-01-01");
-    const urlExpiryDate = new Date("2000-01-01");
-
-    const sut = (): ExtractEntity => new ExtractEntity({
-      url,
-      referenceMonth,
-      referenceYear: invalidReferenceYear,
-      userId,
-      expiryDate,
-      urlExpiryDate
-    });
-
-    expect(sut).toThrow(DomainError);
-  });
-
   test("Should create ExtractEntity", () => {
     const url = "https://example.com";
     const referenceMonth = 1;

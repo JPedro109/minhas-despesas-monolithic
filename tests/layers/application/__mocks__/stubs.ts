@@ -304,11 +304,11 @@ export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
 
 export class ExtractRepositoryStub implements IExtractRepository {
 
+    setContext(context: unknown): void { }
+
     async createExtract(extract: ExtractEntity): Promise<ExtractEntity> {
         return testExtractEntity();
     }
-
-    async updateExtract(extract: ExtractEntity): Promise<void> { }
 
     async getExtractById(id: string): Promise<ExtractEntity> {
         return testExtractEntity();

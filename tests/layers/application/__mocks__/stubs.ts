@@ -280,6 +280,8 @@ export class ExpenseRepositoryStub implements IExpenseRepository {
 
 export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
 
+    setContext(context: unknown): void { }    
+
     async createPaymentHistory(paymentHistory: PaymentHistoryEntity): Promise<PaymentHistoryEntity> {
         return testPaymentHistoryEntity();
     }

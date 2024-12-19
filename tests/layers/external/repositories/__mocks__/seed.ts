@@ -5,6 +5,7 @@ import {
     PrismaExtractRepositoryAdapter, 
     PrismaPaymentHistoryRepositoryAdapter, 
     PrismaPaymentMethodRepositoryAdapter, 
+    PrismaSubscriptionRepositoryAdapter, 
     PrismaUserRepositoryAdapter 
 } from "@/layers/external";
 
@@ -16,6 +17,7 @@ import {
     testPaymentHistoryEntity, 
     testPaymentMethodEntity, 
     testPlanFreeEntity, 
+    testSubscriptionEntity, 
     testUserEntity, 
     testUserEntityTwo 
 } from "./datas";
@@ -27,6 +29,7 @@ export class Seed {
     private readonly prismaExtractRepository: PrismaExtractRepositoryAdapter;
     private readonly prismaPaymentHistoryRepository: PrismaPaymentHistoryRepositoryAdapter;
     private readonly prismaPaymentMethodRepository: PrismaPaymentMethodRepositoryAdapter;
+    private readonly prismaSubscriptionRepository: PrismaSubscriptionRepositoryAdapter;
 
     constructor(private readonly databaseSQLHelper: DatabaseSQLHelper) {
         this.prismaUserRepository = new PrismaUserRepositoryAdapter(this.databaseSQLHelper);
@@ -35,17 +38,10 @@ export class Seed {
         this.prismaExtractRepository = new PrismaExtractRepositoryAdapter(this.databaseSQLHelper);
         this.prismaPaymentHistoryRepository = new PrismaPaymentHistoryRepositoryAdapter(this.databaseSQLHelper);
         this.prismaPaymentMethodRepository = new PrismaPaymentMethodRepositoryAdapter(this.databaseSQLHelper);
+        this.prismaSubscriptionRepository = new PrismaSubscriptionRepositoryAdapter(this.databaseSQLHelper);
     }
 
     async populate(): Promise<void> {
-        await this.prismaUserRepository.createUser(testUserEntity());
-        await this.prismaCustomerRepository.createCustomer(testCustomerEntity());
-        await this.prismaExpenseRepository.createExpense(testExpenseEntityPaid());
-        await this.prismaExtractRepository.createExtract(testExtractEntity());
-        await this.prismaExtractRepository.createExtract(testExtractEntityExpired());
-        await this.prismaPaymentHistoryRepository.createPaymentHistory(testPaymentHistoryEntity());
-        await this.prismaPaymentMethodRepository.createPaymentMethod(testPaymentMethodEntity());
-
         const plan = testPlanFreeEntity();
         const action = await this.databaseSQLHelper.client.prismaAction.create(
             {
@@ -77,11 +73,21 @@ export class Seed {
             }
         );
 
+        await this.prismaUserRepository.createUser(testUserEntity());
+        await this.prismaCustomerRepository.createCustomer(testCustomerEntity());
+        await this.prismaExpenseRepository.createExpense(testExpenseEntityPaid());
+        await this.prismaExtractRepository.createExtract(testExtractEntity());
+        await this.prismaExtractRepository.createExtract(testExtractEntityExpired());
+        await this.prismaPaymentHistoryRepository.createPaymentHistory(testPaymentHistoryEntity());
+        await this.prismaPaymentMethodRepository.createPaymentMethod(testPaymentMethodEntity());
+        await this.prismaSubscriptionRepository.createSubscription(testSubscriptionEntity());
+
         await this.prismaUserRepository.createUser(testUserEntityTwo());
     }
 
     async truncate(): Promise<void> {
         await this.databaseSQLHelper.client.prismaUser.deleteMany({});
+        
         await this.databaseSQLHelper.client.prismaPlan.deleteMany({});
         await this.databaseSQLHelper.client.prismaAction.deleteMany({});
     }

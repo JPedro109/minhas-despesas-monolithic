@@ -1,4 +1,14 @@
-import { CustomerEntity, ExpenseEntity, ExtractEntity, PaymentHistoryEntity, PaymentMethodEntity, PlanEntity, PlanNameEnum, UserEntity } from "@/layers/domain";
+import {
+    CustomerEntity,
+    ExpenseEntity,
+    ExtractEntity,
+    PaymentHistoryEntity,
+    PaymentMethodEntity,
+    PlanEntity,
+    PlanNameEnum,
+    SubscriptionEntity,
+    UserEntity
+} from "@/layers/domain";
 
 export const testUserEntity = (): UserEntity => new UserEntity(
     {
@@ -103,6 +113,21 @@ export const testPlanFreeEntity = (): PlanEntity => new PlanEntity(
             }
         ],
         durationInDays: 0
+    },
+    "00000000-0000-0000-0000-000000000000",
+    new Date()
+);
+
+export const testSubscriptionEntity = (): SubscriptionEntity => new SubscriptionEntity(
+    {
+        userId: "00000000-0000-0000-0000-000000000000",
+        active: true,
+        renewable: true,
+        startDate: new Date("2999-01-01"),
+        endDate: new Date("3000-01-01"),
+        updatedAt: new Date(),
+        plan: testPlanFreeEntity(),
+        amount: 100
     },
     "00000000-0000-0000-0000-000000000000",
     new Date()

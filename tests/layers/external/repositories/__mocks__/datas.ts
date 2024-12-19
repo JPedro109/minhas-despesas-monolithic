@@ -7,7 +7,9 @@ import {
     PlanEntity,
     PlanNameEnum,
     SubscriptionEntity,
-    UserEntity
+    UserEntity,
+    UserVerificationCodeEntity,
+    UserVerificationCodeTypeEnum
 } from "@/layers/domain";
 
 export const testUserEntity = (): UserEntity => new UserEntity(
@@ -128,6 +130,19 @@ export const testSubscriptionEntity = (): SubscriptionEntity => new Subscription
         updatedAt: new Date(),
         plan: testPlanFreeEntity(),
         amount: 100
+    },
+    "00000000-0000-0000-0000-000000000000",
+    new Date()
+);
+
+export const testUserVerificationCodeEntity = (): UserVerificationCodeEntity => new UserVerificationCodeEntity(
+    {
+        user: testUserEntity(),
+        verificationCode: "000000",
+        updatedAt: new Date(),
+        type: UserVerificationCodeTypeEnum.VerifyUserEmail,
+        valid: true,
+        verificationCodeExpiryDate: new Date("3000-01-01")
     },
     "00000000-0000-0000-0000-000000000000",
     new Date()

@@ -6,7 +6,8 @@ import {
     PrismaPaymentHistoryRepositoryAdapter, 
     PrismaPaymentMethodRepositoryAdapter, 
     PrismaSubscriptionRepositoryAdapter, 
-    PrismaUserRepositoryAdapter 
+    PrismaUserRepositoryAdapter, 
+    PrismaUserVerificationCodeRepositoryAdapter
 } from "@/layers/external";
 
 import { 
@@ -19,7 +20,8 @@ import {
     testPlanFreeEntity, 
     testSubscriptionEntity, 
     testUserEntity, 
-    testUserEntityTwo 
+    testUserEntityTwo, 
+    testUserVerificationCodeEntity
 } from "./datas";
 
 export class Seed {
@@ -30,6 +32,7 @@ export class Seed {
     private readonly prismaPaymentHistoryRepository: PrismaPaymentHistoryRepositoryAdapter;
     private readonly prismaPaymentMethodRepository: PrismaPaymentMethodRepositoryAdapter;
     private readonly prismaSubscriptionRepository: PrismaSubscriptionRepositoryAdapter;
+    private readonly prismaUserVerificationCodeRepository: PrismaUserVerificationCodeRepositoryAdapter;
 
     constructor(private readonly databaseSQLHelper: DatabaseSQLHelper) {
         this.prismaUserRepository = new PrismaUserRepositoryAdapter(this.databaseSQLHelper);
@@ -39,6 +42,7 @@ export class Seed {
         this.prismaPaymentHistoryRepository = new PrismaPaymentHistoryRepositoryAdapter(this.databaseSQLHelper);
         this.prismaPaymentMethodRepository = new PrismaPaymentMethodRepositoryAdapter(this.databaseSQLHelper);
         this.prismaSubscriptionRepository = new PrismaSubscriptionRepositoryAdapter(this.databaseSQLHelper);
+        this.prismaUserVerificationCodeRepository = new PrismaUserVerificationCodeRepositoryAdapter(this.databaseSQLHelper);
     }
 
     async populate(): Promise<void> {
@@ -81,6 +85,7 @@ export class Seed {
         await this.prismaPaymentHistoryRepository.createPaymentHistory(testPaymentHistoryEntity());
         await this.prismaPaymentMethodRepository.createPaymentMethod(testPaymentMethodEntity());
         await this.prismaSubscriptionRepository.createSubscription(testSubscriptionEntity());
+        await this.prismaUserVerificationCodeRepository.createUserVerificationCode(testUserVerificationCodeEntity());
 
         await this.prismaUserRepository.createUser(testUserEntityTwo());
     }

@@ -8,7 +8,8 @@ import {
     PrismaPlan, 
     PrismaSubscription, 
     PrismaUser, 
-    PrismaUserConsent
+    PrismaUserConsent,
+    PrismaUserVerificationCode
 } from "@prisma/client";
 import { 
     CustomerEntity, 
@@ -20,7 +21,9 @@ import {
     PlanNameEnum, 
     SubscriptionEntity, 
     UserConsentEntity, 
-    UserEntity 
+    UserEntity, 
+    UserVerificationCodeEntity,
+    UserVerificationCodeTypeEnum
 } from "@/layers/domain";
 
 export class PrismaMapperHelper {
@@ -138,7 +141,9 @@ export class PrismaMapperHelper {
                 endDate: prismaSubscription.endDate,
                 plan: PrismaMapperHelper.toPlanEntity(prismaPlan, prismaActions),
                 updatedAt: prismaSubscription.updatedAt
-            }
+            },
+            prismaSubscription.id,
+            prismaSubscription.createdAt
         );
     }
 
@@ -152,6 +157,24 @@ export class PrismaMapperHelper {
             },
             prismaUserConsent.id,
             prismaUserConsent.createdAt
+        );
+    }
+
+    static toUserVerificationCodeEntity(
+        prismaUserVerificationCode: PrismaUserVerificationCode,
+        prismaUser: PrismaUser
+    ): UserVerificationCodeEntity {
+        return new UserVerificationCodeEntity(
+            {
+                user: PrismaMapperHelper.toUserEntity(prismaUser),
+                type: prismaUserVerificationCode.type as UserVerificationCodeTypeEnum,
+                valid: prismaUserVerificationCode.valid,
+                verificationCode: prismaUserVerificationCode.verificationCode,
+                verificationCodeExpiryDate: prismaUserVerificationCode.verificationCodeExpiryDate,
+                updatedAt: prismaUserVerificationCode.updatedAt
+            },
+            prismaUserVerificationCode.id,
+            prismaUserVerificationCode.createdAt
         );
     }
 }

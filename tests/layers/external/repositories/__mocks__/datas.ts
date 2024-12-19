@@ -1,4 +1,4 @@
-import { CustomerEntity, ExpenseEntity, ExtractEntity, PaymentHistoryEntity, UserEntity } from "@/layers/domain";
+import { CustomerEntity, ExpenseEntity, ExtractEntity, PaymentHistoryEntity, PaymentMethodEntity, UserEntity } from "@/layers/domain";
 
 export const testUserEntity = (): UserEntity => new UserEntity(
     {
@@ -74,6 +74,16 @@ export const testPaymentHistoryEntity = (): PaymentHistoryEntity => new PaymentH
         expenseName: "Name",
         expenseValue: 100,
         paidDate: new Date("3000-01-01")
+    },
+    "00000000-0000-0000-0000-000000000000",
+    new Date()
+);
+
+export const testPaymentMethodEntity = (): PaymentMethodEntity => new PaymentMethodEntity(
+    {
+        userId: "00000000-0000-0000-0000-000000000000",
+        name: "Card One",
+        token: "1"
     },
     "00000000-0000-0000-0000-000000000000",
     new Date()

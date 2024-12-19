@@ -4,6 +4,7 @@ import {
     PrismaExpenseRepositoryAdapter, 
     PrismaExtractRepositoryAdapter, 
     PrismaPaymentHistoryRepositoryAdapter, 
+    PrismaPaymentMethodRepositoryAdapter, 
     PrismaUserRepositoryAdapter 
 } from "@/layers/external";
 
@@ -13,6 +14,7 @@ import {
     testExtractEntity, 
     testExtractEntityExpired, 
     testPaymentHistoryEntity, 
+    testPaymentMethodEntity, 
     testUserEntity, 
     testUserEntityTwo 
 } from "./datas";
@@ -23,6 +25,7 @@ export class Seed {
     private readonly prismaExpenseRepository: PrismaExpenseRepositoryAdapter;
     private readonly prismaExtractRepository: PrismaExtractRepositoryAdapter;
     private readonly prismaPaymentHistoryRepository: PrismaPaymentHistoryRepositoryAdapter;
+    private readonly prismaPaymentMethodRepository: PrismaPaymentMethodRepositoryAdapter;
 
     constructor(private readonly databaseSQLHelper: DatabaseSQLHelper) {
         this.prismaUserRepository = new PrismaUserRepositoryAdapter(this.databaseSQLHelper);
@@ -30,6 +33,7 @@ export class Seed {
         this.prismaExpenseRepository = new PrismaExpenseRepositoryAdapter(this.databaseSQLHelper);
         this.prismaExtractRepository = new PrismaExtractRepositoryAdapter(this.databaseSQLHelper);
         this.prismaPaymentHistoryRepository = new PrismaPaymentHistoryRepositoryAdapter(this.databaseSQLHelper);
+        this.prismaPaymentMethodRepository = new PrismaPaymentMethodRepositoryAdapter(this.databaseSQLHelper);
     }
 
     async populate(): Promise<void> {
@@ -39,6 +43,7 @@ export class Seed {
         await this.prismaExtractRepository.createExtract(testExtractEntity());
         await this.prismaExtractRepository.createExtract(testExtractEntityExpired());
         await this.prismaPaymentHistoryRepository.createPaymentHistory(testPaymentHistoryEntity());
+        await this.prismaPaymentMethodRepository.createPaymentMethod(testPaymentMethodEntity());
 
         await this.prismaUserRepository.createUser(testUserEntityTwo());
     }

@@ -1,5 +1,19 @@
-import { PrismaCustomer, PrismaExpense, PrismaExtract, PrismaPaymentHistory, PrismaUser } from "@prisma/client";
-import { CustomerEntity, ExpenseEntity, ExtractEntity, PaymentHistoryEntity, UserEntity } from "@/layers/domain";
+import { 
+    PrismaCustomer, 
+    PrismaExpense, 
+    PrismaExtract, 
+    PrismaPaymentHistory, 
+    PrismaPaymentMethod, 
+    PrismaUser 
+} from "@prisma/client";
+import { 
+    CustomerEntity, 
+    ExpenseEntity, 
+    ExtractEntity, 
+    PaymentHistoryEntity, 
+    PaymentMethodEntity, 
+    UserEntity 
+} from "@/layers/domain";
 
 export class PrismaMapperHelper {
     static toUserEntity(prismaUser: PrismaUser): UserEntity {
@@ -70,6 +84,19 @@ export class PrismaMapperHelper {
             },
             prismaPaymentHistory.id,
             prismaPaymentHistory.createdAt
+        );
+    }
+
+    static toPaymentMethodEntity(prismaPaymentMethod: PrismaPaymentMethod): PaymentMethodEntity {
+        return new PaymentMethodEntity(
+            {
+                userId: prismaPaymentMethod.userId,
+                name: prismaPaymentMethod.name,
+                token: prismaPaymentMethod.token,
+                updatedAt: prismaPaymentMethod.updatedAt
+            },
+            prismaPaymentMethod.id,
+            prismaPaymentMethod.createdAt
         );
     }
 }

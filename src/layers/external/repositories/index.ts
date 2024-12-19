@@ -9,3 +9,4 @@ export * from "./prisma-payment-history-repository.adapter";
 export * from "./prisma-payment-method-repository.adapter";
 export * from "./prisma-plan-repository.adapter";
 export * from "./prisma-subscription-repository.adapter";
+export * from "./prisma-user-consent-repository.adapter";

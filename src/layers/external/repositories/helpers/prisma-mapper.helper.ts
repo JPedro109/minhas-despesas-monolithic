@@ -7,7 +7,8 @@ import {
     PrismaPaymentMethod, 
     PrismaPlan, 
     PrismaSubscription, 
-    PrismaUser 
+    PrismaUser, 
+    PrismaUserConsent
 } from "@prisma/client";
 import { 
     CustomerEntity, 
@@ -18,6 +19,7 @@ import {
     PlanEntity, 
     PlanNameEnum, 
     SubscriptionEntity, 
+    UserConsentEntity, 
     UserEntity 
 } from "@/layers/domain";
 
@@ -137,6 +139,19 @@ export class PrismaMapperHelper {
                 plan: PrismaMapperHelper.toPlanEntity(prismaPlan, prismaActions),
                 updatedAt: prismaSubscription.updatedAt
             }
+        );
+    }
+
+    static toUserConsentEntity(prismaUserConsent: PrismaUserConsent): UserConsentEntity {
+        return new UserConsentEntity(
+            {
+                userId: prismaUserConsent.userId,
+                consentVersion: prismaUserConsent.consentVersion,
+                ipAddress: prismaUserConsent.ipAddress,
+                userAgent: prismaUserConsent.userAgent
+            },
+            prismaUserConsent.id,
+            prismaUserConsent.createdAt
         );
     }
 }

@@ -6,6 +6,7 @@ import {
     PrismaPaymentHistory, 
     PrismaPaymentMethod, 
     PrismaPlan, 
+    PrismaSubscription, 
     PrismaUser 
 } from "@prisma/client";
 import { 
@@ -16,6 +17,7 @@ import {
     PaymentMethodEntity, 
     PlanEntity, 
     PlanNameEnum, 
+    SubscriptionEntity, 
     UserEntity 
 } from "@/layers/domain";
 
@@ -113,6 +115,27 @@ export class PrismaMapperHelper {
                 durationInDays: prismaPlan.durationInDays,
                 updatedAt: prismaPlan.updatedAt,
                 actions: prismaAction
+            },
+            prismaPlan.id,
+            prismaPlan.createdAt
+        );
+    }
+
+    static toSubscriptionEntity(
+        prismaSubscription: PrismaSubscription, 
+        prismaPlan: PrismaPlan,
+        prismaActions: PrismaAction[]
+    ): SubscriptionEntity {
+        return new SubscriptionEntity(
+            {
+                userId: prismaSubscription.userId,
+                active: prismaSubscription.active,
+                renewable: prismaSubscription.renewable,
+                amount: prismaSubscription.amount,
+                startDate: prismaSubscription.startDate,
+                endDate: prismaSubscription.endDate,
+                plan: PrismaMapperHelper.toPlanEntity(prismaPlan, prismaActions),
+                updatedAt: prismaSubscription.updatedAt
             }
         );
     }

@@ -110,13 +110,14 @@ model PrismaSubscription {
   userId    String     @map("user_id") @db.Uuid
   planId    String     @map("plan_id") @db.Uuid
   user      PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  plan      PrismaPlan @relation(fields: [planId], references: [id])
   amount    Float
   active    Boolean
   renewable Boolean
   startDate DateTime   @map("start_date")
   endDate   DateTime?  @map("end_date")
   createdAt DateTime   @map("created_at")
-  updatedAt DateTime   @map("updated_at")
+  updatedAt DateTime?  @map("updated_at")
 
   @@map("subscriptions")
 }
@@ -145,7 +146,8 @@ model PrismaPlan {
   createdAt      DateTime  @map("created_at")
   updatedAt      DateTime? @map("updated_at")
 
-  actions PrismaAction[]
+  actions            PrismaAction[]
+  PrismaSubscription PrismaSubscription[]
 
   @@map("plans")
 }

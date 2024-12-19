@@ -1,4 +1,4 @@
-import { CustomerEntity, ExpenseEntity, ExtractEntity, PaymentHistoryEntity, PaymentMethodEntity, UserEntity } from "@/layers/domain";
+import { CustomerEntity, ExpenseEntity, ExtractEntity, PaymentHistoryEntity, PaymentMethodEntity, PlanEntity, PlanNameEnum, UserEntity } from "@/layers/domain";
 
 export const testUserEntity = (): UserEntity => new UserEntity(
     {
@@ -84,6 +84,25 @@ export const testPaymentMethodEntity = (): PaymentMethodEntity => new PaymentMet
         userId: "00000000-0000-0000-0000-000000000000",
         name: "Card One",
         token: "1"
+    },
+    "00000000-0000-0000-0000-000000000000",
+    new Date()
+);
+
+export const testPlanFreeEntity = (): PlanEntity => new PlanEntity(
+    {
+        name: PlanNameEnum.Free,
+        amount: 0,
+        description: "Plano FREE",
+        actions: [
+            {
+                id: "00000000-0000-0000-0000-000000000000",
+                name: "create:expense",
+                description: "Criação de Despesa",
+                createdAt: new Date("2024-01-01")
+            }
+        ],
+        durationInDays: 0
     },
     "00000000-0000-0000-0000-000000000000",
     new Date()

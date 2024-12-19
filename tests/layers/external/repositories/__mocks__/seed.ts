@@ -15,6 +15,7 @@ import {
     testExtractEntityExpired, 
     testPaymentHistoryEntity, 
     testPaymentMethodEntity, 
+    testPlanFreeEntity, 
     testUserEntity, 
     testUserEntityTwo 
 } from "./datas";
@@ -45,10 +46,43 @@ export class Seed {
         await this.prismaPaymentHistoryRepository.createPaymentHistory(testPaymentHistoryEntity());
         await this.prismaPaymentMethodRepository.createPaymentMethod(testPaymentMethodEntity());
 
+        const plan = testPlanFreeEntity();
+        const action = await this.databaseSQLHelper.client.prismaAction.create(
+            {
+                data: {
+                    id: plan.actions[0].id,
+                    description: plan.actions[0].description,
+                    name: plan.actions[0].name,
+                    createdAt: plan.actions[0].createdAt,
+                    updatedAt: plan.actions[0].updatedAt
+                }
+            }
+        );
+        await this.databaseSQLHelper.client.prismaPlan.create(
+            {
+                data: {
+                    id: plan.id,
+                    name: plan.name,
+                    description: plan.description,
+                    amount: plan.amount,
+                    createdAt: plan.createdAt,
+                    durationInDays: plan.durationInDays,
+                    updatedAt: plan.updatedAt,
+                    actions: {
+                        connect: [
+                            { id: action.id }
+                        ]
+                    }
+                }
+            }
+        );
+
         await this.prismaUserRepository.createUser(testUserEntityTwo());
     }
 
     async truncate(): Promise<void> {
         await this.databaseSQLHelper.client.prismaUser.deleteMany({});
+        await this.databaseSQLHelper.client.prismaPlan.deleteMany({});
+        await this.databaseSQLHelper.client.prismaAction.deleteMany({});
     }
 }

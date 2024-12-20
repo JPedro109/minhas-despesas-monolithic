@@ -38,8 +38,6 @@ export class CreateExtractUseCase implements ICreateExtractUseCase {
         if(extracts.length === 1) throw new ForbiddenError("Você já tem o número máximo de extratos");
 
         const today = new Date();
-        const extractExpirationDate = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0);
-        extractExpirationDate.setDate(extractExpirationDate.getUTCDate() + 30);
 
         const expiryDateExtract = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0);
         expiryDateExtract.setDate(expiryDateExtract.getUTCDate() + 30);

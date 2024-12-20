@@ -11,3 +11,4 @@ export * from "./prisma-plan-repository.adapter";
 export * from "./prisma-subscription-repository.adapter";
 export * from "./prisma-user-consent-repository.adapter";
 export * from "./prisma-user-verification-repository.adapter";
+export * from "./prisma-unit-of-work-repository.adapter";

@@ -1,4 +1,4 @@
-import { SendNotificationOfSubscriptionThatAreComingDue, MailBodyTypeEnum } from "@/layers/application";
+import { SendNotificationOfSubscriptionThatAreComingDueUseCase, MailBodyTypeEnum } from "@/layers/application";
 import {
     SubscriptionRepositoryStub,
     NotificationStub,
@@ -10,13 +10,13 @@ import {
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: SendNotificationOfSubscriptionThatAreComingDue,
+    sut: SendNotificationOfSubscriptionThatAreComingDueUseCase,
     subscriptionRepositoryStub: SubscriptionRepositoryStub,
     mailStub: NotificationStub
 } => {
     const mailStub = notificationStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new SendNotificationOfSubscriptionThatAreComingDue(
+    const sut = new SendNotificationOfSubscriptionThatAreComingDueUseCase(
         unitOfWorkRepositoryStub,
         mailStub
     );
@@ -28,7 +28,7 @@ const makeSut = (): {
     };
 };
 
-describe("Use case - SendNotificationOfSubscriptionThatAreComingDue", () => {
+describe("Use case - SendNotificationOfSubscriptionThatAreComingDueUseCase", () => {
 
     test("Should not send any emails if there are no expenses due soon", async () => {
         const { sut, subscriptionRepositoryStub, mailStub } = makeSut();

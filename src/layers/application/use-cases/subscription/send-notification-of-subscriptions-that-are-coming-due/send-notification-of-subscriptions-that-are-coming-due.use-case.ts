@@ -5,7 +5,7 @@ import {
     MailBodyTypeEnum
 } from "@/layers/application";
 
-export class SendNotificationOfSubscriptionThatAreComingDue implements ISendNotificationOfSubscriptionThatAreComingDue {
+export class SendNotificationOfSubscriptionThatAreComingDueUseCase implements ISendNotificationOfSubscriptionThatAreComingDue {
 
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository,

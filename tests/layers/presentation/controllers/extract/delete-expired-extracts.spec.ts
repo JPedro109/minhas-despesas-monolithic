@@ -1,9 +1,9 @@
 import { IDeleteExpiredExtractsUseCase } from "@/layers/application";
-import { DeleteExpiredExtractsConstroller } from "@/layers/presentation";
+import { DeleteExpiredExtractsController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: DeleteExpiredExtractsConstroller,
+    sut: DeleteExpiredExtractsController,
     mockDeleteExpiredExtractsUseCase: jest.Mocked<IDeleteExpiredExtractsUseCase>
 } => {
     const mockDeleteExpiredExtractsUseCase: jest.Mocked<IDeleteExpiredExtractsUseCase> = {
@@ -11,7 +11,7 @@ const makeSut = (): {
     };
     const logStub = logStubFactory();
 
-    const sut = new DeleteExpiredExtractsConstroller(
+    const sut = new DeleteExpiredExtractsController(
         mockDeleteExpiredExtractsUseCase, 
         logStub
     );

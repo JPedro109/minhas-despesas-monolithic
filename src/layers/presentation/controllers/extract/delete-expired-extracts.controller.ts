@@ -1,7 +1,7 @@
 import { IDeleteExpiredExtractsUseCase, ILog } from "@/layers/application";
 import { AbstractController, HttpResponse, HttpHelper } from "@/layers/presentation";
 
-export class DeleteExpiredExtractsConstroller extends AbstractController {
+export class DeleteExpiredExtractsController extends AbstractController {
 
     constructor(
         private readonly useCase: IDeleteExpiredExtractsUseCase,

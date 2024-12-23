@@ -20,7 +20,7 @@ describe("External - ExtractAdapter", () => {
                     expenseName: "Água",
                     expenseValue: 120.0,
                     dueDate: new Date("2024-12-12"),
-                    paidDate: new Date("2024-12-06"),
+                    paidDate: new Date("2024-12-13"),
                 },
             ],
         };

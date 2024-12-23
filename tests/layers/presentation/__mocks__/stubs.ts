@@ -20,7 +20,6 @@ export class SecurityStub implements ISecurity {
     }
 }
 
-
 export class LogStub implements ILog {
     trace(message: string, trace: string): void { }
 

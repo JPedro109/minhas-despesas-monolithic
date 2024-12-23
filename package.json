@@ -6,9 +6,12 @@
   "repository": "https://github.com/JPedro109/minhas-despesas-api.git",
   "license": "MIT",
   "scripts": {
+    "postinstall": "husky",
     "migrate:generate": "prisma migrate dev && prisma generate",
     "migrate:execute": "prisma generate && prisma migrate deploy",
-    "postinstall": "husky",
+    "dev": "tsx watch ./src/server.ts",
+    "build": "tsc -p tsconfig-build.json && tsc-alias -p tsconfig-build.json",
+    "start": "yarn migrate:execute && yarn build && node dist/server.js",
     "test": "jest --passWithNoTests --detectOpenHandles --silent",
     "test:coverage": "yarn test --coverage",
     "test:staged": "yarn test --findRelatedTests",

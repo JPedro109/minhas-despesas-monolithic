@@ -32,7 +32,7 @@ export const notificationAdapter = new NotificationAdapter(sqsAdapter);
 export const stripeAdapter = new StripeAdapter();
 export const securityAdapter = new SecurityAdapter();
 
-const databaseSQLHelper = new DatabaseSQLHelper();
+export const databaseSQLHelper = new DatabaseSQLHelper();
 
 export const prismaCustomerRepositoryAdapter = new PrismaCustomerRepositoryAdapter(databaseSQLHelper);
 export const prismaExpenseRepositoryAdapter = new PrismaExpenseRepositoryAdapter(databaseSQLHelper);

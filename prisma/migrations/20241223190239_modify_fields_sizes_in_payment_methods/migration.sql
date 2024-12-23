@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "payment_methods" ALTER COLUMN "name" SET DATA TYPE VARCHAR(30),
+ALTER COLUMN "token" SET DATA TYPE VARCHAR(30);

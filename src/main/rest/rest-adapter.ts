@@ -9,7 +9,9 @@ export class RestAdapter {
 				userId: req.userId,
 				headers: req.headers,
 				method: req.method,
-				path: req.originalUrl
+				path: req.originalUrl,
+				ipAddress: req.hostname,
+				userAgent: req.headers["user-agent"]
 			});			
 
 			if(statusCode === 204) 

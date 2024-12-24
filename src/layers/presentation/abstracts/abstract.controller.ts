@@ -1,5 +1,5 @@
 import { DomainError } from "@/layers/domain";
-import { ILog, ConflictedError, ForbiddenError, NotFoundError, UnauthorizedError } from "@/layers/application";
+import { ILog, ConflictedError, ForbiddenError, NotFoundError, UnauthorizedError, InvalidParamError } from "@/layers/application";
 import { HttpHelper, HttpRequest, HttpResponse, IHttp, InvalidRequestSchemaError } from "@/layers/presentation";
 import { z } from "zod";
 
@@ -81,6 +81,7 @@ export abstract class AbstractController implements IHttp {
         if (e instanceof NotFoundError) return HttpHelper.notFound(e);
         if (e instanceof ForbiddenError) return HttpHelper.forbidden(e);
         if (e instanceof ConflictedError) return HttpHelper.conflicted(e);
+        if (e instanceof InvalidParamError) return HttpHelper.badRequest(e);
         if (e instanceof z.ZodError) return HttpHelper.badRequest(new InvalidRequestSchemaError(e.message));
         return HttpHelper.serverError();
     }

@@ -36,7 +36,7 @@ export class StripeAdapter implements IPayment {
         await this.stripe.paymentIntents.create({
             currency,
             payment_method: paymentMethodId,
-            confirm: true, 
+            confirm: true,
             amount: amount,
             automatic_payment_methods: {
                 enabled: true,
@@ -44,5 +44,17 @@ export class StripeAdapter implements IPayment {
             },
             customer: customerId
         });
+    }
+
+    async deleteAllCustomers(): Promise<void> {
+        const customers = await this.stripe.customers.list({
+            limit: 100
+        });
+
+        for (const customer of customers.data) {
+            if (customer.id) {
+                await this.stripe.customers.del(customer.id);
+            }
+        }
     }
 }

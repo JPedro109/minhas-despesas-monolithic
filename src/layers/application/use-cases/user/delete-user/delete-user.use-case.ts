@@ -34,7 +34,7 @@ export class DeleteUserUseCase implements IDeleteUserUseCase {
 		const hashEmail = await this.cryptography.toHash(user.email);
 
 		await this.unitOfWorkRepository.transaction(async () => {
-			await this.payment.updateCustomerEmailByCustomerId(customer.customerId, hashEmail);
+			await this.payment.updateCustomerEmailByCustomerId(customer.customerId, `${hashEmail}@hash.com`);
 			await userRepository.deleteUserById(id);
 		});
 	}

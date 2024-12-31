@@ -109,7 +109,7 @@ export const testPaymentMethodEntity = (userId: string, token: string): PaymentM
     userId
 );
 
-export const testUserEntity = (): UserEntity => new UserEntity(
+export const testUserEntityWithPlanFree = (): UserEntity => new UserEntity(
     {
         email: "email-with-plan-free@test.com",
         password: "$2a$12$rCgSXPpqhjyB3m8FrCPh3eojDo6ozQ0kAc/Mb7eGgvNYNngrmJTyS", // Password1234

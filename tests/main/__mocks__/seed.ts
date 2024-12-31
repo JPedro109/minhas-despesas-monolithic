@@ -10,7 +10,7 @@ import {
 
 import {
     testPlanFreeEntity,
-    testUserEntity,
+    testUserEntityWithPlanFree,
     testPlanGoldEntity,
     expenseActions,
     extractActions,
@@ -90,7 +90,7 @@ export class Seed {
             }
         );
 
-        const user = testUserEntity();
+        const user = testUserEntityWithPlanFree();
         await this.prismaUserRepository.createUser(user);
         await this.prismaUserConsentRepository.createUserConsent(testUserConsentEntity(user.id));
 

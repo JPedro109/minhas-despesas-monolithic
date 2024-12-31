@@ -46,7 +46,7 @@ export class StripeAdapter implements IPayment {
         });
     }
 
-    async deleteAllCustomers(): Promise<void> {
+    public async deleteAllCustomers(): Promise<void> {
         const customers = await this.stripe.customers.list({
             limit: 100
         });

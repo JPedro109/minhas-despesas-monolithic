@@ -18,7 +18,7 @@ export class AuthenticateUserMiddleware extends AbstractMiddleware {
     
 		const decode = this.secutiry.verifyJsonWebToken(token);
 
-		request.userId = decode.id as string;
+		request.userId = decode.sub as string;
 
 		return HttpHelper.noBody();
 	}

@@ -24,7 +24,7 @@ export const setup = (): void => {
 	});
 };
 
-export const loginRest = async (email: string): Promise<unknown> => {
+export const loginRest = async (email: string): Promise<{ accessToken: string; refreshToken: string }> => {
 	return (await request(setupServer())
 		.post("/api/users/login")
 		.send({

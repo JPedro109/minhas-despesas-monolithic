@@ -38,7 +38,7 @@ describe("/api/users - POST", () => {
         const response = await request(server)
             .post("/api/users")
             .send(body)
-            .set("User-Agent", "Supertest-Client/1.0");;
+            .set("User-Agent", "Supertest-Client/1.0");
 
         expect(response.statusCode).toBe(400);
         expect(response.body.code).toBe("InvalidRequestSchemaError");
@@ -74,7 +74,7 @@ describe("/api/users - POST", () => {
         const response = await request(server)
             .post("/api/users")
             .send(body)
-            .set("User-Agent", "Supertest-Client/1.0");;
+            .set("User-Agent", "Supertest-Client/1.0");
 
         expect(response.statusCode).toBe(409);
         expect(response.body.code).toBe("ConflictedError");
@@ -92,7 +92,7 @@ describe("/api/users - POST", () => {
         const response = await request(server)
             .post("/api/users")
             .send(body)
-            .set("User-Agent", "Supertest-Client/1.0");;
+            .set("User-Agent", "Supertest-Client/1.0");
 
         expect(response.statusCode).toBe(422);
         expect(response.body.code).toBe("DomainError");
@@ -110,7 +110,7 @@ describe("/api/users - POST", () => {
         const response = await request(server)
             .post("/api/users")
             .send(body)
-            .set("User-Agent", "Supertest-Client/1.0");;
+            .set("User-Agent", "Supertest-Client/1.0");
 
         expect(response.statusCode).toBe(201);
     });

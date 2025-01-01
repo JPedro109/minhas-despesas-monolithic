@@ -5,7 +5,9 @@ import {
     PlanNameEnum,
     SubscriptionEntity,
     UserConsentEntity,
-    UserEntity
+    UserEntity,
+    UserVerificationCodeEntity,
+    UserVerificationCodeTypeEnum
 } from "@/layers/domain";
 
 export const expenseActions = [
@@ -109,24 +111,62 @@ export const testPaymentMethodEntity = (userId: string, token: string): PaymentM
     userId
 );
 
-export const testUserEntityWithPlanFree = (): UserEntity => new UserEntity(
+export const testUserEntity = (id: string, email: string): UserEntity => new UserEntity(
     {
-        email: "email-with-plan-free@test.com",
+        email,
         password: "$2a$12$rCgSXPpqhjyB3m8FrCPh3eojDo6ozQ0kAc/Mb7eGgvNYNngrmJTyS", // Password1234
         username: "Test",
         verifiedEmail: true
     },
-    "00000000-0000-0000-0000-000000000000"
+    id
 );
 
-export const testSubscriptionEntityWithPlanFree = (userId: string): SubscriptionEntity => new SubscriptionEntity(
+export const testUserVerificationCodeEntity = (
+    id: string,
+    user: UserEntity,
+    code: string,
+    type: "verify-user-email" | "recovery-user-password" | "update-user-email",
+    verificationCodeExpiryDate?: Date 
+): UserVerificationCodeEntity => {
+    const typesDictionary = {
+        "verify-user-email": UserVerificationCodeTypeEnum.VerifyUserEmail,
+        "recovery-user-password": UserVerificationCodeTypeEnum.RecoveryUserPassword,
+        "update-user-email": UserVerificationCodeTypeEnum.UpdateUserEmail
+    };
+
+    return new UserVerificationCodeEntity(
+        {
+            type: typesDictionary[type],
+            user,
+            valid: true,
+            verificationCode: code,
+            verificationCodeExpiryDate
+        },
+        id
+    );
+};
+
+export const testSubscriptionEntityWithPlanFree = (id: string): SubscriptionEntity => new SubscriptionEntity(
     {
-        userId,
+        userId: id,
         active: true,
         renewable: false,
         startDate: new Date("3000-01-01"),
         plan: testPlanFreeEntity(),
         amount: 0
     },
-    "00000000-0000-0000-0000-000000000000"
+    id
+);
+
+export const testSubscriptionEntityWithPlanGold = (id: string): SubscriptionEntity => new SubscriptionEntity(
+    {
+        userId: id,
+        active: true,
+        renewable: false,
+        startDate: new Date("3000-01-01"),
+        endDate: new Date("3000-02-01"),
+        plan: testPlanGoldEntity(),
+        amount: 0
+    },
+    id
 );

@@ -37,8 +37,8 @@ export class CreatePaymentMethodController extends AbstractController {
 
         this.validateRequestSchema(body);
 
-        await this.useCase.execute(body);
+        const response = await this.useCase.execute(body);
 
-        return HttpHelper.noBody();
+        return HttpHelper.created(response);
     }
 }

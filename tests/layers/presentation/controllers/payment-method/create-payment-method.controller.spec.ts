@@ -55,6 +55,6 @@ describe("Controller - CreatePaymentMethodController", () => {
             userId
         });
 
-        expect(result.statusCode).toBe(204);
+        expect(result.statusCode).toBe(201);
     });
 });

@@ -121,8 +121,17 @@ export const testUserEntity = (id: string, email: string): UserEntity => new Use
     id
 );
 
+export const testUserEntityWithEmailNotVerified = (id: string, email: string): UserEntity => new UserEntity(
+    {
+        email,
+        password: "$2a$12$rCgSXPpqhjyB3m8FrCPh3eojDo6ozQ0kAc/Mb7eGgvNYNngrmJTyS", // Password1234
+        username: "Test",
+        verifiedEmail: false
+    },
+    id
+);
+
 export const testUserVerificationCodeEntity = (
-    id: string,
     user: UserEntity,
     code: string,
     type: "verify-user-email" | "recovery-user-password" | "update-user-email",
@@ -141,8 +150,7 @@ export const testUserVerificationCodeEntity = (
             valid: true,
             verificationCode: code,
             verificationCodeExpiryDate
-        },
-        id
+        }
     );
 };
 

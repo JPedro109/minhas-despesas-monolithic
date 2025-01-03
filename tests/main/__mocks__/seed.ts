@@ -20,7 +20,8 @@ import {
     testSubscriptionEntityWithPlanFree,
     testPaymentMethodEntity,
     testSubscriptionEntityWithPlanGold,
-    testUserVerificationCodeEntity
+    testUserVerificationCodeEntity,
+    testUserEntityWithEmailNotVerified
 } from "./datas";
 
 export class Seed {
@@ -98,12 +99,8 @@ export class Seed {
         const users = [
             {
                 id: "00000000-0000-0000-0000-000000000000",
-                userVerificationCodesIds: [
-                    "00000000-0000-0000-0000-000000000000",
-                    "00000000-0000-0000-0000-000000000001",
-                    "00000000-0000-0000-0000-000000000002",
-                ],
                 email: "email-with-plan-free@test.com",
+                verifiedEmail: true,
                 codeExpired: false,
                 plan: "FREE",
                 codes: [
@@ -114,12 +111,8 @@ export class Seed {
             },
             {
                 id: "00000000-0000-0000-0000-000000000001",
-                userVerificationCodesIds: [
-                    "00000000-0000-0000-0000-000000000003",
-                    "00000000-0000-0000-0000-000000000004",
-                    "00000000-0000-0000-0000-000000000005",
-                ],
                 email: "email-with-plan-free-and-with-codes-expired@test.com",
+                verifiedEmail: true,
                 codeExpired: true,
                 plan: "FREE",
                 codes: [
@@ -127,11 +120,23 @@ export class Seed {
                     "000004",
                     "000005"
                 ]
+            },
+            {
+                id: "00000000-0000-0000-0000-000000000002",
+                email: "email-with-plan-free-and-with-email-not-verified@test.com",
+                verifiedEmail: false,
+                codeExpired: false,
+                plan: "FREE",
+                codes: [
+                    "000006",
+                    "000007",
+                    "000008"
+                ]
             }
         ];
 
         for (const user of users) {
-            await this.createUser(user.id, user.email, user.plan, user.codeExpired, user.userVerificationCodesIds, user.codes);
+            await this.createUser(user.id, user.email, user.verifiedEmail, user.plan, user.codeExpired, user.codes);
         }
     }
 
@@ -147,17 +152,17 @@ export class Seed {
     private async createUser(
         id: string, 
         email: string, 
+        verifiedEmail: boolean,
         plan: string, 
         withCodeExpired: boolean,
-        userVerificationCodesIds: string[], 
-        codes: string[]): Promise<void> {
-        const user = testUserEntity(id, email);
+        codes: string[]
+    ): Promise<void> {
+        const user = verifiedEmail ? testUserEntity(id, email) : testUserEntityWithEmailNotVerified(id, email);
         await this.prismaUserRepository.createUser(user);
         await this.prismaUserConsentRepository.createUserConsent(testUserConsentEntity(user.id));
 
         await this.prismaUserVerificationCodeRepository.createUserVerificationCode(
             testUserVerificationCodeEntity(
-                userVerificationCodesIds[0],
                 user,
                 codes[0],
                 "verify-user-email"
@@ -167,7 +172,6 @@ export class Seed {
         const expiryDate = withCodeExpired ? new Date("2000-01-01") : new Date("3000-01-01");
         await this.prismaUserVerificationCodeRepository.createUserVerificationCode(
             testUserVerificationCodeEntity(
-                userVerificationCodesIds[1],
                 user,
                 codes[1],
                 "recovery-user-password",
@@ -176,7 +180,6 @@ export class Seed {
         );
         await this.prismaUserVerificationCodeRepository.createUserVerificationCode(
             testUserVerificationCodeEntity(
-                userVerificationCodesIds[2],
                 user,
                 codes[2],
                 "update-user-email",

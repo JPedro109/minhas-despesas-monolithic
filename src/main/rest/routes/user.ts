@@ -29,7 +29,7 @@ export default (router: Router): void => {
         "/users/login",
         RestAdapter.route(userLoginController)
     );
-    router.patch(
+    router.post(
         "/users/refresh-token",
         RestAdapter.route(refreshUserTokenController)
     );

@@ -22,7 +22,6 @@ export class DeletePaymentMethodUseCase implements IDeletePaymentMethodUseCase {
 		if(!paymentMethod) throw new NotFoundError("Esse método de pagamento não existe");
 
 		const subscriptionActive = await subscriptionRepository.getActiveSubscriptionByUserId(paymentMethod.userId);
-		if(!subscriptionActive) throw new NotFoundError("O usuário não tem nenhuma assinatura ativa");
 		if(subscriptionActive.renewable) 
 			throw new ForbiddenError("Não possível excluir o método de pagamento pois existe uma assinatura ativa, cancele a assinatura para excluir o método de pagamento");
 

@@ -39,18 +39,6 @@ describe("Use case - DeletePaymentMethodUseCase", () => {
         await expect(result).rejects.toThrow(NotFoundError);
     });
 
-    test("Should not delete payment method because is not exists subscription active", async () => {
-        const { sut, subscriptionRepositoryStub } = makeSut();
-        const id = "1";
-        jest
-            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
-            .mockResolvedValueOnce(null);
-
-        const result = sut.execute({ id });
-
-        await expect(result).rejects.toThrow(NotFoundError);
-    });
-
     test("Should not delete payment method because subscription is renewable", async () => {
         const { sut, subscriptionRepositoryStub } = makeSut();
         const id = "1";

@@ -30,7 +30,7 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
     test("Should throw error if new passwords do not match", async () => {
         const { sut } = makeSut();
         const id = "1";
-        const password = "old-password";
+        const password = "Password1234";
         const newPassword = "NewPassword123";
         const newPasswordConfirm = "different-NewPassword123";
 
@@ -47,7 +47,7 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
     test("Should throw error if user does not exist", async () => {
         const { sut, userRepositoryStub } = makeSut();
         const id = "2";
-        const password = "old-password";
+        const password = "Password1234";
         const newPassword = "NewPassword123";
         const newPasswordConfirm = "NewPassword123";
         jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(null);
@@ -62,12 +62,31 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
         await expect(result).rejects.toThrow(NotFoundError);
     });
 
+    test("Should throw error if password is incorrect", async () => {
+        const { sut, cryptographyStub } = makeSut();
+        jest.spyOn(cryptographyStub, "compareHash").mockResolvedValueOnce(false); 
+
+        const id = "1";
+        const password = "Password1234";
+        const newPassword = "Password1234";
+        const newPasswordConfirm = "Password1234";
+
+        const result = sut.execute({
+            id,
+            password,
+            newPassword,
+            newPasswordConfirm
+        });
+
+        await expect(result).rejects.toThrow(InvalidParamError);
+    });
+
     test("Should throw error if new password is equal to the old password", async () => {
         const { sut } = makeSut();
         const id = "1";
-        const password = "old-password";
-        const newPassword = "old-password";
-        const newPasswordConfirm = "old-password";
+        const password = "Password1234";
+        const newPassword = "Password1234";
+        const newPasswordConfirm = "Password1234";
 
         const result = sut.execute({
             id,
@@ -85,7 +104,7 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
         const password = "Password1234";
         const newPassword = "NewPassword123";
         const newPasswordConfirm = "NewPassword123";
-        jest.spyOn(cryptographyStub, "compareHash").mockResolvedValueOnce(false); 
+        jest.spyOn(cryptographyStub, "compareHash").mockResolvedValueOnce(true); 
         const updateUserByIdSpy = jest.spyOn(userRepositoryStub, "updateUserById");
 
         await sut.execute({

@@ -23,7 +23,9 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
 		if(!user) throw new NotFoundError("O usuário não existe");
 
 		const passwordEqual = await this.cryptography.compareHash(user.password, password);
-		if(passwordEqual) throw new InvalidParamError("A sua nova senha não pode ser igual a anterior");
+		if(!passwordEqual) throw new InvalidParamError("Senha incorreta");
+
+		if(password === newPassword) throw new InvalidParamError("A sua nova senha não pode ser igual a anterior");
 
 		const hashPassword = await this.cryptography.toHash(newPassword);
         user.password = newPassword;

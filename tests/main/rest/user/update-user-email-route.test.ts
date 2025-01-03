@@ -56,7 +56,7 @@ describe("/api/users/email - PATCH", () => {
 
     test("Should not update email because code is expired", async () => {
         const body = makeBody("newemail@example.com", "000005");
-        const token = await loginRest("email-with-plan-free-and-with-codes-expired@test.com");
+        const token = await loginRest("email-with-plan-free-with-codes-expired-without-payment-method@test.com");
 
         const response = await request(setupServer())
             .patch("/api/users/email")

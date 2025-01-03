@@ -98,10 +98,10 @@ export class Seed {
 
         const users = [
             {
-                id: "00000000-0000-0000-0000-000000000000",
                 email: "email-with-plan-free@test.com",
                 verifiedEmail: true,
-                codeExpired: false,
+                withCodeExpired: false,
+                withPaymentMethod: true,
                 plan: "FREE",
                 codes: [
                     "000000",
@@ -110,10 +110,10 @@ export class Seed {
                 ]
             },
             {
-                id: "00000000-0000-0000-0000-000000000001",
-                email: "email-with-plan-free-and-with-codes-expired@test.com",
+                email: "email-with-plan-free-with-codes-expired-without-payment-method@test.com",
                 verifiedEmail: true,
-                codeExpired: true,
+                withCodeExpired: true,
+                withPaymentMethod: false,
                 plan: "FREE",
                 codes: [
                     "000003",
@@ -122,10 +122,10 @@ export class Seed {
                 ]
             },
             {
-                id: "00000000-0000-0000-0000-000000000002",
                 email: "email-with-plan-free-and-with-email-not-verified@test.com",
                 verifiedEmail: false,
-                codeExpired: false,
+                withCodeExpired: false,
+                withPaymentMethod: false,
                 plan: "FREE",
                 codes: [
                     "000006",
@@ -135,9 +135,13 @@ export class Seed {
             }
         ];
 
+        const promises = [];
         for (const user of users) {
-            await this.createUser(user.id, user.email, user.verifiedEmail, user.plan, user.codeExpired, user.codes);
+            promises.push(
+                this.createUser(user.email, user.verifiedEmail, user.plan, user.withCodeExpired, user.withPaymentMethod, user.codes)
+            );
         }
+        await Promise.all(promises);
     }
 
     async truncate(): Promise<void> {
@@ -150,14 +154,14 @@ export class Seed {
     }
 
     private async createUser(
-        id: string, 
         email: string, 
         verifiedEmail: boolean,
         plan: string, 
         withCodeExpired: boolean,
+        withPaymentMethod: boolean,
         codes: string[]
     ): Promise<void> {
-        const user = verifiedEmail ? testUserEntity(id, email) : testUserEntityWithEmailNotVerified(id, email);
+        const user = verifiedEmail ? testUserEntity(email) : testUserEntityWithEmailNotVerified(email);
         await this.prismaUserRepository.createUser(user);
         await this.prismaUserConsentRepository.createUserConsent(testUserConsentEntity(user.id));
 
@@ -193,7 +197,9 @@ export class Seed {
         const customerId = await this.stripeAdapter.createCustomer(user.email);
         await this.prismaCustomerRepository.createCustomer(testCustomerEntity(user.id, customerId));
 
-        const paymentMethodId = await this.stripeAdapter.createPaymentMethod(customerId, "pm_card_visa");
-        await this.prismaPaymentMethodRepository.createPaymentMethod(testPaymentMethodEntity(user.id, paymentMethodId));
+        if(withPaymentMethod) {
+            const paymentMethodId = await this.stripeAdapter.createPaymentMethod(customerId, "pm_card_visa");
+            await this.prismaPaymentMethodRepository.createPaymentMethod(testPaymentMethodEntity(user.id, paymentMethodId));
+        }
     }
 }

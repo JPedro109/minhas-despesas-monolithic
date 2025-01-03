@@ -21,7 +21,7 @@ export class RefreshUserTokenUseCase implements IRefreshUserTokenUseCase {
 
 		const userRepository = this.unitOfWorkRepository.getUserRepository();
 
-		const user = await userRepository.getUserById(data.id as string);
+		const user = await userRepository.getUserById(data.sub as string);
 
 		if(!user) throw new UnauthorizedError("Token inválido");
 

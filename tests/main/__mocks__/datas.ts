@@ -111,22 +111,24 @@ export const testPaymentMethodEntity = (userId: string, token: string): PaymentM
     userId
 );
 
-export const testUserEntity = (email: string): UserEntity => new UserEntity(
+export const testUserEntity = (id: string, email: string): UserEntity => new UserEntity(
     {
         email,
         password: "$2a$12$rCgSXPpqhjyB3m8FrCPh3eojDo6ozQ0kAc/Mb7eGgvNYNngrmJTyS", // Password1234
         username: "Test",
         verifiedEmail: true
-    }
+    },
+    id
 );
 
-export const testUserEntityWithEmailNotVerified = (email: string): UserEntity => new UserEntity(
+export const testUserEntityWithEmailNotVerified = (id: string, email: string): UserEntity => new UserEntity(
     {
         email,
         password: "$2a$12$rCgSXPpqhjyB3m8FrCPh3eojDo6ozQ0kAc/Mb7eGgvNYNngrmJTyS", // Password1234
         username: "Test",
         verifiedEmail: false
-    }
+    },
+    id
 );
 
 export const testUserVerificationCodeEntity = (
@@ -167,7 +169,7 @@ export const testSubscriptionEntityWithPlanGold = (userId: string): Subscription
     {
         userId,
         active: true,
-        renewable: false,
+        renewable: true,
         startDate: new Date("3000-01-01"),
         endDate: new Date("3000-02-01"),
         plan: testPlanGoldEntity(),

@@ -98,6 +98,7 @@ export class Seed {
 
         const users = [
             {
+                id: "00000000-0000-0000-0000-000000000000",
                 email: "email-with-plan-free@test.com",
                 verifiedEmail: true,
                 withCodeExpired: false,
@@ -110,6 +111,7 @@ export class Seed {
                 ]
             },
             {
+                id: "00000000-0000-0000-0000-000000000001",
                 email: "email-with-plan-free-with-codes-expired-without-payment-method@test.com",
                 verifiedEmail: true,
                 withCodeExpired: true,
@@ -122,6 +124,7 @@ export class Seed {
                 ]
             },
             {
+                id: "00000000-0000-0000-0000-000000000002",
                 email: "email-with-plan-free-and-with-email-not-verified@test.com",
                 verifiedEmail: false,
                 withCodeExpired: false,
@@ -132,13 +135,34 @@ export class Seed {
                     "000007",
                     "000008"
                 ]
+            },
+            {
+                id: "00000000-0000-0000-0000-000000000003",
+                email: "email-with-plan-gold@test.com",
+                verifiedEmail: true,
+                withCodeExpired: false,
+                withPaymentMethod: true,
+                plan: "GOLD",
+                codes: [
+                    "000009",
+                    "000010",
+                    "000011"
+                ]
             }
         ];
 
         const promises = [];
         for (const user of users) {
             promises.push(
-                this.createUser(user.email, user.verifiedEmail, user.plan, user.withCodeExpired, user.withPaymentMethod, user.codes)
+                this.createUser(
+                    user.id, 
+                    user.email, 
+                    user.verifiedEmail, 
+                    user.plan, 
+                    user.withCodeExpired, 
+                    user.withPaymentMethod, 
+                    user.codes
+                )
             );
         }
         await Promise.all(promises);
@@ -154,6 +178,7 @@ export class Seed {
     }
 
     private async createUser(
+        userId: string,
         email: string, 
         verifiedEmail: boolean,
         plan: string, 
@@ -161,7 +186,7 @@ export class Seed {
         withPaymentMethod: boolean,
         codes: string[]
     ): Promise<void> {
-        const user = verifiedEmail ? testUserEntity(email) : testUserEntityWithEmailNotVerified(email);
+        const user = verifiedEmail ? testUserEntity(userId, email) : testUserEntityWithEmailNotVerified(userId, email);
         await this.prismaUserRepository.createUser(user);
         await this.prismaUserConsentRepository.createUserConsent(testUserConsentEntity(user.id));
 

@@ -109,7 +109,10 @@ export const getUserPaymentMethodUseCase = new GetUserPaymentMethodUseCase(makeP
 
 export const updatePaymentMethodNameUseCase = new UpdatePaymentMethodNameUseCase(makePrismaUnitOfWorkRepositoryAdapter());
 
-export const updatePaymentMethodTokenUseCase = new UpdatePaymentMethodTokenUseCase(makePrismaUnitOfWorkRepositoryAdapter());
+export const updatePaymentMethodTokenUseCase = new UpdatePaymentMethodTokenUseCase(
+    makePrismaUnitOfWorkRepositoryAdapter(),
+    stripeAdapter
+);
 
 
 export const createExtractUseCase = new CreateExtractUseCase(makePrismaUnitOfWorkRepositoryAdapter(), extractAdapter, s3BucketAdapter);

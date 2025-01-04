@@ -15,6 +15,10 @@ export class UpdatePaymentMethodTokenController extends AbstractController {
                     type: "string",
                     optional: false
                 },
+                userId: {
+                    type: "string",
+                    optional: false
+                },
                 token: {
                     type: "string",
                     optional: false
@@ -27,7 +31,8 @@ export class UpdatePaymentMethodTokenController extends AbstractController {
         const { id, token } = request.data;
         const body = { 
             id,
-            token
+            token,
+            userId: request.userId
         };
 
         this.validateRequestSchema(body);

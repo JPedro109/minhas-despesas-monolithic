@@ -28,12 +28,14 @@ describe("Controller - UpdatePaymentMethodTokenController", () => {
         const { sut } = makeSut();
         const id = "";
         const token = "";
+        const userId = "";
 
         const result = await sut.http({
             data: {
                 id,
                 token
-            }
+            },
+            userId
         });
 
         expect(result.statusCode).toBe(400);
@@ -42,13 +44,15 @@ describe("Controller - UpdatePaymentMethodTokenController", () => {
     test("Should update payment method token", async () => {
         const { sut } = makeSut();
         const id = "1";
+        const userId = "1";
         const token = "token";
 
         const result = await sut.http({
             data: {
                 id,
                 token
-            }
+            },
+            userId
         });
 
         expect(result.statusCode).toBe(204);

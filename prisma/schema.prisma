@@ -126,7 +126,7 @@ model PrismaExtract {
   id             String     @id @db.Uuid
   userId         String     @map("user_id") @db.Uuid
   user           PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  url            String     @db.VarChar(255)
+  url            String     @db.VarChar(600)
   referenceYear  Int        @map("reference_year")
   referenceMonth Int        @map("reference_month")
   expiryDate     DateTime   @map("expiry_date")

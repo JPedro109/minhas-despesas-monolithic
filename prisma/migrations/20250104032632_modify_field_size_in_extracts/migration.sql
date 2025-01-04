@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "extracts" ALTER COLUMN "url" SET DATA TYPE VARCHAR(600);

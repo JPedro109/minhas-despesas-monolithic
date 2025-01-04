@@ -1,6 +1,9 @@
 import {
     DatabaseSQLHelper,
     PrismaCustomerRepositoryAdapter,
+    PrismaExpenseRepositoryAdapter,
+    PrismaExtractRepositoryAdapter,
+    PrismaPaymentHistoryRepositoryAdapter,
     PrismaPaymentMethodRepositoryAdapter,
     PrismaSubscriptionRepositoryAdapter,
     PrismaUserConsentRepositoryAdapter,
@@ -21,7 +24,10 @@ import {
     testPaymentMethodEntity,
     testSubscriptionEntityWithPlanGold,
     testUserVerificationCodeEntity,
-    testUserEntityWithEmailNotVerified
+    testUserEntityWithEmailNotVerified,
+    testExtractEntity,
+    testExpenseEntityPaid,
+    testPaymentHistoryEntity
 } from "./datas";
 
 export class Seed {
@@ -31,6 +37,9 @@ export class Seed {
     private readonly prismaCustomerRepository: PrismaCustomerRepositoryAdapter;
     private readonly prismaSubscriptionRepository: PrismaSubscriptionRepositoryAdapter;
     private readonly prismaPaymentMethodRepository: PrismaPaymentMethodRepositoryAdapter;
+    private readonly prismaExtractRepository: PrismaExtractRepositoryAdapter;
+    private readonly prismaExpenseRepository: PrismaExpenseRepositoryAdapter;
+    private readonly prismaPaymentHistoryRepository: PrismaPaymentHistoryRepositoryAdapter;
 
     private readonly stripeAdapter = new StripeAdapter();
 
@@ -41,6 +50,9 @@ export class Seed {
         this.prismaSubscriptionRepository = new PrismaSubscriptionRepositoryAdapter(this.databaseSQLHelper);
         this.prismaPaymentMethodRepository = new PrismaPaymentMethodRepositoryAdapter(this.databaseSQLHelper);
         this.prismaUserVerificationCodeRepository = new PrismaUserVerificationCodeRepositoryAdapter(this.databaseSQLHelper);
+        this.prismaExtractRepository = new PrismaExtractRepositoryAdapter(this.databaseSQLHelper);
+        this.prismaExpenseRepository = new PrismaExpenseRepositoryAdapter(this.databaseSQLHelper);
+        this.prismaPaymentHistoryRepository = new PrismaPaymentHistoryRepositoryAdapter(this.databaseSQLHelper);
     }
 
     async populate(): Promise<void> {
@@ -103,6 +115,8 @@ export class Seed {
                 verifiedEmail: true,
                 withCodeExpired: false,
                 withPaymentMethod: true,
+                withExpensesAndExtracts: false,
+                withExpense: false,
                 plan: "FREE",
                 codes: [
                     "000000",
@@ -116,6 +130,8 @@ export class Seed {
                 verifiedEmail: true,
                 withCodeExpired: true,
                 withPaymentMethod: false,
+                withExpensesAndExtracts: false,
+                withExpense: false,
                 plan: "FREE",
                 codes: [
                     "000003",
@@ -129,6 +145,8 @@ export class Seed {
                 verifiedEmail: false,
                 withCodeExpired: false,
                 withPaymentMethod: false,
+                withExpensesAndExtracts: false,
+                withExpense: false,
                 plan: "FREE",
                 codes: [
                     "000006",
@@ -138,15 +156,32 @@ export class Seed {
             },
             {
                 id: "00000000-0000-0000-0000-000000000003",
-                email: "email-with-plan-gold@test.com",
+                email: "email-with-plan-gold-and-with-expense@test.com",
                 verifiedEmail: true,
                 withCodeExpired: false,
                 withPaymentMethod: true,
+                withExpensesAndExtracts: false,
+                withExpense: true,
                 plan: "GOLD",
                 codes: [
                     "000009",
                     "000010",
                     "000011"
+                ]
+            },
+            {
+                id: "00000000-0000-0000-0000-000000000004",
+                email: "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+                verifiedEmail: true,
+                withCodeExpired: false,
+                withPaymentMethod: true,
+                withExpensesAndExtracts: true,
+                withExpenses: false,
+                plan: "GOLD",
+                codes: [
+                    "000012",
+                    "000013",
+                    "000014"
                 ]
             }
         ];
@@ -155,12 +190,14 @@ export class Seed {
         for (const user of users) {
             promises.push(
                 this.createUser(
-                    user.id, 
-                    user.email, 
-                    user.verifiedEmail, 
-                    user.plan, 
-                    user.withCodeExpired, 
-                    user.withPaymentMethod, 
+                    user.id,
+                    user.email,
+                    user.verifiedEmail,
+                    user.plan,
+                    user.withCodeExpired,
+                    user.withPaymentMethod,
+                    user.withExpensesAndExtracts,
+                    user.withExpense,
                     user.codes
                 )
             );
@@ -179,11 +216,13 @@ export class Seed {
 
     private async createUser(
         userId: string,
-        email: string, 
+        email: string,
         verifiedEmail: boolean,
-        plan: string, 
+        plan: string,
         withCodeExpired: boolean,
         withPaymentMethod: boolean,
+        withExpensesAndExtracts: boolean,
+        withExpense: boolean,
         codes: string[]
     ): Promise<void> {
         const user = verifiedEmail ? testUserEntity(userId, email) : testUserEntityWithEmailNotVerified(userId, email);
@@ -222,9 +261,40 @@ export class Seed {
         const customerId = await this.stripeAdapter.createCustomer(user.email);
         await this.prismaCustomerRepository.createCustomer(testCustomerEntity(user.id, customerId));
 
-        if(withPaymentMethod) {
+        if (withPaymentMethod) {
             const paymentMethodId = await this.stripeAdapter.createPaymentMethod(customerId, "pm_card_visa");
             await this.prismaPaymentMethodRepository.createPaymentMethod(testPaymentMethodEntity(user.id, paymentMethodId));
+        }
+
+        if (withExpensesAndExtracts) {
+            const extract = testExtractEntity(user.id);
+            await this.prismaExtractRepository.createExtract(extract);
+
+            const expenseIds = [
+                "00000000-0000-0000-0000-000000000000",
+                "00000000-0000-0000-0000-000000000001",
+                "00000000-0000-0000-0000-000000000002",
+                "00000000-0000-0000-0000-000000000003",
+                "00000000-0000-0000-0000-000000000004",
+                "00000000-0000-0000-0000-000000000005",
+                "00000000-0000-0000-0000-000000000006",
+                "00000000-0000-0000-0000-000000000007",
+                "00000000-0000-0000-0000-000000000008",
+                "00000000-0000-0000-0000-000000000009"
+            ];
+
+            const promises = [];
+            for (const expenseId of expenseIds) {
+                promises.push(this.prismaExpenseRepository.createExpense(testExpenseEntityPaid(expenseId, user.id)));
+                promises.push(this.prismaPaymentHistoryRepository.createPaymentHistory(testPaymentHistoryEntity(expenseId, user.id)));
+            }
+            await Promise.all(promises);
+        }
+
+        if(withExpense) {
+            const expenseId = "00000000-0000-0000-0000-000000000010";
+            await this.prismaExpenseRepository.createExpense(testExpenseEntityPaid(expenseId, user.id));
+            await this.prismaPaymentHistoryRepository.createPaymentHistory(testPaymentHistoryEntity(expenseId, user.id));
         }
     }
 }

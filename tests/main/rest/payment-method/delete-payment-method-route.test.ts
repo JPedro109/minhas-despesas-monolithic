@@ -26,7 +26,7 @@ describe("/api/payment-methods/:id - DELETE", () => {
 
     test("Should not delete a payment method because the user has an active renewable subscription", async () => {
         const renewableSubscriptionPaymentMethodId = "00000000-0000-0000-0000-000000000003";
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest("email-with-plan-gold-and-with-expense@test.com");
 
         const response = await request(setupServer())
             .delete(makeUrl(renewableSubscriptionPaymentMethodId))

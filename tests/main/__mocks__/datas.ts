@@ -1,5 +1,8 @@
 import {
     CustomerEntity,
+    ExpenseEntity,
+    ExtractEntity,
+    PaymentHistoryEntity,
     PaymentMethodEntity,
     PlanEntity,
     PlanNameEnum,
@@ -175,4 +178,39 @@ export const testSubscriptionEntityWithPlanGold = (userId: string): Subscription
         plan: testPlanGoldEntity(),
         amount: 0
     }
+);
+
+export const testExpenseEntityPaid = (id: string, userId: string): ExpenseEntity => new ExpenseEntity(
+    {
+        userId,
+        expenseName: "Expense",
+        expenseValue: 100,
+        dueDate: new Date("3000-01-01"),
+        paid: true
+    },
+    id
+);
+
+export const testPaymentHistoryEntity = (expenseId: string, userId: string): PaymentHistoryEntity => new PaymentHistoryEntity(
+    {
+        userId,
+        expenseId,
+        expenseName: "Expense",
+        expenseValue: 100,
+        dueDate: new Date("3000-01-01"),
+        paidDate: new Date("3000-01-01")
+    },
+    expenseId
+);
+
+export const testExtractEntity = (userId: string): ExtractEntity => new ExtractEntity(
+    {
+         url: "https://example.com",
+         referenceMonth: 1,
+         referenceYear: 2024,
+         expiryDate: new Date("3000-01-01"),
+         urlExpiryDate: new Date("3000-01-01"),
+         userId
+    },
+    userId
 );

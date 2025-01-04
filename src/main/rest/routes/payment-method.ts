@@ -17,7 +17,7 @@ export default (router: Router): void => {
         RestAdapter.route(createPaymentMethodController)
     );
     router.delete(
-        "/payment-methods",
+        "/payment-methods/:id",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.route(deletePaymentMethodController)
     );
@@ -27,12 +27,12 @@ export default (router: Router): void => {
         RestAdapter.route(getUserPaymentMethodController)
     );
     router.patch(
-        "/payment-methods/name",
+        "/payment-methods/name/:id",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.route(updatePaymentMethodNameController)
     );
     router.patch(
-        "/payment-methods/token",
+        "/payment-methods/token/:id",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.route(updatePaymentMethodTokenController)
     );

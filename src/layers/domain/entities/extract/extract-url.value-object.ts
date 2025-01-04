@@ -16,7 +16,7 @@ export class ExtractUrlValueObject {
     private static validate(url: string): boolean {
         if (!url) return false;
 
-        const urlRegex = /^(https?:\/\/)?([\w\d-]+\.)+[\w\d]{2,}(\/[\w\d-]*)*\/?(\?[^\s]*)?$/i;
+        const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=%]*)?$/i;
 
         return urlRegex.test(url);
     }

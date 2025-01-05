@@ -28,7 +28,7 @@ export class UpdateExpenseController extends AbstractController {
                     optional: false
                 },
                 dueDate: {
-                    type: "string",
+                    type: "date",
                     optional: false
                 }
             }
@@ -52,7 +52,7 @@ export class UpdateExpenseController extends AbstractController {
 
         this.validateRequestSchema(body);
 
-        await this.useCase.execute(body);
+        await this.useCase.execute({ ...body, dueDate: new Date(dueDate) });
 
         return HttpHelper.noBody();
     }

@@ -68,7 +68,7 @@ describe("/api/extracts - POST", () => {
         expect(response.body.code).toBe("NotFoundError");
     });
 
-    test.only("Should create an extract successfully", async () => {
+    test("Should create an extract successfully", async () => {
         const body = makeBody(1, 3000);
         const token = await loginRest("email-with-plan-gold-and-with-expense@test.com");
 

@@ -4,7 +4,8 @@ import {
     deleteExpiredExtractsController,
     getUserExtractsController,
     authenticationUserMiddleware,
-    getUserSubscriptionUseCase
+    getUserSubscriptionUseCase,
+    basicAuthenticationMiddleware
 } from "@/main/factories";
 import { RestAdapter } from "@/main/rest";
 
@@ -19,6 +20,7 @@ export default (router: Router): void => {
     );
     router.delete(
         "/extracts/expired",
+        RestAdapter.middleware(basicAuthenticationMiddleware),
         RestAdapter.route(deleteExpiredExtractsController)
     );
     router.get(

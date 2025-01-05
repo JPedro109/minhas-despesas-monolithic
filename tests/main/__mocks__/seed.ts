@@ -127,13 +127,13 @@ export class Seed {
             },
             {
                 id: "00000000-0000-0000-0000-000000000001",
-                email: "email-with-plan-free-with-codes-expired-without-payment-method@test.com",
+                email: "email-with-plan-gold-with-codes-expired-without-payment-method@test.com",
                 verifiedEmail: true,
                 withCodeExpired: true,
                 withPaymentMethod: false,
                 withExpensesAndExtracts: false,
                 withExpense: false,
-                plan: "FREE",
+                plan: "GOLD",
                 codes: [
                     "000003",
                     "000004",

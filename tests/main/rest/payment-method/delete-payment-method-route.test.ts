@@ -12,7 +12,7 @@ describe("/api/payment-methods/:id - DELETE", () => {
 
     test("Should not delete a payment method because it does not exist", async () => {
         const nonExistentId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-        const token = await loginRest("email-with-plan-free-with-codes-expired-without-payment-method@test.com");
+        const token = await loginRest("email-with-plan-gold-with-codes-expired-without-payment-method@test.com");
 
         const response = await request(setupServer())
             .delete(makeUrl(nonExistentId))

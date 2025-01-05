@@ -9,7 +9,7 @@ describe("/api/payment-methods - GET", () => {
     setup();
 
     test("Should return null when the user exists but has no payment method", async () => {
-        const token = await loginRest("email-with-plan-free-with-codes-expired-without-payment-method@test.com");
+        const token = await loginRest("email-with-plan-gold-with-codes-expired-without-payment-method@test.com");
 
         const response = await request(setupServer())
             .get("/api/payment-methods")

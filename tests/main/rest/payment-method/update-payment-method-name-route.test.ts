@@ -32,7 +32,7 @@ describe("/api/payment-methods/name/:id - PATCH", () => {
     test("Should not update payment method name when the payment method does not exist", async () => {
         const nonExistentId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
         const body = makeBody("New Payment Method Name");
-        const token = await loginRest("email-with-plan-free-with-codes-expired-without-payment-method@test.com");
+        const token = await loginRest("email-with-plan-gold-with-codes-expired-without-payment-method@test.com");
 
         const response = await request(setupServer())
             .patch(makeUrl(nonExistentId))

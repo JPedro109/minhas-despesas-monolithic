@@ -24,13 +24,13 @@ export default (router: Router): void => {
         RestAdapter.route(createExpenseController)
     );
     router.delete(
-        "/expenses",
+        "/expenses/:id",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.middleware(new AuthorizationUserActionMiddleware(getUserSubscriptionUseCase, "delete:expense")),
         RestAdapter.route(deleteExpenseController)
     );
     router.patch(
-        "/expenses/undo-payment",
+        "/expenses/undo-payment/:id",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.middleware(new AuthorizationUserActionMiddleware(getUserSubscriptionUseCase, "undo-payment:expense")),
         RestAdapter.route(expenseUndoPaymentController)
@@ -42,13 +42,13 @@ export default (router: Router): void => {
         RestAdapter.route(getUserExpensesController)
     );
     router.patch(
-        "/expenses/pay",
+        "/expenses/pay/:id",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.middleware(new AuthorizationUserActionMiddleware(getUserSubscriptionUseCase, "pay:expense")),
         RestAdapter.route(payExpenseController)
     );
     router.put(
-        "/expenses",
+        "/expenses/:id",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.middleware(new AuthorizationUserActionMiddleware(getUserSubscriptionUseCase, "update:expense")),
         RestAdapter.route(updateExpenseController)

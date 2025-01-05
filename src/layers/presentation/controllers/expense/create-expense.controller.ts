@@ -46,7 +46,7 @@ export class CreateExpenseController extends AbstractController {
 
         this.validateRequestSchema(body);
 
-        const response = await this.useCase.execute(body);
+        const response = await this.useCase.execute({ ...body, dueDate: new Date(dueDate) });
 
         return HttpHelper.created(response);
     }

@@ -27,7 +27,8 @@ import {
     testUserEntityWithEmailNotVerified,
     testExtractEntity,
     testExpenseEntityPaid,
-    testPaymentHistoryEntity
+    testPaymentHistoryEntity,
+    testExpenseEntityUnpaid
 } from "./datas";
 
 export class Seed {
@@ -270,23 +271,32 @@ export class Seed {
             const extract = testExtractEntity(user.id);
             await this.prismaExtractRepository.createExtract(extract);
 
-            const expenseIds = [
-                "00000000-0000-0000-0000-000000000000",
-                "00000000-0000-0000-0000-000000000001",
-                "00000000-0000-0000-0000-000000000002",
-                "00000000-0000-0000-0000-000000000003",
-                "00000000-0000-0000-0000-000000000004",
-                "00000000-0000-0000-0000-000000000005",
-                "00000000-0000-0000-0000-000000000006",
-                "00000000-0000-0000-0000-000000000007",
-                "00000000-0000-0000-0000-000000000008",
-                "00000000-0000-0000-0000-000000000009"
+            const expenses = [
+                { id: "00000000-0000-0000-0000-000000000000", pay: true },
+                { id: "00000000-0000-0000-0000-000000000001", pay: false },
+                { id: "00000000-0000-0000-0000-000000000002", pay: true },
+                { id: "00000000-0000-0000-0000-000000000003", pay: true },
+                { id: "00000000-0000-0000-0000-000000000004", pay: true },
+                { id: "00000000-0000-0000-0000-000000000005", pay: true },
+                { id: "00000000-0000-0000-0000-000000000006", pay: true },
+                { id: "00000000-0000-0000-0000-000000000007", pay: true },
+                { id: "00000000-0000-0000-0000-000000000008", pay: true },
+                { id: "00000000-0000-0000-0000-000000000009", pay: true }
             ];
 
             const promises = [];
-            for (const expenseId of expenseIds) {
-                promises.push(this.prismaExpenseRepository.createExpense(testExpenseEntityPaid(expenseId, user.id)));
-                promises.push(this.prismaPaymentHistoryRepository.createPaymentHistory(testPaymentHistoryEntity(expenseId, user.id)));
+            for (const expense of expenses) {
+                promises.push(
+                    this.prismaExpenseRepository.createExpense(
+                        expense.pay ? testExpenseEntityPaid(expense.id, user.id) : testExpenseEntityUnpaid(expense.id, user.id)
+                    )
+                );
+
+                if(expense.pay) {
+                    promises.push(this.prismaPaymentHistoryRepository.createPaymentHistory(
+                        testPaymentHistoryEntity(expense.id, user.id))
+                    );
+                }
             }
             await Promise.all(promises);
         }

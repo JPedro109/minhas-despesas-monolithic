@@ -191,6 +191,17 @@ export const testExpenseEntityPaid = (id: string, userId: string): ExpenseEntity
     id
 );
 
+export const testExpenseEntityUnpaid = (id: string, userId: string): ExpenseEntity => new ExpenseEntity(
+    {
+        userId,
+        expenseName: "Expense",
+        expenseValue: 100,
+        dueDate: new Date("3000-01-01"),
+        paid: false
+    },
+    id
+);
+
 export const testPaymentHistoryEntity = (expenseId: string, userId: string): PaymentHistoryEntity => new PaymentHistoryEntity(
     {
         userId,

@@ -184,7 +184,22 @@ export class Seed {
                     "000013",
                     "000014"
                 ]
-            }
+            },
+            {
+                id: "00000000-0000-0000-0000-000000000005",
+                email: "email-with-plan-free-and-without-payment-method@test.com",
+                verifiedEmail: true,
+                withCodeExpired: false,
+                withPaymentMethod: false,
+                withExpensesAndExtracts: false,
+                withExpense: false,
+                plan: "FREE",
+                codes: [
+                    "000015",
+                    "000016",
+                    "000017"
+                ]
+            },
         ];
 
         const promises = [];

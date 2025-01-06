@@ -35,7 +35,7 @@ export default (router: Router): void => {
         RestAdapter.route(sendNotificationOfSubscriptionThatAreComingDueController)
     );
     router.patch(
-        "/subscriptions",
+        "/subscriptions/plan/:newPlanId",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.route(updateSubscriptionController)
     );

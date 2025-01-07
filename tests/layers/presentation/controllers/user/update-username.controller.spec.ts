@@ -3,35 +3,34 @@ import { UpdateUsernameController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: UpdateUsernameController,
-    mockUpdateUsernameUseCase: jest.Mocked<IUpdateUsernameUseCase>
+    sut: UpdateUsernameController;
+    mockUpdateUsernameUseCase: jest.Mocked<IUpdateUsernameUseCase>;
 } => {
     const mockUpdateUsernameUseCase: jest.Mocked<IUpdateUsernameUseCase> = {
-        execute: jest.fn()
+        execute: jest.fn(),
     };
     const logStub = logStubFactory();
 
     const sut = new UpdateUsernameController(
         mockUpdateUsernameUseCase,
-        logStub
+        logStub,
     );
 
     return {
         sut,
-        mockUpdateUsernameUseCase
+        mockUpdateUsernameUseCase,
     };
 };
 
 describe("Controller - UpdateUsernameController", () => {
-
     test("Should not update username because schema is invalid", async () => {
         const { sut } = makeSut();
         const username = "";
 
         const result = await sut.http({
             data: {
-                username
-            }
+                username,
+            },
         });
 
         expect(result.statusCode).toBe(400);
@@ -43,8 +42,8 @@ describe("Controller - UpdateUsernameController", () => {
 
         const result = await sut.http({
             data: {
-                username
-            }
+                username,
+            },
         });
 
         expect(result.statusCode).toBe(204);

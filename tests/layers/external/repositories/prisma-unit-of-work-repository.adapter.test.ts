@@ -1,15 +1,15 @@
-import { 
-    PrismaCustomerRepositoryAdapter, 
-    PrismaExpenseRepositoryAdapter, 
-    PrismaExtractRepositoryAdapter, 
-    PrismaPaymentHistoryRepositoryAdapter, 
-    PrismaPaymentMethodRepositoryAdapter, 
-    PrismaPlanRepositoryAdapter, 
-    PrismaSubscriptionRepositoryAdapter, 
-    PrismaUnitOfWorkRepositoryAdapter, 
-    PrismaUserConsentRepositoryAdapter, 
-    PrismaUserRepositoryAdapter, 
-    PrismaUserVerificationCodeRepositoryAdapter 
+import {
+    PrismaCustomerRepositoryAdapter,
+    PrismaExpenseRepositoryAdapter,
+    PrismaExtractRepositoryAdapter,
+    PrismaPaymentHistoryRepositoryAdapter,
+    PrismaPaymentMethodRepositoryAdapter,
+    PrismaPlanRepositoryAdapter,
+    PrismaSubscriptionRepositoryAdapter,
+    PrismaUnitOfWorkRepositoryAdapter,
+    PrismaUserConsentRepositoryAdapter,
+    PrismaUserRepositoryAdapter,
+    PrismaUserVerificationCodeRepositoryAdapter,
 } from "@/layers/external";
 import { DatabaseSQLHelper } from "@/layers/external";
 
@@ -28,12 +28,13 @@ describe("External - PrismaUnitOfWorkRepositoryAdapter", () => {
             new PrismaExpenseRepositoryAdapter(databaseSQLHelper),
             new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper),
             new PrismaPaymentHistoryRepositoryAdapter(databaseSQLHelper),
-            new PrismaExtractRepositoryAdapter(databaseSQLHelper)
+            new PrismaExtractRepositoryAdapter(databaseSQLHelper),
         );
 
         const userRepository = sut.getUserRepository();
         const userConsentRepository = sut.getUserConsentRepository();
-        const userVerificationCodeRepository = sut.getUserVerificationCodeRepository();
+        const userVerificationCodeRepository =
+            sut.getUserVerificationCodeRepository();
         const customerRepository = sut.getCustomerRepository();
         const planRepository = sut.getPlanRepository();
         const subscriptionRepository = sut.getSubscriptionRepository();
@@ -66,10 +67,13 @@ describe("External - PrismaUnitOfWorkRepositoryAdapter", () => {
             new PrismaExpenseRepositoryAdapter(databaseSQLHelper),
             new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper),
             new PrismaPaymentHistoryRepositoryAdapter(databaseSQLHelper),
-            new PrismaExtractRepositoryAdapter(databaseSQLHelper)
+            new PrismaExtractRepositoryAdapter(databaseSQLHelper),
         );
 
-        const result = async (): Promise<void> => await sut.transaction(async () => { throw new Error(); });
+        const result = async (): Promise<void> =>
+            await sut.transaction(async () => {
+                throw new Error();
+            });
 
         expect(result).rejects.toThrow(Error);
     });
@@ -86,7 +90,7 @@ describe("External - PrismaUnitOfWorkRepositoryAdapter", () => {
             new PrismaExpenseRepositoryAdapter(databaseSQLHelper),
             new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper),
             new PrismaPaymentHistoryRepositoryAdapter(databaseSQLHelper),
-            new PrismaExtractRepositoryAdapter(databaseSQLHelper)
+            new PrismaExtractRepositoryAdapter(databaseSQLHelper),
         );
         const transactionSpy = jest.spyOn(sut, "transaction");
 

@@ -5,7 +5,6 @@ import { setup } from "../../__mocks__";
 import request from "supertest";
 
 describe("/api/expenses/notify-due - POST", () => {
-
     setup();
 
     test("Should send notification of expenses that are coming due successfully", async () => {

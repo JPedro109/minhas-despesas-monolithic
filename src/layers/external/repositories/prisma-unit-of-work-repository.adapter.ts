@@ -1,20 +1,22 @@
-import { 
-    IUnitOfWorkRepository, 
-    IUserRepository, 
-    IUserConsentRepository, 
-    IUserVerificationCodeRepository, 
-    ICustomerRepository, 
-    IPlanRepository, 
-    ISubscriptionRepository, 
-    IExpenseRepository, 
-    IPaymentMethodRepository, 
-    IPaymentHistoryRepository, 
-    IExtractRepository 
+import {
+    IUnitOfWorkRepository,
+    IUserRepository,
+    IUserConsentRepository,
+    IUserVerificationCodeRepository,
+    ICustomerRepository,
+    IPlanRepository,
+    ISubscriptionRepository,
+    IExpenseRepository,
+    IPaymentMethodRepository,
+    IPaymentHistoryRepository,
+    IExtractRepository,
 } from "@/layers/application";
 
 import { DatabaseSQLHelper, PrismaClientType } from "@/layers/external";
 
-export class PrismaUnitOfWorkRepositoryAdapter implements IUnitOfWorkRepository {
+export class PrismaUnitOfWorkRepositoryAdapter
+    implements IUnitOfWorkRepository
+{
     constructor(
         private readonly databaseSQLHelper: DatabaseSQLHelper,
         private readonly userRepository: IUserRepository,
@@ -26,11 +28,11 @@ export class PrismaUnitOfWorkRepositoryAdapter implements IUnitOfWorkRepository 
         private readonly expenseRepository: IExpenseRepository,
         private readonly paymentMethodRepository: IPaymentMethodRepository,
         private readonly paymentHistoryRepository: IPaymentHistoryRepository,
-        private readonly extractRepository: IExtractRepository
-    ) { }
+        private readonly extractRepository: IExtractRepository,
+    ) {}
 
-	private setContext(context: PrismaClientType): void {
-		this.userRepository.setContext(context);
+    private setContext(context: PrismaClientType): void {
+        this.userRepository.setContext(context);
         this.userRepository.setContext(context);
         this.userConsentRepository.setContext(context);
         this.userVerificationCodeRepository.setContext(context);
@@ -41,21 +43,21 @@ export class PrismaUnitOfWorkRepositoryAdapter implements IUnitOfWorkRepository 
         this.paymentMethodRepository.setContext(context);
         this.paymentHistoryRepository.setContext(context);
         this.extractRepository.setContext(context);
-	}
+    }
 
-	async transaction(querys: () => Promise<void>): Promise<void> {
-		await this.databaseSQLHelper.client.$transaction(async context => {
-			this.setContext(context as PrismaClientType);
-			try {
+    async transaction(querys: () => Promise<void>): Promise<void> {
+        await this.databaseSQLHelper.client.$transaction(async (context) => {
+            this.setContext(context as PrismaClientType);
+            try {
                 await querys();
-            } catch(e) {
+            } catch (e) {
                 this.setContext(this.databaseSQLHelper.client);
                 throw e;
             }
-		});
+        });
 
-		this.setContext(this.databaseSQLHelper.client);
-	}
+        this.setContext(this.databaseSQLHelper.client);
+    }
 
     getUserRepository(): IUserRepository {
         return this.userRepository;

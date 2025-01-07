@@ -1,29 +1,32 @@
-import { UserVerificationCodeEntity, DomainError, UserEntity, UserVerificationCodeTypeEnum } from "@/layers/domain";
+import {
+    UserVerificationCodeEntity,
+    DomainError,
+    UserEntity,
+    UserVerificationCodeTypeEnum,
+} from "@/layers/domain";
 
-const user = new UserEntity(
-    {
-        email: "email@test.com",
-        username: "username",
-        password: "Password1234",
-        verifiedEmail: true
-    }
-);
+const user = new UserEntity({
+    email: "email@test.com",
+    username: "username",
+    password: "Password1234",
+    verifiedEmail: true,
+});
 
 describe("Entity - UserVerificationCode", () => {
-    
     test("Should not create UserVerificationCodeEntity, because verification code is null", () => {
         const type = UserVerificationCodeTypeEnum.VerifyUserEmail;
         const invalidVerificationCode = "";
         const verificationCodeExpiryDate = new Date();
         const valid = true;
 
-        const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
-            type, 
-            verificationCode: invalidVerificationCode,
-            verificationCodeExpiryDate,
-            valid,
-            user
-        });
+        const sut = (): UserVerificationCodeEntity =>
+            new UserVerificationCodeEntity({
+                type,
+                verificationCode: invalidVerificationCode,
+                verificationCodeExpiryDate,
+                valid,
+                user,
+            });
 
         expect(sut).toThrow(DomainError);
     });
@@ -34,13 +37,14 @@ describe("Entity - UserVerificationCode", () => {
         const verificationCodeExpiryDate = new Date();
         const valid = true;
 
-        const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
-            type, 
-            verificationCode: invalidVerificationCode,
-            verificationCodeExpiryDate,
-            valid,
-            user
-        });
+        const sut = (): UserVerificationCodeEntity =>
+            new UserVerificationCodeEntity({
+                type,
+                verificationCode: invalidVerificationCode,
+                verificationCodeExpiryDate,
+                valid,
+                user,
+            });
 
         expect(sut).toThrow(DomainError);
     });
@@ -51,13 +55,14 @@ describe("Entity - UserVerificationCode", () => {
         const verificationCodeExpiryDate = new Date();
         const valid = true;
 
-        const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
-            type: invalidTypeName, 
-            verificationCode,
-            verificationCodeExpiryDate,
-            valid,
-            user
-        });
+        const sut = (): UserVerificationCodeEntity =>
+            new UserVerificationCodeEntity({
+                type: invalidTypeName,
+                verificationCode,
+                verificationCodeExpiryDate,
+                valid,
+                user,
+            });
 
         expect(sut).toThrow(DomainError);
     });
@@ -68,13 +73,14 @@ describe("Entity - UserVerificationCode", () => {
         const valid = true;
         const verificationCodeExpiryDate = new Date();
 
-        const sut = (): UserVerificationCodeEntity => new UserVerificationCodeEntity({
-            type: invalidTypeName, 
-            verificationCode,
-            verificationCodeExpiryDate,
-            valid,
-            user
-        });
+        const sut = (): UserVerificationCodeEntity =>
+            new UserVerificationCodeEntity({
+                type: invalidTypeName,
+                verificationCode,
+                verificationCodeExpiryDate,
+                valid,
+                user,
+            });
 
         expect(sut).toThrow(DomainError);
     });
@@ -86,11 +92,11 @@ describe("Entity - UserVerificationCode", () => {
         const valid = true;
 
         const sut = new UserVerificationCodeEntity({
-            type, 
+            type,
             verificationCode,
             verificationCodeExpiryDate,
             valid,
-            user
+            user,
         });
 
         expect(sut).toBeInstanceOf(UserVerificationCodeEntity);
@@ -110,14 +116,14 @@ describe("Entity - UserVerificationCode", () => {
         const verificationCodeExpiryDate = new Date();
         const valid = false;
         const userVerificationCode = new UserVerificationCodeEntity({
-            type, 
+            type,
             verificationCode,
             verificationCodeExpiryDate,
             valid,
-            user
+            user,
         });
 
-        const sut = (): boolean => userVerificationCode.valid = true;
+        const sut = (): boolean => (userVerificationCode.valid = true);
 
         expect(sut).toThrow(DomainError);
     });
@@ -128,14 +134,14 @@ describe("Entity - UserVerificationCode", () => {
         const verificationCodeExpiryDate = new Date();
         const valid = true;
         const userVerificationCode = new UserVerificationCodeEntity({
-            type, 
+            type,
             verificationCode,
             verificationCodeExpiryDate,
             valid,
-            user
+            user,
         });
 
-        const sut = (): boolean => userVerificationCode.valid = true;
+        const sut = (): boolean => (userVerificationCode.valid = true);
 
         expect(sut).toThrow(DomainError);
     });
@@ -146,11 +152,11 @@ describe("Entity - UserVerificationCode", () => {
         const verificationCodeExpiryDate = new Date();
         const valid = true;
         const userVerificationCode = new UserVerificationCodeEntity({
-            type, 
+            type,
             verificationCode,
             verificationCodeExpiryDate,
             valid,
-            user
+            user,
         });
 
         userVerificationCode.valid = false;

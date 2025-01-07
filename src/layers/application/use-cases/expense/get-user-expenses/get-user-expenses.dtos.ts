@@ -1,6 +1,6 @@
 export type GetUserExpensesDTO = {
     userId: string;
-}
+};
 
 export type GetUserExpensesResponseDTO = {
     userId: string;
@@ -9,4 +9,4 @@ export type GetUserExpensesResponseDTO = {
     expenseValue: number;
     dueDate: Date;
     paid: boolean;
-}
+};

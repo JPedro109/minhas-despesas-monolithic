@@ -5,7 +5,6 @@ import { loginRest, setup } from "../../__mocks__";
 import request from "supertest";
 
 describe("/api/subscriptions/plan/:newPlanId - PATCH", () => {
-
     setup();
 
     const makeUrl = (id: string): string => `/api/subscriptions/plan/${id}`;
@@ -23,7 +22,9 @@ describe("/api/subscriptions/plan/:newPlanId - PATCH", () => {
     });
 
     test("Should not update subscription, because downgrade to Free plan is restricted", async () => {
-        const token = await loginRest("email-with-plan-gold-with-codes-expired-without-payment-method@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-with-codes-expired-without-payment-method@test.com",
+        );
 
         const response = await request(setupServer())
             .patch(makeUrl("00000000-0000-0000-0000-000000000000"))
@@ -35,7 +36,9 @@ describe("/api/subscriptions/plan/:newPlanId - PATCH", () => {
     });
 
     test("Should not update subscription to active because user does not have payment method", async () => {
-        const token = await loginRest("email-with-plan-free-and-without-payment-method@test.com");
+        const token = await loginRest(
+            "email-with-plan-free-and-without-payment-method@test.com",
+        );
 
         const response = await request(setupServer())
             .patch(makeUrl("00000000-0000-0000-0000-000000000001"))

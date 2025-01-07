@@ -1,22 +1,22 @@
 import { IVerifyUserEmailUseCase, ILog } from "@/layers/application";
-import { AbstractController, HttpRequest, HttpResponse, HttpHelper } from "@/layers/presentation";
+import {
+    AbstractController,
+    HttpRequest,
+    HttpResponse,
+    HttpHelper,
+} from "@/layers/presentation";
 
 export class VerifyUserEmailController extends AbstractController {
-
     constructor(
         private readonly useCase: IVerifyUserEmailUseCase,
-        protected readonly log: ILog
-    ) { 
-        super(
-            log,
-            "VerifyUserEmail",
-            {
-                code: {
-                    type: "string",
-                    optional: false
-                }
-            }
-        );
+        protected readonly log: ILog,
+    ) {
+        super(log, "VerifyUserEmail", {
+            code: {
+                type: "string",
+                optional: false,
+            },
+        });
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {

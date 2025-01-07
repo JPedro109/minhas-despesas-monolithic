@@ -3,27 +3,27 @@ import { SendNotificationOfSubscriptionThatAreComingDueController } from "@/laye
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: SendNotificationOfSubscriptionThatAreComingDueController,
-    mockSendNotificationOfSubscriptionThatAreComingDueUseCase: jest.Mocked<ISendNotificationOfSubscriptionThatAreComingDue>
+    sut: SendNotificationOfSubscriptionThatAreComingDueController;
+    mockSendNotificationOfSubscriptionThatAreComingDueUseCase: jest.Mocked<ISendNotificationOfSubscriptionThatAreComingDue>;
 } => {
-    const mockSendNotificationOfSubscriptionThatAreComingDueUseCase: jest.Mocked<ISendNotificationOfSubscriptionThatAreComingDue> = {
-        execute: jest.fn()
-    };
+    const mockSendNotificationOfSubscriptionThatAreComingDueUseCase: jest.Mocked<ISendNotificationOfSubscriptionThatAreComingDue> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new SendNotificationOfSubscriptionThatAreComingDueController(
-        mockSendNotificationOfSubscriptionThatAreComingDueUseCase, 
-        logStub
+        mockSendNotificationOfSubscriptionThatAreComingDueUseCase,
+        logStub,
     );
 
     return {
         sut,
-        mockSendNotificationOfSubscriptionThatAreComingDueUseCase
+        mockSendNotificationOfSubscriptionThatAreComingDueUseCase,
     };
 };
 
 describe("Controller - SendNotificationOfSubscriptionThatAreComingDueController", () => {
-
     test("Should send notification of subscriptions that are coming due ", async () => {
         const { sut } = makeSut();
 

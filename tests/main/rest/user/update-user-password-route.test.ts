@@ -7,18 +7,21 @@ import request from "supertest";
 const makeBody = (
     password: unknown,
     newPassword: unknown,
-    newPasswordConfirm: unknown
+    newPasswordConfirm: unknown,
 ): object => {
     return { password, newPassword, newPasswordConfirm };
 };
 
 describe("/api/users/password - PATCH", () => {
-
     setup();
 
     test("Should not update password because newPassword and newPasswordConfirm do not match", async () => {
         const token = await loginRest("email-with-plan-free@test.com");
-        const body = makeBody("Password1234", "Password12345", "Password123456");
+        const body = makeBody(
+            "Password1234",
+            "Password12345",
+            "Password123456",
+        );
 
         const response = await request(setupServer())
             .patch("/api/users/password")
@@ -32,7 +35,11 @@ describe("/api/users/password - PATCH", () => {
 
     test("Should not update password because the current is incorrect", async () => {
         const token = await loginRest("email-with-plan-free@test.com");
-        const body = makeBody("Password1234567", "Password1234", "Password1234");
+        const body = makeBody(
+            "Password1234567",
+            "Password1234",
+            "Password1234",
+        );
 
         const response = await request(setupServer())
             .patch("/api/users/password")

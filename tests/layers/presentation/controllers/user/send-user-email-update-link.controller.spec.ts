@@ -3,27 +3,27 @@ import { SendUserEmailUpdateLinkController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: SendUserEmailUpdateLinkController,
-    mockSendUserEmailUpdateLinkUseCase: jest.Mocked<ISendUserEmailUpdateLinkUseCase>
+    sut: SendUserEmailUpdateLinkController;
+    mockSendUserEmailUpdateLinkUseCase: jest.Mocked<ISendUserEmailUpdateLinkUseCase>;
 } => {
-    const mockSendUserEmailUpdateLinkUseCase: jest.Mocked<ISendUserEmailUpdateLinkUseCase> = {
-        execute: jest.fn()
-    };
+    const mockSendUserEmailUpdateLinkUseCase: jest.Mocked<ISendUserEmailUpdateLinkUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new SendUserEmailUpdateLinkController(
         mockSendUserEmailUpdateLinkUseCase,
-        logStub
+        logStub,
     );
 
     return {
         sut,
-        mockSendUserEmailUpdateLinkUseCase
+        mockSendUserEmailUpdateLinkUseCase,
     };
 };
 
 describe("Controller - SendUserEmailUpdateLinkController", () => {
-
     test("Should not send user email update link because schema is invalid", async () => {
         const { sut } = makeSut();
         const id = "";
@@ -31,9 +31,9 @@ describe("Controller - SendUserEmailUpdateLinkController", () => {
 
         const result = await sut.http({
             data: {
-                email
+                email,
             },
-            userId: id
+            userId: id,
         });
 
         expect(result.statusCode).toBe(400);
@@ -46,9 +46,9 @@ describe("Controller - SendUserEmailUpdateLinkController", () => {
 
         const result = await sut.http({
             data: {
-                email
+                email,
             },
-            userId: id
+            userId: id,
         });
 
         expect(result.statusCode).toBe(204);

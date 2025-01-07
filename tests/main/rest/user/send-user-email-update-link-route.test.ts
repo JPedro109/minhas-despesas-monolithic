@@ -9,7 +9,6 @@ const makeBody = (email: unknown): object => {
 };
 
 describe("/api/users/send-email-update-link - POST", () => {
-
     setup();
 
     test("Should not send email update link because email is missing", async () => {

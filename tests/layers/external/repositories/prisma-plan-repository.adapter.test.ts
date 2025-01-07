@@ -4,7 +4,6 @@ import { PlanEntity, PlanNameEnum } from "@/layers/domain";
 import { Seed } from "./__mocks__";
 
 describe("External - PrismaPlanRepositoryAdapter", () => {
-
     const databaseSQLHelper = new DatabaseSQLHelper();
 
     beforeAll(async () => {
@@ -39,7 +38,9 @@ describe("External - PrismaPlanRepositoryAdapter", () => {
         test("Should return null if plan does not exist", async () => {
             const sut = new PrismaPlanRepositoryAdapter(databaseSQLHelper);
 
-            const result = await sut.getPlanByName("NON_EXISTING_PLAN" as PlanNameEnum);
+            const result = await sut.getPlanByName(
+                "NON_EXISTING_PLAN" as PlanNameEnum,
+            );
 
             expect(result).toBeNull();
         });
@@ -57,15 +58,19 @@ describe("External - PrismaPlanRepositoryAdapter", () => {
         test("Should return null if plan does not exist", async () => {
             const sut = new PrismaPlanRepositoryAdapter(databaseSQLHelper);
 
-            const result = await sut.getPlanById("ffffffff-ffff-ffff-ffff-ffffffffffff");
+            const result = await sut.getPlanById(
+                "ffffffff-ffff-ffff-ffff-ffffffffffff",
+            );
 
             expect(result).toBeNull();
         });
-        
+
         test("Should return a plan by ID", async () => {
             const sut = new PrismaPlanRepositoryAdapter(databaseSQLHelper);
 
-            const result = await sut.getPlanById("00000000-0000-0000-0000-000000000000");
+            const result = await sut.getPlanById(
+                "00000000-0000-0000-0000-000000000000",
+            );
 
             expect(result).toBeInstanceOf(PlanEntity);
         });

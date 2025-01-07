@@ -1,31 +1,34 @@
 import { InvalidUserEmailError } from "@/layers/domain";
 
 export class UserEmailValueObject {
-	private constructor(private readonly userEmail: string) { }
-	
-	public get value() : string {
-		return this.userEmail;
-	}
+    private constructor(private readonly userEmail: string) {}
 
-	static create(userEmail: string): UserEmailValueObject | InvalidUserEmailError {
-		if(!this.validate(userEmail)) return new InvalidUserEmailError();
+    public get value(): string {
+        return this.userEmail;
+    }
 
-		return new UserEmailValueObject(userEmail);
-	}
+    static create(
+        userEmail: string,
+    ): UserEmailValueObject | InvalidUserEmailError {
+        if (!this.validate(userEmail)) return new InvalidUserEmailError();
 
-	private static validate(userEmail: string): boolean {
-		if(!userEmail) return false;
+        return new UserEmailValueObject(userEmail);
+    }
 
-		if(userEmail.length > 255) return false;
+    private static validate(userEmail: string): boolean {
+        if (!userEmail) return false;
 
-		const userEmailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (userEmail.length > 255) return false;
 
-		if (!userEmailRegEx.test(userEmail)) return false;
+        const userEmailRegEx =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-		const [account, domain] = userEmail.split("@");
+        if (!userEmailRegEx.test(userEmail)) return false;
 
-		if (account.length > 64 || domain.length > 64) return false;
+        const [account, domain] = userEmail.split("@");
 
-		return true;
-	}
+        if (account.length > 64 || domain.length > 64) return false;
+
+        return true;
+    }
 }

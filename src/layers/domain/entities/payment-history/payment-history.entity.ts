@@ -7,12 +7,11 @@ export type PaymentHistoryProps = {
     expenseValue: number;
     dueDate: Date;
     paidDate: Date;
-}
+};
 
 export class PaymentHistoryEntity extends AbstractEntity<PaymentHistoryProps> {
-
     constructor(props: PaymentHistoryProps, id?: string, createdAt?: Date) {
-		super(props, id, createdAt);
+        super(props, id, createdAt);
     }
 
     get userId(): string {

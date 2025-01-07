@@ -1,14 +1,14 @@
-import { 
-    IUserRepository, 
-    IUserVerificationCodeRepository, 
-    ICustomerRepository, 
-    IPlanRepository, 
-    ISubscriptionRepository, 
+import {
+    IUserRepository,
+    IUserVerificationCodeRepository,
+    ICustomerRepository,
+    IPlanRepository,
+    ISubscriptionRepository,
     IUserConsentRepository,
     IExpenseRepository,
     IPaymentMethodRepository,
     IPaymentHistoryRepository,
-    IExtractRepository
+    IExtractRepository,
 } from "@/layers/application";
 
 export interface IUnitOfWorkRepository {

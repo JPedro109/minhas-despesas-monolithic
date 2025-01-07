@@ -3,27 +3,27 @@ import { UpdateSubscriptionRenewalStatusController } from "@/layers/presentation
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: UpdateSubscriptionRenewalStatusController,
-    mockUpdateSubscriptionRenewalStatusUseCase: jest.Mocked<IUpdateSubscriptionRenewalStatusUseCase>
+    sut: UpdateSubscriptionRenewalStatusController;
+    mockUpdateSubscriptionRenewalStatusUseCase: jest.Mocked<IUpdateSubscriptionRenewalStatusUseCase>;
 } => {
-    const mockUpdateSubscriptionRenewalStatusUseCase: jest.Mocked<IUpdateSubscriptionRenewalStatusUseCase> = {
-        execute: jest.fn()
-    };
+    const mockUpdateSubscriptionRenewalStatusUseCase: jest.Mocked<IUpdateSubscriptionRenewalStatusUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new UpdateSubscriptionRenewalStatusController(
-        mockUpdateSubscriptionRenewalStatusUseCase, 
-        logStub
+        mockUpdateSubscriptionRenewalStatusUseCase,
+        logStub,
     );
 
     return {
         sut,
-        mockUpdateSubscriptionRenewalStatusUseCase
+        mockUpdateSubscriptionRenewalStatusUseCase,
     };
 };
 
 describe("Controller - UpdateSubscriptionRenewalStatusController", () => {
-
     test("Should not update subscription renewal status because schema is invalid", async () => {
         const { sut } = makeSut();
         const userId = "";
@@ -31,9 +31,9 @@ describe("Controller - UpdateSubscriptionRenewalStatusController", () => {
 
         const result = await sut.http({
             data: {
-                renewable
+                renewable,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(400);
@@ -46,9 +46,9 @@ describe("Controller - UpdateSubscriptionRenewalStatusController", () => {
 
         const result = await sut.http({
             data: {
-                renewable
+                renewable,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(204);

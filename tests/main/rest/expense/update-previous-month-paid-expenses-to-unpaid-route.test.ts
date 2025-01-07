@@ -5,7 +5,6 @@ import { setup } from "../../__mocks__";
 import request from "supertest";
 
 describe("/api/expenses/update-unpaid - POST", () => {
-
     setup();
 
     test("Should update previous month paid expenses to unpaid successfully", async () => {

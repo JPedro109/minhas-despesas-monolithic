@@ -26,15 +26,13 @@ describe("External - PrismaExpenseRepositoryAdapter", () => {
 
     describe("createExpense", () => {
         test("Should create expense", async () => {
-            const expense = new ExpenseEntity(
-                {
-                    userId: "00000000-0000-0000-0000-000000000000",
-                    expenseName: "Expense",
-                    expenseValue: 100,
-                    dueDate: new Date("3000-01-01"),
-                    paid: false
-                }
-            );
+            const expense = new ExpenseEntity({
+                userId: "00000000-0000-0000-0000-000000000000",
+                expenseName: "Expense",
+                expenseValue: 100,
+                dueDate: new Date("3000-01-01"),
+                paid: false,
+            });
             const sut = new PrismaExpenseRepositoryAdapter(databaseSQLHelper);
 
             const result = await sut.createExpense(expense);
@@ -104,9 +102,13 @@ describe("External - PrismaExpenseRepositoryAdapter", () => {
             const month = 1; // January
             const sut = new PrismaExpenseRepositoryAdapter(databaseSQLHelper);
 
-            await sut.updatePaidExpensesToUnpaidAndSumOneInDueMonthByDueMonth(month);
+            await sut.updatePaidExpensesToUnpaidAndSumOneInDueMonthByDueMonth(
+                month,
+            );
 
-            const expenses = await sut.getExpensesByDueDate(new Date("3000-02-01"));
+            const expenses = await sut.getExpensesByDueDate(
+                new Date("3000-02-01"),
+            );
             expect(expenses.length).toBeGreaterThan(0);
         });
     });

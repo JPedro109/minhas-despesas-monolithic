@@ -1,33 +1,41 @@
 import {
-	IUnitOfWorkRepository,
-	DeletePaymentMethodDTO,
-	IDeletePaymentMethodUseCase,
-	NotFoundError,
-	IPayment,
-	ForbiddenError
+    IUnitOfWorkRepository,
+    DeletePaymentMethodDTO,
+    IDeletePaymentMethodUseCase,
+    NotFoundError,
+    IPayment,
+    ForbiddenError,
 } from "@/layers/application";
 
 export class DeletePaymentMethodUseCase implements IDeletePaymentMethodUseCase {
+    constructor(
+        private readonly unitOfWorkRepository: IUnitOfWorkRepository,
+        private readonly payment: IPayment,
+    ) {}
 
-	constructor(
-		private readonly unitOfWorkRepository: IUnitOfWorkRepository,
-		private readonly payment: IPayment
-	) { }
+    async execute({ id }: DeletePaymentMethodDTO): Promise<void> {
+        const paymentMethodRepository =
+            this.unitOfWorkRepository.getPaymentMethodRepository();
+        const subscriptionRepository =
+            this.unitOfWorkRepository.getSubscriptionRepository();
 
-	async execute({ id }: DeletePaymentMethodDTO): Promise<void> {
-		const paymentMethodRepository = this.unitOfWorkRepository.getPaymentMethodRepository();
-		const subscriptionRepository = this.unitOfWorkRepository.getSubscriptionRepository();
+        const paymentMethod =
+            await paymentMethodRepository.getPaymentMethodById(id);
+        if (!paymentMethod)
+            throw new NotFoundError("Esse método de pagamento não existe");
 
-		const paymentMethod = await paymentMethodRepository.getPaymentMethodById(id);
-		if(!paymentMethod) throw new NotFoundError("Esse método de pagamento não existe");
+        const subscriptionActive =
+            await subscriptionRepository.getActiveSubscriptionByUserId(
+                paymentMethod.userId,
+            );
+        if (subscriptionActive.renewable)
+            throw new ForbiddenError(
+                "Não possível excluir o método de pagamento pois existe uma assinatura ativa, cancele a assinatura para excluir o método de pagamento",
+            );
 
-		const subscriptionActive = await subscriptionRepository.getActiveSubscriptionByUserId(paymentMethod.userId);
-		if(subscriptionActive.renewable) 
-			throw new ForbiddenError("Não possível excluir o método de pagamento pois existe uma assinatura ativa, cancele a assinatura para excluir o método de pagamento");
-
-		await this.unitOfWorkRepository.transaction(async () => {
-			await paymentMethodRepository.deletePaymentMethodById(id); 
-			await this.payment.deletePaymentMethodByToken(paymentMethod.token);
-		});
-	}
+        await this.unitOfWorkRepository.transaction(async () => {
+            await paymentMethodRepository.deletePaymentMethodById(id);
+            await this.payment.deletePaymentMethodByToken(paymentMethod.token);
+        });
+    }
 }

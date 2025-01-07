@@ -11,7 +11,7 @@ export class SecurityStub implements ISecurity {
         return {
             id: "1",
             email: "email@test.com",
-            type: "access_token"
+            type: "access_token",
         };
     }
 
@@ -21,13 +21,13 @@ export class SecurityStub implements ISecurity {
 }
 
 export class LogStub implements ILog {
-    trace(message: string, trace: string): void { }
+    trace(message: string, trace: string): void {}
 
-    info(message: string): void { }
+    info(message: string): void {}
 
-    warning(message: string): void { }
+    warning(message: string): void {}
 
-    error(message: string, error: Error): void { }
+    error(message: string, error: Error): void {}
 }
 
 export const logStubFactory = (): LogStub => new LogStub();

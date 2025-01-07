@@ -3,27 +3,26 @@ import { UpdateUserEmailController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: UpdateUserEmailController,
-    mockUpdateUserEmailUseCase: jest.Mocked<IUpdateUserEmailUseCase>
+    sut: UpdateUserEmailController;
+    mockUpdateUserEmailUseCase: jest.Mocked<IUpdateUserEmailUseCase>;
 } => {
     const mockUpdateUserEmailUseCase: jest.Mocked<IUpdateUserEmailUseCase> = {
-        execute: jest.fn()
+        execute: jest.fn(),
     };
     const logStub = logStubFactory();
 
     const sut = new UpdateUserEmailController(
         mockUpdateUserEmailUseCase,
-        logStub
+        logStub,
     );
 
     return {
         sut,
-        mockUpdateUserEmailUseCase
+        mockUpdateUserEmailUseCase,
     };
 };
 
 describe("Controller - UpdateUserEmailController", () => {
-
     test("Should not update user email because schema is invalid", async () => {
         const { sut } = makeSut();
         const code = "";
@@ -32,8 +31,8 @@ describe("Controller - UpdateUserEmailController", () => {
         const result = await sut.http({
             data: {
                 code,
-                email
-            }
+                email,
+            },
         });
 
         expect(result.statusCode).toBe(400);
@@ -47,8 +46,8 @@ describe("Controller - UpdateUserEmailController", () => {
         const result = await sut.http({
             data: {
                 code,
-                email
-            }
+                email,
+            },
         });
 
         expect(result.statusCode).toBe(204);

@@ -4,7 +4,7 @@ import {
     getUserPaymentMethodController,
     updatePaymentMethodNameController,
     updatePaymentMethodTokenController,
-    authenticationUserMiddleware
+    authenticationUserMiddleware,
 } from "@/main/factories";
 import { RestAdapter } from "@/main/rest";
 
@@ -14,26 +14,26 @@ export default (router: Router): void => {
     router.post(
         "/payment-methods",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(createPaymentMethodController)
+        RestAdapter.route(createPaymentMethodController),
     );
     router.delete(
         "/payment-methods/:id",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(deletePaymentMethodController)
+        RestAdapter.route(deletePaymentMethodController),
     );
     router.get(
         "/payment-methods",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(getUserPaymentMethodController)
+        RestAdapter.route(getUserPaymentMethodController),
     );
     router.patch(
         "/payment-methods/name/:id",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(updatePaymentMethodNameController)
+        RestAdapter.route(updatePaymentMethodNameController),
     );
     router.patch(
         "/payment-methods/token/:id",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(updatePaymentMethodTokenController)
+        RestAdapter.route(updatePaymentMethodTokenController),
     );
 };

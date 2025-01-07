@@ -1,5 +1,9 @@
 import { AbstractEntity } from "../abstract/abstract.entity";
-import { DomainError, PlanAmountValueObject, PlanEntity } from "@/layers/domain";
+import {
+    DomainError,
+    PlanAmountValueObject,
+    PlanEntity,
+} from "@/layers/domain";
 
 export type SubscriptionProps = {
     userId: string;
@@ -10,18 +14,19 @@ export type SubscriptionProps = {
     startDate: Date;
     endDate?: Date;
     updatedAt?: Date;
-}
+};
 
 export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
-
     constructor(props: SubscriptionProps, id?: string, createdAt?: Date) {
-		super(props, id, createdAt);
+        super(props, id, createdAt);
 
-        if (this.endDate?.getTime() <= this.startDate.getTime()) 
-            throw new DomainError("A data de término da assinatura deve ser maior que a data de início");
+        if (this.endDate?.getTime() <= this.startDate.getTime())
+            throw new DomainError(
+                "A data de término da assinatura deve ser maior que a data de início",
+            );
 
         const valueObjects = {
-            amount: PlanAmountValueObject.create(props.amount)
+            amount: PlanAmountValueObject.create(props.amount),
         };
 
         this.validate(valueObjects);
@@ -44,7 +49,10 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
     }
 
     set active(active: boolean) {
-		if(this.props.active === active) throw new DomainError(`A assinatura já está ${active ? "ativa" : "como não ativa"}`);
+        if (this.props.active === active)
+            throw new DomainError(
+                `A assinatura já está ${active ? "ativa" : "como não ativa"}`,
+            );
         this.props.active = active;
         this.props.updatedAt = new Date();
     }
@@ -54,7 +62,10 @@ export class SubscriptionEntity extends AbstractEntity<SubscriptionProps> {
     }
 
     set renewable(renewable: boolean) {
-		if(this.props.renewable === renewable) throw new DomainError(`A assinatura já está ${renewable ? "renovável" : "como não renovável "}`);
+        if (this.props.renewable === renewable)
+            throw new DomainError(
+                `A assinatura já está ${renewable ? "renovável" : "como não renovável "}`,
+            );
         this.props.renewable = renewable;
         this.props.updatedAt = new Date();
     }

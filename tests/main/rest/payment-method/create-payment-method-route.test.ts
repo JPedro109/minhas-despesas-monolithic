@@ -9,13 +9,12 @@ const makeBody = (name: unknown, token: unknown): object => {
 };
 
 describe("/api/payment-methods - POST", () => {
-
     setup();
 
     test("Should not create a payment method because fields are empty", async () => {
         const body = makeBody("", "");
         const token = await loginRest("email-with-plan-free@test.com");
-        
+
         const response = await request(setupServer())
             .post("/api/payment-methods")
             .set("User-Agent", "Supertest-Client/1.0")
@@ -42,7 +41,9 @@ describe("/api/payment-methods - POST", () => {
 
     test("Should create a payment method successfully", async () => {
         const body = makeBody("Valid Method Name", "pm_card_visa");
-        const token = await loginRest("email-with-plan-gold-with-codes-expired-without-payment-method@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-with-codes-expired-without-payment-method@test.com",
+        );
 
         const response = await request(setupServer())
             .post("/api/payment-methods")

@@ -1,7 +1,7 @@
 import {
     ConflictedError,
     NotFoundError,
-    SendUserEmailUpdateLinkUseCase
+    SendUserEmailUpdateLinkUseCase,
 } from "@/layers/application";
 import {
     UserRepositoryStub,
@@ -13,10 +13,10 @@ import {
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: SendUserEmailUpdateLinkUseCase,
-    userRepositoryStub: UserRepositoryStub,
-    userVerificationCodeStub: UserVerificationCodeRepositoryStub,
-    mailStub: NotificationStub
+    sut: SendUserEmailUpdateLinkUseCase;
+    userRepositoryStub: UserRepositoryStub;
+    userVerificationCodeStub: UserVerificationCodeRepositoryStub;
+    mailStub: NotificationStub;
 } => {
     const generationStub = generationStubFactory();
     const mailStub = notificationStubFactory();
@@ -24,14 +24,15 @@ const makeSut = (): {
     const sut = new SendUserEmailUpdateLinkUseCase(
         unitOfWorkRepositoryStub,
         mailStub,
-        generationStub
+        generationStub,
     );
 
     return {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        userVerificationCodeStub: unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
-        mailStub
+        userVerificationCodeStub:
+            unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
+        mailStub,
     };
 };
 
@@ -44,7 +45,7 @@ describe("Use case - SendUserEmailUpdateLinkUseCase", () => {
 
         const result = sut.execute({
             id,
-            email
+            email,
         });
 
         await expect(result).rejects.toThrow(NotFoundError);
@@ -57,23 +58,29 @@ describe("Use case - SendUserEmailUpdateLinkUseCase", () => {
 
         const result = sut.execute({
             id,
-            email
+            email,
         });
 
         await expect(result).rejects.toThrow(ConflictedError);
     });
 
     test("Should send email update link successfully", async () => {
-        const { sut, userRepositoryStub, userVerificationCodeStub, mailStub } = makeSut();
+        const { sut, userRepositoryStub, userVerificationCodeStub, mailStub } =
+            makeSut();
         const id = "1";
         const email = "newemail@test.com";
-        jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(null);
-        const createUserVerificationCodeSpy = jest.spyOn(userVerificationCodeStub, "createUserVerificationCode");
+        jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(
+            null,
+        );
+        const createUserVerificationCodeSpy = jest.spyOn(
+            userVerificationCodeStub,
+            "createUserVerificationCode",
+        );
         const sendMailSpy = jest.spyOn(mailStub, "sendMail");
 
         await sut.execute({
             id,
-            email
+            email,
         });
 
         expect(createUserVerificationCodeSpy).toHaveBeenCalled();

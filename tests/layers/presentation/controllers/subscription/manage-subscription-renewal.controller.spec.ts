@@ -3,27 +3,27 @@ import { ManageSubscriptionRenewalController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: ManageSubscriptionRenewalController,
-    mockManageSubscriptionRenewalUseCase: jest.Mocked<IManageSubscriptionRenewalUseCase>
+    sut: ManageSubscriptionRenewalController;
+    mockManageSubscriptionRenewalUseCase: jest.Mocked<IManageSubscriptionRenewalUseCase>;
 } => {
-    const mockManageSubscriptionRenewalUseCase: jest.Mocked<IManageSubscriptionRenewalUseCase> = {
-        execute: jest.fn()
-    };
+    const mockManageSubscriptionRenewalUseCase: jest.Mocked<IManageSubscriptionRenewalUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new ManageSubscriptionRenewalController(
-        mockManageSubscriptionRenewalUseCase, 
-        logStub
+        mockManageSubscriptionRenewalUseCase,
+        logStub,
     );
 
     return {
         sut,
-        mockManageSubscriptionRenewalUseCase
+        mockManageSubscriptionRenewalUseCase,
     };
 };
 
 describe("Controller - ManageSubscriptionRenewalController", () => {
-
     test("Should not manage subscription renewal because schema is invalid", async () => {
         const { sut } = makeSut();
         const userId = "";
@@ -31,9 +31,9 @@ describe("Controller - ManageSubscriptionRenewalController", () => {
 
         const result = await sut.http({
             data: {
-                renew
+                renew,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(400);
@@ -46,9 +46,9 @@ describe("Controller - ManageSubscriptionRenewalController", () => {
 
         const result = await sut.http({
             data: {
-                renew
+                renew,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(204);

@@ -1,10 +1,10 @@
 import { AbstractEntity } from "../abstract/abstract.entity";
-import { 
-    UserVerificationCodeValueObject, 
-    UserVerificationCodeTypeValueObject, 
-	UserVerificationCodeTypeEnum,
-	UserEntity,
-    DomainError
+import {
+    UserVerificationCodeValueObject,
+    UserVerificationCodeTypeValueObject,
+    UserVerificationCodeTypeEnum,
+    UserEntity,
+    DomainError,
 } from "@/layers/domain";
 
 export type UserVerificationCodeProps = {
@@ -14,49 +14,56 @@ export type UserVerificationCodeProps = {
     user: UserEntity;
     verificationCodeExpiryDate?: Date;
     updatedAt?: Date;
-}
+};
 
 export class UserVerificationCodeEntity extends AbstractEntity<UserVerificationCodeProps> {
+    constructor(
+        props: UserVerificationCodeProps,
+        id?: string,
+        createdAt?: Date,
+    ) {
+        super(props, id, createdAt);
 
-	constructor(props: UserVerificationCodeProps, id?: string, createdAt?: Date) {
-		super(props, id, createdAt);
+        const valueObjects = {
+            verificationCode: UserVerificationCodeValueObject.create(
+                props.verificationCode,
+            ),
+            type: UserVerificationCodeTypeValueObject.create(props.type),
+        };
 
-		const valueObjects = {
-			verificationCode: UserVerificationCodeValueObject.create(props.verificationCode),
-            type: UserVerificationCodeTypeValueObject.create(props.type)
-		};
+        this.validate(valueObjects);
+    }
 
-		this.validate(valueObjects);
-	}
+    public get type(): string {
+        return this.props.type;
+    }
 
-	public get type(): string {
-		return this.props.type;
-	}
+    public get verificationCode(): string {
+        return this.props.verificationCode;
+    }
 
-	public get verificationCode(): string {
-		return this.props.verificationCode;
-	}
+    public get verificationCodeExpiryDate(): Date {
+        return this.props.verificationCodeExpiryDate;
+    }
 
-	public get verificationCodeExpiryDate(): Date {
-		return this.props.verificationCodeExpiryDate;
-	}
-
-	public get valid(): boolean {
-		return this.props.valid;
-	}
+    public get valid(): boolean {
+        return this.props.valid;
+    }
 
     public set valid(valid: boolean) {
-		if(!this.props.valid) throw new DomainError("O código já está invalidado");
-		if(this.props.valid && valid) throw new DomainError("Esse código já está ativo");
-		this.props.valid = valid;
+        if (!this.props.valid)
+            throw new DomainError("O código já está invalidado");
+        if (this.props.valid && valid)
+            throw new DomainError("Esse código já está ativo");
+        this.props.valid = valid;
         this.props.updatedAt = new Date();
-	}
-	
-	public get user(): UserEntity {
-		return this.props.user;
-	}
+    }
 
-	public get updatedAt(): Date | null {
-		return this.props.updatedAt;
-	}
+    public get user(): UserEntity {
+        return this.props.user;
+    }
+
+    public get updatedAt(): Date | null {
+        return this.props.updatedAt;
+    }
 }

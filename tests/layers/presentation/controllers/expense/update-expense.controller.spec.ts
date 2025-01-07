@@ -3,32 +3,28 @@ import { UpdateExpenseController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: UpdateExpenseController,
-    mockUpdateExpenseUseCase: jest.Mocked<IUpdateExpenseUseCase>
+    sut: UpdateExpenseController;
+    mockUpdateExpenseUseCase: jest.Mocked<IUpdateExpenseUseCase>;
 } => {
     const mockUpdateExpenseUseCase: jest.Mocked<IUpdateExpenseUseCase> = {
-        execute: jest.fn()
+        execute: jest.fn(),
     };
     const logStub = logStubFactory();
 
-    const sut = new UpdateExpenseController(
-        mockUpdateExpenseUseCase, 
-        logStub
-    );
+    const sut = new UpdateExpenseController(mockUpdateExpenseUseCase, logStub);
 
     return {
         sut,
-        mockUpdateExpenseUseCase
+        mockUpdateExpenseUseCase,
     };
 };
 
 describe("Controller - UpdateExpenseController", () => {
-
     test("Should not update expense because schema is invalid", async () => {
         const { sut } = makeSut();
         const userId = "";
         const id = "";
-        const expenseName ="";
+        const expenseName = "";
         const expenseValue = null;
         const dueDate = "";
 
@@ -37,9 +33,9 @@ describe("Controller - UpdateExpenseController", () => {
                 id,
                 expenseName,
                 expenseValue,
-                dueDate
+                dueDate,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(400);
@@ -58,9 +54,9 @@ describe("Controller - UpdateExpenseController", () => {
                 id,
                 expenseName,
                 expenseValue,
-                dueDate
+                dueDate,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(204);

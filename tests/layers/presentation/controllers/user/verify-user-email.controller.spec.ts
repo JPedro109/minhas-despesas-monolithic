@@ -3,35 +3,34 @@ import { VerifyUserEmailController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: VerifyUserEmailController,
-    mockVerifyUserEmailUseCase: jest.Mocked<IVerifyUserEmailUseCase>
+    sut: VerifyUserEmailController;
+    mockVerifyUserEmailUseCase: jest.Mocked<IVerifyUserEmailUseCase>;
 } => {
     const mockVerifyUserEmailUseCase: jest.Mocked<IVerifyUserEmailUseCase> = {
-        execute: jest.fn()
+        execute: jest.fn(),
     };
     const logStub = logStubFactory();
 
     const sut = new VerifyUserEmailController(
         mockVerifyUserEmailUseCase,
-        logStub
+        logStub,
     );
 
     return {
         sut,
-        mockVerifyUserEmailUseCase
+        mockVerifyUserEmailUseCase,
     };
 };
 
 describe("Controller - VerifyUserEmailController", () => {
-
     test("Should not verify user email because schema is invalid", async () => {
         const { sut } = makeSut();
         const code = "";
 
         const result = await sut.http({
             data: {
-                code
-            }
+                code,
+            },
         });
 
         expect(result.statusCode).toBe(400);
@@ -43,8 +42,8 @@ describe("Controller - VerifyUserEmailController", () => {
 
         const result = await sut.http({
             data: {
-                code
-            }
+                code,
+            },
         });
 
         expect(result.statusCode).toBe(204);

@@ -2,28 +2,29 @@ import { NotFoundError, GetUserExtractsUseCase } from "@/layers/application";
 import {
     UserRepositoryStub,
     unitOfWorkRepositoryStubFactory,
-    testExtractEntity
+    testExtractEntity,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: GetUserExtractsUseCase,
-    userRepositoryStub: UserRepositoryStub
+    sut: GetUserExtractsUseCase;
+    userRepositoryStub: UserRepositoryStub;
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new GetUserExtractsUseCase(unitOfWorkRepositoryStub);
-    
+
     return {
         sut,
-        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository()
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
     };
 };
 
 describe("Use case - GetUserExtractsUseCase", () => {
-
     test("Should not get users extracts because user is not exists", async () => {
         const { sut, userRepositoryStub } = makeSut();
         const userId = "2";
-        jest.spyOn(userRepositoryStub, "getUserById").mockResolvedValueOnce(null);
+        jest.spyOn(userRepositoryStub, "getUserById").mockResolvedValueOnce(
+            null,
+        );
 
         const result = sut.execute({ userId });
 
@@ -36,16 +37,14 @@ describe("Use case - GetUserExtractsUseCase", () => {
 
         const result = await sut.execute({ userId });
 
-        expect(result).toEqual(
-            [
-                {
-                    extractId: testExtractEntity().id,
-                    url: testExtractEntity().url,
-                    userId: testExtractEntity().userId,
-                    expiryDate: testExtractEntity().expiryDate,
-                    urlExpiryDate: testExtractEntity().urlExpiryDate
-                }
-            ]
-        );
+        expect(result).toEqual([
+            {
+                extractId: testExtractEntity().id,
+                url: testExtractEntity().url,
+                userId: testExtractEntity().userId,
+                expiryDate: testExtractEntity().expiryDate,
+                urlExpiryDate: testExtractEntity().urlExpiryDate,
+            },
+        ]);
     });
 });

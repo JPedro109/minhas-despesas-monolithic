@@ -6,4 +6,4 @@ export type GetActiveNonRenewableSubscriptionsResponseDTO = {
     renewable: boolean;
     startDate: Date;
     endDate?: Date;
-}
+};

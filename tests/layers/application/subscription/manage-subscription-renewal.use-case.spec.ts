@@ -1,29 +1,32 @@
-import { NotFoundError, ManageSubscriptionRenewalUseCase } from "@/layers/application";
+import {
+    NotFoundError,
+    ManageSubscriptionRenewalUseCase,
+} from "@/layers/application";
 import {
     SubscriptionRepositoryStub,
     ExpenseRepositoryStub,
     unitOfWorkRepositoryStubFactory,
     testSubscriptionEntityWithPlanDiamond,
-    testSubscriptionEntityWithPlanDiamondNotRenewable
+    testSubscriptionEntityWithPlanDiamondNotRenewable,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: ManageSubscriptionRenewalUseCase,
-    subscriptionRepositoryStub: SubscriptionRepositoryStub,
-    expenseRepositoryStub: ExpenseRepositoryStub,
+    sut: ManageSubscriptionRenewalUseCase;
+    subscriptionRepositoryStub: SubscriptionRepositoryStub;
+    expenseRepositoryStub: ExpenseRepositoryStub;
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new ManageSubscriptionRenewalUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        subscriptionRepositoryStub: unitOfWorkRepositoryStub.getSubscriptionRepository(),
-        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository()
+        subscriptionRepositoryStub:
+            unitOfWorkRepositoryStub.getSubscriptionRepository(),
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository(),
     };
 };
 
 describe("Use case - ManageSubscriptionRenewalUseCase", () => {
-
     afterEach(() => {
         jest.restoreAllMocks();
     });
@@ -32,9 +35,10 @@ describe("Use case - ManageSubscriptionRenewalUseCase", () => {
         const userId = "2";
         const renew = true;
         const { sut, subscriptionRepositoryStub } = makeSut();
-        jest
-            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
-            .mockReturnValueOnce(null);
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getActiveSubscriptionByUserId",
+        ).mockReturnValueOnce(null);
 
         const result = sut.execute({ userId, renew });
 
@@ -45,20 +49,21 @@ describe("Use case - ManageSubscriptionRenewalUseCase", () => {
         const userId = "1";
         const renew = false;
         const { sut, subscriptionRepositoryStub } = makeSut();
-        jest
-            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
-            .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
-        jest
-            .spyOn(Date.prototype, "getUTCFullYear")
-            .mockReturnValueOnce(3000);
-        jest
-            .spyOn(Date.prototype, "getUTCMonth")
-            .mockReturnValueOnce(1);
-        jest
-            .spyOn(Date.prototype, "getUTCDate")
-            .mockReturnValueOnce(4);
-        const createSubscriptionSpy = jest.spyOn(subscriptionRepositoryStub, "createSubscription");
-        const updateSubscriptionByIdSpy = jest.spyOn(subscriptionRepositoryStub, "updateSubscriptionById");
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getActiveSubscriptionByUserId",
+        ).mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
+        jest.spyOn(Date.prototype, "getUTCFullYear").mockReturnValueOnce(3000);
+        jest.spyOn(Date.prototype, "getUTCMonth").mockReturnValueOnce(1);
+        jest.spyOn(Date.prototype, "getUTCDate").mockReturnValueOnce(4);
+        const createSubscriptionSpy = jest.spyOn(
+            subscriptionRepositoryStub,
+            "createSubscription",
+        );
+        const updateSubscriptionByIdSpy = jest.spyOn(
+            subscriptionRepositoryStub,
+            "updateSubscriptionById",
+        );
 
         await sut.execute({ userId, renew });
 
@@ -69,25 +74,31 @@ describe("Use case - ManageSubscriptionRenewalUseCase", () => {
     test("Should downgrade the plan and delete expenses", async () => {
         const userId = "1";
         const renew = false;
-        const { sut, subscriptionRepositoryStub, expenseRepositoryStub } = makeSut();
-        jest
-            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
-            .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
-        jest
-            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
-            .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
-        jest
-            .spyOn(Date.prototype, "getUTCFullYear")
-            .mockReturnValueOnce(3000);
-        jest
-            .spyOn(Date.prototype, "getUTCMonth")
-            .mockReturnValueOnce(1);
-        jest
-            .spyOn(Date.prototype, "getUTCDate")
-            .mockReturnValueOnce(9);
-        const createSubscriptionSpy = jest.spyOn(subscriptionRepositoryStub, "createSubscription");
-        const updateSubscriptionByIdSpy = jest.spyOn(subscriptionRepositoryStub, "updateSubscriptionById");
-        const deleteExpensesByUserIdSpy = jest.spyOn(expenseRepositoryStub, "deleteExpensesByUserId");
+        const { sut, subscriptionRepositoryStub, expenseRepositoryStub } =
+            makeSut();
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getActiveSubscriptionByUserId",
+        ).mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getActiveSubscriptionByUserId",
+        ).mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
+        jest.spyOn(Date.prototype, "getUTCFullYear").mockReturnValueOnce(3000);
+        jest.spyOn(Date.prototype, "getUTCMonth").mockReturnValueOnce(1);
+        jest.spyOn(Date.prototype, "getUTCDate").mockReturnValueOnce(9);
+        const createSubscriptionSpy = jest.spyOn(
+            subscriptionRepositoryStub,
+            "createSubscription",
+        );
+        const updateSubscriptionByIdSpy = jest.spyOn(
+            subscriptionRepositoryStub,
+            "updateSubscriptionById",
+        );
+        const deleteExpensesByUserIdSpy = jest.spyOn(
+            expenseRepositoryStub,
+            "deleteExpensesByUserId",
+        );
 
         await sut.execute({ userId, renew });
 
@@ -100,23 +111,27 @@ describe("Use case - ManageSubscriptionRenewalUseCase", () => {
         const userId = "1";
         const renew = false;
         const { sut, subscriptionRepositoryStub } = makeSut();
-        jest
-            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
-            .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamondNotRenewable());
-        jest
-            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
-            .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
-        jest
-            .spyOn(Date.prototype, "getUTCFullYear")
-            .mockReturnValueOnce(3000);
-        jest
-            .spyOn(Date.prototype, "getUTCMonth")
-            .mockReturnValueOnce(1);
-        jest
-            .spyOn(Date.prototype, "getUTCDate")
-            .mockReturnValueOnce(2);
-        const createSubscriptionSpy = jest.spyOn(subscriptionRepositoryStub, "createSubscription");
-        const updateSubscriptionByIdSpy = jest.spyOn(subscriptionRepositoryStub, "updateSubscriptionById");
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getActiveSubscriptionByUserId",
+        ).mockResolvedValueOnce(
+            testSubscriptionEntityWithPlanDiamondNotRenewable(),
+        );
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getActiveSubscriptionByUserId",
+        ).mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
+        jest.spyOn(Date.prototype, "getUTCFullYear").mockReturnValueOnce(3000);
+        jest.spyOn(Date.prototype, "getUTCMonth").mockReturnValueOnce(1);
+        jest.spyOn(Date.prototype, "getUTCDate").mockReturnValueOnce(2);
+        const createSubscriptionSpy = jest.spyOn(
+            subscriptionRepositoryStub,
+            "createSubscription",
+        );
+        const updateSubscriptionByIdSpy = jest.spyOn(
+            subscriptionRepositoryStub,
+            "updateSubscriptionById",
+        );
 
         await sut.execute({ userId, renew });
 
@@ -128,23 +143,25 @@ describe("Use case - ManageSubscriptionRenewalUseCase", () => {
         const userId = "1";
         const renew = true;
         const { sut, subscriptionRepositoryStub } = makeSut();
-        jest
-            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
-            .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
-        jest
-            .spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId")
-            .mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
-        jest
-            .spyOn(Date.prototype, "getUTCFullYear")
-            .mockReturnValueOnce(3000);
-        jest
-            .spyOn(Date.prototype, "getUTCMonth")
-            .mockReturnValueOnce(1);
-        jest
-            .spyOn(Date.prototype, "getUTCDate")
-            .mockReturnValueOnce(2);
-        const createSubscriptionSpy = jest.spyOn(subscriptionRepositoryStub, "createSubscription");
-        const updateSubscriptionByIdSpy = jest.spyOn(subscriptionRepositoryStub, "updateSubscriptionById");
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getActiveSubscriptionByUserId",
+        ).mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getActiveSubscriptionByUserId",
+        ).mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
+        jest.spyOn(Date.prototype, "getUTCFullYear").mockReturnValueOnce(3000);
+        jest.spyOn(Date.prototype, "getUTCMonth").mockReturnValueOnce(1);
+        jest.spyOn(Date.prototype, "getUTCDate").mockReturnValueOnce(2);
+        const createSubscriptionSpy = jest.spyOn(
+            subscriptionRepositoryStub,
+            "createSubscription",
+        );
+        const updateSubscriptionByIdSpy = jest.spyOn(
+            subscriptionRepositoryStub,
+            "updateSubscriptionById",
+        );
 
         await sut.execute({ userId, renew });
 

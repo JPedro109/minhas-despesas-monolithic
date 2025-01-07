@@ -1,7 +1,9 @@
-import { ExpenseNameValueObject, InvalidExpenseNameError } from "@/layers/domain";
+import {
+    ExpenseNameValueObject,
+    InvalidExpenseNameError,
+} from "@/layers/domain";
 
 describe("Value Object - ExpenseNameValueObject", () => {
-    
     test("Should not create ExpenseNameValueObject, because value is null", () => {
         const invalidExpenseName = "";
 
@@ -21,7 +23,9 @@ describe("Value Object - ExpenseNameValueObject", () => {
     test("Should create ExpenseNameValueObject", () => {
         const expenseName = "expense";
 
-        const sut = ExpenseNameValueObject.create(expenseName) as unknown as ExpenseNameValueObject;
+        const sut = ExpenseNameValueObject.create(
+            expenseName,
+        ) as unknown as ExpenseNameValueObject;
 
         expect(sut).toBeInstanceOf(ExpenseNameValueObject);
         expect(sut.value).toBe(expenseName);

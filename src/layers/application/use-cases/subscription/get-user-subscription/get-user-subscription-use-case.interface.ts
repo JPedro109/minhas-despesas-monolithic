@@ -1,5 +1,10 @@
-import { GetUserSubscriptionDTO, GetUserSubscriptionResponseDTO } from "@/layers/application";
+import {
+    GetUserSubscriptionDTO,
+    GetUserSubscriptionResponseDTO,
+} from "@/layers/application";
 
 export interface IGetUserSubscriptionUseCase {
-    execute(dto: GetUserSubscriptionDTO): Promise<GetUserSubscriptionResponseDTO>;
+    execute(
+        dto: GetUserSubscriptionDTO,
+    ): Promise<GetUserSubscriptionResponseDTO>;
 }

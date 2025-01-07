@@ -1,4 +1,7 @@
-import { SendNotificationOfExpensesThatAreComingDueUseCase, MailBodyTypeEnum } from "@/layers/application";
+import {
+    SendNotificationOfExpensesThatAreComingDueUseCase,
+    MailBodyTypeEnum,
+} from "@/layers/application";
 import {
     ExpenseRepositoryStub,
     UserRepositoryStub,
@@ -6,36 +9,38 @@ import {
     unitOfWorkRepositoryStubFactory,
     notificationStubFactory,
     testUserEntity,
-    testExpenseEntityUnpaid
+    testExpenseEntityUnpaid,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: SendNotificationOfExpensesThatAreComingDueUseCase,
-    expenseRepositoryStub: ExpenseRepositoryStub,
-    userRepositoryStub: UserRepositoryStub,
-    mailStub: NotificationStub
+    sut: SendNotificationOfExpensesThatAreComingDueUseCase;
+    expenseRepositoryStub: ExpenseRepositoryStub;
+    userRepositoryStub: UserRepositoryStub;
+    mailStub: NotificationStub;
 } => {
     const mailStub = notificationStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new SendNotificationOfExpensesThatAreComingDueUseCase(
         unitOfWorkRepositoryStub,
-        mailStub
+        mailStub,
     );
 
     return {
         sut,
         expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository(),
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        mailStub
+        mailStub,
     };
 };
 
 describe("Use case - SendNotificationOfExpensesThatAreComingDueUseCase", () => {
-
     test("Should not send any emails if there are no expenses due soon", async () => {
         const { sut, expenseRepositoryStub, mailStub } = makeSut();
         const sendMailSpy = jest.spyOn(mailStub, "sendMail");
-        jest.spyOn(expenseRepositoryStub, "getExpensesByDueDate").mockResolvedValueOnce([]);
+        jest.spyOn(
+            expenseRepositoryStub,
+            "getExpensesByDueDate",
+        ).mockResolvedValueOnce([]);
 
         await sut.execute();
 
@@ -60,14 +65,12 @@ describe("Use case - SendNotificationOfExpensesThatAreComingDueUseCase", () => {
         expect(sendMailSpy).toHaveBeenCalledWith(
             testUserEntity().email,
             MailBodyTypeEnum.NotifyExpenseThatIsDueBody,
-            expect.arrayContaining(
-                [ 
-                    { 
-                        expenseName: testExpenseEntityUnpaid().expenseName, 
-                        expenseValue: testExpenseEntityUnpaid().expenseValue 
-                    } 
-                ]
-            )
+            expect.arrayContaining([
+                {
+                    expenseName: testExpenseEntityUnpaid().expenseName,
+                    expenseValue: testExpenseEntityUnpaid().expenseValue,
+                },
+            ]),
         );
     });
 });

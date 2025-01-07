@@ -9,7 +9,6 @@ const makeBody = (email: unknown, password: unknown): object => {
 };
 
 describe("/api/users/login - POST", () => {
-
     setup();
 
     test("Should not login because user does not exist", async () => {
@@ -25,7 +24,10 @@ describe("/api/users/login - POST", () => {
     });
 
     test("Should not login because email is not verified", async () => {
-        const body = makeBody("email-with-plan-free-and-with-email-not-verified@test.com", "Password1234");
+        const body = makeBody(
+            "email-with-plan-free-and-with-email-not-verified@test.com",
+            "Password1234",
+        );
 
         const response = await request(setupServer())
             .post("/api/users/login")
@@ -37,7 +39,10 @@ describe("/api/users/login - POST", () => {
     });
 
     test("Should not login because password is incorrect", async () => {
-        const body = makeBody("email-with-plan-free@test.com", "Password123456");
+        const body = makeBody(
+            "email-with-plan-free@test.com",
+            "Password123456",
+        );
 
         const response = await request(setupServer())
             .post("/api/users/login")

@@ -4,19 +4,24 @@ import { setupServer } from "@/main/setup-server";
 import { loginRest, setup } from "../../__mocks__";
 import request from "supertest";
 
-const makeBody = (expenseName: string, expenseValue: number, dueDate: string): object => {
+const makeBody = (
+    expenseName: string,
+    expenseValue: number,
+    dueDate: string,
+): object => {
     return { expenseName, expenseValue, dueDate };
 };
 
 describe("/api/expenses/:id - PUT", () => {
-
     setup();
 
     const makeUrl = (id: string): string => `/api/expenses/${id}`;
 
     test("Should not update expense because the are fields invalid", async () => {
         const body = makeBody("", undefined, "");
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .put(makeUrl("00000000-0000-0000-0000-000000000000"))
@@ -30,7 +35,9 @@ describe("/api/expenses/:id - PUT", () => {
 
     test("Should not update expense because the expense does not exist", async () => {
         const body = makeBody("Updated Expense Name", 150, "3000-12-31");
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .put(makeUrl("ffffffff-ffff-ffff-ffff-ffffffffffff"))
@@ -44,7 +51,9 @@ describe("/api/expenses/:id - PUT", () => {
 
     test("Should successfully update an expense", async () => {
         const body = makeBody("Updated Expense Name", 150, "3000-12-31");
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .put(makeUrl("00000000-0000-0000-0000-000000000000"))

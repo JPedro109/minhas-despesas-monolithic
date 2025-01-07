@@ -10,24 +10,28 @@ import {
     paymentStubFactory,
     testUserVerificationCodeEntityOfTypeRecoveryUserPassword,
     testUserVerificationCodeEntityOfTypeUpdateUserEmail,
-    testUserVerificationCodeEntityOfTypeUpdateUserEmailWithDateExpired
+    testUserVerificationCodeEntityOfTypeUpdateUserEmailWithDateExpired,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: UpdateUserEmailUseCase,
-    userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub,
-    userRepositoryStub: UserRepositoryStub,
-    paymentStub: PaymentStub
+    sut: UpdateUserEmailUseCase;
+    userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub;
+    userRepositoryStub: UserRepositoryStub;
+    paymentStub: PaymentStub;
 } => {
     const paymentStub = paymentStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new UpdateUserEmailUseCase(unitOfWorkRepositoryStub, paymentStub);
+    const sut = new UpdateUserEmailUseCase(
+        unitOfWorkRepositoryStub,
+        paymentStub,
+    );
 
     return {
         sut,
-        userVerificationCodeRepositoryStub: unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
+        userVerificationCodeRepositoryStub:
+            unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        paymentStub
+        paymentStub,
     };
 };
 
@@ -39,7 +43,7 @@ describe("Use case - UpdateUserEmailUseCase", () => {
 
         const result = sut.execute({
             email,
-            code
+            code,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -49,13 +53,18 @@ describe("Use case - UpdateUserEmailUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         const email = "newemail@test.com";
         const code = "123458";
-        jest
-            .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPassword()));
+        jest.spyOn(
+            userVerificationCodeRepositoryStub,
+            "getUserVerificationCodeByVerificationCode",
+        ).mockReturnValueOnce(
+            Promise.resolve(
+                testUserVerificationCodeEntityOfTypeRecoveryUserPassword(),
+            ),
+        );
 
         const result = sut.execute({
             email,
-            code
+            code,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -65,32 +74,56 @@ describe("Use case - UpdateUserEmailUseCase", () => {
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
         const email = "newemail@test.com";
         const code = "000000";
-        jest
-            .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeUpdateUserEmailWithDateExpired()));
+        jest.spyOn(
+            userVerificationCodeRepositoryStub,
+            "getUserVerificationCodeByVerificationCode",
+        ).mockReturnValueOnce(
+            Promise.resolve(
+                testUserVerificationCodeEntityOfTypeUpdateUserEmailWithDateExpired(),
+            ),
+        );
 
         const result = sut.execute({
             email,
-            code
+            code,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
     });
 
     test("Should update email successfully", async () => {
-        const { sut, userVerificationCodeRepositoryStub, userRepositoryStub, paymentStub } = makeSut();
+        const {
+            sut,
+            userVerificationCodeRepositoryStub,
+            userRepositoryStub,
+            paymentStub,
+        } = makeSut();
         const email = "newemail@test.com";
         const code = "123456";
-        jest
-            .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeUpdateUserEmail()));
-        const updateUserVerificationCodeByIdSpy = jest.spyOn(userVerificationCodeRepositoryStub, "updateUserVerificationCodeById");
-        const updateUserByIdSpy = jest.spyOn(userRepositoryStub, "updateUserById");
-        const updateCustomerEmailByCustomerIdSpy = jest.spyOn(paymentStub, "updateCustomerEmailByCustomerId");
+        jest.spyOn(
+            userVerificationCodeRepositoryStub,
+            "getUserVerificationCodeByVerificationCode",
+        ).mockReturnValueOnce(
+            Promise.resolve(
+                testUserVerificationCodeEntityOfTypeUpdateUserEmail(),
+            ),
+        );
+        const updateUserVerificationCodeByIdSpy = jest.spyOn(
+            userVerificationCodeRepositoryStub,
+            "updateUserVerificationCodeById",
+        );
+        const updateUserByIdSpy = jest.spyOn(
+            userRepositoryStub,
+            "updateUserById",
+        );
+        const updateCustomerEmailByCustomerIdSpy = jest.spyOn(
+            paymentStub,
+            "updateCustomerEmailByCustomerId",
+        );
 
         await sut.execute({
             email,
-            code
+            code,
         });
 
         expect(updateUserVerificationCodeByIdSpy).toHaveBeenCalled();

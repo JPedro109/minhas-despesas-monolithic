@@ -1,6 +1,17 @@
 import { DomainError } from "@/layers/domain";
-import { ConflictedError, ForbiddenError, ILog, NotFoundError, UnauthorizedError } from "@/layers/application";
-import { AbstractController, HttpHelper, HttpRequest, HttpResponse } from "@/layers/presentation";
+import {
+    ConflictedError,
+    ForbiddenError,
+    ILog,
+    NotFoundError,
+    UnauthorizedError,
+} from "@/layers/application";
+import {
+    AbstractController,
+    HttpHelper,
+    HttpRequest,
+    HttpResponse,
+} from "@/layers/presentation";
 import { logStubFactory } from "../__mocks__";
 
 class UseCase {
@@ -10,66 +21,58 @@ class UseCase {
 }
 
 class TestController extends AbstractController {
-
     constructor(
         private readonly useCase: UseCase,
-        log: ILog
+        log: ILog,
     ) {
-        super(
-            log,
-            "Test",
-            {
-                account: {
-                    type: {
-                        email: {
-                            type: "string",
-                            optional: false
-                        },
-                        password: {
-                            type: "string",
-                            optional: false
-                        },
-                        dateOfBirth: {
-                            type: "date",
-                            optional: false
-                        }
+        super(log, "Test", {
+            account: {
+                type: {
+                    email: {
+                        type: "string",
+                        optional: false,
                     },
-                    optional: false
+                    password: {
+                        type: "string",
+                        optional: false,
+                    },
+                    dateOfBirth: {
+                        type: "date",
+                        optional: false,
+                    },
                 },
-                address: {
-                    type: {
-                        street: {
-                            type: "string",
-                            optional: false
-                        },
-                        city: {
-                            type: "string",
-                            optional: false
-                        },
-                        state: {
-                            type: "string",
-                            optional: false
-                        },
-                        complement: {
-                            type: "string",
-                            optional: true
-                        }
+                optional: false,
+            },
+            address: {
+                type: {
+                    street: {
+                        type: "string",
+                        optional: false,
                     },
-                    optional: true
-                }
-            }
-        );
+                    city: {
+                        type: "string",
+                        optional: false,
+                    },
+                    state: {
+                        type: "string",
+                        optional: false,
+                    },
+                    complement: {
+                        type: "string",
+                        optional: true,
+                    },
+                },
+                optional: true,
+            },
+        });
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const {
-            account,
-            address
-        } = request.data;
+        const { account, address } = request.data;
 
         const body = {
             account,
-            address
+            address,
         };
 
         this.validateRequestSchema(body);
@@ -81,45 +84,43 @@ class TestController extends AbstractController {
 }
 
 const makeSut = (): {
-    sut: TestController,
-    useCase: UseCase
+    sut: TestController;
+    useCase: UseCase;
 } => {
     const logStub = logStubFactory();
     const useCase = new UseCase();
 
-    const sut = new TestController(
-        useCase,
-        logStub
-    );
+    const sut = new TestController(useCase, logStub);
 
     return {
         sut,
-        useCase
+        useCase,
     };
 };
 
 describe("Controller - CreateUserController", () => {
-
     test("Should return status code 422", async () => {
         const { sut, useCase } = makeSut();
         const account = {
             email: "email@test.com",
             password: "Password1234",
-            dateOfBirth: "2000-01-01"
+            dateOfBirth: "2000-01-01",
         };
         const address = {
             street: "Street One",
             city: "City",
             state: "State",
-            complement: undefined
+            complement: undefined,
         };
-        jest.spyOn(useCase, "execute").mockRejectedValueOnce(new DomainError("Test"));
+        jest.spyOn(useCase, "execute").mockRejectedValueOnce(
+            new DomainError("Test"),
+        );
 
         const result = await sut.http({
             data: {
                 account,
-                address
-            }
+                address,
+            },
         });
 
         expect(result.statusCode).toBe(422);
@@ -130,21 +131,23 @@ describe("Controller - CreateUserController", () => {
         const account = {
             email: "email@test.com",
             password: "Password1234",
-            dateOfBirth: "2000-01-01"
+            dateOfBirth: "2000-01-01",
         };
         const address = {
             street: "Street One",
             city: "City",
             state: "State",
-            complement: undefined
+            complement: undefined,
         };
-        jest.spyOn(useCase, "execute").mockRejectedValueOnce(new UnauthorizedError("Test"));
+        jest.spyOn(useCase, "execute").mockRejectedValueOnce(
+            new UnauthorizedError("Test"),
+        );
 
         const result = await sut.http({
             data: {
                 account,
-                address
-            }
+                address,
+            },
         });
 
         expect(result.statusCode).toBe(401);
@@ -155,21 +158,23 @@ describe("Controller - CreateUserController", () => {
         const account = {
             email: "email@test.com",
             password: "Password1234",
-            dateOfBirth: "2000-01-01"
+            dateOfBirth: "2000-01-01",
         };
         const address = {
             street: "Street One",
             city: "City",
             state: "State",
-            complement: undefined
+            complement: undefined,
         };
-        jest.spyOn(useCase, "execute").mockRejectedValueOnce(new NotFoundError("Test"));
+        jest.spyOn(useCase, "execute").mockRejectedValueOnce(
+            new NotFoundError("Test"),
+        );
 
         const result = await sut.http({
             data: {
                 account,
-                address
-            }
+                address,
+            },
         });
 
         expect(result.statusCode).toBe(404);
@@ -180,21 +185,23 @@ describe("Controller - CreateUserController", () => {
         const account = {
             email: "email@test.com",
             password: "Password1234",
-            dateOfBirth: "2000-01-01"
+            dateOfBirth: "2000-01-01",
         };
         const address = {
             street: "Street One",
             city: "City",
             state: "State",
-            complement: undefined
+            complement: undefined,
         };
-        jest.spyOn(useCase, "execute").mockRejectedValueOnce(new ForbiddenError("Test"));
+        jest.spyOn(useCase, "execute").mockRejectedValueOnce(
+            new ForbiddenError("Test"),
+        );
 
         const result = await sut.http({
             data: {
                 account,
-                address
-            }
+                address,
+            },
         });
 
         expect(result.statusCode).toBe(403);
@@ -205,21 +212,23 @@ describe("Controller - CreateUserController", () => {
         const account = {
             email: "email@test.com",
             password: "Password1234",
-            dateOfBirth: "2000-01-01"
+            dateOfBirth: "2000-01-01",
         };
         const address = {
             street: "Street One",
             city: "City",
             state: "State",
-            complement: undefined
+            complement: undefined,
         };
-        jest.spyOn(useCase, "execute").mockRejectedValueOnce(new ConflictedError("Test"));
+        jest.spyOn(useCase, "execute").mockRejectedValueOnce(
+            new ConflictedError("Test"),
+        );
 
         const result = await sut.http({
             data: {
                 account,
-                address
-            }
+                address,
+            },
         });
 
         expect(result.statusCode).toBe(409);
@@ -230,21 +239,21 @@ describe("Controller - CreateUserController", () => {
         const account = {
             email: "email@test.com",
             password: "Password1234",
-            dateOfBirth: "2000-01-01"
+            dateOfBirth: "2000-01-01",
         };
         const address = {
             street: "Street One",
             city: "City",
             state: "State",
-            complement: undefined
+            complement: undefined,
         };
         jest.spyOn(useCase, "execute").mockRejectedValueOnce(new Error("Test"));
 
         const result = await sut.http({
             data: {
                 account,
-                address
-            }
+                address,
+            },
         });
 
         expect(result.statusCode).toBe(500);
@@ -255,20 +264,20 @@ describe("Controller - CreateUserController", () => {
         const account = {
             email: "",
             password: "",
-            dateOfBirth: ""
+            dateOfBirth: "",
         };
         const address = {
             street: "",
             city: "",
             state: "",
-            complement: undefined
+            complement: undefined,
         };
 
         const result = await sut.http({
             data: {
                 account,
-                address
-            }
+                address,
+            },
         });
 
         expect(result.statusCode).toBe(400);
@@ -279,21 +288,21 @@ describe("Controller - CreateUserController", () => {
         const account = {
             email: "email@test.com",
             password: "Password1234",
-            dateOfBirth: "2000-01-01"
+            dateOfBirth: "2000-01-01",
         };
         const address = {
             street: "Street One",
             city: "City",
             state: "State",
-            complement: undefined
+            complement: undefined,
         };
         jest.spyOn(sut, "http").mockResolvedValueOnce(HttpHelper.ok("1"));
 
         const result = await sut.http({
             data: {
                 account,
-                address
-            }
+                address,
+            },
         });
 
         expect(result.statusCode).toBe(200);
@@ -304,20 +313,20 @@ describe("Controller - CreateUserController", () => {
         const account = {
             email: "email@test.com",
             password: "Password1234",
-            dateOfBirth: "2000-01-01"
+            dateOfBirth: "2000-01-01",
         };
         const address = {
             street: "Street One",
             city: "City",
             state: "State",
-            complement: undefined
+            complement: undefined,
         };
 
         const result = await sut.http({
             data: {
                 account,
-                address
-            }
+                address,
+            },
         });
 
         expect(result.statusCode).toBe(201);
@@ -328,21 +337,21 @@ describe("Controller - CreateUserController", () => {
         const account = {
             email: "email@test.com",
             password: "Password1234",
-            dateOfBirth: "2000-01-01"
+            dateOfBirth: "2000-01-01",
         };
         const address = {
             street: "Street One",
             city: "City",
             state: "State",
-            complement: undefined
+            complement: undefined,
         };
         jest.spyOn(sut, "http").mockResolvedValueOnce(HttpHelper.noBody());
 
         const result = await sut.http({
             data: {
                 account,
-                address
-            }
+                address,
+            },
         });
 
         expect(result.statusCode).toBe(204);

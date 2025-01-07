@@ -3,27 +3,23 @@ import { CreateUserController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: CreateUserController,
-    mockCreateUserUseCase: jest.Mocked<ICreateUserUseCase>
+    sut: CreateUserController;
+    mockCreateUserUseCase: jest.Mocked<ICreateUserUseCase>;
 } => {
     const mockCreateUserUseCase: jest.Mocked<ICreateUserUseCase> = {
-        execute: jest.fn().mockResolvedValue("1")
+        execute: jest.fn().mockResolvedValue("1"),
     };
     const logStub = logStubFactory();
 
-    const sut = new CreateUserController(
-        mockCreateUserUseCase, 
-        logStub
-    );
+    const sut = new CreateUserController(mockCreateUserUseCase, logStub);
 
     return {
         sut,
-        mockCreateUserUseCase
+        mockCreateUserUseCase,
     };
 };
 
 describe("Controller - CreateUserController", () => {
-
     test("Should not create user schema is invalid", async () => {
         const { sut } = makeSut();
         const email = "";
@@ -43,7 +39,7 @@ describe("Controller - CreateUserController", () => {
                 consentVersion,
             },
             ipAddress,
-            userAgent
+            userAgent,
         });
 
         expect(result.statusCode).toBe(400);
@@ -57,7 +53,8 @@ describe("Controller - CreateUserController", () => {
         const passwordConfirm = "Senha@1234";
         const consentVersion = "v1.0";
         const ipAddress = "127.0.0.1";
-        const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
+        const userAgent =
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
 
         const result = await sut.http({
             data: {
@@ -68,7 +65,7 @@ describe("Controller - CreateUserController", () => {
                 consentVersion,
             },
             ipAddress,
-            userAgent
+            userAgent,
         });
 
         expect(result.statusCode).toBe(201);

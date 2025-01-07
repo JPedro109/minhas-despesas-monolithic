@@ -9,7 +9,6 @@ const makeBody = (username: unknown): object => {
 };
 
 describe("/api/users/username - PATCH", () => {
-
     setup();
 
     test("Should update username successfully", async () => {

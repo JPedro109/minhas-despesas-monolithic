@@ -1,18 +1,17 @@
 import { PaymentMethodEntity } from "@/layers/domain";
 
 describe("Entity - PaymentMethod", () => {
-
     test("Should create PaymentMethodEntity", () => {
         const userId = "1";
         const name = "Card One";
         const token = "card_one_1";
         const updatedAt = new Date();
-        
+
         const sut = new PaymentMethodEntity({
             userId,
             name,
             token,
-            updatedAt
+            updatedAt,
         });
 
         expect(sut).toBeInstanceOf(PaymentMethodEntity);
@@ -33,7 +32,7 @@ describe("Entity - PaymentMethod", () => {
             userId,
             name,
             token,
-            updatedAt
+            updatedAt,
         });
 
         paymentMethod.name = name;

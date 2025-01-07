@@ -3,27 +3,27 @@ import { SendNotificationOfExpensesThatAreComingDueController } from "@/layers/p
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: SendNotificationOfExpensesThatAreComingDueController,
-    mockSendNotificationOfExpensesThatAreComingDueUseCase: jest.Mocked<ISendNotificationOfExpensesThatAreComingDueUseCase>
+    sut: SendNotificationOfExpensesThatAreComingDueController;
+    mockSendNotificationOfExpensesThatAreComingDueUseCase: jest.Mocked<ISendNotificationOfExpensesThatAreComingDueUseCase>;
 } => {
-    const mockSendNotificationOfExpensesThatAreComingDueUseCase: jest.Mocked<ISendNotificationOfExpensesThatAreComingDueUseCase> = {
-        execute: jest.fn()
-    };
+    const mockSendNotificationOfExpensesThatAreComingDueUseCase: jest.Mocked<ISendNotificationOfExpensesThatAreComingDueUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new SendNotificationOfExpensesThatAreComingDueController(
         mockSendNotificationOfExpensesThatAreComingDueUseCase,
-        logStub
+        logStub,
     );
 
     return {
         sut,
-        mockSendNotificationOfExpensesThatAreComingDueUseCase
+        mockSendNotificationOfExpensesThatAreComingDueUseCase,
     };
 };
 
 describe("Controller - SendNotificationOfExpensesThatAreComingDueController", () => {
-
     test("Should send notification of expenses that are coming due payment", async () => {
         const { sut } = makeSut();
 

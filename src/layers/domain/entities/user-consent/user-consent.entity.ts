@@ -5,10 +5,9 @@ export type UserConsentProps = {
     consentVersion: string;
     ipAddress: string;
     userAgent: string;
-}
+};
 
 export class UserConsentEntity extends AbstractEntity<UserConsentProps> {
-
     constructor(props: UserConsentProps, id?: string, createdAt?: Date) {
         super(props, id, createdAt);
     }

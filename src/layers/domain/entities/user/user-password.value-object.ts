@@ -1,27 +1,30 @@
 import { InvalidUserPasswordError } from "@/layers/domain";
 
 export class UserPasswordValueObject {
-	private constructor(private readonly userPassword: string) { }
+    private constructor(private readonly userPassword: string) {}
 
-	public get value() : string {
-		return this.userPassword;
-	}
-	
-	static create(userPassword: string): UserPasswordValueObject | InvalidUserPasswordError {
-		if(!this.validate(userPassword)) return new InvalidUserPasswordError();
+    public get value(): string {
+        return this.userPassword;
+    }
 
-		return new UserPasswordValueObject(userPassword);
-	}
+    static create(
+        userPassword: string,
+    ): UserPasswordValueObject | InvalidUserPasswordError {
+        if (!this.validate(userPassword)) return new InvalidUserPasswordError();
 
-	private static validate(userPassword: string): boolean {
-		if(!userPassword) return false;
+        return new UserPasswordValueObject(userPassword);
+    }
 
-		const userPasswordRegExBcrypt = /^\$2[ayb]\$.{56}$/;
-		if(userPasswordRegExBcrypt.test(userPassword)) return true;
+    private static validate(userPassword: string): boolean {
+        if (!userPassword) return false;
 
-		const userPasswordRegEx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?:([0-9a-zA-Z])){8,}$/;
-		if(userPasswordRegEx.test(userPassword)) return true;
+        const userPasswordRegExBcrypt = /^\$2[ayb]\$.{56}$/;
+        if (userPasswordRegExBcrypt.test(userPassword)) return true;
 
-		return false;
-	}
+        const userPasswordRegEx =
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?:([0-9a-zA-Z])){8,}$/;
+        if (userPasswordRegEx.test(userPassword)) return true;
+
+        return false;
+    }
 }

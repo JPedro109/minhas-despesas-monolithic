@@ -9,7 +9,6 @@ const makeBody = (email: unknown): object => {
 };
 
 describe("/api/user/send-password-recovery-link - POST", () => {
-
     setup();
 
     test("Should not send password recovery link because email is missing", async () => {

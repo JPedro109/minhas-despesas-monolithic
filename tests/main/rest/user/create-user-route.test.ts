@@ -25,15 +25,9 @@ const makeBodyCreateUser = (
 describe("/api/users - POST", () => {
     setup();
     const server = setupServer();
-    
+
     test("Should not create user, because fields are emptys", async () => {
-        const body = makeBodyCreateUser(
-            "",
-            "",
-            "",
-            "",
-            ""
-        );
+        const body = makeBodyCreateUser("", "", "", "", "");
 
         const response = await request(server)
             .post("/api/users")
@@ -50,7 +44,7 @@ describe("/api/users - POST", () => {
             "username",
             "Password1234",
             "Password5678",
-            "1.0"
+            "1.0",
         );
 
         const response = await request(server)
@@ -68,7 +62,7 @@ describe("/api/users - POST", () => {
             "username",
             "Password1234",
             "Password1234",
-            "1.0"
+            "1.0",
         );
 
         const response = await request(server)
@@ -86,7 +80,7 @@ describe("/api/users - POST", () => {
             "username",
             "123",
             "123",
-            "1.0"
+            "1.0",
         );
 
         const response = await request(server)
@@ -104,7 +98,7 @@ describe("/api/users - POST", () => {
             "username",
             "Password1234",
             "Password1234",
-            "1.0"
+            "1.0",
         );
 
         const response = await request(server)

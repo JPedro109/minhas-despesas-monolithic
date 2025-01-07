@@ -23,7 +23,7 @@ import {
     IUserVerificationCodeRepository,
     JsonWebTokenType,
     MailBodyTypeEnum,
-    PaymentCurrencyEnum
+    PaymentCurrencyEnum,
 } from "@/layers/application";
 import {
     CustomerEntity,
@@ -36,7 +36,7 @@ import {
     SubscriptionEntity,
     UserConsentEntity,
     UserEntity,
-    UserVerificationCodeEntity
+    UserVerificationCodeEntity,
 } from "@/layers/domain";
 import {
     testCustomerEntity,
@@ -47,7 +47,7 @@ import {
     testPaymentMethodEntity,
     testPlanFreeEntity,
     testSubscriptionEntityWithPlanFree,
-    testUserEntity
+    testUserEntity,
 } from "./datas";
 
 export class BucketStub implements IBucket {
@@ -71,7 +71,7 @@ export class SecurityStub implements ISecurity {
         return {
             id: "1",
             email: "email@test.com",
-            type: "access_token"
+            type: "access_token",
         };
     }
 
@@ -85,7 +85,10 @@ export class CryptographyStub implements ICryptography {
         return "$2b$12$qx/jS7nYYxrDqjgah9w4eOnr3fRR6roW5UWGYLuiQr81s0wwc1Yl6";
     }
 
-    async compareHash(hash: string, valueToBeCompared: string): Promise<boolean> {
+    async compareHash(
+        hash: string,
+        valueToBeCompared: string,
+    ): Promise<boolean> {
         return true;
     }
 }
@@ -101,7 +104,11 @@ export class GenerationStub implements IGeneration {
 }
 
 export class NotificationStub implements INotification {
-    async sendMail(to: string, type: MailBodyTypeEnum, props?: object): Promise<void> { }
+    async sendMail(
+        to: string,
+        type: MailBodyTypeEnum,
+        props?: object,
+    ): Promise<void> {}
 }
 
 export class PaymentStub implements IPayment {
@@ -109,26 +116,32 @@ export class PaymentStub implements IPayment {
         return "1";
     }
 
-    async updateCustomerEmailByCustomerId(customerId: string, email: string): Promise<void> { }
+    async updateCustomerEmailByCustomerId(
+        customerId: string,
+        email: string,
+    ): Promise<void> {}
 
-    async deleteCustomer(customerId: string): Promise<void> { }
+    async deleteCustomer(customerId: string): Promise<void> {}
 
-    async createPaymentMethod(customerId: string, paymentMethodId: string): Promise<string> {
+    async createPaymentMethod(
+        customerId: string,
+        paymentMethodId: string,
+    ): Promise<string> {
         return "1";
     }
 
-    async deletePaymentMethodByToken(paymentMethodId: string): Promise<void> { }
+    async deletePaymentMethodByToken(paymentMethodId: string): Promise<void> {}
 
     async pay(
         customerId: string,
         paymentMethodId: string,
         amount: number,
-        currency: PaymentCurrencyEnum
-    ): Promise<void> { }
+        currency: PaymentCurrencyEnum,
+    ): Promise<void> {}
 }
 
 export class CustomerRepositoryStub implements ICustomerRepository {
-    setContext(context: unknown): void { }
+    setContext(context: unknown): void {}
 
     async createCustomer(customer: CustomerEntity): Promise<CustomerEntity> {
         return customer;
@@ -144,7 +157,7 @@ export class CustomerRepositoryStub implements ICustomerRepository {
 }
 
 export class PlanRepositoryStub implements IPlanRepository {
-    setContext(context: unknown): void { }
+    setContext(context: unknown): void {}
 
     async getPlans(): Promise<PlanEntity[]> {
         return [testPlanFreeEntity()];
@@ -160,33 +173,45 @@ export class PlanRepositoryStub implements IPlanRepository {
 }
 
 export class SubscriptionRepositoryStub implements ISubscriptionRepository {
-    setContext(context: unknown): void { }
+    setContext(context: unknown): void {}
 
-    async createSubscription(subscription: SubscriptionEntity): Promise<SubscriptionEntity> {
+    async createSubscription(
+        subscription: SubscriptionEntity,
+    ): Promise<SubscriptionEntity> {
         return subscription;
     }
 
-    async updateSubscriptionById(subscriptionId: string, subscription: SubscriptionEntity): Promise<void> { }
+    async updateSubscriptionById(
+        subscriptionId: string,
+        subscription: SubscriptionEntity,
+    ): Promise<void> {}
 
-    async getActiveSubscriptionByUserId(userId: string): Promise<SubscriptionEntity | null> {
+    async getActiveSubscriptionByUserId(
+        userId: string,
+    ): Promise<SubscriptionEntity | null> {
         return testSubscriptionEntityWithPlanFree();
     }
 
-    async getActiveSubscriptionsByEndDate(endDate: Date, renewable: boolean): Promise<SubscriptionEntity[]> {
+    async getActiveSubscriptionsByEndDate(
+        endDate: Date,
+        renewable: boolean,
+    ): Promise<SubscriptionEntity[]> {
         return [testSubscriptionEntityWithPlanFree()];
     }
 }
 
 export class UserConsentRepositoryStub implements IUserConsentRepository {
-    setContext(context: unknown): void { }
+    setContext(context: unknown): void {}
 
-    async createUserConsent(userConsent: UserConsentEntity): Promise<UserConsentEntity> {
+    async createUserConsent(
+        userConsent: UserConsentEntity,
+    ): Promise<UserConsentEntity> {
         return userConsent;
     }
 }
 
 export class UserRepositoryStub implements IUserRepository {
-    setContext(context: unknown): void { }
+    setContext(context: unknown): void {}
 
     async createUser(user: UserEntity): Promise<UserEntity> {
         return user;
@@ -204,54 +229,71 @@ export class UserRepositoryStub implements IUserRepository {
         return testUserEntity();
     }
 
-    async updateUserById(id: string, user: UserEntity): Promise<void> { }
+    async updateUserById(id: string, user: UserEntity): Promise<void> {}
 
-    async deleteUserById(id: string): Promise<void> { }
+    async deleteUserById(id: string): Promise<void> {}
 }
 
-export class UserVerificationCodeRepositoryStub implements IUserVerificationCodeRepository {
-    setContext(context: unknown): void { }
+export class UserVerificationCodeRepositoryStub
+    implements IUserVerificationCodeRepository
+{
+    setContext(context: unknown): void {}
 
-    async createUserVerificationCode(userVerificationCode: UserVerificationCodeEntity): Promise<UserVerificationCodeEntity> {
+    async createUserVerificationCode(
+        userVerificationCode: UserVerificationCodeEntity,
+    ): Promise<UserVerificationCodeEntity> {
         return userVerificationCode;
     }
 
-    async getUserVerificationCodeByVerificationCode(verificationCode: string): Promise<UserVerificationCodeEntity | null> {
+    async getUserVerificationCodeByVerificationCode(
+        verificationCode: string,
+    ): Promise<UserVerificationCodeEntity | null> {
         return null;
     }
 
     async updateUserVerificationCodeById(
         userVerificationCodeId: string,
-        userVerificationCode: UserVerificationCodeEntity
-    ): Promise<void> { };
+        userVerificationCode: UserVerificationCodeEntity,
+    ): Promise<void> {}
 }
 
 export class PaymentMethodRepositoryStub implements IPaymentMethodRepository {
-    setContext(context: unknown): void { }
+    setContext(context: unknown): void {}
 
-    async createPaymentMethod(paymentMethod: PaymentMethodEntity): Promise<PaymentMethodEntity> {
+    async createPaymentMethod(
+        paymentMethod: PaymentMethodEntity,
+    ): Promise<PaymentMethodEntity> {
         return testPaymentMethodEntity();
     }
 
-    async getPaymentMethodByUserId(userId: string): Promise<PaymentMethodEntity | null> {
+    async getPaymentMethodByUserId(
+        userId: string,
+    ): Promise<PaymentMethodEntity | null> {
         return testPaymentMethodEntity();
     }
 
-    async getPaymentMethodsByUserIds(userIds: string[]): Promise<PaymentMethodEntity[]> {
+    async getPaymentMethodsByUserIds(
+        userIds: string[],
+    ): Promise<PaymentMethodEntity[]> {
         return [testPaymentMethodEntity()];
     }
 
-    async getPaymentMethodById(id: string): Promise<PaymentMethodEntity | null> {
+    async getPaymentMethodById(
+        id: string,
+    ): Promise<PaymentMethodEntity | null> {
         return testPaymentMethodEntity();
     }
 
-    async updatePaymentMethodById(paymentMethodId: string, paymentMethod: PaymentMethodEntity): Promise<void> { }
+    async updatePaymentMethodById(
+        paymentMethodId: string,
+        paymentMethod: PaymentMethodEntity,
+    ): Promise<void> {}
 
-    async deletePaymentMethodById(paymentMethodId: string): Promise<void> { }
+    async deletePaymentMethodById(paymentMethodId: string): Promise<void> {}
 }
 
 export class ExpenseRepositoryStub implements IExpenseRepository {
-    setContext(context: unknown): void { }
+    setContext(context: unknown): void {}
 
     async createExpense(expenseEntity: ExpenseEntity): Promise<ExpenseEntity> {
         return testExpenseEntityUnpaid();
@@ -269,44 +311,45 @@ export class ExpenseRepositoryStub implements IExpenseRepository {
         return [testExpenseEntityUnpaid(), testExpenseEntityPaid()];
     }
 
-    async updateExpenseById(id: string, data: ExpenseEntity): Promise<void> { }
+    async updateExpenseById(id: string, data: ExpenseEntity): Promise<void> {}
 
-    async updatePaidExpensesToUnpaidAndSumOneInDueMonthByDueMonth(month: number): Promise<void> { }
+    async updatePaidExpensesToUnpaidAndSumOneInDueMonthByDueMonth(
+        month: number,
+    ): Promise<void> {}
 
-    async deleteExpenseById(id: string): Promise<void> { }
+    async deleteExpenseById(id: string): Promise<void> {}
 
-    async deleteExpensesByUserId(userId: string): Promise<void> { }
+    async deleteExpensesByUserId(userId: string): Promise<void> {}
 }
 
 export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {
+    setContext(context: unknown): void {}
 
-    setContext(context: unknown): void { }    
-
-    async createPaymentHistory(paymentHistory: PaymentHistoryEntity): Promise<PaymentHistoryEntity> {
+    async createPaymentHistory(
+        paymentHistory: PaymentHistoryEntity,
+    ): Promise<PaymentHistoryEntity> {
         return testPaymentHistoryEntity();
     }
 
     async getPaymentHistoriesByUserIdAndDueMonthAndDueYear(
         userId: string,
         paymentMonth: number,
-        paymentYear: number
+        paymentYear: number,
     ): Promise<PaymentHistoryEntity[]> {
         return [testPaymentHistoryEntity()];
     }
 
-    async deletePaymentHistoriesByExpenseId(expenseId: string): Promise<void> { }
+    async deletePaymentHistoriesByExpenseId(expenseId: string): Promise<void> {}
 
     async deletePaymentHistoryByExpenseIdAndDueMonthAndDueYear(
         expenseId: string,
         paymentMonth: number,
-        paymentYear: number
-    ): Promise<void> { }
-
+        paymentYear: number,
+    ): Promise<void> {}
 }
 
 export class ExtractRepositoryStub implements IExtractRepository {
-
-    setContext(context: unknown): void { }
+    setContext(context: unknown): void {}
 
     async createExtract(extract: ExtractEntity): Promise<ExtractEntity> {
         return testExtractEntity();
@@ -320,8 +363,7 @@ export class ExtractRepositoryStub implements IExtractRepository {
         return [testExtractEntity()];
     }
 
-    async deleteExtractsWhenTheCurrentDateIsGreaterThanTheExpirationDate(): Promise<void> { }
-
+    async deleteExtractsWhenTheCurrentDateIsGreaterThanTheExpirationDate(): Promise<void> {}
 }
 
 export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
@@ -335,8 +377,8 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
         private readonly paymentMethodRepository: IPaymentMethodRepository,
         private readonly expenseRepository: IExpenseRepository,
         private readonly paymentHistory: IPaymentHistoryRepository,
-        private readonly extractRepository: IExtractRepository
-    ) { }
+        private readonly extractRepository: IExtractRepository,
+    ) {}
 
     async transaction(querys: () => Promise<void>): Promise<void> {
         await querys();
@@ -386,29 +428,43 @@ export class UnitOfWorkRepositoryStub implements IUnitOfWorkRepository {
 export const bucketStubFactory = (): BucketStub => new BucketStub();
 export const extractStubFactory = (): ExtractStub => new ExtractStub();
 export const securityStubFactory = (): SecurityStub => new SecurityStub();
-export const cryptographyStubFactory = (): CryptographyStub => new CryptographyStub();
+export const cryptographyStubFactory = (): CryptographyStub =>
+    new CryptographyStub();
 export const generationStubFactory = (): GenerationStub => new GenerationStub();
-export const notificationStubFactory = (): NotificationStub => new NotificationStub();
+export const notificationStubFactory = (): NotificationStub =>
+    new NotificationStub();
 export const paymentStubFactory = (): PaymentStub => new PaymentStub();
-export const userRepositoryStubFactory = (): UserRepositoryStub => new UserRepositoryStub();
-export const userConsentRepositoryStubFactory = (): UserConsentRepositoryStub => new UserConsentRepositoryStub();
-export const userVerificationCodeRepositoryStubFactory = (): UserVerificationCodeRepositoryStub => new UserVerificationCodeRepositoryStub();
-export const customerRepositoryStubFactory = (): CustomerRepositoryStub => new CustomerRepositoryStub();
-export const planRepositoryStubFactory = (): PlanRepositoryStub => new PlanRepositoryStub();
-export const subscriptionRepositoryStubFactory = (): SubscriptionRepositoryStub => new SubscriptionRepositoryStub();
-export const paymentMethodRepositoryStubFactory = (): PaymentMethodRepositoryStub => new PaymentMethodRepositoryStub();
-export const expenseRepositoryStubFactory = (): ExpenseRepositoryStub => new ExpenseRepositoryStub();
-export const paymentHistoryRepositoryStubFactory = (): PaymentHistoryRepositoryStub => new PaymentHistoryRepositoryStub();
-export const extractRepositoryStubFactory = (): ExtractRepositoryStub => new ExtractRepositoryStub();
-export const unitOfWorkRepositoryStubFactory = (): UnitOfWorkRepositoryStub => new UnitOfWorkRepositoryStub(
-    userRepositoryStubFactory(),
-    userVerificationCodeRepositoryStubFactory(),
-    customerRepositoryStubFactory(),
-    planRepositoryStubFactory(),
-    subscriptionRepositoryStubFactory(),
-    userConsentRepositoryStubFactory(),
-    paymentMethodRepositoryStubFactory(),
-    expenseRepositoryStubFactory(),
-    paymentHistoryRepositoryStubFactory(),
-    extractRepositoryStubFactory()
-);
+export const userRepositoryStubFactory = (): UserRepositoryStub =>
+    new UserRepositoryStub();
+export const userConsentRepositoryStubFactory = (): UserConsentRepositoryStub =>
+    new UserConsentRepositoryStub();
+export const userVerificationCodeRepositoryStubFactory =
+    (): UserVerificationCodeRepositoryStub =>
+        new UserVerificationCodeRepositoryStub();
+export const customerRepositoryStubFactory = (): CustomerRepositoryStub =>
+    new CustomerRepositoryStub();
+export const planRepositoryStubFactory = (): PlanRepositoryStub =>
+    new PlanRepositoryStub();
+export const subscriptionRepositoryStubFactory =
+    (): SubscriptionRepositoryStub => new SubscriptionRepositoryStub();
+export const paymentMethodRepositoryStubFactory =
+    (): PaymentMethodRepositoryStub => new PaymentMethodRepositoryStub();
+export const expenseRepositoryStubFactory = (): ExpenseRepositoryStub =>
+    new ExpenseRepositoryStub();
+export const paymentHistoryRepositoryStubFactory =
+    (): PaymentHistoryRepositoryStub => new PaymentHistoryRepositoryStub();
+export const extractRepositoryStubFactory = (): ExtractRepositoryStub =>
+    new ExtractRepositoryStub();
+export const unitOfWorkRepositoryStubFactory = (): UnitOfWorkRepositoryStub =>
+    new UnitOfWorkRepositoryStub(
+        userRepositoryStubFactory(),
+        userVerificationCodeRepositoryStubFactory(),
+        customerRepositoryStubFactory(),
+        planRepositoryStubFactory(),
+        subscriptionRepositoryStubFactory(),
+        userConsentRepositoryStubFactory(),
+        paymentMethodRepositoryStubFactory(),
+        expenseRepositoryStubFactory(),
+        paymentHistoryRepositoryStubFactory(),
+        extractRepositoryStubFactory(),
+    );

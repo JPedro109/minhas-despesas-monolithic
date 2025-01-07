@@ -3,4 +3,4 @@ export type UpdateUserPasswordDTO = {
     password: string;
     newPassword: string;
     newPasswordConfirm: string;
-}
+};

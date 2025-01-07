@@ -1,29 +1,29 @@
-import { 
+import {
     PrismaAction,
-    PrismaCustomer, 
-    PrismaExpense, 
-    PrismaExtract, 
-    PrismaPaymentHistory, 
-    PrismaPaymentMethod, 
-    PrismaPlan, 
-    PrismaSubscription, 
-    PrismaUser, 
+    PrismaCustomer,
+    PrismaExpense,
+    PrismaExtract,
+    PrismaPaymentHistory,
+    PrismaPaymentMethod,
+    PrismaPlan,
+    PrismaSubscription,
+    PrismaUser,
     PrismaUserConsent,
-    PrismaUserVerificationCode
+    PrismaUserVerificationCode,
 } from "@prisma/client";
-import { 
-    CustomerEntity, 
-    ExpenseEntity, 
-    ExtractEntity, 
-    PaymentHistoryEntity, 
-    PaymentMethodEntity, 
-    PlanEntity, 
-    PlanNameEnum, 
-    SubscriptionEntity, 
-    UserConsentEntity, 
-    UserEntity, 
+import {
+    CustomerEntity,
+    ExpenseEntity,
+    ExtractEntity,
+    PaymentHistoryEntity,
+    PaymentMethodEntity,
+    PlanEntity,
+    PlanNameEnum,
+    SubscriptionEntity,
+    UserConsentEntity,
+    UserEntity,
     UserVerificationCodeEntity,
-    UserVerificationCodeTypeEnum
+    UserVerificationCodeTypeEnum,
 } from "@/layers/domain";
 
 export class PrismaMapperHelper {
@@ -34,10 +34,10 @@ export class PrismaMapperHelper {
                 username: prismaUser.username,
                 password: prismaUser.password,
                 verifiedEmail: prismaUser.verifiedEmail,
-                updatedAt: prismaUser.updatedAt
+                updatedAt: prismaUser.updatedAt,
             },
             prismaUser.id,
-            prismaUser.createdAt
+            prismaUser.createdAt,
         );
     }
 
@@ -45,10 +45,10 @@ export class PrismaMapperHelper {
         return new CustomerEntity(
             {
                 customerId: prismaCustomer.customerId,
-                userId: prismaCustomer.userId
+                userId: prismaCustomer.userId,
             },
             prismaCustomer.id,
-            prismaCustomer.createdAt
+            prismaCustomer.createdAt,
         );
     }
 
@@ -60,10 +60,10 @@ export class PrismaMapperHelper {
                 expenseValue: prismaExpense.expenseValue,
                 dueDate: prismaExpense.dueDate,
                 paid: prismaExpense.paid,
-                updatedAt: prismaExpense.updatedAt
+                updatedAt: prismaExpense.updatedAt,
             },
             prismaExpense.id,
-            prismaExpense.createdAt
+            prismaExpense.createdAt,
         );
     }
 
@@ -76,14 +76,16 @@ export class PrismaMapperHelper {
                 urlExpiryDate: prismaExtract.urlExpiryDate,
                 referenceMonth: prismaExtract.referenceMonth,
                 referenceYear: prismaExtract.referenceYear,
-                updatedAt: prismaExtract.updatedAt
+                updatedAt: prismaExtract.updatedAt,
             },
             prismaExtract.id,
-            prismaExtract.createdAt
+            prismaExtract.createdAt,
         );
     }
 
-    static toPaymentHistoryEntity(prismaPaymentHistory: PrismaPaymentHistory): PaymentHistoryEntity {
+    static toPaymentHistoryEntity(
+        prismaPaymentHistory: PrismaPaymentHistory,
+    ): PaymentHistoryEntity {
         return new PaymentHistoryEntity(
             {
                 userId: prismaPaymentHistory.userId,
@@ -91,27 +93,32 @@ export class PrismaMapperHelper {
                 expenseName: prismaPaymentHistory.expenseName,
                 expenseValue: prismaPaymentHistory.expenseValue,
                 dueDate: prismaPaymentHistory.dueDate,
-                paidDate: prismaPaymentHistory.paymentDate
+                paidDate: prismaPaymentHistory.paymentDate,
             },
             prismaPaymentHistory.id,
-            prismaPaymentHistory.createdAt
+            prismaPaymentHistory.createdAt,
         );
     }
 
-    static toPaymentMethodEntity(prismaPaymentMethod: PrismaPaymentMethod): PaymentMethodEntity {
+    static toPaymentMethodEntity(
+        prismaPaymentMethod: PrismaPaymentMethod,
+    ): PaymentMethodEntity {
         return new PaymentMethodEntity(
             {
                 userId: prismaPaymentMethod.userId,
                 name: prismaPaymentMethod.name,
                 token: prismaPaymentMethod.token,
-                updatedAt: prismaPaymentMethod.updatedAt
+                updatedAt: prismaPaymentMethod.updatedAt,
             },
             prismaPaymentMethod.id,
-            prismaPaymentMethod.createdAt
+            prismaPaymentMethod.createdAt,
         );
     }
 
-    static toPlanEntity(prismaPlan: PrismaPlan, prismaAction: PrismaAction[]): PlanEntity {
+    static toPlanEntity(
+        prismaPlan: PrismaPlan,
+        prismaAction: PrismaAction[],
+    ): PlanEntity {
         return new PlanEntity(
             {
                 name: prismaPlan.name as PlanNameEnum,
@@ -119,17 +126,17 @@ export class PrismaMapperHelper {
                 description: prismaPlan.description,
                 durationInDays: prismaPlan.durationInDays,
                 updatedAt: prismaPlan.updatedAt,
-                actions: prismaAction
+                actions: prismaAction,
             },
             prismaPlan.id,
-            prismaPlan.createdAt
+            prismaPlan.createdAt,
         );
     }
 
     static toSubscriptionEntity(
-        prismaSubscription: PrismaSubscription, 
+        prismaSubscription: PrismaSubscription,
         prismaPlan: PrismaPlan,
-        prismaActions: PrismaAction[]
+        prismaActions: PrismaAction[],
     ): SubscriptionEntity {
         return new SubscriptionEntity(
             {
@@ -139,30 +146,35 @@ export class PrismaMapperHelper {
                 amount: prismaSubscription.amount,
                 startDate: prismaSubscription.startDate,
                 endDate: prismaSubscription.endDate,
-                plan: PrismaMapperHelper.toPlanEntity(prismaPlan, prismaActions),
-                updatedAt: prismaSubscription.updatedAt
+                plan: PrismaMapperHelper.toPlanEntity(
+                    prismaPlan,
+                    prismaActions,
+                ),
+                updatedAt: prismaSubscription.updatedAt,
             },
             prismaSubscription.id,
-            prismaSubscription.createdAt
+            prismaSubscription.createdAt,
         );
     }
 
-    static toUserConsentEntity(prismaUserConsent: PrismaUserConsent): UserConsentEntity {
+    static toUserConsentEntity(
+        prismaUserConsent: PrismaUserConsent,
+    ): UserConsentEntity {
         return new UserConsentEntity(
             {
                 userId: prismaUserConsent.userId,
                 consentVersion: prismaUserConsent.consentVersion,
                 ipAddress: prismaUserConsent.ipAddress,
-                userAgent: prismaUserConsent.userAgent
+                userAgent: prismaUserConsent.userAgent,
             },
             prismaUserConsent.id,
-            prismaUserConsent.createdAt
+            prismaUserConsent.createdAt,
         );
     }
 
     static toUserVerificationCodeEntity(
         prismaUserVerificationCode: PrismaUserVerificationCode,
-        prismaUser: PrismaUser
+        prismaUser: PrismaUser,
     ): UserVerificationCodeEntity {
         return new UserVerificationCodeEntity(
             {
@@ -170,11 +182,12 @@ export class PrismaMapperHelper {
                 type: prismaUserVerificationCode.type as UserVerificationCodeTypeEnum,
                 valid: prismaUserVerificationCode.valid,
                 verificationCode: prismaUserVerificationCode.verificationCode,
-                verificationCodeExpiryDate: prismaUserVerificationCode.verificationCodeExpiryDate,
-                updatedAt: prismaUserVerificationCode.updatedAt
+                verificationCodeExpiryDate:
+                    prismaUserVerificationCode.verificationCodeExpiryDate,
+                updatedAt: prismaUserVerificationCode.updatedAt,
             },
             prismaUserVerificationCode.id,
-            prismaUserVerificationCode.createdAt
+            prismaUserVerificationCode.createdAt,
         );
     }
 }

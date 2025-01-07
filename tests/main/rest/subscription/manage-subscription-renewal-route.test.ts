@@ -9,12 +9,13 @@ const makeBody = (renew: unknown): object => {
 };
 
 describe("/api/subscriptions/renew - POST", () => {
-
     setup();
 
     test("Should not manage subscription because field is invalid", async () => {
         const body = makeBody(undefined);
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .post("/api/subscriptions/renew")
@@ -28,7 +29,9 @@ describe("/api/subscriptions/renew - POST", () => {
 
     test("Should manage subscription adding a new subscription with the same plan", async () => {
         const body = makeBody(true);
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .post("/api/subscriptions/renew")
@@ -41,7 +44,9 @@ describe("/api/subscriptions/renew - POST", () => {
 
     test("Should manage subscription adding a new subscription with plan free", async () => {
         const body = makeBody(false);
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .post("/api/subscriptions/renew")

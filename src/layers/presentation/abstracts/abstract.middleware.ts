@@ -1,8 +1,12 @@
 import { ForbiddenError, UnauthorizedError } from "@/layers/application";
-import { HttpHelper, HttpRequest, HttpResponse, IHttp } from "@/layers/presentation";
+import {
+    HttpHelper,
+    HttpRequest,
+    HttpResponse,
+    IHttp,
+} from "@/layers/presentation";
 
 export abstract class AbstractMiddleware implements IHttp {
-
     public async http(request: HttpRequest): Promise<HttpResponse> {
         try {
             const { statusCode, response } = await this.handler(request);

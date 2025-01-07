@@ -3,27 +3,27 @@ import { RecoverUserPasswordController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: RecoverUserPasswordController,
-    mockRecoverUserPasswordUseCase: jest.Mocked<IRecoverUserPasswordUseCase>
+    sut: RecoverUserPasswordController;
+    mockRecoverUserPasswordUseCase: jest.Mocked<IRecoverUserPasswordUseCase>;
 } => {
-    const mockRecoverUserPasswordUseCase: jest.Mocked<IRecoverUserPasswordUseCase> = {
-        execute: jest.fn()
-    };
+    const mockRecoverUserPasswordUseCase: jest.Mocked<IRecoverUserPasswordUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new RecoverUserPasswordController(
-        mockRecoverUserPasswordUseCase, 
-        logStub
+        mockRecoverUserPasswordUseCase,
+        logStub,
     );
 
     return {
         sut,
-        mockRecoverUserPasswordUseCase
+        mockRecoverUserPasswordUseCase,
     };
 };
 
 describe("Controller - RecoverUserPasswordController", () => {
-
     test("Should not recover user password because schema is invalid", async () => {
         const { sut } = makeSut();
         const code = "";
@@ -34,8 +34,8 @@ describe("Controller - RecoverUserPasswordController", () => {
             data: {
                 code,
                 password,
-                passwordConfirm
-            }
+                passwordConfirm,
+            },
         });
 
         expect(result.statusCode).toBe(400);
@@ -51,8 +51,8 @@ describe("Controller - RecoverUserPasswordController", () => {
             data: {
                 code,
                 password,
-                passwordConfirm
-            }
+                passwordConfirm,
+            },
         });
 
         expect(result.statusCode).toBe(204);

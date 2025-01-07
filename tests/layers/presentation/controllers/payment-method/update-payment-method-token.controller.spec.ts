@@ -3,27 +3,27 @@ import { UpdatePaymentMethodTokenController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: UpdatePaymentMethodTokenController,
-    mockUpdatePaymentMethodTokenUseCase: jest.Mocked<IUpdatePaymentMethodTokenUseCase>
+    sut: UpdatePaymentMethodTokenController;
+    mockUpdatePaymentMethodTokenUseCase: jest.Mocked<IUpdatePaymentMethodTokenUseCase>;
 } => {
-    const mockUpdatePaymentMethodTokenUseCase: jest.Mocked<IUpdatePaymentMethodTokenUseCase> = {
-        execute: jest.fn()
-    };
+    const mockUpdatePaymentMethodTokenUseCase: jest.Mocked<IUpdatePaymentMethodTokenUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new UpdatePaymentMethodTokenController(
-        mockUpdatePaymentMethodTokenUseCase, 
-        logStub
+        mockUpdatePaymentMethodTokenUseCase,
+        logStub,
     );
 
     return {
         sut,
-        mockUpdatePaymentMethodTokenUseCase
+        mockUpdatePaymentMethodTokenUseCase,
     };
 };
 
 describe("Controller - UpdatePaymentMethodTokenController", () => {
-
     test("Should not update payment method token because schema is invalid", async () => {
         const { sut } = makeSut();
         const id = "";
@@ -33,9 +33,9 @@ describe("Controller - UpdatePaymentMethodTokenController", () => {
         const result = await sut.http({
             data: {
                 id,
-                token
+                token,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(400);
@@ -50,9 +50,9 @@ describe("Controller - UpdatePaymentMethodTokenController", () => {
         const result = await sut.http({
             data: {
                 id,
-                token
+                token,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(204);

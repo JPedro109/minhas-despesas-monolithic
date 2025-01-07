@@ -1,7 +1,6 @@
 import { ExtractUrlValueObject, InvalidExtractUrlError } from "@/layers/domain";
 
 describe("Value Object - ExtractUrlValueObject", () => {
-
     test("Should not create ExtractUrlValueObject, because url is empty", () => {
         const invalidExtractUrl = "";
 
@@ -26,11 +25,12 @@ describe("Value Object - ExtractUrlValueObject", () => {
         expect(sut).toBeInstanceOf(InvalidExtractUrlError);
     });
 
-    
     test("Should create ExtractUrlValueObject, because url is valid", () => {
         const extractUrl = "https://www.example.com";
 
-        const sut = ExtractUrlValueObject.create(extractUrl) as unknown as ExtractUrlValueObject;
+        const sut = ExtractUrlValueObject.create(
+            extractUrl,
+        ) as unknown as ExtractUrlValueObject;
 
         expect(sut).toBeInstanceOf(ExtractUrlValueObject);
         expect(sut.value).toBe(extractUrl);

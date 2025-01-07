@@ -1,9 +1,12 @@
 import { ExtractEntity } from "@/layers/domain";
 import { IExtractRepository } from "@/layers/application";
-import { DatabaseSQLHelper, PrismaClientType, PrismaMapperHelper } from "@/layers/external";
+import {
+    DatabaseSQLHelper,
+    PrismaClientType,
+    PrismaMapperHelper,
+} from "@/layers/external";
 
 export class PrismaExtractRepositoryAdapter implements IExtractRepository {
-
     private context: PrismaClientType;
 
     constructor(private readonly databaseSQLHelper: DatabaseSQLHelper) {
@@ -25,8 +28,8 @@ export class PrismaExtractRepositoryAdapter implements IExtractRepository {
                 referenceMonth: extract.referenceMonth,
                 referenceYear: extract.referenceYear,
                 createdAt: extract.createdAt,
-                updatedAt: extract.updatedAt
-            }
+                updatedAt: extract.updatedAt,
+            },
         });
 
         return PrismaMapperHelper.toExtractEntity(createdExtract);
@@ -34,7 +37,7 @@ export class PrismaExtractRepositoryAdapter implements IExtractRepository {
 
     async getExtractById(id: string): Promise<ExtractEntity | null> {
         const extract = await this.context.prismaExtract.findUnique({
-            where: { id }
+            where: { id },
         });
 
         if (!extract) return null;
@@ -44,10 +47,12 @@ export class PrismaExtractRepositoryAdapter implements IExtractRepository {
 
     async getExtractsByUserId(userId: string): Promise<ExtractEntity[]> {
         const extracts = await this.context.prismaExtract.findMany({
-            where: { userId }
+            where: { userId },
         });
 
-        return extracts.map(extract => PrismaMapperHelper.toExtractEntity(extract));
+        return extracts.map((extract) =>
+            PrismaMapperHelper.toExtractEntity(extract),
+        );
     }
 
     async deleteExtractsWhenTheCurrentDateIsGreaterThanTheExpirationDate(): Promise<void> {
@@ -55,8 +60,8 @@ export class PrismaExtractRepositoryAdapter implements IExtractRepository {
 
         await this.context.prismaExtract.deleteMany({
             where: {
-                expiryDate: { lt: currentDate }
-            }
+                expiryDate: { lt: currentDate },
+            },
         });
     }
 }

@@ -1,12 +1,15 @@
 import { ForbiddenError, UnauthorizedError } from "@/layers/application";
-import { AbstractMiddleware, HttpHelper, HttpResponse } from "@/layers/presentation";
+import {
+    AbstractMiddleware,
+    HttpHelper,
+    HttpResponse,
+} from "@/layers/presentation";
 
 class Test {
-    async execute(): Promise<void> { }
+    async execute(): Promise<void> {}
 }
 
 class TestMiddleware extends AbstractMiddleware {
-
     constructor(private readonly test: Test) {
         super();
     }
@@ -18,23 +21,24 @@ class TestMiddleware extends AbstractMiddleware {
 }
 
 const makeSut = (): {
-    sut: TestMiddleware
-    test: Test
+    sut: TestMiddleware;
+    test: Test;
 } => {
     const test = new Test();
     const sut = new TestMiddleware(test);
 
     return {
         sut,
-        test
+        test,
     };
 };
 
 describe("Middleware - AbstractMiddleware", () => {
-
     test("Should return status code 401", async () => {
         const { sut, test } = makeSut();
-        jest.spyOn(test, "execute").mockRejectedValueOnce(new UnauthorizedError("Error"));
+        jest.spyOn(test, "execute").mockRejectedValueOnce(
+            new UnauthorizedError("Error"),
+        );
 
         const result = await sut.http({});
 
@@ -43,7 +47,9 @@ describe("Middleware - AbstractMiddleware", () => {
 
     test("Should return status code 403", async () => {
         const { sut, test } = makeSut();
-        jest.spyOn(test, "execute").mockRejectedValueOnce(new ForbiddenError("Error"));
+        jest.spyOn(test, "execute").mockRejectedValueOnce(
+            new ForbiddenError("Error"),
+        );
 
         const result = await sut.http({});
 

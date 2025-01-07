@@ -1,5 +1,10 @@
-import { GetUserPaymentMethodDTO, GetUserPaymentMethodResponseDTO } from "@/layers/application";
+import {
+    GetUserPaymentMethodDTO,
+    GetUserPaymentMethodResponseDTO,
+} from "@/layers/application";
 
 export interface IGetUserPaymentMethodUseCase {
-    execute(dto: GetUserPaymentMethodDTO): Promise<GetUserPaymentMethodResponseDTO | null>
+    execute(
+        dto: GetUserPaymentMethodDTO,
+    ): Promise<GetUserPaymentMethodResponseDTO | null>;
 }

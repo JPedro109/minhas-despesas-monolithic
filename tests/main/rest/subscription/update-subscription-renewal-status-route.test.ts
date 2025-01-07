@@ -9,12 +9,13 @@ const makeBody = (renewable: unknown): object => {
 };
 
 describe("/api/subscriptions/renewal-status - PATCH", () => {
-
     setup();
 
     test("Should not update subscription renewal status because field is invalid", async () => {
         const body = makeBody(undefined);
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .patch("/api/subscriptions/renewal-status")
@@ -41,7 +42,9 @@ describe("/api/subscriptions/renewal-status - PATCH", () => {
 
     test("Should not update subscription renewal status to active because user does not have payment method", async () => {
         const body = makeBody(true);
-        const token = await loginRest("email-with-plan-gold-with-codes-expired-without-payment-method@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-with-codes-expired-without-payment-method@test.com",
+        );
 
         const response = await request(setupServer())
             .patch("/api/subscriptions/renewal-status")
@@ -54,7 +57,9 @@ describe("/api/subscriptions/renewal-status - PATCH", () => {
 
     test("Should update subscription renewal status to inactive", async () => {
         const body = makeBody(false);
-        const token = await loginRest("email-with-plan-gold-with-codes-expired-without-payment-method@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-with-codes-expired-without-payment-method@test.com",
+        );
 
         const response = await request(setupServer())
             .patch("/api/subscriptions/renewal-status")
@@ -67,7 +72,9 @@ describe("/api/subscriptions/renewal-status - PATCH", () => {
 
     test("Should update subscription renewal status to active", async () => {
         const body = makeBody(false);
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .patch("/api/subscriptions/renewal-status")

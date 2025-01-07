@@ -5,7 +5,7 @@ import {
     getUserExtractsController,
     authenticationUserMiddleware,
     getUserSubscriptionUseCase,
-    basicAuthenticationMiddleware
+    basicAuthenticationMiddleware,
 } from "@/main/factories";
 import { RestAdapter } from "@/main/rest";
 
@@ -15,18 +15,28 @@ export default (router: Router): void => {
     router.post(
         "/extracts",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.middleware(new AuthorizationUserActionMiddleware(getUserSubscriptionUseCase, "create:extract")),
-        RestAdapter.route(createExtractController)
+        RestAdapter.middleware(
+            new AuthorizationUserActionMiddleware(
+                getUserSubscriptionUseCase,
+                "create:extract",
+            ),
+        ),
+        RestAdapter.route(createExtractController),
     );
     router.delete(
         "/extracts/expired",
         RestAdapter.middleware(basicAuthenticationMiddleware),
-        RestAdapter.route(deleteExpiredExtractsController)
+        RestAdapter.route(deleteExpiredExtractsController),
     );
     router.get(
         "/extracts",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.middleware(new AuthorizationUserActionMiddleware(getUserSubscriptionUseCase, "get:extract")),
-        RestAdapter.route(getUserExtractsController)
+        RestAdapter.middleware(
+            new AuthorizationUserActionMiddleware(
+                getUserSubscriptionUseCase,
+                "get:extract",
+            ),
+        ),
+        RestAdapter.route(getUserExtractsController),
     );
 };

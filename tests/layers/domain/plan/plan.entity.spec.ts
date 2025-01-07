@@ -1,22 +1,22 @@
 import { PlanEntity, DomainError, PlanNameEnum } from "@/layers/domain";
 
 describe("Entity - Plan", () => {
-
     test("Should not create PlanEntity, because plan name is not valid", () => {
         const invalidName = "" as PlanNameEnum;
         const description = "A valid description";
         const amount = 100;
         const durationInDays = 1;
         const actions = [];
-      
-        const sut = (): PlanEntity => new PlanEntity({
-          name: invalidName, 
-          description, 
-          amount,
-          actions,
-          durationInDays
-        });
-      
+
+        const sut = (): PlanEntity =>
+            new PlanEntity({
+                name: invalidName,
+                description,
+                amount,
+                actions,
+                durationInDays,
+            });
+
         expect(sut).toThrow(DomainError);
     });
 
@@ -27,48 +27,57 @@ describe("Entity - Plan", () => {
         const durationInDays = 1;
         const actions = [];
 
-        const sut = (): PlanEntity => new PlanEntity({
-          name, 
-          description: invalidPlanDescription, 
-          amount,
-          actions,
-          durationInDays
-        });
+        const sut = (): PlanEntity =>
+            new PlanEntity({
+                name,
+                description: invalidPlanDescription,
+                amount,
+                actions,
+                durationInDays,
+            });
 
         expect(sut).toThrow(DomainError);
     });
 
     test("Should not create PlanEntity, because plan amount is not valid", () => {
-      const name = PlanNameEnum.Free;
-      const invalidPlanDescription = "";
-      const invalidAmount = -100;
-      const durationInDays = 1;
-      const actions = [];
+        const name = PlanNameEnum.Free;
+        const invalidPlanDescription = "";
+        const invalidAmount = -100;
+        const durationInDays = 1;
+        const actions = [];
 
-      const sut = (): PlanEntity => new PlanEntity({
-        name, 
-        description: invalidPlanDescription, 
-        amount: invalidAmount,
-        actions,
-        durationInDays
-      });
+        const sut = (): PlanEntity =>
+            new PlanEntity({
+                name,
+                description: invalidPlanDescription,
+                amount: invalidAmount,
+                actions,
+                durationInDays,
+            });
 
-      expect(sut).toThrow(DomainError);
-  });
+        expect(sut).toThrow(DomainError);
+    });
 
-  test("Should create PlanEntity", () => {
+    test("Should create PlanEntity", () => {
         const name = PlanNameEnum.Free;
         const description = "A valid description";
         const amount = 100;
         const durationInDays = 1;
-        const actions = [{ id: "1", name: "Action 1", description: "Action description", createdAt: new Date() }];
+        const actions = [
+            {
+                id: "1",
+                name: "Action 1",
+                description: "Action description",
+                createdAt: new Date(),
+            },
+        ];
 
         const sut = new PlanEntity({
-          name, 
-          description, 
-          amount,
-          actions,
-          durationInDays
+            name,
+            description,
+            amount,
+            actions,
+            durationInDays,
         });
 
         expect(sut).toBeInstanceOf(PlanEntity);
@@ -81,5 +90,4 @@ describe("Entity - Plan", () => {
         expect(sut.createdAt).not.toBeUndefined();
         expect(sut.updatedAt).toBeUndefined();
     });
-
 });

@@ -17,36 +17,38 @@ export default (router: Router): void => {
     router.post(
         "/subscriptions/charge-expired",
         RestAdapter.middleware(basicAuthenticationMiddleware),
-        RestAdapter.route(executeChargeToExpiredSubscriptionsController)
+        RestAdapter.route(executeChargeToExpiredSubscriptionsController),
     );
     router.get(
         "/subscriptions",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(getUserSubscriptionController)
+        RestAdapter.route(getUserSubscriptionController),
     );
     router.post(
         "/subscriptions/renew",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(manageSubscriptionRenewalController)
+        RestAdapter.route(manageSubscriptionRenewalController),
     );
     router.post(
         "/subscriptions/notify-due",
         RestAdapter.middleware(basicAuthenticationMiddleware),
-        RestAdapter.route(sendNotificationOfSubscriptionThatAreComingDueController)
+        RestAdapter.route(
+            sendNotificationOfSubscriptionThatAreComingDueController,
+        ),
     );
     router.patch(
         "/subscriptions/plan/:newPlanId",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(updateSubscriptionController)
+        RestAdapter.route(updateSubscriptionController),
     );
     router.patch(
         "/subscriptions/renewal-status",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(updateSubscriptionRenewalStatusController)
+        RestAdapter.route(updateSubscriptionRenewalStatusController),
     );
     router.post(
         "/subscriptions/set-free-plan",
         RestAdapter.middleware(basicAuthenticationMiddleware),
-        RestAdapter.route(setFreePlanForNonRenewableSubscriptionsController)
+        RestAdapter.route(setFreePlanForNonRenewableSubscriptionsController),
     );
 };

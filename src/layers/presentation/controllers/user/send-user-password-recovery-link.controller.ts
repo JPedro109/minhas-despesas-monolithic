@@ -1,22 +1,25 @@
-import { ISendUserPasswordRecoveryLinkUseCase, ILog } from "@/layers/application";
-import { AbstractController, HttpRequest, HttpResponse, HttpHelper } from "@/layers/presentation";
+import {
+    ISendUserPasswordRecoveryLinkUseCase,
+    ILog,
+} from "@/layers/application";
+import {
+    AbstractController,
+    HttpRequest,
+    HttpResponse,
+    HttpHelper,
+} from "@/layers/presentation";
 
 export class SendUserPasswordRecoveryLinkController extends AbstractController {
-
     constructor(
         private readonly useCase: ISendUserPasswordRecoveryLinkUseCase,
-        protected readonly log: ILog
-    ) { 
-        super(
-            log,
-            "SendUserPasswordRecoveryLink",
-            {
-                email: {
-                    type: "string",
-                    optional: false
-                }
-            }
-        );
+        protected readonly log: ILog,
+    ) {
+        super(log, "SendUserPasswordRecoveryLink", {
+            email: {
+                type: "string",
+                optional: false,
+            },
+        });
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {

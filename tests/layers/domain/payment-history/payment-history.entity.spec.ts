@@ -1,22 +1,21 @@
 import { PaymentHistoryEntity } from "@/layers/domain";
 
 describe("Entity - PaymentHistory", () => {
-
     test("Should create PaymentHistoryEntity", () => {
         const userId = "1";
         const expenseId = "1";
         const expenseName = "Expense Name";
-        const expenseValue = 100.00;
+        const expenseValue = 100.0;
         const dueDate = new Date("2024-12-01");
         const paidDate = new Date("2024-11-01");
-        
+
         const sut = new PaymentHistoryEntity({
             userId,
             expenseId,
             expenseName,
             expenseValue,
             dueDate,
-            paidDate
+            paidDate,
         });
 
         expect(sut).toBeInstanceOf(PaymentHistoryEntity);

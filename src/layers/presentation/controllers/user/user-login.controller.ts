@@ -1,26 +1,26 @@
 import { IUserLoginUseCase, ILog } from "@/layers/application";
-import { AbstractController, HttpRequest, HttpResponse, HttpHelper } from "@/layers/presentation";
+import {
+    AbstractController,
+    HttpRequest,
+    HttpResponse,
+    HttpHelper,
+} from "@/layers/presentation";
 
 export class UserLoginController extends AbstractController {
-
     constructor(
         private readonly useCase: IUserLoginUseCase,
-        protected readonly log: ILog
-    ) { 
-        super(
-            log,
-            "UserLogin",
-            {
-                email: {
-                    type: "string",
-                    optional: false
-                },
-                password: {
-                    type: "string",
-                    optional: false
-                }
-            }
-        );
+        protected readonly log: ILog,
+    ) {
+        super(log, "UserLogin", {
+            email: {
+                type: "string",
+                optional: false,
+            },
+            password: {
+                type: "string",
+                optional: false,
+            },
+        });
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
@@ -28,7 +28,7 @@ export class UserLoginController extends AbstractController {
 
         const body = {
             email,
-            password
+            password,
         };
 
         this.validateRequestSchema(body);

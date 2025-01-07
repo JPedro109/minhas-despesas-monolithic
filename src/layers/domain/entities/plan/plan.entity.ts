@@ -3,7 +3,7 @@ import {
     PlanNameValueObject,
     PlanDescriptionValueObject,
     PlanAmountValueObject,
-    PlanNameEnum
+    PlanNameEnum,
 } from "@/layers/domain";
 
 export type PlanActionProps = {
@@ -12,7 +12,7 @@ export type PlanActionProps = {
     description: string;
     createdAt: Date;
     updatedAt?: Date;
-}
+};
 
 export type PlanProps = {
     name: PlanNameEnum;
@@ -21,17 +21,16 @@ export type PlanProps = {
     durationInDays: number;
     actions: PlanActionProps[];
     updatedAt?: Date;
-}
+};
 
 export class PlanEntity extends AbstractEntity<PlanProps> {
-
     constructor(props: PlanProps, id?: string, createdAt?: Date) {
         super(props, id, createdAt);
 
         const valueObjects = {
             name: PlanNameValueObject.create(props.name),
             description: PlanDescriptionValueObject.create(props.description),
-            amount: PlanAmountValueObject.create(props.amount)
+            amount: PlanAmountValueObject.create(props.amount),
         };
 
         this.validate(valueObjects);

@@ -5,7 +5,6 @@ import { loginRest, setup } from "../../__mocks__";
 import request from "supertest";
 
 describe("/api/plans - GET", () => {
-
     setup();
 
     test("Should return a list of plans successfully", async () => {

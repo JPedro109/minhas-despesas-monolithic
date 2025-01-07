@@ -3,27 +3,27 @@ import { UpdateUserPasswordController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: UpdateUserPasswordController,
-    mockUpdateUserPasswordUseCase: jest.Mocked<IUpdateUserPasswordUseCase>
+    sut: UpdateUserPasswordController;
+    mockUpdateUserPasswordUseCase: jest.Mocked<IUpdateUserPasswordUseCase>;
 } => {
-    const mockUpdateUserPasswordUseCase: jest.Mocked<IUpdateUserPasswordUseCase> = {
-        execute: jest.fn()
-    };
+    const mockUpdateUserPasswordUseCase: jest.Mocked<IUpdateUserPasswordUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new UpdateUserPasswordController(
         mockUpdateUserPasswordUseCase,
-        logStub
+        logStub,
     );
 
     return {
         sut,
-        mockUpdateUserPasswordUseCase
+        mockUpdateUserPasswordUseCase,
     };
 };
 
 describe("Controller - UpdateUserPasswordController", () => {
-
     test("Should not update user password because schema is invalid", async () => {
         const { sut } = makeSut();
         const id = "";
@@ -35,9 +35,9 @@ describe("Controller - UpdateUserPasswordController", () => {
             data: {
                 password,
                 newPassword,
-                newPasswordConfirm
+                newPasswordConfirm,
             },
-            userId: id
+            userId: id,
         });
 
         expect(result.statusCode).toBe(400);
@@ -54,9 +54,9 @@ describe("Controller - UpdateUserPasswordController", () => {
             data: {
                 password,
                 newPassword,
-                newPasswordConfirm
+                newPasswordConfirm,
             },
-            userId: id
+            userId: id,
         });
 
         expect(result.statusCode).toBe(204);

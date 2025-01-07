@@ -2,27 +2,30 @@ import { GetUserPlanUseCase, NotFoundError } from "@/layers/application";
 import {
     SubscriptionRepositoryStub,
     unitOfWorkRepositoryStubFactory,
-    testPlanFreeEntity
+    testPlanFreeEntity,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: GetUserPlanUseCase,
-    subscriptionRepositoryStub: SubscriptionRepositoryStub,
+    sut: GetUserPlanUseCase;
+    subscriptionRepositoryStub: SubscriptionRepositoryStub;
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new GetUserPlanUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        subscriptionRepositoryStub: unitOfWorkRepositoryStub.getSubscriptionRepository()
+        subscriptionRepositoryStub:
+            unitOfWorkRepositoryStub.getSubscriptionRepository(),
     };
 };
 
 describe("Use case - GetUserPlanUseCase", () => {
-
     test("Should throw an error if the plan associated with the subscription is not found", async () => {
         const { sut, subscriptionRepositoryStub } = makeSut();
-        jest.spyOn(subscriptionRepositoryStub, "getActiveSubscriptionByUserId").mockReturnValueOnce(null);
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getActiveSubscriptionByUserId",
+        ).mockReturnValueOnce(null);
 
         const result = sut.execute({ userId: "2" });
 

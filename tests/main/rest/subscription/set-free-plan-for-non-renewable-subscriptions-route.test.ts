@@ -5,7 +5,6 @@ import { setup } from "../../__mocks__";
 import request from "supertest";
 
 describe("/api/subscriptions/set-free-plan - POST", () => {
-
     setup();
 
     test("Should set free plan for non renewable subscriptions successfully", async () => {

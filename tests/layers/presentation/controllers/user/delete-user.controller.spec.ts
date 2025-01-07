@@ -3,27 +3,23 @@ import { DeleteUserController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: DeleteUserController,
-    mockDeleteUserUseCase: jest.Mocked<IDeleteUserUseCase>
+    sut: DeleteUserController;
+    mockDeleteUserUseCase: jest.Mocked<IDeleteUserUseCase>;
 } => {
     const mockDeleteUserUseCase: jest.Mocked<IDeleteUserUseCase> = {
-        execute: jest.fn()
+        execute: jest.fn(),
     };
     const logStub = logStubFactory();
 
-    const sut = new DeleteUserController(
-        mockDeleteUserUseCase, 
-        logStub
-    );
+    const sut = new DeleteUserController(mockDeleteUserUseCase, logStub);
 
     return {
         sut,
-        mockDeleteUserUseCase
+        mockDeleteUserUseCase,
     };
 };
 
 describe("Controller - DeleteUserController", () => {
-
     test("Should not delete user because schema is invalid", async () => {
         const { sut } = makeSut();
         const id = "";
@@ -33,9 +29,9 @@ describe("Controller - DeleteUserController", () => {
         const result = await sut.http({
             data: {
                 password,
-                passwordConfirm
+                passwordConfirm,
             },
-            userId: id
+            userId: id,
         });
 
         expect(result.statusCode).toBe(400);
@@ -50,9 +46,9 @@ describe("Controller - DeleteUserController", () => {
         const result = await sut.http({
             data: {
                 password,
-                passwordConfirm
+                passwordConfirm,
             },
-            userId: id
+            userId: id,
         });
 
         expect(result.statusCode).toBe(204);

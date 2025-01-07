@@ -4,7 +4,6 @@ import { ExtractEntity } from "@/layers/domain";
 import { Seed } from "./__mocks__";
 
 describe("External - PrismaExtractRepositoryAdapter", () => {
-
     const databaseSQLHelper = new DatabaseSQLHelper();
 
     beforeAll(async () => {
@@ -33,7 +32,7 @@ describe("External - PrismaExtractRepositoryAdapter", () => {
                 expiryDate: new Date("3000-01-01"),
                 urlExpiryDate: new Date("3000-01-01"),
                 referenceMonth: 1,
-                referenceYear: 2024
+                referenceYear: 2024,
             });
 
             const sut = new PrismaExtractRepositoryAdapter(databaseSQLHelper);

@@ -1,11 +1,16 @@
-import { IDeleteExpiredExtractsUseCase, IUnitOfWorkRepository } from "@/layers/application";
+import {
+    IDeleteExpiredExtractsUseCase,
+    IUnitOfWorkRepository,
+} from "@/layers/application";
 
-export class DeleteExpiredExtractsUseCase implements IDeleteExpiredExtractsUseCase {
+export class DeleteExpiredExtractsUseCase
+    implements IDeleteExpiredExtractsUseCase
+{
+    constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) {}
 
-    constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
-    
     async execute(): Promise<void> {
-        const extractRepository = this.unitOfWorkRepository.getExtractRepository();
+        const extractRepository =
+            this.unitOfWorkRepository.getExtractRepository();
 
         await extractRepository.deleteExtractsWhenTheCurrentDateIsGreaterThanTheExpirationDate();
     }

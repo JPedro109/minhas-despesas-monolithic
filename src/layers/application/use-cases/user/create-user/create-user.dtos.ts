@@ -3,7 +3,7 @@ export type CreateUserDTO = {
     username: string;
     password: string;
     passwordConfirm: string;
-    consentVersion: string;				
+    consentVersion: string;
     ipAddress: string;
     userAgent: string;
-}
+};

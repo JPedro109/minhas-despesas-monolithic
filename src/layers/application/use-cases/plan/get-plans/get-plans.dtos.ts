@@ -3,4 +3,4 @@ export type GetPlansResponseDTO = {
     planName: string;
     planAmount: number;
     planDescription: string;
-}
+};

@@ -5,12 +5,11 @@ export type PaymentMethodProps = {
     name: string;
     token: string;
     updatedAt?: Date;
-}
+};
 
 export class PaymentMethodEntity extends AbstractEntity<PaymentMethodProps> {
-
     constructor(props: PaymentMethodProps, id?: string, createdAt?: Date) {
-		super(props, id, createdAt);
+        super(props, id, createdAt);
     }
 
     get userId(): string {

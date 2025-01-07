@@ -1,6 +1,6 @@
 export type GetUserSubscriptionDTO = {
     userId: string;
-}
+};
 
 export type GetUserSubscriptionResponseDTO = {
     subscriptionId: string;
@@ -22,4 +22,4 @@ export type GetUserSubscriptionResponseDTO = {
     renewable: boolean;
     startDate: Date;
     endDate?: Date;
-}
+};

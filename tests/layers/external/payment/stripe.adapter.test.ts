@@ -5,7 +5,7 @@ describe("External - StripeAdapter", () => {
     test("Should create customer | createCustomer", async () => {
         const email = "email@test.com";
         const sut = new StripeAdapter();
-        
+
         const result = await sut.createCustomer(email);
 
         expect(typeof result).toBe("string");
@@ -17,12 +17,18 @@ describe("External - StripeAdapter", () => {
         const email = "email@test.com";
         const sut = new StripeAdapter();
         const customerId = await sut.createCustomer(email);
-        const updateCustomerEmailByCustomerIdSpy = jest.spyOn(sut, "updateCustomerEmailByCustomerId");
+        const updateCustomerEmailByCustomerIdSpy = jest.spyOn(
+            sut,
+            "updateCustomerEmailByCustomerId",
+        );
 
         await sut.updateCustomerEmailByCustomerId(customerId, email);
 
-		expect(updateCustomerEmailByCustomerIdSpy).toHaveBeenCalled();
-		expect(updateCustomerEmailByCustomerIdSpy).toHaveBeenCalledWith(customerId, email);
+        expect(updateCustomerEmailByCustomerIdSpy).toHaveBeenCalled();
+        expect(updateCustomerEmailByCustomerIdSpy).toHaveBeenCalledWith(
+            customerId,
+            email,
+        );
 
         await sut.deleteCustomer(customerId);
     });
@@ -36,7 +42,7 @@ describe("External - StripeAdapter", () => {
         await sut.deleteCustomer(customerId);
 
         expect(deleteCustomerSpy).toHaveBeenCalled();
-		expect(deleteCustomerSpy).toHaveBeenCalledWith(customerId);
+        expect(deleteCustomerSpy).toHaveBeenCalledWith(customerId);
     });
 
     test("Should create payment method | createPaymentMethod", async () => {
@@ -57,13 +63,21 @@ describe("External - StripeAdapter", () => {
         const token = "pm_card_visa";
         const sut = new StripeAdapter();
         const customerId = await sut.createCustomer(email);
-        const paymentMethodId = await sut.createPaymentMethod(customerId, token);
-        const deletePaymentMethodByTokenSpy = jest.spyOn(sut, "deletePaymentMethodByToken");
+        const paymentMethodId = await sut.createPaymentMethod(
+            customerId,
+            token,
+        );
+        const deletePaymentMethodByTokenSpy = jest.spyOn(
+            sut,
+            "deletePaymentMethodByToken",
+        );
 
         await sut.deletePaymentMethodByToken(paymentMethodId);
 
         expect(deletePaymentMethodByTokenSpy).toHaveBeenCalled();
-		expect(deletePaymentMethodByTokenSpy).toHaveBeenCalledWith(paymentMethodId);
+        expect(deletePaymentMethodByTokenSpy).toHaveBeenCalledWith(
+            paymentMethodId,
+        );
 
         await sut.deleteCustomer(customerId);
     });
@@ -79,7 +93,12 @@ describe("External - StripeAdapter", () => {
         await sut.pay(customerId, token, 500, PaymentCurrencyEnum.BRL);
 
         expect(paySpy).toHaveBeenCalled();
-		expect(paySpy).toHaveBeenCalledWith(customerId, token, 500, PaymentCurrencyEnum.BRL);
+        expect(paySpy).toHaveBeenCalledWith(
+            customerId,
+            token,
+            500,
+            PaymentCurrencyEnum.BRL,
+        );
 
         await sut.deleteCustomer(customerId);
     });

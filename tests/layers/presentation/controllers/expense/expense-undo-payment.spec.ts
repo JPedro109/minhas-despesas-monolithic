@@ -3,35 +3,35 @@ import { ExpenseUndoPaymentController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: ExpenseUndoPaymentController,
-    mockExpenseUndoPaymentUseCase: jest.Mocked<IExpenseUndoPaymentUseCase>
+    sut: ExpenseUndoPaymentController;
+    mockExpenseUndoPaymentUseCase: jest.Mocked<IExpenseUndoPaymentUseCase>;
 } => {
-    const mockExpenseUndoPaymentUseCase: jest.Mocked<IExpenseUndoPaymentUseCase> = {
-        execute: jest.fn()
-    };
+    const mockExpenseUndoPaymentUseCase: jest.Mocked<IExpenseUndoPaymentUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new ExpenseUndoPaymentController(
         mockExpenseUndoPaymentUseCase,
-        logStub
+        logStub,
     );
 
     return {
         sut,
-        mockExpenseUndoPaymentUseCase
+        mockExpenseUndoPaymentUseCase,
     };
 };
 
 describe("Controller - ExpenseUndoPaymentController", () => {
-
     test("Should not expense undo payment because schema is invalid", async () => {
         const { sut } = makeSut();
         const id = "";
-        
+
         const result = await sut.http({
             data: {
-                id
-            }
+                id,
+            },
         });
 
         expect(result.statusCode).toBe(400);
@@ -43,8 +43,8 @@ describe("Controller - ExpenseUndoPaymentController", () => {
 
         const result = await sut.http({
             data: {
-                id
-            }
+                id,
+            },
         });
 
         expect(result.statusCode).toBe(204);

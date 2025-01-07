@@ -3,27 +3,23 @@ import { CreateExtractController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: CreateExtractController,
-    mockCreateExtractUseCase: jest.Mocked<ICreateExtractUseCase>
+    sut: CreateExtractController;
+    mockCreateExtractUseCase: jest.Mocked<ICreateExtractUseCase>;
 } => {
     const mockCreateExtractUseCase: jest.Mocked<ICreateExtractUseCase> = {
-        execute: jest.fn()
+        execute: jest.fn(),
     };
     const logStub = logStubFactory();
 
-    const sut = new CreateExtractController(
-        mockCreateExtractUseCase, 
-        logStub
-    );
+    const sut = new CreateExtractController(mockCreateExtractUseCase, logStub);
 
     return {
         sut,
-        mockCreateExtractUseCase
+        mockCreateExtractUseCase,
     };
 };
 
 describe("Controller - CreateExtractController", () => {
-
     test("Should not create extract because schema is invalid", async () => {
         const { sut } = makeSut();
         const userId = "";
@@ -33,9 +29,9 @@ describe("Controller - CreateExtractController", () => {
         const result = await sut.http({
             data: {
                 referenceMonth,
-                referenceYear
+                referenceYear,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(400);
@@ -50,9 +46,9 @@ describe("Controller - CreateExtractController", () => {
         const result = await sut.http({
             data: {
                 referenceMonth,
-                referenceYear
+                referenceYear,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(201);

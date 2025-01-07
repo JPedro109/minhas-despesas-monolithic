@@ -1,33 +1,33 @@
 import { IDeleteExpenseUseCase, ILog } from "@/layers/application";
-import { AbstractController, HttpResponse, HttpHelper, HttpRequest } from "@/layers/presentation";
+import {
+    AbstractController,
+    HttpResponse,
+    HttpHelper,
+    HttpRequest,
+} from "@/layers/presentation";
 
 export class DeleteExpenseController extends AbstractController {
-
     constructor(
         private readonly useCase: IDeleteExpenseUseCase,
-        protected readonly log: ILog
+        protected readonly log: ILog,
     ) {
-        super(
-            log,
-            "DeleteExpense",
-            {
-                id: {
-                    type: "string",
-                    optional: false
-                },
-                deleteExpensePaymentHistory: {
-                    type: "boolean",
-                    optional: false
-                }
-            }
-        );
+        super(log, "DeleteExpense", {
+            id: {
+                type: "string",
+                optional: false,
+            },
+            deleteExpensePaymentHistory: {
+                type: "boolean",
+                optional: false,
+            },
+        });
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
         const { id, deleteExpensePaymentHistory } = request.data;
         const body = {
             id,
-            deleteExpensePaymentHistory
+            deleteExpensePaymentHistory,
         };
 
         this.validateRequestSchema(body);

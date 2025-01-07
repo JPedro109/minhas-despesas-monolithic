@@ -1,25 +1,28 @@
-import { InvalidExpenseDueDateError, InvalidExpenseNameError, InvalidExpenseValueError } from "@/layers/domain";
+import {
+    InvalidExpenseDueDateError,
+    InvalidExpenseNameError,
+    InvalidExpenseValueError,
+} from "@/layers/domain";
 import { NotFoundError, UpdateExpenseUseCase } from "@/layers/application";
 import {
     ExpenseRepositoryStub,
-    unitOfWorkRepositoryStubFactory
+    unitOfWorkRepositoryStubFactory,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: UpdateExpenseUseCase,
-    expenseRepositoryStub: ExpenseRepositoryStub
+    sut: UpdateExpenseUseCase;
+    expenseRepositoryStub: ExpenseRepositoryStub;
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdateExpenseUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository()
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository(),
     };
 };
 
 describe("Use case - UpdateExpenseUseCase", () => {
-
     test("Should not update expense because expense name is invalid", async () => {
         const { sut } = makeSut();
         const id = "1";
@@ -31,7 +34,7 @@ describe("Use case - UpdateExpenseUseCase", () => {
             id,
             expenseName,
             expenseValue,
-            dueDate
+            dueDate,
         });
 
         await expect(result).rejects.toThrow(InvalidExpenseNameError);
@@ -48,7 +51,7 @@ describe("Use case - UpdateExpenseUseCase", () => {
             id,
             expenseName,
             expenseValue,
-            dueDate
+            dueDate,
         });
 
         await expect(result).rejects.toThrow(InvalidExpenseValueError);
@@ -65,7 +68,7 @@ describe("Use case - UpdateExpenseUseCase", () => {
             id,
             expenseName,
             expenseValue,
-            dueDate
+            dueDate,
         });
 
         await expect(result).rejects.toThrow(InvalidExpenseDueDateError);
@@ -77,13 +80,16 @@ describe("Use case - UpdateExpenseUseCase", () => {
         const expenseName = "Updated Expense Name";
         const expenseValue = 500;
         const dueDate = new Date("3000-01-01");
-        jest.spyOn(expenseRepositoryStub, "getExpenseById").mockResolvedValueOnce(null);
+        jest.spyOn(
+            expenseRepositoryStub,
+            "getExpenseById",
+        ).mockResolvedValueOnce(null);
 
         const result = sut.execute({
             id,
             expenseName,
             expenseValue,
-            dueDate
+            dueDate,
         });
 
         await expect(result).rejects.toThrow(NotFoundError);
@@ -91,7 +97,10 @@ describe("Use case - UpdateExpenseUseCase", () => {
 
     test("Should update an existing expense successfully", async () => {
         const { sut, expenseRepositoryStub } = makeSut();
-        const updateExpenseByIdSpy = jest.spyOn(expenseRepositoryStub, "updateExpenseById");
+        const updateExpenseByIdSpy = jest.spyOn(
+            expenseRepositoryStub,
+            "updateExpenseById",
+        );
         const id = "1";
         const expenseName = "Updated Expense Name";
         const expenseValue = 500;
@@ -101,7 +110,7 @@ describe("Use case - UpdateExpenseUseCase", () => {
             id,
             expenseName,
             expenseValue,
-            dueDate
+            dueDate,
         });
 
         expect(updateExpenseByIdSpy).toHaveBeenCalled();

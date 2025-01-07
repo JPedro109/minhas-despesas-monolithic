@@ -4,7 +4,6 @@ import { PaymentMethodEntity } from "@/layers/domain";
 import { Seed, testPaymentMethodEntity } from "./__mocks__";
 
 describe("External - PrismaPaymentMethodRepositoryAdapter", () => {
-
     const databaseSQLHelper = new DatabaseSQLHelper();
 
     beforeAll(async () => {
@@ -30,10 +29,12 @@ describe("External - PrismaPaymentMethodRepositoryAdapter", () => {
             const paymentMethod = new PaymentMethodEntity({
                 userId: "00000000-0000-0000-0000-000000000001",
                 name: "Card One",
-                token: "1"
+                token: "1",
             });
 
-            const sut = new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper);
+            const sut = new PrismaPaymentMethodRepositoryAdapter(
+                databaseSQLHelper,
+            );
 
             const result = await sut.createPaymentMethod(paymentMethod);
 
@@ -43,17 +44,25 @@ describe("External - PrismaPaymentMethodRepositoryAdapter", () => {
 
     describe("getPaymentMethodById", () => {
         test("Should return a payment method by ID", async () => {
-            const sut = new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper);
+            const sut = new PrismaPaymentMethodRepositoryAdapter(
+                databaseSQLHelper,
+            );
 
-            const result = await sut.getPaymentMethodById("00000000-0000-0000-0000-000000000000");
+            const result = await sut.getPaymentMethodById(
+                "00000000-0000-0000-0000-000000000000",
+            );
 
             expect(result).toBeInstanceOf(PaymentMethodEntity);
         });
 
         test("Should return null if payment method does not exist", async () => {
-            const sut = new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper);
+            const sut = new PrismaPaymentMethodRepositoryAdapter(
+                databaseSQLHelper,
+            );
 
-            const result = await sut.getPaymentMethodById("ffffffff-ffff-ffff-ffff-ffffffffffff");
+            const result = await sut.getPaymentMethodById(
+                "ffffffff-ffff-ffff-ffff-ffffffffffff",
+            );
 
             expect(result).toBeNull();
         });
@@ -61,17 +70,25 @@ describe("External - PrismaPaymentMethodRepositoryAdapter", () => {
 
     describe("getPaymentMethodByUserId", () => {
         test("Should return a payment method by user ID", async () => {
-            const sut = new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper);
+            const sut = new PrismaPaymentMethodRepositoryAdapter(
+                databaseSQLHelper,
+            );
 
-            const result = await sut.getPaymentMethodByUserId("00000000-0000-0000-0000-000000000000");
+            const result = await sut.getPaymentMethodByUserId(
+                "00000000-0000-0000-0000-000000000000",
+            );
 
             expect(result).toBeInstanceOf(PaymentMethodEntity);
         });
 
         test("Should return null if user has no payment method", async () => {
-            const sut = new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper);
+            const sut = new PrismaPaymentMethodRepositoryAdapter(
+                databaseSQLHelper,
+            );
 
-            const result = await sut.getPaymentMethodByUserId("ffffffff-ffff-ffff-ffff-ffffffffffff");
+            const result = await sut.getPaymentMethodByUserId(
+                "ffffffff-ffff-ffff-ffff-ffffffffffff",
+            );
 
             expect(result).toBeNull();
         });
@@ -79,17 +96,25 @@ describe("External - PrismaPaymentMethodRepositoryAdapter", () => {
 
     describe("getPaymentMethodsByUserIds", () => {
         test("Should return an empty array if no payment methods exist for given user IDs", async () => {
-            const sut = new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper);
+            const sut = new PrismaPaymentMethodRepositoryAdapter(
+                databaseSQLHelper,
+            );
 
-            const result = await sut.getPaymentMethodsByUserIds(["ffffffff-ffff-ffff-ffff-ffffffffffff"]);
+            const result = await sut.getPaymentMethodsByUserIds([
+                "ffffffff-ffff-ffff-ffff-ffffffffffff",
+            ]);
 
             expect(result).toEqual([]);
         });
 
         test("Should return payment methods for given user IDs", async () => {
-            const sut = new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper);
+            const sut = new PrismaPaymentMethodRepositoryAdapter(
+                databaseSQLHelper,
+            );
 
-            const result = await sut.getPaymentMethodsByUserIds(["00000000-0000-0000-0000-000000000000"]);
+            const result = await sut.getPaymentMethodsByUserIds([
+                "00000000-0000-0000-0000-000000000000",
+            ]);
 
             expect(result.length).toBeGreaterThan(0);
         });
@@ -97,12 +122,19 @@ describe("External - PrismaPaymentMethodRepositoryAdapter", () => {
 
     describe("updatePaymentMethodById", () => {
         test("Should update a payment method", async () => {
-            const sut = new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper);
+            const sut = new PrismaPaymentMethodRepositoryAdapter(
+                databaseSQLHelper,
+            );
             const paymentMethod = testPaymentMethodEntity();
 
-            await sut.updatePaymentMethodById("00000000-0000-0000-0000-000000000000", paymentMethod);
+            await sut.updatePaymentMethodById(
+                "00000000-0000-0000-0000-000000000000",
+                paymentMethod,
+            );
 
-            const result = await sut.getPaymentMethodById("00000000-0000-0000-0000-000000000000");
+            const result = await sut.getPaymentMethodById(
+                "00000000-0000-0000-0000-000000000000",
+            );
 
             expect(result).toBeInstanceOf(PaymentMethodEntity);
         });
@@ -110,11 +142,17 @@ describe("External - PrismaPaymentMethodRepositoryAdapter", () => {
 
     describe("deletePaymentMethodById", () => {
         test("Should delete a payment method by ID", async () => {
-            const sut = new PrismaPaymentMethodRepositoryAdapter(databaseSQLHelper);
+            const sut = new PrismaPaymentMethodRepositoryAdapter(
+                databaseSQLHelper,
+            );
 
-            await sut.deletePaymentMethodById("00000000-0000-0000-0000-000000000000");
+            await sut.deletePaymentMethodById(
+                "00000000-0000-0000-0000-000000000000",
+            );
 
-            const result = await sut.getPaymentMethodById("00000000-0000-0000-0000-000000000000");
+            const result = await sut.getPaymentMethodById(
+                "00000000-0000-0000-0000-000000000000",
+            );
 
             expect(result).toBeNull();
         });

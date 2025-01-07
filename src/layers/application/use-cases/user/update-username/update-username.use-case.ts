@@ -1,23 +1,20 @@
 import {
-	IUnitOfWorkRepository,
-	UpdateUsernameDTO,
-	IUpdateUsernameUseCase,
-	NotFoundError
+    IUnitOfWorkRepository,
+    UpdateUsernameDTO,
+    IUpdateUsernameUseCase,
+    NotFoundError,
 } from "@/layers/application";
 
 export class UpdateUsernameUseCase implements IUpdateUsernameUseCase {
+    constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) {}
 
-	constructor(
-		private readonly unitOfWorkRepository: IUnitOfWorkRepository
-	) { }
+    async execute({ id, username }: UpdateUsernameDTO): Promise<void> {
+        const userRepository = this.unitOfWorkRepository.getUserRepository();
 
-	async execute({ id, username }: UpdateUsernameDTO): Promise<void> {
-		const userRepository = this.unitOfWorkRepository.getUserRepository();
-
-		const user = await userRepository.getUserById(id);
-		if(!user) throw new NotFoundError("O usuário não existe");
+        const user = await userRepository.getUserById(id);
+        if (!user) throw new NotFoundError("O usuário não existe");
 
         user.username = username;
-		await userRepository.updateUserById(user.id, user);
-	}
+        await userRepository.updateUserById(user.id, user);
+    }
 }

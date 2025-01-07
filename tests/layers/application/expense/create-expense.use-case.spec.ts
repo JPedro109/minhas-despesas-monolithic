@@ -1,11 +1,20 @@
 import { DomainError } from "@/layers/domain";
-import { CreateExpenseUseCase, ForbiddenError, NotFoundError } from "@/layers/application";
-import { ExpenseRepositoryStub, testExpenseEntityPaid, unitOfWorkRepositoryStubFactory, UserRepositoryStub } from "../__mocks__";
+import {
+    CreateExpenseUseCase,
+    ForbiddenError,
+    NotFoundError,
+} from "@/layers/application";
+import {
+    ExpenseRepositoryStub,
+    testExpenseEntityPaid,
+    unitOfWorkRepositoryStubFactory,
+    UserRepositoryStub,
+} from "../__mocks__";
 
 const makeSut = (): {
-    sut: CreateExpenseUseCase,
-    userRepositoryStub: UserRepositoryStub,
-    expenseRepositoryStub: ExpenseRepositoryStub
+    sut: CreateExpenseUseCase;
+    userRepositoryStub: UserRepositoryStub;
+    expenseRepositoryStub: ExpenseRepositoryStub;
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new CreateExpenseUseCase(unitOfWorkRepositoryStub);
@@ -13,12 +22,11 @@ const makeSut = (): {
     return {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository()
+        expenseRepositoryStub: unitOfWorkRepositoryStub.getExpenseRepository(),
     };
 };
 
 describe("Use case - CreateExpenseUseCase", () => {
-
     test("Should not create expense because the user rules are not respected", async () => {
         const { sut } = makeSut();
         const userId = "1";
@@ -30,7 +38,7 @@ describe("Use case - CreateExpenseUseCase", () => {
             userId,
             expenseName,
             expenseValue,
-            dueDate
+            dueDate,
         });
 
         await expect(result).rejects.toThrow(DomainError);
@@ -40,17 +48,17 @@ describe("Use case - CreateExpenseUseCase", () => {
         const { sut, userRepositoryStub } = makeSut();
         const userId = "3";
         const expenseName = "Expense";
-        const expenseValue = 100;    
+        const expenseValue = 100;
         const dueDate = new Date("3000-01-01");
-        jest
-            .spyOn(userRepositoryStub, "getUserById")
-            .mockResolvedValueOnce(null);
+        jest.spyOn(userRepositoryStub, "getUserById").mockResolvedValueOnce(
+            null,
+        );
 
         const result = sut.execute({
             userId,
             expenseName,
             expenseValue,
-            dueDate
+            dueDate,
         });
 
         await expect(result).rejects.toThrow(NotFoundError);
@@ -60,29 +68,30 @@ describe("Use case - CreateExpenseUseCase", () => {
         const { sut, expenseRepositoryStub } = makeSut();
         const userId = "2";
         const expenseName = "Expense";
-        const expenseValue = 100;    
+        const expenseValue = 100;
         const dueDate = new Date("3000-01-01");
         const expense = testExpenseEntityPaid();
-        jest
-            .spyOn(expenseRepositoryStub, "getExpensesByUserId")
-            .mockResolvedValueOnce([
-                expense,
-                expense,
-                expense,
-                expense,
-                expense,
-                expense,
-                expense,
-                expense,
-                expense,
-                expense
-            ]);
+        jest.spyOn(
+            expenseRepositoryStub,
+            "getExpensesByUserId",
+        ).mockResolvedValueOnce([
+            expense,
+            expense,
+            expense,
+            expense,
+            expense,
+            expense,
+            expense,
+            expense,
+            expense,
+            expense,
+        ]);
 
         const result = sut.execute({
             userId,
             expenseName,
             expenseValue,
-            dueDate
+            dueDate,
         });
 
         await expect(result).rejects.toThrow(ForbiddenError);
@@ -92,14 +101,14 @@ describe("Use case - CreateExpenseUseCase", () => {
         const { sut } = makeSut();
         const userId = "1";
         const expenseName = "Expense";
-        const expenseValue = 100;    
+        const expenseValue = 100;
         const dueDate = new Date("3000-01-01");
 
         const result = await sut.execute({
             userId,
             expenseName,
             expenseValue,
-            dueDate
+            dueDate,
         });
 
         expect(typeof result).toBe("string");

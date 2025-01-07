@@ -1,5 +1,10 @@
 import { AbstractEntity } from "../abstract/abstract.entity";
-import { ExpenseNameValueObject, ExpenseValueValueObject, ExpenseDueDateValueObject, DomainError } from "@/layers/domain";
+import {
+    ExpenseNameValueObject,
+    ExpenseValueValueObject,
+    ExpenseDueDateValueObject,
+    DomainError,
+} from "@/layers/domain";
 
 export type ExpenseProps = {
     userId: string;
@@ -7,22 +12,21 @@ export type ExpenseProps = {
     expenseValue: number;
     dueDate: Date;
     paid: boolean;
-	updatedAt?: Date;
-}
+    updatedAt?: Date;
+};
 
 export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
-
     constructor(props: ExpenseProps, id?: string, createdAt?: Date) {
-		super(props, id, createdAt);
+        super(props, id, createdAt);
 
-		const valueObjects = {
-			expenseName: ExpenseNameValueObject.create(props.expenseName),
-			expenseValue: ExpenseValueValueObject.create(props.expenseValue),
-			dueDate: ExpenseDueDateValueObject.create(props.dueDate),
-		};
-        
-		this.validate(valueObjects);
-	}
+        const valueObjects = {
+            expenseName: ExpenseNameValueObject.create(props.expenseName),
+            expenseValue: ExpenseValueValueObject.create(props.expenseValue),
+            dueDate: ExpenseDueDateValueObject.create(props.dueDate),
+        };
+
+        this.validate(valueObjects);
+    }
 
     get userId(): string {
         return this.props.userId;
@@ -34,7 +38,7 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
 
     set expenseName(expenseName: string) {
         const result = ExpenseNameValueObject.create(expenseName);
-		if (result instanceof Error) throw result;
+        if (result instanceof Error) throw result;
         this.props.expenseName = result.value;
         this.props.updatedAt = new Date();
     }
@@ -45,7 +49,7 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
 
     set expenseValue(expenseValue: number) {
         const result = ExpenseValueValueObject.create(expenseValue);
-		if (result instanceof Error) throw result;
+        if (result instanceof Error) throw result;
         this.props.expenseValue = result.value;
         this.props.updatedAt = new Date();
     }
@@ -56,7 +60,7 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
 
     set dueDate(dueDate: Date) {
         const result = ExpenseDueDateValueObject.create(dueDate);
-		if (result instanceof Error) throw result;
+        if (result instanceof Error) throw result;
         this.props.dueDate = result.value;
         this.props.updatedAt = new Date();
     }
@@ -66,7 +70,10 @@ export class ExpenseEntity extends AbstractEntity<ExpenseProps> {
     }
 
     set paid(paid: boolean) {
-		if(this.props.paid === paid) throw new DomainError(`A despesa já está ${paid ? "paga" : "como não paga"}`);
+        if (this.props.paid === paid)
+            throw new DomainError(
+                `A despesa já está ${paid ? "paga" : "como não paga"}`,
+            );
         this.props.paid = paid;
         this.props.updatedAt = new Date();
     }

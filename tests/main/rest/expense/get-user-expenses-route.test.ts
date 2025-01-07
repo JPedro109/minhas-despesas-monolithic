@@ -5,11 +5,12 @@ import { loginRest, setup } from "../../__mocks__";
 import request from "supertest";
 
 describe("/api/expenses - GET", () => {
-
     setup();
 
     test("Should return a list of expenses successfully", async () => {
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .get("/api/expenses")

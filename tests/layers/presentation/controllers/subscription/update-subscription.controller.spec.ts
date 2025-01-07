@@ -3,27 +3,27 @@ import { UpdateSubscriptionController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: UpdateSubscriptionController,
-    mockUpdateSubscriptionUseCase: jest.Mocked<IUpdateSubscriptionUseCase>
+    sut: UpdateSubscriptionController;
+    mockUpdateSubscriptionUseCase: jest.Mocked<IUpdateSubscriptionUseCase>;
 } => {
-    const mockUpdateSubscriptionUseCase: jest.Mocked<IUpdateSubscriptionUseCase> = {
-        execute: jest.fn()
-    };
+    const mockUpdateSubscriptionUseCase: jest.Mocked<IUpdateSubscriptionUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new UpdateSubscriptionController(
-        mockUpdateSubscriptionUseCase, 
-        logStub
+        mockUpdateSubscriptionUseCase,
+        logStub,
     );
 
     return {
         sut,
-        mockUpdateSubscriptionUseCase
+        mockUpdateSubscriptionUseCase,
     };
 };
 
 describe("Controller - UpdateSubscriptionController", () => {
-
     test("Should not update subscription because schema is invalid", async () => {
         const { sut } = makeSut();
         const userId = "";
@@ -31,9 +31,9 @@ describe("Controller - UpdateSubscriptionController", () => {
 
         const result = await sut.http({
             data: {
-                newPlanId
+                newPlanId,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(400);
@@ -46,9 +46,9 @@ describe("Controller - UpdateSubscriptionController", () => {
 
         const result = await sut.http({
             data: {
-                newPlanId
+                newPlanId,
             },
-            userId
+            userId,
         });
 
         expect(result.statusCode).toBe(204);

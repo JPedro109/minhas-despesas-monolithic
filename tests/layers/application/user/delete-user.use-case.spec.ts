@@ -1,36 +1,43 @@
-import { DeleteUserUseCase, InvalidParamError, NotFoundError } from "@/layers/application";
-import { 
+import {
+    DeleteUserUseCase,
+    InvalidParamError,
+    NotFoundError,
+} from "@/layers/application";
+import {
     UserRepositoryStub,
     PaymentStub,
     CryptographyStub,
     unitOfWorkRepositoryStubFactory,
     cryptographyStubFactory,
-    paymentStubFactory
+    paymentStubFactory,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: DeleteUserUseCase,
-    userRepositoryStub: UserRepositoryStub,
-    cryptographyStub: CryptographyStub,
-    paymentStub: PaymentStub,
-    userRepository: UserRepositoryStub
+    sut: DeleteUserUseCase;
+    userRepositoryStub: UserRepositoryStub;
+    cryptographyStub: CryptographyStub;
+    paymentStub: PaymentStub;
+    userRepository: UserRepositoryStub;
 } => {
     const paymentStub = paymentStubFactory();
     const cryptographyStub = cryptographyStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new DeleteUserUseCase(unitOfWorkRepositoryStub, cryptographyStub, paymentStub);
+    const sut = new DeleteUserUseCase(
+        unitOfWorkRepositoryStub,
+        cryptographyStub,
+        paymentStub,
+    );
 
     return {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
         cryptographyStub,
         paymentStub,
-        userRepository: unitOfWorkRepositoryStub.getUserRepository()
+        userRepository: unitOfWorkRepositoryStub.getUserRepository(),
     };
 };
 
 describe("Use case - DeleteUserUseCase", () => {
-
     test("Should not delete user because passwords do not match", async () => {
         const { sut } = makeSut();
         const id = "1";
@@ -40,7 +47,7 @@ describe("Use case - DeleteUserUseCase", () => {
         const result = sut.execute({
             id,
             password,
-            passwordConfirm
+            passwordConfirm,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -51,12 +58,14 @@ describe("Use case - DeleteUserUseCase", () => {
         const id = "2";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
-        jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(Promise.resolve(null));
+        jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(
+            Promise.resolve(null),
+        );
 
         const result = sut.execute({
             id,
             password,
-            passwordConfirm
+            passwordConfirm,
         });
 
         await expect(result).rejects.toThrow(NotFoundError);
@@ -67,12 +76,14 @@ describe("Use case - DeleteUserUseCase", () => {
         const id = "1";
         const password = "InvalidPassword";
         const passwordConfirm = "InvalidPassword";
-        jest.spyOn(cryptographyStub, "compareHash").mockReturnValueOnce(Promise.resolve(false));
+        jest.spyOn(cryptographyStub, "compareHash").mockReturnValueOnce(
+            Promise.resolve(false),
+        );
 
         const result = sut.execute({
             id,
             password,
-            passwordConfirm
+            passwordConfirm,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -83,13 +94,16 @@ describe("Use case - DeleteUserUseCase", () => {
         const id = "1";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
-        const updateCustomerEmailByCustomerIdSpy = jest.spyOn(paymentStub, "updateCustomerEmailByCustomerId");
+        const updateCustomerEmailByCustomerIdSpy = jest.spyOn(
+            paymentStub,
+            "updateCustomerEmailByCustomerId",
+        );
         const deleteUserByIdSpy = jest.spyOn(userRepository, "deleteUserById");
 
         await sut.execute({
             id,
             password,
-            passwordConfirm
+            passwordConfirm,
         });
 
         expect(updateCustomerEmailByCustomerIdSpy).toHaveBeenCalled();

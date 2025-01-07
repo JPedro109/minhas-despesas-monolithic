@@ -3,35 +3,31 @@ import { PayExpenseController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: PayExpenseController,
-    mockPayExpenseUseCase: jest.Mocked<IPayExpenseUseCase>
+    sut: PayExpenseController;
+    mockPayExpenseUseCase: jest.Mocked<IPayExpenseUseCase>;
 } => {
     const mockPayExpenseUseCase: jest.Mocked<IPayExpenseUseCase> = {
-        execute: jest.fn()
+        execute: jest.fn(),
     };
     const logStub = logStubFactory();
 
-    const sut = new PayExpenseController(
-        mockPayExpenseUseCase,
-        logStub
-    );
+    const sut = new PayExpenseController(mockPayExpenseUseCase, logStub);
 
     return {
         sut,
-        mockPayExpenseUseCase
+        mockPayExpenseUseCase,
     };
 };
 
 describe("Controller - PayExpenseController", () => {
-
     test("Should not pay expense because schema is invalid", async () => {
         const { sut } = makeSut();
         const id = "";
-        
+
         const result = await sut.http({
             data: {
-                id
-            }
+                id,
+            },
         });
 
         expect(result.statusCode).toBe(400);
@@ -43,8 +39,8 @@ describe("Controller - PayExpenseController", () => {
 
         const result = await sut.http({
             data: {
-                id
-            }
+                id,
+            },
         });
 
         expect(result.statusCode).toBe(204);

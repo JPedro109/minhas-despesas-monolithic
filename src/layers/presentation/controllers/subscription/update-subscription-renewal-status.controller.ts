@@ -1,34 +1,37 @@
-import { IUpdateSubscriptionRenewalStatusUseCase, ILog } from "@/layers/application";
-import { AbstractController, HttpResponse, HttpHelper, HttpRequest } from "@/layers/presentation";
+import {
+    IUpdateSubscriptionRenewalStatusUseCase,
+    ILog,
+} from "@/layers/application";
+import {
+    AbstractController,
+    HttpResponse,
+    HttpHelper,
+    HttpRequest,
+} from "@/layers/presentation";
 
 export class UpdateSubscriptionRenewalStatusController extends AbstractController {
-
     constructor(
         private readonly useCase: IUpdateSubscriptionRenewalStatusUseCase,
-        protected readonly log: ILog
-    ) { 
-        super(
-            log,
-            "UpdateSubscriptionRenewalStatus",
-            {
-                userId: {
-                    type: "string",
-                    optional: false
-                },
-                renewable: {
-                    type: "boolean",
-                    optional: false
-                }
-            }
-        );
+        protected readonly log: ILog,
+    ) {
+        super(log, "UpdateSubscriptionRenewalStatus", {
+            userId: {
+                type: "string",
+                optional: false,
+            },
+            renewable: {
+                type: "boolean",
+                optional: false,
+            },
+        });
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
         const { renewable } = request.data;
-        
-        const body = { 
+
+        const body = {
             userId: request.userId,
-            renewable
+            renewable,
         };
 
         this.validateRequestSchema(body);

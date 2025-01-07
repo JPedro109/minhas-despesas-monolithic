@@ -9,7 +9,6 @@ const makeBody = (refreshToken: unknown): object => {
 };
 
 describe("/api/users/refresh-token - POST", () => {
-
     setup();
 
     test("Should not refresh token because refreshToken is missing", async () => {

@@ -9,14 +9,15 @@ const makeBody = (deleteExpensePaymentHistory: unknown): object => {
 };
 
 describe("/api/expenses/:id - DELETE", () => {
-
     setup();
 
     const makeUrl = (id: string): string => `/api/expenses/${id}`;
 
     test("Should not delete expense because field is invalid", async () => {
         const body = makeBody(undefined);
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .delete(makeUrl("00000000-0000-0000-0000-000000000000"))
@@ -30,7 +31,9 @@ describe("/api/expenses/:id - DELETE", () => {
 
     test("Should not delete expense because the expense does not exist", async () => {
         const body = makeBody(true);
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .delete(makeUrl("ffffffff-ffff-ffff-ffff-ffffffffffff"))
@@ -44,7 +47,9 @@ describe("/api/expenses/:id - DELETE", () => {
 
     test("Should delete the expense and its payment history successfully", async () => {
         const body = makeBody(true);
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .delete(makeUrl("00000000-0000-0000-0000-000000000000"))
@@ -57,7 +62,9 @@ describe("/api/expenses/:id - DELETE", () => {
 
     test("Should delete the expense without its payment history when flag is false", async () => {
         const body = makeBody(false);
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .delete(makeUrl("00000000-0000-0000-0000-000000000000"))

@@ -1,24 +1,40 @@
-import { ForbiddenError, IGetUserSubscriptionUseCase, UnauthorizedError } from "@/layers/application";
-import { HttpRequest, HttpResponse, HttpHelper, AbstractMiddleware } from "@/layers/presentation";
+import {
+    ForbiddenError,
+    IGetUserSubscriptionUseCase,
+    UnauthorizedError,
+} from "@/layers/application";
+import {
+    HttpRequest,
+    HttpResponse,
+    HttpHelper,
+    AbstractMiddleware,
+} from "@/layers/presentation";
 
 export class AuthorizationUserActionMiddleware extends AbstractMiddleware {
+    constructor(
+        private readonly getUserSubscriptionUseCase: IGetUserSubscriptionUseCase,
+        private readonly action: string,
+    ) {
+        super();
+    }
 
-        constructor(
-                private readonly getUserSubscriptionUseCase: IGetUserSubscriptionUseCase,
-                private readonly action: string
-        ) {
-                super();
-        }
+    async handler(request: HttpRequest): Promise<HttpResponse> {
+        if (!request.userId)
+            throw new UnauthorizedError("Você não está autenticado");
 
-        async handler(request: HttpRequest): Promise<HttpResponse> {
-                if (!request.userId) throw new UnauthorizedError("Você não está autenticado");
+        const subscription = await this.getUserSubscriptionUseCase.execute({
+            userId: request.userId,
+        });
 
-                const subscription = await this.getUserSubscriptionUseCase.execute({ userId: request.userId });
+        const actionRequired = subscription.plan.actions.find(
+            (x) => x.name === this.action,
+        );
 
-                const actionRequired = subscription.plan.actions.find(x => x.name === this.action);
+        if (!actionRequired)
+            throw new ForbiddenError(
+                "Você não contém o plano necessário para executar a ação",
+            );
 
-                if (!actionRequired) throw new ForbiddenError("Você não contém o plano necessário para executar a ação");
-
-                return HttpHelper.noBody();
-        }
+        return HttpHelper.noBody();
+    }
 }

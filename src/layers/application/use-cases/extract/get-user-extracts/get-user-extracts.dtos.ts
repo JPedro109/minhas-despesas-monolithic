@@ -1,6 +1,6 @@
 export type GetUserExtractsDTO = {
     userId: string;
-}
+};
 
 export type GetUserExtractsResponseDTO = {
     extractId: string;
@@ -8,4 +8,4 @@ export type GetUserExtractsResponseDTO = {
     userId: string;
     expiryDate: Date;
     urlExpiryDate: Date;
-}
+};

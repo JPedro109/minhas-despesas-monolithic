@@ -5,7 +5,6 @@ import { setup } from "../../__mocks__";
 import request from "supertest";
 
 describe("/api/subscriptions/charge-expired - POST", () => {
-
     setup();
 
     test("Should execute charge to expired subscriptions successfully", async () => {

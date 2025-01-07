@@ -9,7 +9,6 @@ const makeBody = (code: unknown): object => {
 };
 
 describe("/api/users/verify-email - PATCH", () => {
-
     setup();
 
     test("Should not verify email because the code is invalid", async () => {

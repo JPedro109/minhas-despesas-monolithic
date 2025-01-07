@@ -1,29 +1,41 @@
 import { DomainError } from "@/layers/domain";
-import { ILog, ConflictedError, ForbiddenError, NotFoundError, UnauthorizedError, InvalidParamError } from "@/layers/application";
-import { HttpHelper, HttpRequest, HttpResponse, IHttp, InvalidRequestSchemaError } from "@/layers/presentation";
+import {
+    ILog,
+    ConflictedError,
+    ForbiddenError,
+    NotFoundError,
+    UnauthorizedError,
+    InvalidParamError,
+} from "@/layers/application";
+import {
+    HttpHelper,
+    HttpRequest,
+    HttpResponse,
+    IHttp,
+    InvalidRequestSchemaError,
+} from "@/layers/presentation";
 import { z } from "zod";
 
 type RequestSchema = {
     [field: string]: {
-        type: "string" | "number" | "boolean" | "date" | RequestSchema,
-        optional: boolean
-    }
-}
+        type: "string" | "number" | "boolean" | "date" | RequestSchema;
+        optional: boolean;
+    };
+};
 
 export abstract class AbstractController implements IHttp {
-
     constructor(
         protected readonly log: ILog,
         protected readonly event: string,
-        protected readonly schema?: RequestSchema
-    ) { }
+        protected readonly schema?: RequestSchema,
+    ) {}
 
     public async http(request: HttpRequest): Promise<HttpResponse> {
         try {
             const { statusCode, response } = await this.handler(request);
 
             this.log.info(
-                `${request.path} ${request.method} ${statusCode} ${this.event} | Operation completed successfully`
+                `${request.path} ${request.method} ${statusCode} ${this.event} | Operation completed successfully`,
             );
 
             return { statusCode, response };
@@ -31,9 +43,14 @@ export abstract class AbstractController implements IHttp {
             const { statusCode, response } = this.setErrorStatusCode(e);
 
             if (statusCode !== 500) {
-                this.log.warning(`${request.path} ${request.method} ${statusCode} ${this.event} | ${e.message}`);
+                this.log.warning(
+                    `${request.path} ${request.method} ${statusCode} ${this.event} | ${e.message}`,
+                );
             } else {
-                this.log.error(`${request.path} ${request.method} ${statusCode} ${this.event}`, e);
+                this.log.error(
+                    `${request.path} ${request.method} ${statusCode} ${this.event}`,
+                    e,
+                );
             }
 
             return { statusCode, response };
@@ -54,26 +71,40 @@ export abstract class AbstractController implements IHttp {
             date: z
                 .string()
                 .refine((value) => !isNaN(Date.parse(value)), {
-                    message: "The date must be in a valid format (ISO 8601)"
+                    message: "The date must be in a valid format (ISO 8601)",
                 })
-                .transform((value) => new Date(value))
+                .transform((value) => new Date(value)),
         };
 
         for (const field in schema) {
             const props = schema[field];
 
-            if (props.type != "string" && props.type != "number" && props.type != "boolean" && props.type != "date") {
-                zodObject[field] =
-                    props.optional ?
-                        (this.mountZodObjet(props.type as unknown as RequestSchema, {}) as z.ZodAny).optional() :
-                        this.mountZodObjet(props.type as unknown as RequestSchema, {});
+            if (
+                props.type != "string" &&
+                props.type != "number" &&
+                props.type != "boolean" &&
+                props.type != "date"
+            ) {
+                zodObject[field] = props.optional
+                    ? (
+                          this.mountZodObjet(
+                              props.type as unknown as RequestSchema,
+                              {},
+                          ) as z.ZodAny
+                      ).optional()
+                    : this.mountZodObjet(
+                          props.type as unknown as RequestSchema,
+                          {},
+                      );
             } else {
-                zodObject[field] = props.optional ? typesDict[props.type].optional() : typesDict[props.type];
+                zodObject[field] = props.optional
+                    ? typesDict[props.type].optional()
+                    : typesDict[props.type];
             }
         }
 
         return z.object(zodObject as z.ZodRawShape);
-    };
+    }
 
     private setErrorStatusCode(e: Error): HttpResponse {
         if (e instanceof DomainError) return HttpHelper.unprocessableEntity(e);
@@ -82,7 +113,10 @@ export abstract class AbstractController implements IHttp {
         if (e instanceof ForbiddenError) return HttpHelper.forbidden(e);
         if (e instanceof ConflictedError) return HttpHelper.conflicted(e);
         if (e instanceof InvalidParamError) return HttpHelper.badRequest(e);
-        if (e instanceof z.ZodError) return HttpHelper.badRequest(new InvalidRequestSchemaError(e.message));
+        if (e instanceof z.ZodError)
+            return HttpHelper.badRequest(
+                new InvalidRequestSchemaError(e.message),
+            );
         return HttpHelper.serverError();
     }
 }

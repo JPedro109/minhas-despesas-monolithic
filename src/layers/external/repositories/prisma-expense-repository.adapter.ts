@@ -1,6 +1,10 @@
 import { IExpenseRepository } from "@/layers/application";
 import { ExpenseEntity } from "@/layers/domain";
-import { DatabaseSQLHelper, PrismaClientType, PrismaMapperHelper } from "@/layers/external";
+import {
+    DatabaseSQLHelper,
+    PrismaClientType,
+    PrismaMapperHelper,
+} from "@/layers/external";
 
 export class PrismaExpenseRepositoryAdapter implements IExpenseRepository {
     private context: PrismaClientType;
@@ -23,27 +27,35 @@ export class PrismaExpenseRepositoryAdapter implements IExpenseRepository {
                 dueDate: expenseEntity.dueDate,
                 paid: expenseEntity.paid,
                 createdAt: expenseEntity.createdAt,
-                updatedAt: expenseEntity.updatedAt
-            }
+                updatedAt: expenseEntity.updatedAt,
+            },
         });
         return PrismaMapperHelper.toExpenseEntity(expenseCreated);
     }
 
     async getExpenseById(id: string): Promise<ExpenseEntity | null> {
-        const expense = await this.context.prismaExpense.findUnique({ where: { id } });
+        const expense = await this.context.prismaExpense.findUnique({
+            where: { id },
+        });
         return expense ? PrismaMapperHelper.toExpenseEntity(expense) : null;
     }
 
     async getExpensesByUserId(userId: string): Promise<ExpenseEntity[]> {
-        const expenses = await this.context.prismaExpense.findMany({ where: { userId } });
-        return expenses.map((expense) => PrismaMapperHelper.toExpenseEntity(expense));
+        const expenses = await this.context.prismaExpense.findMany({
+            where: { userId },
+        });
+        return expenses.map((expense) =>
+            PrismaMapperHelper.toExpenseEntity(expense),
+        );
     }
 
     async getExpensesByDueDate(dueDate: Date): Promise<ExpenseEntity[]> {
         const expenses = await this.context.prismaExpense.findMany({
             where: { dueDate },
         });
-        return expenses.map((expense) => PrismaMapperHelper.toExpenseEntity(expense));
+        return expenses.map((expense) =>
+            PrismaMapperHelper.toExpenseEntity(expense),
+        );
     }
 
     async updateExpenseById(id: string, data: ExpenseEntity): Promise<void> {
@@ -60,7 +72,7 @@ export class PrismaExpenseRepositoryAdapter implements IExpenseRepository {
     }
 
     async updatePaidExpensesToUnpaidAndSumOneInDueMonthByDueMonth(
-        month: number
+        month: number,
     ): Promise<void> {
         await this.context.$queryRaw`
             UPDATE expenses

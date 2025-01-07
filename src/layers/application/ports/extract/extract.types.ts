@@ -7,5 +7,5 @@ export type ExpenseExtractProps = {
         expenseValue: number;
         dueDate: Date;
         paidDate: Date;
-    }[]
-}
+    }[];
+};

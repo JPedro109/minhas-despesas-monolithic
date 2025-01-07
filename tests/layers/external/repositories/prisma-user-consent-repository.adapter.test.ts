@@ -26,12 +26,14 @@ describe("External - PrismaUserConsentRepositoryAdapter", () => {
 
     describe("createUserConsent", () => {
         test("Should create a new user consent", async () => {
-            const sut = new PrismaUserConsentRepositoryAdapter(databaseSQLHelper);
+            const sut = new PrismaUserConsentRepositoryAdapter(
+                databaseSQLHelper,
+            );
             const userConsent = new UserConsentEntity({
                 userId: "00000000-0000-0000-0000-000000000000",
                 consentVersion: "v1.0",
                 ipAddress: "127.0.0.1",
-                userAgent: "Mozilla/5.0"
+                userAgent: "Mozilla/5.0",
             });
 
             const result = await sut.createUserConsent(userConsent);

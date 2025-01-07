@@ -1,6 +1,10 @@
 import { CustomerEntity } from "@/layers/domain";
 import { ICustomerRepository } from "@/layers/application";
-import { DatabaseSQLHelper, PrismaClientType, PrismaMapperHelper } from "@/layers/external";
+import {
+    DatabaseSQLHelper,
+    PrismaClientType,
+    PrismaMapperHelper,
+} from "@/layers/external";
 
 export class PrismaCustomerRepositoryAdapter implements ICustomerRepository {
     private context: PrismaClientType;
@@ -19,8 +23,8 @@ export class PrismaCustomerRepositoryAdapter implements ICustomerRepository {
                 id: customer.id,
                 userId: customer.userId,
                 customerId: customer.customerId,
-                createdAt: customer.createdAt
-            }
+                createdAt: customer.createdAt,
+            },
         });
 
         return PrismaMapperHelper.toCustomerEntity(customerCreated);
@@ -29,8 +33,8 @@ export class PrismaCustomerRepositoryAdapter implements ICustomerRepository {
     async getCustomerByUserId(userId: string): Promise<CustomerEntity | null> {
         const customer = await this.context.prismaCustomer.findUnique({
             where: {
-                userId
-            }
+                userId,
+            },
         });
 
         if (!customer) return null;
@@ -42,11 +46,13 @@ export class PrismaCustomerRepositoryAdapter implements ICustomerRepository {
         const prismaCustomers = await this.context.prismaCustomer.findMany({
             where: {
                 userId: {
-                    in: userIds
-                }
-            }
+                    in: userIds,
+                },
+            },
         });
 
-        return prismaCustomers.map(prismaCustomer => PrismaMapperHelper.toCustomerEntity(prismaCustomer));
+        return prismaCustomers.map((prismaCustomer) =>
+            PrismaMapperHelper.toCustomerEntity(prismaCustomer),
+        );
     }
 }

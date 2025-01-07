@@ -3,27 +3,26 @@ import { UserLoginController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: UserLoginController,
-    mockUserLoginUseCase: jest.Mocked<IUserLoginUseCase>
+    sut: UserLoginController;
+    mockUserLoginUseCase: jest.Mocked<IUserLoginUseCase>;
 } => {
     const mockUserLoginUseCase: jest.Mocked<IUserLoginUseCase> = {
-        execute: jest.fn().mockResolvedValue({ accessToken: "token", refreshToken: "refresh-token" })
+        execute: jest.fn().mockResolvedValue({
+            accessToken: "token",
+            refreshToken: "refresh-token",
+        }),
     };
     const logStub = logStubFactory();
 
-    const sut = new UserLoginController(
-        mockUserLoginUseCase,
-        logStub
-    );
+    const sut = new UserLoginController(mockUserLoginUseCase, logStub);
 
     return {
         sut,
-        mockUserLoginUseCase
+        mockUserLoginUseCase,
     };
 };
 
 describe("Controller - UserLoginController", () => {
-
     test("Should not user login because schema is invalid", async () => {
         const { sut } = makeSut();
         const email = "";
@@ -32,8 +31,8 @@ describe("Controller - UserLoginController", () => {
         const result = await sut.http({
             data: {
                 email,
-                password
-            }
+                password,
+            },
         });
 
         expect(result.statusCode).toBe(400);
@@ -47,8 +46,8 @@ describe("Controller - UserLoginController", () => {
         const result = await sut.http({
             data: {
                 email,
-                password
-            }
+                password,
+            },
         });
 
         expect(result.statusCode).toBe(200);

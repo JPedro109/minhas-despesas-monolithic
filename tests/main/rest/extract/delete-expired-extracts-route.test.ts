@@ -5,7 +5,6 @@ import { setup } from "../../__mocks__";
 import request from "supertest";
 
 describe("/api/extracts/expired - DELETE", () => {
-
     setup();
 
     test("Should delete expired extracts successfully", async () => {

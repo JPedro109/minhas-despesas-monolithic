@@ -1,22 +1,19 @@
-import {
-    NotFoundError,
-    UpdateUsernameUseCase
-} from "@/layers/application";
+import { NotFoundError, UpdateUsernameUseCase } from "@/layers/application";
 import {
     UserRepositoryStub,
-    unitOfWorkRepositoryStubFactory
+    unitOfWorkRepositoryStubFactory,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: UpdateUsernameUseCase,
-    userRepositoryStub: UserRepositoryStub
+    sut: UpdateUsernameUseCase;
+    userRepositoryStub: UserRepositoryStub;
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const sut = new UpdateUsernameUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,
-        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository()
+        userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
     };
 };
 
@@ -29,7 +26,7 @@ describe("Use case - UpdateUsernameUseCase", () => {
 
         const result = sut.execute({
             id,
-            username
+            username,
         });
 
         await expect(result).rejects.toThrow(NotFoundError);
@@ -39,11 +36,14 @@ describe("Use case - UpdateUsernameUseCase", () => {
         const { sut, userRepositoryStub } = makeSut();
         const id = "1";
         const username = "new-username";
-        const updateUserByIdSpy = jest.spyOn(userRepositoryStub, "updateUserById");
+        const updateUserByIdSpy = jest.spyOn(
+            userRepositoryStub,
+            "updateUserById",
+        );
 
         await sut.execute({
             id,
-            username
+            username,
         });
 
         expect(updateUserByIdSpy).toHaveBeenCalled();

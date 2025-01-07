@@ -3,35 +3,34 @@ import { RefreshUserTokenController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: RefreshUserTokenController,
-    mockRefreshUserTokenUseCase: jest.Mocked<IRefreshUserTokenUseCase>
+    sut: RefreshUserTokenController;
+    mockRefreshUserTokenUseCase: jest.Mocked<IRefreshUserTokenUseCase>;
 } => {
     const mockRefreshUserTokenUseCase: jest.Mocked<IRefreshUserTokenUseCase> = {
-        execute: jest.fn().mockResolvedValue("token")
+        execute: jest.fn().mockResolvedValue("token"),
     };
     const logStub = logStubFactory();
 
     const sut = new RefreshUserTokenController(
-        mockRefreshUserTokenUseCase, 
-        logStub
+        mockRefreshUserTokenUseCase,
+        logStub,
     );
 
     return {
         sut,
-        mockRefreshUserTokenUseCase
+        mockRefreshUserTokenUseCase,
     };
 };
 
 describe("Controller - RefreshUserTokenController", () => {
-
     test("Should not refresh user token because schema is invalid", async () => {
         const { sut } = makeSut();
         const refreshToken = "";
 
         const result = await sut.http({
             data: {
-                refreshToken
-            }
+                refreshToken,
+            },
         });
 
         expect(result.statusCode).toBe(400);
@@ -43,8 +42,8 @@ describe("Controller - RefreshUserTokenController", () => {
 
         const result = await sut.http({
             data: {
-                refreshToken
-            }
+                refreshToken,
+            },
         });
 
         expect(result.statusCode).toBe(200);

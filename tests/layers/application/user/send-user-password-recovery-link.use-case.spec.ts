@@ -8,14 +8,14 @@ import {
     NotificationStub,
     unitOfWorkRepositoryStubFactory,
     generationStubFactory,
-    notificationStubFactory
+    notificationStubFactory,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: SendUserPasswordRecoveryLinkUseCase,
-    userRepositoryStub: UserRepositoryStub,
-    userVerificationCodeStub: UserVerificationCodeRepositoryStub,
-    mailStub: NotificationStub
+    sut: SendUserPasswordRecoveryLinkUseCase;
+    userRepositoryStub: UserRepositoryStub;
+    userVerificationCodeStub: UserVerificationCodeRepositoryStub;
+    mailStub: NotificationStub;
 } => {
     const generationStub = generationStubFactory();
     const mailStub = notificationStubFactory();
@@ -23,14 +23,15 @@ const makeSut = (): {
     const sut = new SendUserPasswordRecoveryLinkUseCase(
         unitOfWorkRepositoryStub,
         mailStub,
-        generationStub
+        generationStub,
     );
 
     return {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        userVerificationCodeStub: unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
-        mailStub
+        userVerificationCodeStub:
+            unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
+        mailStub,
     };
 };
 
@@ -38,10 +39,12 @@ describe("Use case - SendUserPasswordRecoveryLinkUseCase", () => {
     test("Should not send password recovery link because email is not registered", async () => {
         const { sut, userRepositoryStub } = makeSut();
         const email = "nonexistentemail@test.com";
-        jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(null);
+        jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(
+            null,
+        );
 
         const result = sut.execute({
-            email
+            email,
         });
 
         await expect(result).rejects.toThrow(NotFoundError);
@@ -50,11 +53,14 @@ describe("Use case - SendUserPasswordRecoveryLinkUseCase", () => {
     test("Should send password recovery link successfully", async () => {
         const { sut, userVerificationCodeStub, mailStub } = makeSut();
         const email = "email@teste.com";
-        const createUserVerificationCodeSpy = jest.spyOn(userVerificationCodeStub, "createUserVerificationCode");
+        const createUserVerificationCodeSpy = jest.spyOn(
+            userVerificationCodeStub,
+            "createUserVerificationCode",
+        );
         const sendMailSpy = jest.spyOn(mailStub, "sendMail");
 
         await sut.execute({
-            email
+            email,
         });
 
         expect(createUserVerificationCodeSpy).toHaveBeenCalled();

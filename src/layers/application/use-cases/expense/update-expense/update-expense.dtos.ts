@@ -3,4 +3,4 @@ export type UpdateExpenseDTO = {
     expenseName: string;
     expenseValue: number;
     dueDate: Date;
-}
+};

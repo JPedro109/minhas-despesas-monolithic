@@ -1,4 +1,4 @@
 export type UpdateSubscriptionDTO = {
     userId: string;
-    newPlanId: string; 
-}
+    newPlanId: string;
+};

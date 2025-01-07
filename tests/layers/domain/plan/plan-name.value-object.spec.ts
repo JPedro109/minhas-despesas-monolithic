@@ -1,29 +1,34 @@
-import { PlanNameValueObject, PlanNameEnum, InvalidPlanNameError } from "@/layers/domain";
+import {
+    PlanNameValueObject,
+    PlanNameEnum,
+    InvalidPlanNameError,
+} from "@/layers/domain";
 
-describe(("Value Object - PlanNameValueObject"), () => {
-    
-	test("Should not create PlanNameValueObject, because plan name is empty" , () => {
-		const invalidPlanName = "" as PlanNameEnum;
+describe("Value Object - PlanNameValueObject", () => {
+    test("Should not create PlanNameValueObject, because plan name is empty", () => {
+        const invalidPlanName = "" as PlanNameEnum;
 
-		const sut = PlanNameValueObject.create(invalidPlanName);
+        const sut = PlanNameValueObject.create(invalidPlanName);
 
-		expect(sut).toBeInstanceOf(InvalidPlanNameError);
-	});
+        expect(sut).toBeInstanceOf(InvalidPlanNameError);
+    });
 
-	test("Should not create PlanNameValueObject, because the plan name has more than 50 characters" , () => {
-		const invalidPlanName = "c".repeat(51) as PlanNameEnum;
+    test("Should not create PlanNameValueObject, because the plan name has more than 50 characters", () => {
+        const invalidPlanName = "c".repeat(51) as PlanNameEnum;
 
-		const sut = PlanNameValueObject.create(invalidPlanName);
+        const sut = PlanNameValueObject.create(invalidPlanName);
 
-		expect(sut).toBeInstanceOf(InvalidPlanNameError);
-	});
+        expect(sut).toBeInstanceOf(InvalidPlanNameError);
+    });
 
-	test("Should create PlanNameValueObject" , () => {
-		const planName = PlanNameEnum.Free;
+    test("Should create PlanNameValueObject", () => {
+        const planName = PlanNameEnum.Free;
 
-		const sut = PlanNameValueObject.create(planName) as unknown as PlanNameValueObject;
+        const sut = PlanNameValueObject.create(
+            planName,
+        ) as unknown as PlanNameValueObject;
 
-		expect(sut).toBeInstanceOf(PlanNameValueObject);
-		expect(sut.value).toBe(planName);
-	});
+        expect(sut).toBeInstanceOf(PlanNameValueObject);
+        expect(sut.value).toBe(planName);
+    });
 });

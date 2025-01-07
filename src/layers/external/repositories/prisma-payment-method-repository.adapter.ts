@@ -1,9 +1,14 @@
 import { PaymentMethodEntity } from "@/layers/domain";
 import { IPaymentMethodRepository } from "@/layers/application";
-import { DatabaseSQLHelper, PrismaClientType, PrismaMapperHelper } from "@/layers/external";
+import {
+    DatabaseSQLHelper,
+    PrismaClientType,
+    PrismaMapperHelper,
+} from "@/layers/external";
 
-export class PrismaPaymentMethodRepositoryAdapter implements IPaymentMethodRepository {
-    
+export class PrismaPaymentMethodRepositoryAdapter
+    implements IPaymentMethodRepository
+{
     private context: PrismaClientType;
 
     constructor(private readonly databaseSQLHelper: DatabaseSQLHelper) {
@@ -14,7 +19,9 @@ export class PrismaPaymentMethodRepositoryAdapter implements IPaymentMethodRepos
         this.context = context as PrismaClientType;
     }
 
-    async createPaymentMethod(paymentMethod: PaymentMethodEntity): Promise<PaymentMethodEntity> {
+    async createPaymentMethod(
+        paymentMethod: PaymentMethodEntity,
+    ): Promise<PaymentMethodEntity> {
         const created = await this.context.prismaPaymentMethod.create({
             data: {
                 id: paymentMethod.id,
@@ -22,57 +29,70 @@ export class PrismaPaymentMethodRepositoryAdapter implements IPaymentMethodRepos
                 name: paymentMethod.name,
                 token: paymentMethod.token,
                 createdAt: paymentMethod.createdAt,
-                updatedAt: paymentMethod.updatedAt
-            }
+                updatedAt: paymentMethod.updatedAt,
+            },
         });
 
         return PrismaMapperHelper.toPaymentMethodEntity(created);
     }
 
-    async getPaymentMethodById(id: string): Promise<PaymentMethodEntity | null> {
-        const paymentMethod = await this.context.prismaPaymentMethod.findUnique({
-            where: { id }
-        });
+    async getPaymentMethodById(
+        id: string,
+    ): Promise<PaymentMethodEntity | null> {
+        const paymentMethod = await this.context.prismaPaymentMethod.findUnique(
+            {
+                where: { id },
+            },
+        );
 
-        if(!paymentMethod) return null;
+        if (!paymentMethod) return null;
 
         return PrismaMapperHelper.toPaymentMethodEntity(paymentMethod);
     }
 
-    async getPaymentMethodByUserId(userId: string): Promise<PaymentMethodEntity | null> {
+    async getPaymentMethodByUserId(
+        userId: string,
+    ): Promise<PaymentMethodEntity | null> {
         const paymentMethod = await this.context.prismaPaymentMethod.findFirst({
-            where: { userId }
+            where: { userId },
         });
 
-        if(!paymentMethod) return null;
+        if (!paymentMethod) return null;
 
         return PrismaMapperHelper.toPaymentMethodEntity(paymentMethod);
     }
 
-    async getPaymentMethodsByUserIds(userIds: string[]): Promise<PaymentMethodEntity[]> {
+    async getPaymentMethodsByUserIds(
+        userIds: string[],
+    ): Promise<PaymentMethodEntity[]> {
         const paymentMethods = await this.context.prismaPaymentMethod.findMany({
             where: {
-                userId: { in: userIds }
-            }
+                userId: { in: userIds },
+            },
         });
 
-        return paymentMethods.map(paymentMethod => PrismaMapperHelper.toPaymentMethodEntity(paymentMethod));
+        return paymentMethods.map((paymentMethod) =>
+            PrismaMapperHelper.toPaymentMethodEntity(paymentMethod),
+        );
     }
 
-    async updatePaymentMethodById(paymentMethodId: string, paymentMethod: PaymentMethodEntity): Promise<void> {
+    async updatePaymentMethodById(
+        paymentMethodId: string,
+        paymentMethod: PaymentMethodEntity,
+    ): Promise<void> {
         await this.context.prismaPaymentMethod.update({
             where: { id: paymentMethodId },
             data: {
                 name: paymentMethod.name,
                 token: paymentMethod.token,
-                updatedAt: paymentMethod.updatedAt
-            }
+                updatedAt: paymentMethod.updatedAt,
+            },
         });
     }
 
     async deletePaymentMethodById(paymentMethodId: string): Promise<void> {
         await this.context.prismaPaymentMethod.delete({
-            where: { id: paymentMethodId }
+            where: { id: paymentMethodId },
         });
     }
 }

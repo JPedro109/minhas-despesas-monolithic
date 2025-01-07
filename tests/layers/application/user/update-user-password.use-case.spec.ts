@@ -1,28 +1,31 @@
 import {
     InvalidParamError,
     NotFoundError,
-    UpdateUserPasswordUseCase
+    UpdateUserPasswordUseCase,
 } from "@/layers/application";
 import {
     UserRepositoryStub,
     CryptographyStub,
     unitOfWorkRepositoryStubFactory,
-    cryptographyStubFactory
+    cryptographyStubFactory,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: UpdateUserPasswordUseCase,
-    userRepositoryStub: UserRepositoryStub,
-    cryptographyStub: CryptographyStub
+    sut: UpdateUserPasswordUseCase;
+    userRepositoryStub: UserRepositoryStub;
+    cryptographyStub: CryptographyStub;
 } => {
     const cryptographyStub = cryptographyStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new UpdateUserPasswordUseCase(unitOfWorkRepositoryStub, cryptographyStub);
+    const sut = new UpdateUserPasswordUseCase(
+        unitOfWorkRepositoryStub,
+        cryptographyStub,
+    );
 
     return {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        cryptographyStub
+        cryptographyStub,
     };
 };
 
@@ -38,7 +41,7 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
             id,
             password,
             newPassword,
-            newPasswordConfirm
+            newPasswordConfirm,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -56,7 +59,7 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
             id,
             password,
             newPassword,
-            newPasswordConfirm
+            newPasswordConfirm,
         });
 
         await expect(result).rejects.toThrow(NotFoundError);
@@ -64,7 +67,9 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
 
     test("Should throw error if password is incorrect", async () => {
         const { sut, cryptographyStub } = makeSut();
-        jest.spyOn(cryptographyStub, "compareHash").mockResolvedValueOnce(false); 
+        jest.spyOn(cryptographyStub, "compareHash").mockResolvedValueOnce(
+            false,
+        );
 
         const id = "1";
         const password = "Password1234";
@@ -75,7 +80,7 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
             id,
             password,
             newPassword,
-            newPasswordConfirm
+            newPasswordConfirm,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -92,7 +97,7 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
             id,
             password,
             newPassword,
-            newPasswordConfirm
+            newPasswordConfirm,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -104,14 +109,17 @@ describe("Use case - UpdateUserPasswordUseCase", () => {
         const password = "Password1234";
         const newPassword = "NewPassword123";
         const newPasswordConfirm = "NewPassword123";
-        jest.spyOn(cryptographyStub, "compareHash").mockResolvedValueOnce(true); 
-        const updateUserByIdSpy = jest.spyOn(userRepositoryStub, "updateUserById");
+        jest.spyOn(cryptographyStub, "compareHash").mockResolvedValueOnce(true);
+        const updateUserByIdSpy = jest.spyOn(
+            userRepositoryStub,
+            "updateUserById",
+        );
 
         await sut.execute({
             id,
             password,
             newPassword,
-            newPasswordConfirm
+            newPasswordConfirm,
         });
 
         expect(updateUserByIdSpy).toHaveBeenCalled();

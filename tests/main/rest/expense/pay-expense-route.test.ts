@@ -5,13 +5,14 @@ import { loginRest, setup } from "../../__mocks__";
 import request from "supertest";
 
 describe("/api/expenses/pay/:id - PATCH", () => {
-
     setup();
 
     const makeUrl = (id: string): string => `/api/expenses/pay/${id}`;
 
     test("Should not pay because the expense does not exist", async () => {
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .patch(makeUrl("ffffffff-ffff-ffff-ffff-ffffffffffff"))
@@ -24,7 +25,9 @@ describe("/api/expenses/pay/:id - PATCH", () => {
     });
 
     test("Should pay", async () => {
-        const token = await loginRest("email-with-plan-gold-and-with-expenses-and-extracts@test.com");
+        const token = await loginRest(
+            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+        );
 
         const response = await request(setupServer())
             .patch(makeUrl("00000000-0000-0000-0000-000000000001"))

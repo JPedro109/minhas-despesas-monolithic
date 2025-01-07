@@ -1,7 +1,6 @@
 import { SQSAdapter } from "@/layers/external";
 
 describe("External - SQSAdapter", () => {
-
     test("Should send message | sendMessage", async () => {
         const queue = "Test";
         const object = { name: "test" };

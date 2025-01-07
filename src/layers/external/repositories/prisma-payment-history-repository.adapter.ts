@@ -1,11 +1,16 @@
 import { PaymentHistoryEntity } from "@/layers/domain";
 import { IPaymentHistoryRepository } from "@/layers/application";
-import { DatabaseSQLHelper, PrismaClientType, PrismaMapperHelper } from "@/layers/external";
+import {
+    DatabaseSQLHelper,
+    PrismaClientType,
+    PrismaMapperHelper,
+} from "@/layers/external";
 
 import { PrismaPaymentHistory } from "@prisma/client";
 
-export class PrismaPaymentHistoryRepositoryAdapter implements IPaymentHistoryRepository {
-
+export class PrismaPaymentHistoryRepositoryAdapter
+    implements IPaymentHistoryRepository
+{
     private context: PrismaClientType;
 
     constructor(private readonly databaseSQLHelper: DatabaseSQLHelper) {
@@ -16,7 +21,9 @@ export class PrismaPaymentHistoryRepositoryAdapter implements IPaymentHistoryRep
         this.context = context as PrismaClientType;
     }
 
-    async createPaymentHistory(paymentHistory: PaymentHistoryEntity): Promise<PaymentHistoryEntity> {
+    async createPaymentHistory(
+        paymentHistory: PaymentHistoryEntity,
+    ): Promise<PaymentHistoryEntity> {
         const created = await this.context.prismaPaymentHistory.create({
             data: {
                 id: paymentHistory.id,
@@ -26,8 +33,8 @@ export class PrismaPaymentHistoryRepositoryAdapter implements IPaymentHistoryRep
                 expenseValue: paymentHistory.expenseValue,
                 dueDate: paymentHistory.dueDate,
                 paymentDate: paymentHistory.paidDate,
-                createdAt: paymentHistory.createdAt
-            }
+                createdAt: paymentHistory.createdAt,
+            },
         });
 
         return PrismaMapperHelper.toPaymentHistoryEntity(created);
@@ -36,37 +43,43 @@ export class PrismaPaymentHistoryRepositoryAdapter implements IPaymentHistoryRep
     async getPaymentHistoriesByUserIdAndDueMonthAndDueYear(
         userId: string,
         paymentMonth: number,
-        paymentYear: number
+        paymentYear: number,
     ): Promise<PaymentHistoryEntity[]> {
-        const histories = await this.context.$queryRaw`
+        const histories = (await this.context.$queryRaw`
                 SELECT * FROM payment_histories
                 WHERE user_id = ${userId}::uuid
                     AND EXTRACT(MONTH FROM due_date) = ${paymentMonth} 
                     AND EXTRACT(YEAR FROM due_date) = ${paymentYear};
-            ` as Record<string, unknown>[];
+            `) as Record<string, unknown>[];
 
-        const historiesFormatted = histories.map(history => {
+        const historiesFormatted = histories.map((history) => {
             const object = {};
-            for(const key in history) {
+            for (const key in history) {
                 const value = history[key];
-                object[key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase())] = value;
+                object[
+                    key.replace(/_([a-z])/g, (_, letter) =>
+                        letter.toUpperCase(),
+                    )
+                ] = value;
             }
             return object;
         }) as unknown as PrismaPaymentHistory[];
 
-        return historiesFormatted.map(history => PrismaMapperHelper.toPaymentHistoryEntity(history));
+        return historiesFormatted.map((history) =>
+            PrismaMapperHelper.toPaymentHistoryEntity(history),
+        );
     }
 
     async deletePaymentHistoriesByExpenseId(expenseId: string): Promise<void> {
         await this.context.prismaPaymentHistory.deleteMany({
-            where: { expenseId }
+            where: { expenseId },
         });
     }
 
     async deletePaymentHistoryByExpenseIdAndDueMonthAndDueYear(
         expenseId: string,
         paymentMonth: number,
-        paymentYear: number
+        paymentYear: number,
     ): Promise<void> {
         await this.context.$queryRaw`
             DELETE FROM payment_histories

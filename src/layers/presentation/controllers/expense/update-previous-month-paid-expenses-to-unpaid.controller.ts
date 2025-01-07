@@ -1,16 +1,19 @@
-import { IUpdatePreviousMonthPaidExpensesToUnpaidUseCase, ILog } from "@/layers/application";
-import { AbstractController, HttpResponse, HttpHelper } from "@/layers/presentation";
+import {
+    IUpdatePreviousMonthPaidExpensesToUnpaidUseCase,
+    ILog,
+} from "@/layers/application";
+import {
+    AbstractController,
+    HttpResponse,
+    HttpHelper,
+} from "@/layers/presentation";
 
 export class UpdatePreviousMonthPaidExpensesToUnpaidController extends AbstractController {
-
     constructor(
         private readonly useCase: IUpdatePreviousMonthPaidExpensesToUnpaidUseCase,
-        protected readonly log: ILog
+        protected readonly log: ILog,
     ) {
-        super(
-            log,
-            "UpdatePreviousMonthPaidExpensesToUnpaid"
-        );
+        super(log, "UpdatePreviousMonthPaidExpensesToUnpaid");
     }
 
     protected async handler(): Promise<HttpResponse> {

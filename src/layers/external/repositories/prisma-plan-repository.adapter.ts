@@ -1,9 +1,12 @@
 import { PlanEntity, PlanNameEnum } from "@/layers/domain";
 import { IPlanRepository } from "@/layers/application";
-import { DatabaseSQLHelper, PrismaClientType, PrismaMapperHelper } from "@/layers/external";
+import {
+    DatabaseSQLHelper,
+    PrismaClientType,
+    PrismaMapperHelper,
+} from "@/layers/external";
 
 export class PrismaPlanRepositoryAdapter implements IPlanRepository {
-
     private context: PrismaClientType;
 
     constructor(private readonly databaseSQLHelper: DatabaseSQLHelper) {
@@ -17,21 +20,23 @@ export class PrismaPlanRepositoryAdapter implements IPlanRepository {
     async getPlans(): Promise<PlanEntity[]> {
         const plans = await this.context.prismaPlan.findMany({
             include: {
-                actions: true
-            }
+                actions: true,
+            },
         });
-        return plans.map(plan => PrismaMapperHelper.toPlanEntity(plan, plan.actions));
+        return plans.map((plan) =>
+            PrismaMapperHelper.toPlanEntity(plan, plan.actions),
+        );
     }
 
     async getPlanByName(planName: PlanNameEnum): Promise<PlanEntity | null> {
         const plan = await this.context.prismaPlan.findFirst({
             where: { name: planName },
             include: {
-                actions: true
-            }
+                actions: true,
+            },
         });
 
-        if(!plan) return null;
+        if (!plan) return null;
 
         return PrismaMapperHelper.toPlanEntity(plan, plan.actions);
     }
@@ -40,11 +45,11 @@ export class PrismaPlanRepositoryAdapter implements IPlanRepository {
         const plan = await this.context.prismaPlan.findUnique({
             where: { id: planId },
             include: {
-                actions: true
-            }
+                actions: true,
+            },
         });
 
-        if(!plan) return null;
+        if (!plan) return null;
 
         return PrismaMapperHelper.toPlanEntity(plan, plan.actions);
     }

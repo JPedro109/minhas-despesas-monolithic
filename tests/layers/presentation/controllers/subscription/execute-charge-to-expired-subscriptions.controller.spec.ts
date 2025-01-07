@@ -3,27 +3,27 @@ import { ExecuteChargeToExpiredSubscriptionsController } from "@/layers/presenta
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: ExecuteChargeToExpiredSubscriptionsController,
-    mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IExecuteChargeToExpiredSubscriptionsUseCase>
+    sut: ExecuteChargeToExpiredSubscriptionsController;
+    mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IExecuteChargeToExpiredSubscriptionsUseCase>;
 } => {
-    const mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IExecuteChargeToExpiredSubscriptionsUseCase> = {
-        execute: jest.fn()
-    };
+    const mockExecuteChargeToExpiredSubscriptionUseCase: jest.Mocked<IExecuteChargeToExpiredSubscriptionsUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new ExecuteChargeToExpiredSubscriptionsController(
-        mockExecuteChargeToExpiredSubscriptionUseCase, 
-        logStub
+        mockExecuteChargeToExpiredSubscriptionUseCase,
+        logStub,
     );
 
     return {
         sut,
-        mockExecuteChargeToExpiredSubscriptionUseCase
+        mockExecuteChargeToExpiredSubscriptionUseCase,
     };
 };
 
 describe("Controller - ExecuteChargeToExpiredSubscriptionController", () => {
-
     test("Should execute charge to expired subscriptions", async () => {
         const { sut } = makeSut();
 

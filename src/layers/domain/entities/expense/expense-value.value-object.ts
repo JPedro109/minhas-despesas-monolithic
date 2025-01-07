@@ -1,13 +1,15 @@
 import { InvalidExpenseValueError } from "./errors/invalid-expense-value.error";
 
 export class ExpenseValueValueObject {
-    private constructor(private readonly expenseValue: number) { }
+    private constructor(private readonly expenseValue: number) {}
 
     public get value(): number {
         return this.expenseValue;
     }
 
-    static create(expenseValue: number): ExpenseValueValueObject | InvalidExpenseValueError {
+    static create(
+        expenseValue: number,
+    ): ExpenseValueValueObject | InvalidExpenseValueError {
         if (!this.validate(expenseValue)) return new InvalidExpenseValueError();
 
         return new ExpenseValueValueObject(expenseValue);

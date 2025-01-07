@@ -1,48 +1,74 @@
-import { 
-    IPayment, 
-    IExecuteChargeToExpiredSubscriptionsUseCase, 
-    IUnitOfWorkRepository, 
-    PaymentCurrencyEnum
+import {
+    IPayment,
+    IExecuteChargeToExpiredSubscriptionsUseCase,
+    IUnitOfWorkRepository,
+    PaymentCurrencyEnum,
 } from "@/layers/application";
 
-export class ExecuteChargeToExpiredSubscriptionsUseCase implements IExecuteChargeToExpiredSubscriptionsUseCase {
-    
+export class ExecuteChargeToExpiredSubscriptionsUseCase
+    implements IExecuteChargeToExpiredSubscriptionsUseCase
+{
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository,
-        private readonly payment: IPayment
-    ) { }
+        private readonly payment: IPayment,
+    ) {}
 
     async execute(): Promise<void> {
-        const subscriptionRepository = this.unitOfWorkRepository.getSubscriptionRepository();
-        const customerRepository = this.unitOfWorkRepository.getCustomerRepository();
-        const paymentMethodRepository = this.unitOfWorkRepository.getPaymentMethodRepository();
+        const subscriptionRepository =
+            this.unitOfWorkRepository.getSubscriptionRepository();
+        const customerRepository =
+            this.unitOfWorkRepository.getCustomerRepository();
+        const paymentMethodRepository =
+            this.unitOfWorkRepository.getPaymentMethodRepository();
 
         const today = new Date();
-        const subscriptionsEndDate = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0);        
-        const subscriptionActives = await subscriptionRepository.getActiveSubscriptionsByEndDate(subscriptionsEndDate, true);
+        const subscriptionsEndDate = new Date(
+            today.getUTCFullYear(),
+            today.getUTCMonth(),
+            today.getUTCDate(),
+            0,
+            0,
+            0,
+        );
+        const subscriptionActives =
+            await subscriptionRepository.getActiveSubscriptionsByEndDate(
+                subscriptionsEndDate,
+                true,
+            );
 
-        if(subscriptionActives.length === 0) return;
+        if (subscriptionActives.length === 0) return;
 
-        const subscriptionsMap = new Map<string, { planName: string, value: number }>();
-        subscriptionActives.map(x => {
-            subscriptionsMap.set(x.userId, { planName: x.plan.name, value: x.amount });
+        const subscriptionsMap = new Map<
+            string,
+            { planName: string; value: number }
+        >();
+        subscriptionActives.map((x) => {
+            subscriptionsMap.set(x.userId, {
+                planName: x.plan.name,
+                value: x.amount,
+            });
         });
 
-        const userIds = Object.keys(
-            Object.fromEntries(subscriptionsMap)
-        );
+        const userIds = Object.keys(Object.fromEntries(subscriptionsMap));
 
-        const paymentMethods = await paymentMethodRepository.getPaymentMethodsByUserIds(userIds);
+        const paymentMethods =
+            await paymentMethodRepository.getPaymentMethodsByUserIds(userIds);
         const paymentMethodsMap = new Map<string, string>();
-        paymentMethods.map(x => paymentMethodsMap.set(x.userId, x.token));
+        paymentMethods.map((x) => paymentMethodsMap.set(x.userId, x.token));
 
-        const customers = await customerRepository.getCustomersByUserIds(userIds);
+        const customers =
+            await customerRepository.getCustomersByUserIds(userIds);
 
         const payments = [];
-        customers.forEach(customer => {
+        customers.forEach((customer) => {
             const subscription = subscriptionsMap.get(customer.userId);
             const paymentMethod = paymentMethodsMap.get(customer.userId);
-            const payment = this.payment.pay(customer.customerId, paymentMethod, subscription.value, PaymentCurrencyEnum.BRL);
+            const payment = this.payment.pay(
+                customer.customerId,
+                paymentMethod,
+                subscription.value,
+                PaymentCurrencyEnum.BRL,
+            );
             payments.push(payment);
         });
 

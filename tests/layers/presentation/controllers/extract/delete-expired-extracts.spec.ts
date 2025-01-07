@@ -3,27 +3,27 @@ import { DeleteExpiredExtractsController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: DeleteExpiredExtractsController,
-    mockDeleteExpiredExtractsUseCase: jest.Mocked<IDeleteExpiredExtractsUseCase>
+    sut: DeleteExpiredExtractsController;
+    mockDeleteExpiredExtractsUseCase: jest.Mocked<IDeleteExpiredExtractsUseCase>;
 } => {
-    const mockDeleteExpiredExtractsUseCase: jest.Mocked<IDeleteExpiredExtractsUseCase> = {
-        execute: jest.fn()
-    };
+    const mockDeleteExpiredExtractsUseCase: jest.Mocked<IDeleteExpiredExtractsUseCase> =
+        {
+            execute: jest.fn(),
+        };
     const logStub = logStubFactory();
 
     const sut = new DeleteExpiredExtractsController(
-        mockDeleteExpiredExtractsUseCase, 
-        logStub
+        mockDeleteExpiredExtractsUseCase,
+        logStub,
     );
 
     return {
         sut,
-        mockDeleteExpiredExtractsUseCase
+        mockDeleteExpiredExtractsUseCase,
     };
 };
 
 describe("Controller - DeleteExpiredExtractsController", () => {
-
     test("Should delete expired extracts", async () => {
         const { sut } = makeSut();
 

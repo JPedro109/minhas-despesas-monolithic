@@ -1,16 +1,19 @@
-import { ISendNotificationOfExpensesThatAreComingDueUseCase, ILog } from "@/layers/application";
-import { AbstractController, HttpResponse, HttpHelper } from "@/layers/presentation";
+import {
+    ISendNotificationOfExpensesThatAreComingDueUseCase,
+    ILog,
+} from "@/layers/application";
+import {
+    AbstractController,
+    HttpResponse,
+    HttpHelper,
+} from "@/layers/presentation";
 
 export class SendNotificationOfExpensesThatAreComingDueController extends AbstractController {
-
     constructor(
         private readonly useCase: ISendNotificationOfExpensesThatAreComingDueUseCase,
-        protected readonly log: ILog
+        protected readonly log: ILog,
     ) {
-        super(
-            log,
-            "SendNotificationOfExpensesThatAreComingDue"
-        );
+        super(log, "SendNotificationOfExpensesThatAreComingDue");
     }
 
     protected async handler(): Promise<HttpResponse> {

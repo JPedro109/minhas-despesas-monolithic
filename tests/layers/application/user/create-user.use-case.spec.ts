@@ -1,5 +1,9 @@
 import { DomainError } from "@/layers/domain";
-import { ConflictedError, InvalidParamError, CreateUserUseCase } from "@/layers/application";
+import {
+    ConflictedError,
+    InvalidParamError,
+    CreateUserUseCase,
+} from "@/layers/application";
 import {
     NotificationStub,
     CustomerRepositoryStub,
@@ -8,32 +12,38 @@ import {
     notificationStubFactory,
     cryptographyStubFactory,
     generationStubFactory,
-    paymentStubFactory
+    paymentStubFactory,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: CreateUserUseCase,
-    userRepositoryStub: UserRepositoryStub,
-    customerRepositoryStub: CustomerRepositoryStub,
-    mailStub: NotificationStub
+    sut: CreateUserUseCase;
+    userRepositoryStub: UserRepositoryStub;
+    customerRepositoryStub: CustomerRepositoryStub;
+    mailStub: NotificationStub;
 } => {
     const mailStub = notificationStubFactory();
     const cryptographyStub = cryptographyStubFactory();
     const generationStub = generationStubFactory();
     const paymentStub = paymentStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new CreateUserUseCase(unitOfWorkRepositoryStub, mailStub, cryptographyStub, generationStub, paymentStub);
+    const sut = new CreateUserUseCase(
+        unitOfWorkRepositoryStub,
+        mailStub,
+        cryptographyStub,
+        generationStub,
+        paymentStub,
+    );
 
     return {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        customerRepositoryStub: unitOfWorkRepositoryStub.getCustomerRepository(),
-        mailStub
+        customerRepositoryStub:
+            unitOfWorkRepositoryStub.getCustomerRepository(),
+        mailStub,
     };
 };
 
 describe("Use case - CreateUserUseCase", () => {
-
     test("Should not create user, because the user rules are not respected", async () => {
         const email = "invalid-email";
         const username = "u".repeat(300);
@@ -51,7 +61,7 @@ describe("Use case - CreateUserUseCase", () => {
             passwordConfirm,
             consentVersion,
             userAgent,
-            ipAddress
+            ipAddress,
         });
 
         await expect(result).rejects.toThrow(DomainError);
@@ -74,7 +84,7 @@ describe("Use case - CreateUserUseCase", () => {
             passwordConfirm: invalidPasswordConfirm,
             consentVersion,
             userAgent,
-            ipAddress
+            ipAddress,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -97,7 +107,7 @@ describe("Use case - CreateUserUseCase", () => {
             passwordConfirm,
             consentVersion,
             userAgent,
-            ipAddress
+            ipAddress,
         });
 
         await expect(result).rejects.toThrow(ConflictedError);
@@ -112,12 +122,13 @@ describe("Use case - CreateUserUseCase", () => {
         const userAgent = "Mozilla";
         const ipAddress = "127.0.0.1";
         const { sut, userRepositoryStub, customerRepositoryStub } = makeSut();
-        jest
-            .spyOn(userRepositoryStub, "getUserByEmail")
-            .mockReturnValueOnce(null);
-        jest
-            .spyOn(customerRepositoryStub, "createCustomer")
-            .mockReturnValueOnce(Promise.reject(new Error()));
+        jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(
+            null,
+        );
+        jest.spyOn(
+            customerRepositoryStub,
+            "createCustomer",
+        ).mockReturnValueOnce(Promise.reject(new Error()));
 
         const result = sut.execute({
             email,
@@ -126,7 +137,7 @@ describe("Use case - CreateUserUseCase", () => {
             passwordConfirm,
             consentVersion,
             userAgent,
-            ipAddress
+            ipAddress,
         });
 
         await expect(result).rejects.toThrow(Error);
@@ -141,12 +152,12 @@ describe("Use case - CreateUserUseCase", () => {
         const userAgent = "Mozilla";
         const ipAddress = "127.0.0.1";
         const { sut, userRepositoryStub, mailStub } = makeSut();
-        jest
-            .spyOn(userRepositoryStub, "getUserByEmail")
-            .mockReturnValueOnce(Promise.resolve(null));
-        jest
-            .spyOn(mailStub, "sendMail")
-            .mockReturnValueOnce(Promise.reject(new Error()));
+        jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(
+            Promise.resolve(null),
+        );
+        jest.spyOn(mailStub, "sendMail").mockReturnValueOnce(
+            Promise.reject(new Error()),
+        );
 
         const result = sut.execute({
             email,
@@ -155,7 +166,7 @@ describe("Use case - CreateUserUseCase", () => {
             passwordConfirm,
             consentVersion,
             userAgent,
-            ipAddress
+            ipAddress,
         });
 
         await expect(result).rejects.toThrow(Error);
@@ -170,9 +181,9 @@ describe("Use case - CreateUserUseCase", () => {
         const userAgent = "Mozilla";
         const ipAddress = "127.0.0.1";
         const { sut, userRepositoryStub } = makeSut();
-        jest
-            .spyOn(userRepositoryStub, "getUserByEmail")
-            .mockReturnValueOnce(null);
+        jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(
+            null,
+        );
 
         const result = await sut.execute({
             email,
@@ -181,7 +192,7 @@ describe("Use case - CreateUserUseCase", () => {
             passwordConfirm,
             consentVersion,
             userAgent,
-            ipAddress
+            ipAddress,
         });
 
         expect(typeof result).toBe("string");

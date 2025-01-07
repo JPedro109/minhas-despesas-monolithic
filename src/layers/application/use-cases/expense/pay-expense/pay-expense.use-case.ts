@@ -1,15 +1,22 @@
 import { PaymentHistoryEntity } from "@/layers/domain";
-import { IPayExpenseUseCase, IUnitOfWorkRepository, NotFoundError, PayExpenseDTO } from "@/layers/application";
+import {
+    IPayExpenseUseCase,
+    IUnitOfWorkRepository,
+    NotFoundError,
+    PayExpenseDTO,
+} from "@/layers/application";
 
 export class PayExpenseUseCase implements IPayExpenseUseCase {
-    constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) { }
+    constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) {}
 
     async execute({ id }: PayExpenseDTO): Promise<void> {
-        const expenseRepository = this.unitOfWorkRepository.getExpenseRepository();
-        const paymentHistoryRepository = this.unitOfWorkRepository.getPaymentHistoryRepository();
+        const expenseRepository =
+            this.unitOfWorkRepository.getExpenseRepository();
+        const paymentHistoryRepository =
+            this.unitOfWorkRepository.getPaymentHistoryRepository();
 
         const expense = await expenseRepository.getExpenseById(id);
-        if(!expense) throw new NotFoundError("Essa despesa não existe");
+        if (!expense) throw new NotFoundError("Essa despesa não existe");
 
         expense.paid = true;
 
@@ -19,7 +26,7 @@ export class PayExpenseUseCase implements IPayExpenseUseCase {
             expenseValue: expense.expenseValue,
             dueDate: expense.dueDate,
             paidDate: new Date(),
-            userId: expense.userId
+            userId: expense.userId,
         });
 
         await this.unitOfWorkRepository.transaction(async () => {

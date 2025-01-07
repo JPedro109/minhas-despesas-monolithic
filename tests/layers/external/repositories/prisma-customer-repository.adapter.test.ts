@@ -1,9 +1,11 @@
-import { DatabaseSQLHelper, PrismaCustomerRepositoryAdapter } from "@/layers/external";
+import {
+    DatabaseSQLHelper,
+    PrismaCustomerRepositoryAdapter,
+} from "@/layers/external";
 import { CustomerEntity } from "@/layers/domain";
 import { Seed } from "./__mocks__";
 
 describe("External - PrismaCustomerRepositoryAdapter", () => {
-
     const databaseSQLHelper = new DatabaseSQLHelper();
 
     beforeAll(async () => {
@@ -28,7 +30,7 @@ describe("External - PrismaCustomerRepositoryAdapter", () => {
         test("Should create customer", async () => {
             const customer = new CustomerEntity({
                 userId: "00000000-0000-0000-0000-000000000001",
-                customerId: "1"
+                customerId: "1",
             });
             const sut = new PrismaCustomerRepositoryAdapter(databaseSQLHelper);
 

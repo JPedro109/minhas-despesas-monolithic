@@ -1,4 +1,4 @@
 export interface IGeneration {
-	generateCode(): string;
-	generateCodeExpirationDate(): Date;
+    generateCode(): string;
+    generateCodeExpirationDate(): Date;
 }

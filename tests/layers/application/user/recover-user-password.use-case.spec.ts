@@ -1,4 +1,7 @@
-import { InvalidParamError, RecoverUserPasswordUseCase } from "@/layers/application";
+import {
+    InvalidParamError,
+    RecoverUserPasswordUseCase,
+} from "@/layers/application";
 import {
     CryptographyStub,
     UserVerificationCodeRepositoryStub,
@@ -7,42 +10,50 @@ import {
     cryptographyStubFactory,
     testUserVerificationCodeEntityOfTypeRecoveryUserPassword,
     testUserVerificationCodeEntityOfTypeRecoveryUserPasswordWithDateExpired,
-    testUserVerificationCodeEntityOfTypeUpdateUserEmail
+    testUserVerificationCodeEntityOfTypeUpdateUserEmail,
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: RecoverUserPasswordUseCase,
-    userRepositoryStub: UserRepositoryStub,
-    userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub,
-    cryptographyStub: CryptographyStub
+    sut: RecoverUserPasswordUseCase;
+    userRepositoryStub: UserRepositoryStub;
+    userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub;
+    cryptographyStub: CryptographyStub;
 } => {
     const cryptographyStub = cryptographyStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new RecoverUserPasswordUseCase(unitOfWorkRepositoryStub, cryptographyStub);
+    const sut = new RecoverUserPasswordUseCase(
+        unitOfWorkRepositoryStub,
+        cryptographyStub,
+    );
 
     return {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        userVerificationCodeRepositoryStub: unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
-        cryptographyStub
+        userVerificationCodeRepositoryStub:
+            unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
+        cryptographyStub,
     };
 };
 
 describe("Use case - RecoverUserPasswordUseCase", () => {
-
     test("Should not recover password because passwords do not match", async () => {
         const code = "123456";
         const password = "NewPassword123";
         const invalidPasswordConfirm = "DifferentPassword123";
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
-        jest
-            .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPassword()));
+        jest.spyOn(
+            userVerificationCodeRepositoryStub,
+            "getUserVerificationCodeByVerificationCode",
+        ).mockReturnValueOnce(
+            Promise.resolve(
+                testUserVerificationCodeEntityOfTypeRecoveryUserPassword(),
+            ),
+        );
 
         const result = sut.execute({
             code,
             password,
-            passwordConfirm: invalidPasswordConfirm
+            passwordConfirm: invalidPasswordConfirm,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -57,7 +68,7 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
         const result = sut.execute({
             code,
             password,
-            passwordConfirm
+            passwordConfirm,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -68,14 +79,19 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
         const password = "NewPassword123";
         const passwordConfirm = "NewPassword123";
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
-        jest
-            .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeUpdateUserEmail()));
+        jest.spyOn(
+            userVerificationCodeRepositoryStub,
+            "getUserVerificationCodeByVerificationCode",
+        ).mockReturnValueOnce(
+            Promise.resolve(
+                testUserVerificationCodeEntityOfTypeUpdateUserEmail(),
+            ),
+        );
 
         const result = sut.execute({
             code,
             password,
-            passwordConfirm
+            passwordConfirm,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -86,14 +102,19 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
         const password = "NewPassword123";
         const passwordConfirm = "NewPassword123";
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
-        jest
-            .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPasswordWithDateExpired()));
+        jest.spyOn(
+            userVerificationCodeRepositoryStub,
+            "getUserVerificationCodeByVerificationCode",
+        ).mockReturnValueOnce(
+            Promise.resolve(
+                testUserVerificationCodeEntityOfTypeRecoveryUserPasswordWithDateExpired(),
+            ),
+        );
 
         const result = sut.execute({
             code,
             password,
-            passwordConfirm
+            passwordConfirm,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -104,14 +125,19 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
         const password = "OldPassword123";
         const passwordConfirm = "OldPassword123";
         const { sut, userVerificationCodeRepositoryStub } = makeSut();
-        jest
-            .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPassword()));
+        jest.spyOn(
+            userVerificationCodeRepositoryStub,
+            "getUserVerificationCodeByVerificationCode",
+        ).mockReturnValueOnce(
+            Promise.resolve(
+                testUserVerificationCodeEntityOfTypeRecoveryUserPassword(),
+            ),
+        );
 
         const result = sut.execute({
             code,
             password,
-            passwordConfirm
+            passwordConfirm,
         });
 
         await expect(result).rejects.toThrow(InvalidParamError);
@@ -121,20 +147,33 @@ describe("Use case - RecoverUserPasswordUseCase", () => {
         const code = "123456";
         const password = "NewPassword123";
         const passwordConfirm = "NewPassword123";
-        const { sut, cryptographyStub, userRepositoryStub, userVerificationCodeRepositoryStub } = makeSut();
-        jest
-            .spyOn(cryptographyStub, "compareHash")
-            .mockReturnValueOnce(Promise.resolve(false));
-        jest
-            .spyOn(userVerificationCodeRepositoryStub, "getUserVerificationCodeByVerificationCode")
-            .mockReturnValueOnce(Promise.resolve(testUserVerificationCodeEntityOfTypeRecoveryUserPassword()));
-        const updateUserVerificationCodeByIdSpy = jest.spyOn(userVerificationCodeRepositoryStub, "updateUserVerificationCodeById");
+        const {
+            sut,
+            cryptographyStub,
+            userRepositoryStub,
+            userVerificationCodeRepositoryStub,
+        } = makeSut();
+        jest.spyOn(cryptographyStub, "compareHash").mockReturnValueOnce(
+            Promise.resolve(false),
+        );
+        jest.spyOn(
+            userVerificationCodeRepositoryStub,
+            "getUserVerificationCodeByVerificationCode",
+        ).mockReturnValueOnce(
+            Promise.resolve(
+                testUserVerificationCodeEntityOfTypeRecoveryUserPassword(),
+            ),
+        );
+        const updateUserVerificationCodeByIdSpy = jest.spyOn(
+            userVerificationCodeRepositoryStub,
+            "updateUserVerificationCodeById",
+        );
         const updateUserSpy = jest.spyOn(userRepositoryStub, "updateUserById");
 
         await sut.execute({
             code,
             password,
-            passwordConfirm
+            passwordConfirm,
         });
 
         expect(updateUserVerificationCodeByIdSpy).toHaveBeenCalled();

@@ -85,7 +85,7 @@ export class CreateExtractUseCase implements ICreateExtractUseCase {
             });
 
             const url = await this.bucket.uploadFile(
-                `extract-expense-${userId}-${Date.now()}`,
+                `extract-expense-${userId}-${Date.now()}.pdf`,
                 file,
             );
 

@@ -35,21 +35,28 @@ export class CreatePaymentMethodUseCase implements ICreatePaymentMethodUseCase {
                 "Já existe um método de pagamento para esse usuário",
             );
 
-        const paymentMethod = new PaymentMethodEntity({
-            userId,
-            name,
-            token,
-        });
-
         let paymentMethodCreated: PaymentMethodEntity;
         await this.unitOfWorkRepository.transaction(async () => {
-            paymentMethodCreated =
-                await paymentMethodRepository.createPaymentMethod(
-                    paymentMethod,
-                );
             const customer =
                 await customerRepository.getCustomerByUserId(userId);
-            await this.payment.createPaymentMethod(customer.customerId, token);
+            const tokenCreated = await this.payment.createPaymentMethod(
+                customer.customerId,
+                token,
+            );
+            try {
+                const paymentMethod = new PaymentMethodEntity({
+                    userId,
+                    name,
+                    token: tokenCreated,
+                });
+                paymentMethodCreated =
+                    await paymentMethodRepository.createPaymentMethod(
+                        paymentMethod,
+                    );
+            } catch (e) {
+                await this.payment.deletePaymentMethodByToken(tokenCreated);
+                throw e;
+            }
         });
 
         return paymentMethodCreated.id;

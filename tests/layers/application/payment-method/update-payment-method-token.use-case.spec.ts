@@ -41,6 +41,21 @@ describe("Use case - UpdatePaymentMethodTokenUseCase", () => {
         await expect(result).rejects.toThrow(NotFoundError);
     });
 
+    test("Should not update payment method token because database is failed", async () => {
+        const { sut, paymentMethodRepositoryStub } = makeSut();
+        jest.spyOn(
+            paymentMethodRepositoryStub,
+            "updatePaymentMethodById",
+        ).mockReturnValueOnce(Promise.reject(new Error()));
+        const id = "1";
+        const userId = "1";
+        const token = "payment_method_updated";
+
+        const result = sut.execute({ id, userId, token });
+
+        await expect(result).rejects.toThrow(Error);
+    });
+
     test("Should update payment method token successfully", async () => {
         const { sut, paymentMethodRepositoryStub } = makeSut();
         const updatePaymentMethodByIdSpy = jest.spyOn(

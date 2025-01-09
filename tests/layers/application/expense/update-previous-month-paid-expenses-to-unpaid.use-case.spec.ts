@@ -22,7 +22,9 @@ const makeSut = (): {
 describe("Use case - UpdatePreviousMonthPaidExpensesToUnpaidUseCase", () => {
     test("Should update paid expenses from the previous month to unpaid", async () => {
         const { sut, expenseRepositoryStub } = makeSut();
-        const previousMonth = new Date().getUTCMonth() - 1;
+        const date = new Date();
+        const dateWithPreviousMonth = new Date().setMonth(date.getMonth() - 1);
+        const previousMonth = new Date(dateWithPreviousMonth).getMonth() + 1;
         const updatePaidExpensesToUnpaidSpy = jest.spyOn(
             expenseRepositoryStub,
             "updatePaidExpensesToUnpaidAndSumOneInDueMonthByDueMonth",

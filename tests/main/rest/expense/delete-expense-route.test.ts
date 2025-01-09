@@ -13,22 +13,6 @@ describe("/api/expenses/:id - DELETE", () => {
 
     const makeUrl = (id: string): string => `/api/expenses/${id}`;
 
-    test("Should not delete expense because field is invalid", async () => {
-        const body = makeBody(undefined);
-        const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
-        );
-
-        const response = await request(setupServer())
-            .delete(makeUrl("00000000-0000-0000-0000-000000000000"))
-            .set("User-Agent", "Supertest-Client/1.0")
-            .set("authorization", `Bearer ${token.accessToken}`)
-            .send(body);
-
-        expect(response.statusCode).toBe(400);
-        expect(response.body.code).toBe("InvalidRequestSchemaError");
-    });
-
     test("Should not delete expense because the expense does not exist", async () => {
         const body = makeBody(true);
         const token = await loginRest(

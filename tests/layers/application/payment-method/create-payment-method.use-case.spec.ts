@@ -56,6 +56,25 @@ describe("Use case - CreatePaymentMethodUseCase", () => {
         await expect(result).rejects.toThrow(ConflictedError);
     });
 
+    test("Should not create payment method because database is failed", async () => {
+        const { sut, paymentMethodRepositoryStub } = makeSut();
+        const userId = "1";
+        const name = "Payment Method";
+        const token = "payment_token";
+        jest.spyOn(
+            paymentMethodRepositoryStub,
+            "getPaymentMethodByUserId",
+        ).mockReturnValueOnce(Promise.resolve(null));
+        jest.spyOn(
+            paymentMethodRepositoryStub,
+            "createPaymentMethod",
+        ).mockReturnValueOnce(Promise.reject(new Error()));
+
+        const result = sut.execute({ userId, name, token });
+
+        await expect(result).rejects.toThrow(Error);
+    });
+
     test("Should create payment method successfully", async () => {
         const { sut, paymentMethodRepositoryStub } = makeSut();
         const userId = "1";

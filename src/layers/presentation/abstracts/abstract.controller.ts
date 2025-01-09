@@ -58,7 +58,19 @@ export abstract class AbstractController implements IHttp {
     }
 
     protected validateRequestSchema(body: object): void {
-        (this.mountZodObjet(this.schema, {}) as z.AnyZodObject).parse(body);
+        const result = (
+            this.mountZodObjet(this.schema, {}) as z.AnyZodObject
+        ).safeParse(body);
+
+        if (!result.success) {
+            const messages: string[] = [];
+
+            result.error.errors.forEach((error) => {
+                messages.push(`${error.path.join(".")} ${error.message}`);
+            });
+
+            throw new InvalidRequestSchemaError(messages.join(", "));
+        }
     }
 
     protected abstract handler(request: HttpRequest): Promise<HttpResponse>;
@@ -112,11 +124,11 @@ export abstract class AbstractController implements IHttp {
         if (e instanceof NotFoundError) return HttpHelper.notFound(e);
         if (e instanceof ForbiddenError) return HttpHelper.forbidden(e);
         if (e instanceof ConflictedError) return HttpHelper.conflicted(e);
-        if (e instanceof InvalidParamError) return HttpHelper.badRequest(e);
-        if (e instanceof z.ZodError)
-            return HttpHelper.badRequest(
-                new InvalidRequestSchemaError(e.message),
-            );
+        if (
+            e instanceof InvalidParamError ||
+            e instanceof InvalidRequestSchemaError
+        )
+            return HttpHelper.badRequest(e);
         return HttpHelper.serverError();
     }
 }

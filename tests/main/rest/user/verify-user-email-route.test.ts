@@ -11,6 +11,18 @@ const makeBody = (code: unknown): object => {
 describe("/api/users/verify-email - PATCH", () => {
     setup();
 
+    test("Should not verify email because the code is empty", async () => {
+        const body = makeBody("");
+
+        const response = await request(setupServer())
+            .patch("/api/users/verify-email")
+            .set("User-Agent", "Supertest-Client/1.0")
+            .send(body);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.code).toBe("InvalidRequestSchemaError");
+    });
+
     test("Should not verify email because the code is invalid", async () => {
         const body = makeBody("999999");
 

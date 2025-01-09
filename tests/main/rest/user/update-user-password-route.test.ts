@@ -15,6 +15,20 @@ const makeBody = (
 describe("/api/users/password - PATCH", () => {
     setup();
 
+    test("Should not update password because fields are emptys", async () => {
+        const token = await loginRest("email-with-plan-free@test.com");
+        const body = makeBody("", "", "");
+
+        const response = await request(setupServer())
+            .patch("/api/users/password")
+            .set("authorization", `Bearer ${token.accessToken}`)
+            .set("User-Agent", "Supertest-Client/1.0")
+            .send(body);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.code).toBe("InvalidRequestSchemaError");
+    });
+
     test("Should not update password because newPassword and newPasswordConfirm do not match", async () => {
         const token = await loginRest("email-with-plan-free@test.com");
         const body = makeBody(

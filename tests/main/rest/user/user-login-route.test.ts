@@ -11,6 +11,18 @@ const makeBody = (email: unknown, password: unknown): object => {
 describe("/api/users/login - POST", () => {
     setup();
 
+    test("Should not login because fields are empty", async () => {
+        const body = makeBody("", "");
+
+        const response = await request(setupServer())
+            .post("/api/users/login")
+            .set("User-Agent", "Supertest-Client/1.0")
+            .send(body);
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.code).toBe("InvalidRequestSchemaError");
+    });
+
     test("Should not login because user does not exist", async () => {
         const body = makeBody("nonexistent-email@example.com", "Password1234");
 

@@ -9,10 +9,13 @@ export class UpdatePreviousMonthPaidExpensesToUnpaidUseCase
     constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) {}
 
     async execute(): Promise<void> {
+        const date = new Date();
+        const dateWithPreviousMonth = new Date().setMonth(date.getMonth() - 1);
+        const previousMonth = new Date(dateWithPreviousMonth).getMonth() + 1;
         const expenseRepository =
             this.unitOfWorkRepository.getExpenseRepository();
         await expenseRepository.updatePaidExpensesToUnpaidAndSumOneInDueMonthByDueMonth(
-            new Date().getUTCMonth() - 1,
+            previousMonth,
         );
     }
 }

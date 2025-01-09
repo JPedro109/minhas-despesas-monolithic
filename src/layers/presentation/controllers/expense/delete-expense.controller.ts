@@ -27,7 +27,8 @@ export class DeleteExpenseController extends AbstractController {
         const { id, deleteExpensePaymentHistory } = request.data;
         const body = {
             id,
-            deleteExpensePaymentHistory,
+            deleteExpensePaymentHistory:
+                deleteExpensePaymentHistory === "true" ? true : false,
         };
 
         this.validateRequestSchema(body);

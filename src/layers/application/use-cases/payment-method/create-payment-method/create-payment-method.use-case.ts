@@ -39,10 +39,11 @@ export class CreatePaymentMethodUseCase implements ICreatePaymentMethodUseCase {
         await this.unitOfWorkRepository.transaction(async () => {
             const customer =
                 await customerRepository.getCustomerByUserId(userId);
-            const tokenCreated = await this.payment.createPaymentMethod(
-                customer.customerId,
-                token,
-            );
+            const tokenCreated =
+                await this.payment.attachmentPaymentMethodInCustomer(
+                    customer.customerId,
+                    token,
+                );
             try {
                 const paymentMethod = new PaymentMethodEntity({
                     userId,

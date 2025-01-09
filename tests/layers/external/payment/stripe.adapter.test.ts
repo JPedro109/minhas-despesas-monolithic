@@ -45,13 +45,16 @@ describe("External - StripeAdapter", () => {
         expect(deleteCustomerSpy).toHaveBeenCalledWith(customerId);
     });
 
-    test("Should create payment method | createPaymentMethod", async () => {
+    test("Should create payment method | attachmentPaymentMethodInCustomer", async () => {
         const email = "email@test.com";
         const token = "pm_card_visa";
         const sut = new StripeAdapter();
         const customerId = await sut.createCustomer(email);
 
-        const result = await sut.createPaymentMethod(customerId, token);
+        const result = await sut.attachmentPaymentMethodInCustomer(
+            customerId,
+            token,
+        );
 
         expect(typeof result).toBe("string");
 
@@ -63,7 +66,7 @@ describe("External - StripeAdapter", () => {
         const token = "pm_card_visa";
         const sut = new StripeAdapter();
         const customerId = await sut.createCustomer(email);
-        const paymentMethodId = await sut.createPaymentMethod(
+        const paymentMethodId = await sut.attachmentPaymentMethodInCustomer(
             customerId,
             token,
         );
@@ -87,7 +90,7 @@ describe("External - StripeAdapter", () => {
         const token = "pm_card_visa";
         const sut = new StripeAdapter();
         const customerId = await sut.createCustomer(email);
-        await sut.createPaymentMethod(customerId, token);
+        await sut.attachmentPaymentMethodInCustomer(customerId, token);
         const paySpy = jest.spyOn(sut, "pay");
 
         await sut.pay(customerId, token, 500, PaymentCurrencyEnum.BRL);

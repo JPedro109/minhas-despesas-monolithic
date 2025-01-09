@@ -273,7 +273,7 @@ export class Seed {
 
         if (withPaymentMethod) {
             const paymentMethodId =
-                await this.stripeAdapter.createPaymentMethod(
+                await this.stripeAdapter.attachmentPaymentMethodInCustomer(
                     customerId,
                     "pm_card_visa",
                 );

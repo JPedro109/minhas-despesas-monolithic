@@ -23,7 +23,7 @@ export class StripeAdapter implements IPayment {
         await this.stripe.customers.del(customerId);
     }
 
-    public async createPaymentMethod(
+    public async attachmentPaymentMethodInCustomer(
         customerId: string,
         token: string,
     ): Promise<string> {

@@ -123,7 +123,7 @@ export class PaymentStub implements IPayment {
 
     async deleteCustomer(customerId: string): Promise<void> {}
 
-    async createPaymentMethod(
+    async attachmentPaymentMethodInCustomer(
         customerId: string,
         paymentMethodId: string,
     ): Promise<string> {

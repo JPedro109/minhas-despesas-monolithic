@@ -34,10 +34,11 @@ export class UpdatePaymentMethodTokenUseCase
         const oldPaymentMethod = paymentMethod.token;
 
         await this.unitOfWorkRepository.transaction(async () => {
-            const tokenCreated = await this.payment.createPaymentMethod(
-                customer.customerId,
-                token,
-            );
+            const tokenCreated =
+                await this.payment.attachmentPaymentMethodInCustomer(
+                    customer.customerId,
+                    token,
+                );
 
             try {
                 paymentMethod.token = tokenCreated;

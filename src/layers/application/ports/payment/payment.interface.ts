@@ -7,7 +7,7 @@ export interface IPayment {
         email: string,
     ): Promise<void>;
     deleteCustomer(customerId: string): Promise<void>;
-    createPaymentMethod(
+    attachmentPaymentMethodInCustomer(
         customerId: string,
         paymentMethodId: string,
     ): Promise<string>;

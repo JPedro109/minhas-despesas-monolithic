@@ -23,7 +23,7 @@ export class ExpenseUndoPaymentUseCase implements IExpenseUndoPaymentUseCase {
             await expenseRepository.updateExpenseById(id, expense);
             await paymentHistoryRepository.deletePaymentHistoryByExpenseIdAndDueMonthAndDueYear(
                 id,
-                expense.dueDate.getUTCMonth(),
+                expense.dueDate.getUTCMonth() + 1,
                 expense.dueDate.getUTCFullYear(),
             );
         });

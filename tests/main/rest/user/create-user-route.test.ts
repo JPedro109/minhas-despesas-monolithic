@@ -24,12 +24,11 @@ const makeBodyCreateUser = (
 
 describe("/api/users - POST", () => {
     setup();
-    const server = setupServer();
 
     test("Should not create user, because fields are emptys", async () => {
         const body = makeBodyCreateUser("", "", "", "", "");
 
-        const response = await request(server)
+        const response = await request(setupServer())
             .post("/api/users")
             .send(body)
             .set("User-Agent", "Supertest-Client/1.0");
@@ -47,7 +46,7 @@ describe("/api/users - POST", () => {
             "1.0",
         );
 
-        const response = await request(server)
+        const response = await request(setupServer())
             .post("/api/users")
             .send(body)
             .set("User-Agent", "Supertest-Client/1.0");
@@ -65,7 +64,7 @@ describe("/api/users - POST", () => {
             "1.0",
         );
 
-        const response = await request(server)
+        const response = await request(setupServer())
             .post("/api/users")
             .send(body)
             .set("User-Agent", "Supertest-Client/1.0");
@@ -83,7 +82,7 @@ describe("/api/users - POST", () => {
             "1.0",
         );
 
-        const response = await request(server)
+        const response = await request(setupServer())
             .post("/api/users")
             .send(body)
             .set("User-Agent", "Supertest-Client/1.0");
@@ -101,7 +100,7 @@ describe("/api/users - POST", () => {
             "1.0",
         );
 
-        const response = await request(server)
+        const response = await request(setupServer())
             .post("/api/users")
             .send(body)
             .set("User-Agent", "Supertest-Client/1.0");

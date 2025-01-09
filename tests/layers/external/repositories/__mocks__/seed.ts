@@ -99,7 +99,7 @@ export class Seed {
         await this.prismaPaymentHistoryRepository.createPaymentHistory(
             testPaymentHistoryEntity(),
         );
-        await this.prismaPaymentMethodRepository.attachmentPaymentMethodInCustomer(
+        await this.prismaPaymentMethodRepository.createPaymentMethod(
             testPaymentMethodEntity(),
         );
         await this.prismaSubscriptionRepository.createSubscription(

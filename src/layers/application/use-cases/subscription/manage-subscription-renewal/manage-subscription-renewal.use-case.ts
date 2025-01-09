@@ -1,10 +1,10 @@
 import { PlanNameEnum, SubscriptionEntity } from "@/layers/domain";
 import {
+    ForbiddenError,
     IManageSubscriptionRenewalUseCase,
     IPlanRepository,
     IUnitOfWorkRepository,
     ManageSubscriptionRenewalDTO,
-    NotFoundError,
 } from "@/layers/application";
 
 export class ManageSubscriptionRenewalUseCase
@@ -19,14 +19,13 @@ export class ManageSubscriptionRenewalUseCase
         const subscriptionRepository =
             this.unitOfWorkRepository.getSubscriptionRepository();
         const planRepository = this.unitOfWorkRepository.getPlanRepository();
-        const expenseRepository =
-            this.unitOfWorkRepository.getExpenseRepository();
 
         const subscriptionActive =
             await subscriptionRepository.getActiveSubscriptionByUserId(userId);
-        if (!subscriptionActive)
-            throw new NotFoundError(
-                "Esse usuário não possui uma assinatura ativa",
+
+        if (subscriptionActive.plan.name === PlanNameEnum.Free)
+            throw new ForbiddenError(
+                `Não é possível gerenciar uma assinatura com o plano ${PlanNameEnum.Free}`,
             );
 
         const today = new Date();
@@ -58,9 +57,6 @@ export class ManageSubscriptionRenewalUseCase
                 await subscriptionRepository.createSubscription(
                     newSubscription,
                 );
-
-                if (subscriptionActive.renewable)
-                    await expenseRepository.deleteExpensesByUserId(userId);
             });
         }
     }

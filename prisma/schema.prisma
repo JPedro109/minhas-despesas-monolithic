@@ -59,7 +59,7 @@ model PrismaUserConsent {
   user           PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   consentVersion String     @map("consent_version") @db.VarChar(10)
   ipAddress      String     @map("ip_address") @db.VarChar(50)
-  userAgent      String     @map("user_agent") @db.VarChar(50)
+  userAgent      String     @map("user_agent") @db.VarChar(255)
   createdAt      DateTime   @map("created_at")
 
   @@map("user_consents")

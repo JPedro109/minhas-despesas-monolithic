@@ -31,16 +31,25 @@ export class UpdatePaymentMethodTokenUseCase
 
         const customer = await customerRepository.getCustomerByUserId(userId);
 
-        const oldPayment = paymentMethod.token;
-        paymentMethod.token = token;
+        const oldPaymentMethod = paymentMethod.token;
 
         await this.unitOfWorkRepository.transaction(async () => {
-            await paymentMethodRepository.updatePaymentMethodById(
-                paymentMethod.id,
-                paymentMethod,
+            const tokenCreated = await this.payment.createPaymentMethod(
+                customer.customerId,
+                token,
             );
-            await this.payment.deletePaymentMethodByToken(oldPayment);
-            await this.payment.createPaymentMethod(customer.customerId, token);
+
+            try {
+                paymentMethod.token = tokenCreated;
+                await paymentMethodRepository.updatePaymentMethodById(
+                    paymentMethod.id,
+                    paymentMethod,
+                );
+                await this.payment.deletePaymentMethodByToken(oldPaymentMethod);
+            } catch (e) {
+                await this.payment.deletePaymentMethodByToken(tokenCreated);
+                throw e;
+            }
         });
     }
 }

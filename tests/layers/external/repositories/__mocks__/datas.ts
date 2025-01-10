@@ -147,6 +147,22 @@ export const testSubscriptionEntity = (): SubscriptionEntity =>
         new Date(),
     );
 
+export const testSubscriptionEntityExpired = (): SubscriptionEntity =>
+    new SubscriptionEntity(
+        {
+            userId: "00000000-0000-0000-0000-000000000001",
+            active: true,
+            renewable: true,
+            startDate: new Date("2000-01-01"),
+            endDate: new Date("2000-02-01"),
+            updatedAt: new Date(),
+            plan: testPlanFreeEntity(),
+            amount: 100,
+        },
+        "00000000-0000-0000-0000-000000000001",
+        new Date(),
+    );
+
 export const testUserVerificationCodeEntity = (): UserVerificationCodeEntity =>
     new UserVerificationCodeEntity(
         {

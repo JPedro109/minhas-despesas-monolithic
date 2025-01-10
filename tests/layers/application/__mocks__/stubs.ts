@@ -47,6 +47,7 @@ import {
     testPaymentMethodEntity,
     testPlanFreeEntity,
     testSubscriptionEntityWithPlanFree,
+    testSubscriptionEntityWithPlanGold,
     testUserEntity,
 } from "./datas";
 
@@ -197,6 +198,12 @@ export class SubscriptionRepositoryStub implements ISubscriptionRepository {
         renewable: boolean,
     ): Promise<SubscriptionEntity[]> {
         return [testSubscriptionEntityWithPlanFree()];
+    }
+
+    async getSubscriptionsActiveAndRenewableWhenTheCurrentDateIsGreaterThanTheEndDate(): Promise<
+        SubscriptionEntity[]
+    > {
+        return [testSubscriptionEntityWithPlanGold()];
     }
 }
 

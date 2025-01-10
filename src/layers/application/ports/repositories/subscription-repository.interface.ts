@@ -12,6 +12,9 @@ export interface ISubscriptionRepository {
         endDate: Date,
         renewable: boolean,
     ): Promise<SubscriptionEntity[]>;
+    getSubscriptionsActiveAndRenewableWhenTheCurrentDateIsGreaterThanTheEndDate(): Promise<
+        SubscriptionEntity[]
+    >;
     updateSubscriptionById(
         subscriptionId: string,
         subscription: SubscriptionEntity,

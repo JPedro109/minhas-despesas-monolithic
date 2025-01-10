@@ -107,6 +107,19 @@ describe("External - PrismaSubscriptionRepositoryAdapter", () => {
         });
     });
 
+    describe("getActiveSubscriptionsByEndDate", () => {
+        test("Should return subscriptions active and Renewable when the current date is greater than the end date", async () => {
+            const sut = new PrismaSubscriptionRepositoryAdapter(
+                databaseSQLHelper,
+            );
+
+            const result =
+                await sut.getSubscriptionsActiveAndRenewableWhenTheCurrentDateIsGreaterThanTheEndDate();
+
+            expect(result.length).toBeGreaterThan(0);
+        });
+    });
+
     describe("updateSubscriptionById", () => {
         test("Should update the subscription by ID", async () => {
             const sut = new PrismaSubscriptionRepositoryAdapter(

@@ -99,6 +99,35 @@ export class PrismaSubscriptionRepositoryAdapter
         );
     }
 
+    async getSubscriptionsActiveAndRenewableWhenTheCurrentDateIsGreaterThanTheEndDate(): Promise<
+        SubscriptionEntity[]
+    > {
+        const currentDate = new Date();
+
+        const subscriptions = await this.context.prismaSubscription.findMany({
+            where: {
+                endDate: { lt: currentDate },
+                renewable: true,
+                active: true,
+            },
+            include: {
+                plan: {
+                    include: {
+                        actions: true,
+                    },
+                },
+            },
+        });
+
+        return subscriptions.map((subscription) =>
+            PrismaMapperHelper.toSubscriptionEntity(
+                subscription,
+                subscription.plan,
+                subscription.plan.actions,
+            ),
+        );
+    }
+
     async updateSubscriptionById(
         subscriptionId: string,
         subscription: SubscriptionEntity,

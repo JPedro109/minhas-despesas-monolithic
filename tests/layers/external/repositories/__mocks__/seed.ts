@@ -19,6 +19,7 @@ import {
     testPaymentMethodEntity,
     testPlanFreeEntity,
     testSubscriptionEntity,
+    testSubscriptionEntityExpired,
     testUserEntity,
     testUserEntityTwo,
     testUserVerificationCodeEntity,
@@ -110,6 +111,9 @@ export class Seed {
         );
 
         await this.prismaUserRepository.createUser(testUserEntityTwo());
+        await this.prismaSubscriptionRepository.createSubscription(
+            testSubscriptionEntityExpired(),
+        );
     }
 
     async truncate(): Promise<void> {

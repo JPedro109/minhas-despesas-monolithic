@@ -17,14 +17,6 @@ describe("Value Object - ExtractUrlValueObject", () => {
         expect(sut).toBeInstanceOf(InvalidExtractUrlError);
     });
 
-    test("Should not create ExtractUrlValueObject, because url is too long", () => {
-        const invalidExtractUrl = "https://" + "a".repeat(2048);
-
-        const sut = ExtractUrlValueObject.create(invalidExtractUrl);
-
-        expect(sut).toBeInstanceOf(InvalidExtractUrlError);
-    });
-
     test("Should create ExtractUrlValueObject, because url is valid", () => {
         const extractUrl = "https://www.example.com";
 

@@ -17,7 +17,7 @@ export class ExtractUrlValueObject {
         if (!url) return false;
 
         const urlRegex =
-            /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=%]*)?$/i;
+            /^(https?):\/\/[a-zA-Z0-9.-]+(:\d+)?(\/[^\s?#]*)?(\?[^\s#]*)?(#[^\s]*)?$/;
 
         return urlRegex.test(url);
     }

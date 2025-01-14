@@ -4,13 +4,13 @@ import {
     internalServerError,
     notFoundError,
 } from "@/main/rest/docs/components";
-import { authorizationHeaderSchema } from "@/main/rest/docs/schemas";
+import { basicAuthorizationHeaderSchema } from "@/main/rest/docs/schemas";
 
 export const manageSubscriptionRenewal = {
     tags: ["Subscription"],
     summary: "Faz o gerenciamento da assinatura do usuário",
     parameters: [
-        authorizationHeaderSchema,
+        basicAuthorizationHeaderSchema,
         {
             in: "body",
             name: "body",
@@ -20,6 +20,9 @@ export const manageSubscriptionRenewal = {
                 properties: {
                     renew: {
                         type: "boolean",
+                    },
+                    userId: {
+                        type: "string",
                     },
                 },
             },

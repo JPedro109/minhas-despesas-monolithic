@@ -26,7 +26,7 @@ export default (router: Router): void => {
     );
     router.post(
         "/subscriptions/renew",
-        RestAdapter.middleware(authenticationUserMiddleware),
+        RestAdapter.middleware(basicAuthenticationMiddleware),
         RestAdapter.route(manageSubscriptionRenewalController),
     );
     router.post(

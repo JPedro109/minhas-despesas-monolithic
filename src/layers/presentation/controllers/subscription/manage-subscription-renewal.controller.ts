@@ -24,10 +24,10 @@ export class ManageSubscriptionRenewalController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { renew } = request.data;
+        const { renew, userId } = request.data;
 
         const body = {
-            userId: request.userId,
+            userId,
             renew,
         };
 

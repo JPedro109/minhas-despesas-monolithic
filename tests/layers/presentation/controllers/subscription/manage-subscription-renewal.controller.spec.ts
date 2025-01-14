@@ -31,9 +31,9 @@ describe("Controller - ManageSubscriptionRenewalController", () => {
 
         const result = await sut.http({
             data: {
+                userId,
                 renew,
             },
-            userId,
         });
 
         expect(result.statusCode).toBe(400);
@@ -46,9 +46,9 @@ describe("Controller - ManageSubscriptionRenewalController", () => {
 
         const result = await sut.http({
             data: {
+                userId,
                 renew,
             },
-            userId,
         });
 
         expect(result.statusCode).toBe(204);

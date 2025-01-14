@@ -17,6 +17,10 @@ export class SQSAdapter implements IQueue {
                 environmentVariables.nodeEnv === "production"
                     ? null
                     : credential,
+            endpoint:
+                environmentVariables.nodeEnv === "production"
+                    ? null
+                    : environmentVariables.localstackEndpoint,
         });
     }
 

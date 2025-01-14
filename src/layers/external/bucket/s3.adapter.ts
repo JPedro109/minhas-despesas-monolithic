@@ -23,6 +23,13 @@ export class S3BucketAdapter implements IBucket {
                 environmentVariables.nodeEnv === "production"
                     ? null
                     : credential,
+            endpoint:
+                environmentVariables.nodeEnv === "production"
+                    ? null
+                    : environmentVariables.localstackEndpoint,
+            forcePathStyle: environmentVariables.localstackEndpoint
+                ? true
+                : null,
         });
     }
 

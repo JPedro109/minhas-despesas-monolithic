@@ -9,7 +9,7 @@
     "postinstall": "husky",
     "migrate:generate": "prisma migrate dev && prisma generate",
     "migrate:execute": "prisma generate && prisma migrate deploy",
-    "dev": "tsx watch ./src/server.ts",
+    "dev": "yarn migrate:execute && tsx watch ./src/server.ts",
     "build": "tsc -p tsconfig-build.json && tsc-alias -p tsconfig-build.json",
     "start": "yarn migrate:execute && yarn build && node dist/server.js",
     "test": "jest --passWithNoTests --detectOpenHandles --silent",

@@ -7,9 +7,9 @@ import {
     SubscriptionRepositoryStub,
     unitOfWorkRepositoryStubFactory,
     paymentStubFactory,
-    testSubscriptionEntityWithPlanFree,
     testPaymentMethodEntity,
     testCustomerEntity,
+    testSubscriptionEntityWithPlanGold,
 } from "../__mocks__";
 
 const makeSut = (): {
@@ -38,7 +38,7 @@ describe("Use case - ExecuteChargeToExpiredSubscriptionsUseCase", () => {
         const paySpy = jest.spyOn(paymentStub, "pay");
         jest.spyOn(
             subscriptionRepositoryStub,
-            "getActiveSubscriptionsByEndDate",
+            "getSubscriptionsActiveAndRenewableWhenTheCurrentDateIsGreaterThanTheEndDate",
         ).mockResolvedValueOnce([]);
 
         await sut.execute();
@@ -55,7 +55,7 @@ describe("Use case - ExecuteChargeToExpiredSubscriptionsUseCase", () => {
         expect(paySpy).toHaveBeenCalledWith(
             testCustomerEntity().customerId,
             testPaymentMethodEntity().token,
-            testSubscriptionEntityWithPlanFree().amount,
+            testSubscriptionEntityWithPlanGold().amount,
             PaymentCurrencyEnum.BRL,
         );
     });

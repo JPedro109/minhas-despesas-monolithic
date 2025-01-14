@@ -21,20 +21,8 @@ export class ExecuteChargeToExpiredSubscriptionsUseCase
         const paymentMethodRepository =
             this.unitOfWorkRepository.getPaymentMethodRepository();
 
-        const today = new Date();
-        const subscriptionsEndDate = new Date(
-            today.getUTCFullYear(),
-            today.getUTCMonth(),
-            today.getUTCDate(),
-            0,
-            0,
-            0,
-        );
         const subscriptionActives =
-            await subscriptionRepository.getActiveSubscriptionsByEndDate(
-                subscriptionsEndDate,
-                true,
-            );
+            await subscriptionRepository.getSubscriptionsActiveAndRenewableWhenTheCurrentDateIsGreaterThanTheEndDate();
 
         if (subscriptionActives.length === 0) return;
 

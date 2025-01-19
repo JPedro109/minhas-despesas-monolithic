@@ -14,7 +14,7 @@ describe("/api/expenses/:id - DELETE", () => {
     const makeUrl = (id: string): string => `/api/expenses/${id}`;
 
     test("Should not delete expense because the expense does not exist", async () => {
-        const body = makeBody(true);
+        const body = makeBody("true");
         const token = await loginRest(
             "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
         );
@@ -30,7 +30,7 @@ describe("/api/expenses/:id - DELETE", () => {
     });
 
     test("Should delete the expense and its payment history successfully", async () => {
-        const body = makeBody(true);
+        const body = makeBody("true");
         const token = await loginRest(
             "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
         );
@@ -45,7 +45,7 @@ describe("/api/expenses/:id - DELETE", () => {
     });
 
     test("Should delete the expense without its payment history when flag is false", async () => {
-        const body = makeBody(false);
+        const body = makeBody("false");
         const token = await loginRest(
             "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
         );

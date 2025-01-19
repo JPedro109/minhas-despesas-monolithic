@@ -35,10 +35,25 @@ describe("Controller - DeleteExpenseController", () => {
         expect(result.statusCode).toBe(400);
     });
 
+    test("Should delete expense and delete payment history", async () => {
+        const { sut } = makeSut();
+        const id = "1";
+        const deleteExpensePaymentHistory = "false";
+
+        const result = await sut.http({
+            data: {
+                id,
+                deleteExpensePaymentHistory,
+            },
+        });
+
+        expect(result.statusCode).toBe(204);
+    });
+
     test("Should delete expense", async () => {
         const { sut } = makeSut();
         const id = "1";
-        const deleteExpensePaymentHistory = true;
+        const deleteExpensePaymentHistory = "true";
 
         const result = await sut.http({
             data: {

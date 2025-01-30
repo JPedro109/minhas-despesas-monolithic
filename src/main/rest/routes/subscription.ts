@@ -1,6 +1,5 @@
 import {
     getUserSubscriptionController,
-    updateSubscriptionController,
     updateSubscriptionRenewalStatusController,
     authenticationUserMiddleware,
 } from "@/main/factories";
@@ -13,11 +12,6 @@ export default (router: Router): void => {
         "/subscriptions",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.route(getUserSubscriptionController),
-    );
-    router.patch(
-        "/subscriptions/plan/:newPlanId",
-        RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(updateSubscriptionController),
     );
     router.patch(
         "/subscriptions/renewal-status",

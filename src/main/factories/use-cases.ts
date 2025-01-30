@@ -21,7 +21,6 @@ import {
     VerifyUserEmailUseCase,
     GetUserSubscriptionUseCase,
     UpdateSubscriptionRenewalStatusUseCase,
-    UpdateSubscriptionUseCase,
     GetPlansUseCase,
     CreatePaymentMethodUseCase,
     DeletePaymentMethodUseCase,
@@ -106,11 +105,6 @@ export const verifyUserEmailUseCase = new VerifyUserEmailUseCase(
 
 export const getUserSubscriptionUseCase = new GetUserSubscriptionUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),
-);
-
-export const updateSubscriptionUseCase = new UpdateSubscriptionUseCase(
-    makePrismaUnitOfWorkRepositoryAdapter(),
-    stripeAdapter,
 );
 
 export const updateSubscriptionRenewalStatusUseCase =

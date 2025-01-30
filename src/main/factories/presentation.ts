@@ -21,7 +21,6 @@ import {
     VerifyUserEmailController,
     GetUserSubscriptionController,
     UpdateSubscriptionRenewalStatusController,
-    UpdateSubscriptionController,
     GetPlansController,
     CreatePaymentMethodController,
     DeletePaymentMethodController,
@@ -46,7 +45,6 @@ import {
     userLoginUseCase,
     verifyUserEmailUseCase,
     getUserSubscriptionUseCase,
-    updateSubscriptionUseCase,
     updateSubscriptionRenewalStatusUseCase,
     getPlansUseCase,
     createPaymentMethodUseCase,
@@ -126,11 +124,6 @@ export const verifyUserEmailController = new VerifyUserEmailController(
 
 export const getUserSubscriptionController = new GetUserSubscriptionController(
     getUserSubscriptionUseCase,
-    winstonAdapter,
-);
-
-export const updateSubscriptionController = new UpdateSubscriptionController(
-    updateSubscriptionUseCase,
     winstonAdapter,
 );
 

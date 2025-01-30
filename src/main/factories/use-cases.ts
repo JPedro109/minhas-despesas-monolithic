@@ -6,7 +6,6 @@ import {
     GetUserExpensesUseCase,
     ExpenseUndoPaymentUseCase,
     UpdatePreviousMonthPaidExpensesToUnpaidUseCase,
-    SendNotificationOfExpensesThatAreComingDueUseCase,
     DeleteExpiredExtractsUseCase,
     PayExpenseUseCase,
     CreateUserUseCase,
@@ -34,7 +33,6 @@ import {
     UpdatePaymentMethodNameUseCase,
     UpdatePaymentMethodTokenUseCase,
     CreateExtractUseCase,
-    SendNotificationOfSubscriptionThatAreComingDueUseCase,
 } from "@/layers/application";
 
 import {
@@ -130,12 +128,6 @@ export const manageSubscriptionRenewalUseCase =
         makePrismaUnitOfWorkRepositoryAdapter(),
     );
 
-export const sendNotificationOfSubscriptionThatAreComingDueUseCase =
-    new SendNotificationOfSubscriptionThatAreComingDueUseCase(
-        makePrismaUnitOfWorkRepositoryAdapter(),
-        notificationAdapter,
-    );
-
 export const updateSubscriptionUseCase = new UpdateSubscriptionUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),
     stripeAdapter,
@@ -210,12 +202,6 @@ export const getUserExpensesUseCase = new GetUserExpensesUseCase(
 export const payExpenseUseCase = new PayExpenseUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),
 );
-
-export const sendNotificationOfExpensesThatAreComingDueUseCase =
-    new SendNotificationOfExpensesThatAreComingDueUseCase(
-        makePrismaUnitOfWorkRepositoryAdapter(),
-        notificationAdapter,
-    );
 
 export const updateExpenseUseCase = new UpdateExpenseUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),

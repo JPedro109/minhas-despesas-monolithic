@@ -5,7 +5,6 @@ import {
     expenseUndoPaymentController,
     getUserExpensesController,
     payExpenseController,
-    sendNotificationOfExpensesThatAreComingDueController,
     updateExpenseController,
     updatePreviousMonthPaidExpensesToUnpaidController,
     authenticationUserMiddleware,
@@ -82,11 +81,6 @@ export default (router: Router): void => {
             ),
         ),
         RestAdapter.route(updateExpenseController),
-    );
-    router.post(
-        "/expenses/notify-due",
-        RestAdapter.middleware(basicAuthenticationMiddleware),
-        RestAdapter.route(sendNotificationOfExpensesThatAreComingDueController),
     );
     router.post(
         "/expenses/update-unpaid",

@@ -6,7 +6,6 @@ import {
     GetUserExpensesController,
     ExpenseUndoPaymentController,
     UpdatePreviousMonthPaidExpensesToUnpaidController,
-    SendNotificationOfExpensesThatAreComingDueController,
     DeleteExpiredExtractsController,
     PayExpenseController,
     CreateUserController,
@@ -33,7 +32,6 @@ import {
     UpdatePaymentMethodNameController,
     UpdatePaymentMethodTokenController,
     CreateExtractController,
-    SendNotificationOfSubscriptionThatAreComingDueController,
     SetFreePlanForNonRenewableSubscriptionsController,
     AuthenticateUserMiddleware,
     BasicAuthenticationMiddleware,
@@ -55,7 +53,6 @@ import {
     getActiveNonRenewableSubscriptionsUseCase,
     getUserSubscriptionUseCase,
     manageSubscriptionRenewalUseCase,
-    sendNotificationOfSubscriptionThatAreComingDueUseCase,
     updateSubscriptionUseCase,
     updateSubscriptionRenewalStatusUseCase,
     getPlansUseCase,
@@ -73,7 +70,6 @@ import {
     expenseUndoPaymentUseCase,
     getUserExpensesUseCase,
     payExpenseUseCase,
-    sendNotificationOfExpensesThatAreComingDueUseCase,
     updateExpenseUseCase,
     updatePreviousMonthPaidExpensesToUnpaidUseCase,
 } from "./use-cases";
@@ -150,12 +146,6 @@ export const getUserSubscriptionController = new GetUserSubscriptionController(
 export const manageSubscriptionRenewalController =
     new ManageSubscriptionRenewalController(
         manageSubscriptionRenewalUseCase,
-        winstonAdapter,
-    );
-
-export const sendNotificationOfSubscriptionThatAreComingDueController =
-    new SendNotificationOfSubscriptionThatAreComingDueController(
-        sendNotificationOfSubscriptionThatAreComingDueUseCase,
         winstonAdapter,
     );
 
@@ -255,12 +245,6 @@ export const payExpenseController = new PayExpenseController(
     payExpenseUseCase,
     winstonAdapter,
 );
-
-export const sendNotificationOfExpensesThatAreComingDueController =
-    new SendNotificationOfExpensesThatAreComingDueController(
-        sendNotificationOfExpensesThatAreComingDueUseCase,
-        winstonAdapter,
-    );
 
 export const updateExpenseController = new UpdateExpenseController(
     updateExpenseUseCase,

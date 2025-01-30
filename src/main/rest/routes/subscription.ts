@@ -2,7 +2,6 @@ import {
     executeChargeToExpiredSubscriptionsController,
     getUserSubscriptionController,
     manageSubscriptionRenewalController,
-    sendNotificationOfSubscriptionThatAreComingDueController,
     updateSubscriptionController,
     updateSubscriptionRenewalStatusController,
     setFreePlanForNonRenewableSubscriptionsController,
@@ -28,13 +27,6 @@ export default (router: Router): void => {
         "/subscriptions/renew",
         RestAdapter.middleware(basicAuthenticationMiddleware),
         RestAdapter.route(manageSubscriptionRenewalController),
-    );
-    router.post(
-        "/subscriptions/notify-due",
-        RestAdapter.middleware(basicAuthenticationMiddleware),
-        RestAdapter.route(
-            sendNotificationOfSubscriptionThatAreComingDueController,
-        ),
     );
     router.patch(
         "/subscriptions/plan/:newPlanId",

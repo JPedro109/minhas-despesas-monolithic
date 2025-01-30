@@ -23,7 +23,6 @@ import {
     UpdateSubscriptionRenewalStatusController,
     UpdateSubscriptionController,
     GetPlansController,
-    GetUserPlanController,
     CreatePaymentMethodController,
     DeletePaymentMethodController,
     GetUserPaymentMethodController,
@@ -50,7 +49,6 @@ import {
     updateSubscriptionUseCase,
     updateSubscriptionRenewalStatusUseCase,
     getPlansUseCase,
-    getUserPlanUseCase,
     createPaymentMethodUseCase,
     deletePaymentMethodUseCase,
     getUserPaymentMethodUseCase,
@@ -144,11 +142,6 @@ export const updateSubscriptionRenewalStatusController =
 
 export const getPlansController = new GetPlansController(
     getPlansUseCase,
-    winstonAdapter,
-);
-
-export const getUserPlanController = new GetUserPlanController(
-    getUserPlanUseCase,
     winstonAdapter,
 );
 

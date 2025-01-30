@@ -1,6 +1,5 @@
 import {
     getPlansController,
-    getUserPlanController,
     authenticationUserMiddleware,
 } from "@/main/factories";
 import { RestAdapter } from "@/main/rest";
@@ -12,10 +11,5 @@ export default (router: Router): void => {
         "/plans",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.route(getPlansController),
-    );
-    router.get(
-        "/plans/user",
-        RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(getUserPlanController),
     );
 };

@@ -23,7 +23,6 @@ import {
     UpdateSubscriptionRenewalStatusUseCase,
     UpdateSubscriptionUseCase,
     GetPlansUseCase,
-    GetUserPlanUseCase,
     CreatePaymentMethodUseCase,
     DeletePaymentMethodUseCase,
     GetUserPaymentMethodUseCase,
@@ -120,10 +119,6 @@ export const updateSubscriptionRenewalStatusUseCase =
     );
 
 export const getPlansUseCase = new GetPlansUseCase(
-    makePrismaUnitOfWorkRepositoryAdapter(),
-);
-
-export const getUserPlanUseCase = new GetUserPlanUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),
 );
 

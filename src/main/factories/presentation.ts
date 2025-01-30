@@ -19,9 +19,7 @@ import {
     UpdateUsernameController,
     UserLoginController,
     VerifyUserEmailController,
-    ExecuteChargeToExpiredSubscriptionsController,
     GetUserSubscriptionController,
-    ManageSubscriptionRenewalController,
     UpdateSubscriptionRenewalStatusController,
     UpdateSubscriptionController,
     GetPlansController,
@@ -32,7 +30,6 @@ import {
     UpdatePaymentMethodNameController,
     UpdatePaymentMethodTokenController,
     CreateExtractController,
-    SetFreePlanForNonRenewableSubscriptionsController,
     AuthenticateUserMiddleware,
     BasicAuthenticationMiddleware,
 } from "@/layers/presentation";
@@ -49,10 +46,7 @@ import {
     updateUsernameUseCase,
     userLoginUseCase,
     verifyUserEmailUseCase,
-    executeChargeToExpiredSubscriptionsUseCase,
-    getActiveNonRenewableSubscriptionsUseCase,
     getUserSubscriptionUseCase,
-    manageSubscriptionRenewalUseCase,
     updateSubscriptionUseCase,
     updateSubscriptionRenewalStatusUseCase,
     getPlansUseCase,
@@ -132,22 +126,10 @@ export const verifyUserEmailController = new VerifyUserEmailController(
     winstonAdapter,
 );
 
-export const executeChargeToExpiredSubscriptionsController =
-    new ExecuteChargeToExpiredSubscriptionsController(
-        executeChargeToExpiredSubscriptionsUseCase,
-        winstonAdapter,
-    );
-
 export const getUserSubscriptionController = new GetUserSubscriptionController(
     getUserSubscriptionUseCase,
     winstonAdapter,
 );
-
-export const manageSubscriptionRenewalController =
-    new ManageSubscriptionRenewalController(
-        manageSubscriptionRenewalUseCase,
-        winstonAdapter,
-    );
 
 export const updateSubscriptionController = new UpdateSubscriptionController(
     updateSubscriptionUseCase,
@@ -157,13 +139,6 @@ export const updateSubscriptionController = new UpdateSubscriptionController(
 export const updateSubscriptionRenewalStatusController =
     new UpdateSubscriptionRenewalStatusController(
         updateSubscriptionRenewalStatusUseCase,
-        winstonAdapter,
-    );
-
-export const setFreePlanForNonRenewableSubscriptionsController =
-    new SetFreePlanForNonRenewableSubscriptionsController(
-        getActiveNonRenewableSubscriptionsUseCase,
-        manageSubscriptionRenewalUseCase,
         winstonAdapter,
     );
 

@@ -19,10 +19,7 @@ import {
     UpdateUsernameUseCase,
     UserLoginUseCase,
     VerifyUserEmailUseCase,
-    ExecuteChargeToExpiredSubscriptionsUseCase,
-    GetActiveNonRenewableSubscriptionsUseCase,
     GetUserSubscriptionUseCase,
-    ManageSubscriptionRenewalUseCase,
     UpdateSubscriptionRenewalStatusUseCase,
     UpdateSubscriptionUseCase,
     GetPlansUseCase,
@@ -108,25 +105,9 @@ export const verifyUserEmailUseCase = new VerifyUserEmailUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),
 );
 
-export const executeChargeToExpiredSubscriptionsUseCase =
-    new ExecuteChargeToExpiredSubscriptionsUseCase(
-        makePrismaUnitOfWorkRepositoryAdapter(),
-        stripeAdapter,
-    );
-
-export const getActiveNonRenewableSubscriptionsUseCase =
-    new GetActiveNonRenewableSubscriptionsUseCase(
-        makePrismaUnitOfWorkRepositoryAdapter(),
-    );
-
 export const getUserSubscriptionUseCase = new GetUserSubscriptionUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),
 );
-
-export const manageSubscriptionRenewalUseCase =
-    new ManageSubscriptionRenewalUseCase(
-        makePrismaUnitOfWorkRepositoryAdapter(),
-    );
 
 export const updateSubscriptionUseCase = new UpdateSubscriptionUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),

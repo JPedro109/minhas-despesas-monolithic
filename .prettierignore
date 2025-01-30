@@ -10,3 +10,4 @@ dist/
 .husky/
 coverage/
 prisma/
+.github/

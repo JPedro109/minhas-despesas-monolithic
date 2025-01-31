@@ -1,4 +1,3 @@
-import { PaymentCurrencyEnum } from "@/layers/application";
 import { StripeAdapter } from "@/layers/external";
 
 describe("External - StripeAdapter", () => {
@@ -80,27 +79,6 @@ describe("External - StripeAdapter", () => {
         expect(deletePaymentMethodByTokenSpy).toHaveBeenCalled();
         expect(deletePaymentMethodByTokenSpy).toHaveBeenCalledWith(
             paymentMethodId,
-        );
-
-        await sut.deleteCustomer(customerId);
-    });
-
-    test("Should pay | pay", async () => {
-        const email = "email@test.com";
-        const token = "pm_card_visa";
-        const sut = new StripeAdapter();
-        const customerId = await sut.createCustomer(email);
-        await sut.attachmentPaymentMethodInCustomer(customerId, token);
-        const paySpy = jest.spyOn(sut, "pay");
-
-        await sut.pay(customerId, token, 500, PaymentCurrencyEnum.BRL);
-
-        expect(paySpy).toHaveBeenCalled();
-        expect(paySpy).toHaveBeenCalledWith(
-            customerId,
-            token,
-            500,
-            PaymentCurrencyEnum.BRL,
         );
 
         await sut.deleteCustomer(customerId);

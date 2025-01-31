@@ -1,5 +1,3 @@
-import { PaymentCurrencyEnum } from "./payment-currency.enum";
-
 export interface IPayment {
     createCustomer(email: string): Promise<string>;
     updateCustomerEmailByCustomerId(
@@ -12,10 +10,4 @@ export interface IPayment {
         paymentMethodId: string,
     ): Promise<string>;
     deletePaymentMethodByToken(token: string): Promise<void>;
-    pay(
-        customerId: string,
-        paymentMethodId: string,
-        amount: number,
-        currency: PaymentCurrencyEnum,
-    ): Promise<void>;
 }

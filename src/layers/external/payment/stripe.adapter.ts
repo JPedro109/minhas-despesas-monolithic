@@ -1,5 +1,5 @@
 import { environmentVariables } from "@/shared";
-import { IPayment, PaymentCurrencyEnum } from "@/layers/application";
+import { IPayment } from "@/layers/application";
 
 import { Stripe } from "stripe";
 
@@ -36,25 +36,6 @@ export class StripeAdapter implements IPayment {
 
     public async deletePaymentMethodByToken(token: string): Promise<void> {
         await this.stripe.paymentMethods.detach(token);
-    }
-
-    public async pay(
-        customerId: string,
-        paymentMethodId: string,
-        amount: number,
-        currency: PaymentCurrencyEnum,
-    ): Promise<void> {
-        await this.stripe.paymentIntents.create({
-            currency,
-            payment_method: paymentMethodId,
-            confirm: true,
-            amount: amount,
-            automatic_payment_methods: {
-                enabled: true,
-                allow_redirects: "never",
-            },
-            customer: customerId,
-        });
     }
 
     public async deleteAllCustomers(): Promise<void> {

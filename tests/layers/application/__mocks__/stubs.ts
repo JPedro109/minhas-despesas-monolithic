@@ -10,7 +10,6 @@ import {
     IExtract,
     IExtractRepository,
     IGeneration,
-    ILog,
     INotification,
     IPayment,
     IPaymentHistoryRepository,
@@ -23,7 +22,6 @@ import {
     IUserVerificationCodeRepository,
     JsonWebTokenType,
     MailBodyTypeEnum,
-    PaymentCurrencyEnum,
 } from "@/layers/application";
 import {
     CustomerEntity,
@@ -132,13 +130,6 @@ export class PaymentStub implements IPayment {
     }
 
     async deletePaymentMethodByToken(paymentMethodId: string): Promise<void> {}
-
-    async pay(
-        customerId: string,
-        paymentMethodId: string,
-        amount: number,
-        currency: PaymentCurrencyEnum,
-    ): Promise<void> {}
 }
 
 export class CustomerRepositoryStub implements ICustomerRepository {

@@ -1,5 +1,6 @@
 import { environmentVariables } from "@/shared";
 import {
+    CustomerEntity,
     UserConsentEntity,
     UserEntity,
     UserVerificationCodeEntity,
@@ -54,6 +55,8 @@ export class CreateUserUseCase implements ICreateUserUseCase {
             this.unitOfWorkRepository.getUserConsentRepository();
         const userVerificationCodeRepository =
             this.unitOfWorkRepository.getUserVerificationCodeRepository();
+        const customerRepository =
+            this.unitOfWorkRepository.getCustomerRepository();
 
         const userExists = await userRepository.getUserByEmail(user.email);
         if (userExists) throw new ConflictedError("Email já cadastrado");
@@ -82,16 +85,27 @@ export class CreateUserUseCase implements ICreateUserUseCase {
                 userVerificationCode,
             );
 
-            await this.notification.sendMail(
-                email,
-                MailBodyTypeEnum.VerifyUserEmailBody,
-                {
-                    appUrl: environmentVariables.appUrl,
+            const customerId = await this.payment.createCustomer();
+            try {
+                const customer = new CustomerEntity({
+                    userId: userCreated.id,
+                    customerId,
+                });
+                await customerRepository.createCustomer(customer);
+                await this.notification.sendMail(
                     email,
-                    username,
-                    code,
-                },
-            );
+                    MailBodyTypeEnum.VerifyUserEmailBody,
+                    {
+                        appUrl: environmentVariables.appUrl,
+                        email,
+                        username,
+                        code,
+                    },
+                );
+            } catch (e) {
+                await this.payment.deleteCustomer(customerId);
+                throw e;
+            }
         });
 
         return userCreated.id;

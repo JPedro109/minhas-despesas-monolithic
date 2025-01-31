@@ -20,4 +20,5 @@ export interface IPayment {
         subscriptionId: string,
         renewable: boolean,
     ): Promise<void>;
+    deleteSubscription(subscriptionExternalId: string): Promise<void>;
 }

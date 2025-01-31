@@ -151,6 +151,10 @@ export class PaymentStub implements IPayment {
         subscriptionId: string,
         renewable: boolean,
     ): Promise<void> {}
+
+    public async deleteSubscription(
+        subscriptionExternalId: string,
+    ): Promise<void> {}
 }
 
 export class CustomerRepositoryStub implements ICustomerRepository {

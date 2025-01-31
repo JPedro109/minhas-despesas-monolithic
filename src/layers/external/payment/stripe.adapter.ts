@@ -75,6 +75,10 @@ export class StripeAdapter implements IPayment {
         });
     }
 
+    async deleteSubscription(subscriptionExternalId: string): Promise<void> {
+        await this.stripe.subscriptions.cancel(subscriptionExternalId);
+    }
+
     public async deleteAllCustomers(): Promise<void> {
         const customers = await this.stripe.customers.list({
             limit: 100,

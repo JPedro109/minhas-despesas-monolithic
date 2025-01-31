@@ -58,7 +58,7 @@ describe("External - StripeAdapter", () => {
         await sut.deleteCustomer(customerId);
     });
 
-    test.only("Should get subscription | createSubscription", async () => {
+    test("Should get subscription | createSubscription", async () => {
         const token = "pm_card_visa";
         const planExternalId = "price_1QkaxzRu300ehj2uYbE4FbTP";
         const sut = new StripeAdapter();
@@ -83,6 +83,28 @@ describe("External - StripeAdapter", () => {
     });
 
     test("Should update subscription renewable | updateSubscriptionRenewable", async () => {
+        const token = "pm_card_visa";
+        const planExternalId = "price_1QkaxzRu300ehj2uYbE4FbTP";
+        const sut = new StripeAdapter();
+        const customerId = await sut.createCustomer();
+        const paymentMethodId = await sut.attachmentPaymentMethodInCustomer(
+            customerId,
+            token,
+        );
+        const subscriptionExternalId = await sut.createSubscription(
+            customerId,
+            planExternalId,
+            paymentMethodId,
+        );
+
+        const result = await sut.deleteSubscription(subscriptionExternalId);
+
+        expect(result).not.toBeNull();
+
+        await sut.deleteCustomer(customerId);
+    });
+
+    test("Should delete subscription renewable | deleteSubscription", async () => {
         const token = "pm_card_visa";
         const planExternalId = "price_1QkaxzRu300ehj2uYbE4FbTP";
         const sut = new StripeAdapter();

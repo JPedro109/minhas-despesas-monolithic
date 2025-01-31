@@ -1,12 +1,9 @@
 import { environmentVariables } from "@/shared";
 import {
-    CustomerEntity,
-    SubscriptionEntity,
     UserConsentEntity,
     UserEntity,
     UserVerificationCodeEntity,
     UserVerificationCodeTypeEnum,
-    PlanNameEnum,
 } from "@/layers/domain";
 import {
     IUnitOfWorkRepository,
@@ -57,11 +54,6 @@ export class CreateUserUseCase implements ICreateUserUseCase {
             this.unitOfWorkRepository.getUserConsentRepository();
         const userVerificationCodeRepository =
             this.unitOfWorkRepository.getUserVerificationCodeRepository();
-        const customerRepository =
-            this.unitOfWorkRepository.getCustomerRepository();
-        const planRepository = this.unitOfWorkRepository.getPlanRepository();
-        const subscriptionRepository =
-            this.unitOfWorkRepository.getSubscriptionRepository();
 
         const userExists = await userRepository.getUserByEmail(user.email);
         if (userExists) throw new ConflictedError("Email já cadastrado");
@@ -90,49 +82,16 @@ export class CreateUserUseCase implements ICreateUserUseCase {
                 userVerificationCode,
             );
 
-            const planFree = await planRepository.getPlanByName(
-                PlanNameEnum.Free,
-            );
-
-            const date = new Date();
-            const subscription = new SubscriptionEntity({
-                userId: userCreated.id,
-                plan: planFree,
-                active: true,
-                renewable: false,
-                amount: planFree.amount,
-                startDate: new Date(
-                    date.getUTCFullYear(),
-                    date.getUTCMonth(),
-                    date.getUTCDate(),
-                    0,
-                    0,
-                    0,
-                ),
-            });
-            await subscriptionRepository.createSubscription(subscription);
-
-            const customerId = await this.payment.createCustomer(email);
-            try {
-                const customer = new CustomerEntity({
-                    userId: userCreated.id,
-                    customerId,
-                });
-                await customerRepository.createCustomer(customer);
-                await this.notification.sendMail(
+            await this.notification.sendMail(
+                email,
+                MailBodyTypeEnum.VerifyUserEmailBody,
+                {
+                    appUrl: environmentVariables.appUrl,
                     email,
-                    MailBodyTypeEnum.VerifyUserEmailBody,
-                    {
-                        appUrl: environmentVariables.appUrl,
-                        email,
-                        username,
-                        code,
-                    },
-                );
-            } catch (e) {
-                await this.payment.deleteCustomer(customerId);
-                throw e;
-            }
+                    username,
+                    code,
+                },
+            );
         });
 
         return userCreated.id;

@@ -6,7 +6,6 @@ import {
 } from "@/layers/application";
 import {
     NotificationStub,
-    CustomerRepositoryStub,
     UserRepositoryStub,
     unitOfWorkRepositoryStubFactory,
     notificationStubFactory,
@@ -18,7 +17,6 @@ import {
 const makeSut = (): {
     sut: CreateUserUseCase;
     userRepositoryStub: UserRepositoryStub;
-    customerRepositoryStub: CustomerRepositoryStub;
     mailStub: NotificationStub;
 } => {
     const mailStub = notificationStubFactory();
@@ -37,8 +35,6 @@ const makeSut = (): {
     return {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        customerRepositoryStub:
-            unitOfWorkRepositoryStub.getCustomerRepository(),
         mailStub,
     };
 };
@@ -111,36 +107,6 @@ describe("Use case - CreateUserUseCase", () => {
         });
 
         await expect(result).rejects.toThrow(ConflictedError);
-    });
-
-    test("Should not create user, because create customer is failed", async () => {
-        const email = "email@test.com";
-        const username = "username";
-        const password = "Password1234";
-        const passwordConfirm = "Password1234";
-        const consentVersion = "1.0";
-        const userAgent = "Mozilla";
-        const ipAddress = "127.0.0.1";
-        const { sut, userRepositoryStub, customerRepositoryStub } = makeSut();
-        jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(
-            null,
-        );
-        jest.spyOn(
-            customerRepositoryStub,
-            "createCustomer",
-        ).mockReturnValueOnce(Promise.reject(new Error()));
-
-        const result = sut.execute({
-            email,
-            username,
-            password,
-            passwordConfirm,
-            consentVersion,
-            userAgent,
-            ipAddress,
-        });
-
-        await expect(result).rejects.toThrow(Error);
     });
 
     test("Should not create user, because send mail is failed", async () => {

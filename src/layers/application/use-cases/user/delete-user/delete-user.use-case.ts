@@ -24,8 +24,6 @@ export class DeleteUserUseCase implements IDeleteUserUseCase {
             throw new InvalidParamError("As senhas não coincidem");
 
         const userRepository = this.unitOfWorkRepository.getUserRepository();
-        const customerRepository =
-            this.unitOfWorkRepository.getCustomerRepository();
 
         const user = await userRepository.getUserById(id);
 
@@ -38,15 +36,6 @@ export class DeleteUserUseCase implements IDeleteUserUseCase {
 
         if (!passwordIsEqual) throw new InvalidParamError("Senha inválida");
 
-        const customer = await customerRepository.getCustomerByUserId(user.id);
-        const hashEmail = await this.cryptography.toHash(user.email);
-
-        await this.unitOfWorkRepository.transaction(async () => {
-            await this.payment.updateCustomerEmailByCustomerId(
-                customer.customerId,
-                `${hashEmail}@hash.com`,
-            );
-            await userRepository.deleteUserById(id);
-        });
+        await userRepository.deleteUserById(id);
     }
 }

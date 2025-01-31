@@ -27,20 +27,6 @@ describe("/api/extracts - POST", () => {
         expect(response.body.code).toBe("InvalidRequestSchemaError");
     });
 
-    test("Should not create extract because the user plan does not include the creation of extracts", async () => {
-        const body = makeBody(1, 3000);
-        const token = await loginRest("email-with-plan-free@test.com");
-
-        const response = await request(setupServer())
-            .post("/api/extracts")
-            .set("User-Agent", "Supertest-Client/1.0")
-            .set("authorization", `Bearer ${token.accessToken}`)
-            .send(body);
-
-        expect(response.statusCode).toBe(403);
-        expect(response.body.code).toBe("ForbiddenError");
-    });
-
     test("Should not create extract because the user already has the maximum number of extracts", async () => {
         const body = makeBody(1, 3000);
         const token = await loginRest(

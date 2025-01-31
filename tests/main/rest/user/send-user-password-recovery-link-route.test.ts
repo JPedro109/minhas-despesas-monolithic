@@ -36,7 +36,7 @@ describe("/api/user/send-password-recovery-link - POST", () => {
     });
 
     test("Should send password recovery link successfully", async () => {
-        const body = makeBody("email-with-plan-free@test.com");
+        const body = makeBody("email-with-plan-gold@test.com");
 
         const response = await request(setupServer())
             .post("/api/users/send-password-recovery-link")

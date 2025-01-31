@@ -1,16 +1,19 @@
-import { PlanNameEnum } from "@/layers/domain";
 import {
     UpdateSubscriptionRenewalStatusDTO,
     IUpdateSubscriptionRenewalStatusUseCase,
     IUnitOfWorkRepository,
     NotFoundError,
     ForbiddenError,
+    IPayment,
 } from "@/layers/application";
 
 export class UpdateSubscriptionRenewalStatusUseCase
     implements IUpdateSubscriptionRenewalStatusUseCase
 {
-    constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) {}
+    constructor(
+        private readonly unitOfWorkRepository: IUnitOfWorkRepository,
+        private readonly payment: IPayment,
+    ) {}
 
     async execute({
         userId,
@@ -21,16 +24,10 @@ export class UpdateSubscriptionRenewalStatusUseCase
         const paymentMethodRepository =
             this.unitOfWorkRepository.getPaymentMethodRepository();
 
-        const subscriptionActive =
-            await subscriptionRepository.getActiveSubscriptionByUserId(userId);
+        const subscription =
+            await subscriptionRepository.getSubscriptionByUserId(userId);
 
-        if (!subscriptionActive)
-            throw new NotFoundError("Esse usuário não existe");
-
-        if (subscriptionActive.plan.name === PlanNameEnum.Free)
-            throw new ForbiddenError(
-                `Não é possível alterar o status de renovação de uma assinatura com o plano ${PlanNameEnum.Free}`,
-            );
+        if (!subscription) throw new NotFoundError("Esse usuário não existe");
 
         if (renewable) {
             const paymentMethodExists =
@@ -41,10 +38,19 @@ export class UpdateSubscriptionRenewalStatusUseCase
                 );
         }
 
-        subscriptionActive.renewable = renewable;
-        await subscriptionRepository.updateSubscriptionById(
-            subscriptionActive.id,
-            subscriptionActive,
+        const subscriptionData =
+            await this.payment.getSubscriptionBySubscriptionExternalId(
+                subscription.subscriptionExternalId,
+            );
+
+        if (subscriptionData.renewable === renewable)
+            throw new ForbiddenError(
+                `A assinatura já está ${renewable ? "ativa" : "cancelada"}`,
+            );
+
+        await this.payment.updateSubscriptionRenewable(
+            subscription.subscriptionExternalId,
+            renewable,
         );
     }
 }

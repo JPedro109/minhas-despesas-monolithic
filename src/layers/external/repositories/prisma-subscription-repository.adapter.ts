@@ -27,12 +27,8 @@ export class PrismaSubscriptionRepositoryAdapter
                 data: {
                     id: subscription.id,
                     userId: subscription.userId,
-                    active: subscription.active,
-                    renewable: subscription.renewable,
-                    amount: subscription.amount,
                     planId: subscription.plan.id,
-                    startDate: subscription.startDate,
-                    endDate: subscription.endDate,
+                    subscriptionExternalId: subscription.subscriptionExternalId,
                     createdAt: subscription.createdAt,
                     updatedAt: subscription.updatedAt,
                 },
@@ -52,11 +48,11 @@ export class PrismaSubscriptionRepositoryAdapter
         );
     }
 
-    async getActiveSubscriptionByUserId(
+    async getSubscriptionByUserId(
         userId: string,
     ): Promise<SubscriptionEntity | null> {
         const subscription = await this.context.prismaSubscription.findFirst({
-            where: { userId, active: true },
+            where: { userId },
             include: {
                 plan: {
                     include: {
@@ -73,75 +69,5 @@ export class PrismaSubscriptionRepositoryAdapter
             subscription.plan,
             subscription.plan.actions,
         );
-    }
-
-    async getActiveSubscriptionsByEndDate(
-        endDate: Date,
-        renewable: boolean,
-    ): Promise<SubscriptionEntity[]> {
-        const subscriptions = await this.context.prismaSubscription.findMany({
-            where: { endDate, renewable, active: true },
-            include: {
-                plan: {
-                    include: {
-                        actions: true,
-                    },
-                },
-            },
-        });
-
-        return subscriptions.map((subscription) =>
-            PrismaMapperHelper.toSubscriptionEntity(
-                subscription,
-                subscription.plan,
-                subscription.plan.actions,
-            ),
-        );
-    }
-
-    async getSubscriptionsActiveAndRenewableWhenTheCurrentDateIsGreaterThanTheEndDate(): Promise<
-        SubscriptionEntity[]
-    > {
-        const currentDate = new Date();
-
-        const subscriptions = await this.context.prismaSubscription.findMany({
-            where: {
-                endDate: { lt: currentDate },
-                renewable: true,
-                active: true,
-            },
-            include: {
-                plan: {
-                    include: {
-                        actions: true,
-                    },
-                },
-            },
-        });
-
-        return subscriptions.map((subscription) =>
-            PrismaMapperHelper.toSubscriptionEntity(
-                subscription,
-                subscription.plan,
-                subscription.plan.actions,
-            ),
-        );
-    }
-
-    async updateSubscriptionById(
-        subscriptionId: string,
-        subscription: SubscriptionEntity,
-    ): Promise<void> {
-        await this.context.prismaSubscription.update({
-            where: { id: subscriptionId },
-            data: {
-                active: subscription.active,
-                renewable: subscription.renewable,
-                amount: subscription.amount,
-                startDate: subscription.startDate,
-                endDate: subscription.endDate,
-                updatedAt: subscription.updatedAt,
-            },
-        });
     }
 }

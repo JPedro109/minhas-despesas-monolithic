@@ -111,12 +111,13 @@ export const testPaymentMethodEntity = (): PaymentMethodEntity =>
         new Date(),
     );
 
-export const testPlanFreeEntity = (): PlanEntity =>
+export const testPlanGoldEntity = (): PlanEntity =>
     new PlanEntity(
         {
-            name: PlanNameEnum.Free,
-            amount: 0,
-            description: "Plano FREE",
+            name: PlanNameEnum.Gold,
+            planExternalId: "1",
+            amount: 100,
+            description: "Plano Gold",
             actions: [
                 {
                     id: "00000000-0000-0000-0000-000000000000",
@@ -135,13 +136,8 @@ export const testSubscriptionEntity = (): SubscriptionEntity =>
     new SubscriptionEntity(
         {
             userId: "00000000-0000-0000-0000-000000000000",
-            active: true,
-            renewable: true,
-            startDate: new Date("2999-01-01"),
-            endDate: new Date("3000-01-01"),
-            updatedAt: new Date(),
-            plan: testPlanFreeEntity(),
-            amount: 100,
+            subscriptionExternalId: "1",
+            plan: testPlanGoldEntity(),
         },
         "00000000-0000-0000-0000-000000000000",
         new Date(),
@@ -151,13 +147,8 @@ export const testSubscriptionEntityExpired = (): SubscriptionEntity =>
     new SubscriptionEntity(
         {
             userId: "00000000-0000-0000-0000-000000000001",
-            active: true,
-            renewable: true,
-            startDate: new Date("2000-01-01"),
-            endDate: new Date("2000-02-01"),
-            updatedAt: new Date(),
-            plan: testPlanFreeEntity(),
-            amount: 100,
+            subscriptionExternalId: "1",
+            plan: testPlanGoldEntity(),
         },
         "00000000-0000-0000-0000-000000000001",
         new Date(),

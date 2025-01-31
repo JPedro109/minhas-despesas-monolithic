@@ -17,7 +17,6 @@ export type GetUserSubscriptionResponseDTO = {
             description: string;
         }[];
     };
-    amount: number;
     active: boolean;
     renewable: boolean;
     startDate: Date;

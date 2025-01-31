@@ -125,31 +125,11 @@ export const testUserVerificationCodeEntityOfTypeRecoveryUserPasswordWithDateExp
             new Date("2024-01-01"),
         );
 
-export const testPlanFreeEntity = (): PlanEntity =>
-    new PlanEntity(
-        {
-            name: PlanNameEnum.Free,
-            amount: 0,
-            description: "Plano FREE",
-            actions: [
-                {
-                    id: "1",
-                    name: "create:expense",
-                    description: "create:expense",
-                    createdAt: new Date("2024-01-01"),
-                    updatedAt: new Date("2024-06-30"),
-                },
-            ],
-            durationInDays: 30,
-        },
-        "1",
-        new Date("2024-01-01"),
-    );
-
 export const testPlanGoldEntity = (): PlanEntity =>
     new PlanEntity(
         {
             name: PlanNameEnum.Gold,
+            planExternalId: "1",
             amount: 500,
             description: "Plano GOLD",
             actions: [
@@ -167,103 +147,16 @@ export const testPlanGoldEntity = (): PlanEntity =>
         new Date("2024-01-01"),
     );
 
-export const testPlanDiamondEntity = (): PlanEntity =>
-    new PlanEntity(
-        {
-            name: PlanNameEnum.Diamond,
-            amount: 1000,
-            description: "Plano DIAMOND",
-            actions: [
-                {
-                    id: "1",
-                    name: "create:expense",
-                    description: "create:expense",
-                    createdAt: new Date("2024-01-01"),
-                    updatedAt: new Date("2024-06-30"),
-                },
-            ],
-            durationInDays: 30,
-        },
-        "3",
-        new Date("2024-01-01"),
-    );
-
-export const testSubscriptionEntityWithPlanFree = (): SubscriptionEntity =>
-    new SubscriptionEntity(
-        {
-            userId: "1",
-            plan: testPlanFreeEntity(),
-            amount: testPlanFreeEntity().amount,
-            active: true,
-            renewable: false,
-            startDate: new Date("3000-01-01"),
-            endDate: new Date("3000-02-01"),
-        },
-        "1",
-        new Date("2024-01-01"),
-    );
-
-export const testSubscriptionEntityWithPlanGoldWithoutAmount =
-    (): SubscriptionEntity =>
-        new SubscriptionEntity(
-            {
-                userId: "1",
-                plan: testPlanGoldEntity(),
-                amount: 0,
-                active: true,
-                renewable: true,
-                startDate: new Date("3000-01-01"),
-                endDate: new Date("3000-02-01"),
-            },
-            "4",
-            new Date("2024-01-01"),
-        );
-
 export const testSubscriptionEntityWithPlanGold = (): SubscriptionEntity =>
     new SubscriptionEntity(
         {
             userId: "1",
+            subscriptionExternalId: "1",
             plan: testPlanGoldEntity(),
-            amount: testPlanGoldEntity().amount,
-            active: true,
-            renewable: true,
-            startDate: new Date("3000-01-01"),
-            endDate: new Date("3000-02-01"),
         },
         "2",
         new Date("2024-01-01"),
     );
-
-export const testSubscriptionEntityWithPlanDiamond = (): SubscriptionEntity =>
-    new SubscriptionEntity(
-        {
-            userId: "1",
-            plan: testPlanDiamondEntity(),
-            amount: testPlanDiamondEntity().amount,
-            active: true,
-            renewable: true,
-            startDate: new Date("3000-01-01"),
-            endDate: new Date("3000-02-01"),
-        },
-        "3",
-        new Date("2024-01-01"),
-    );
-
-export const testSubscriptionEntityWithPlanDiamondNotRenewable =
-    (): SubscriptionEntity =>
-        new SubscriptionEntity(
-            {
-                userId: "1",
-                plan: testPlanDiamondEntity(),
-                amount: testPlanDiamondEntity().amount,
-                active: true,
-                renewable: false,
-                startDate: new Date("3000-01-01"),
-                endDate: new Date("3000-02-01"),
-            },
-            "5",
-            new Date("2024-01-01"),
-        );
 
 export const testCustomerEntity = (): CustomerEntity =>
     new CustomerEntity(

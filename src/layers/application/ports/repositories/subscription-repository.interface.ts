@@ -5,18 +5,5 @@ export interface ISubscriptionRepository {
     createSubscription(
         subscription: SubscriptionEntity,
     ): Promise<SubscriptionEntity>;
-    getActiveSubscriptionByUserId(
-        userId: string,
-    ): Promise<SubscriptionEntity | null>;
-    getActiveSubscriptionsByEndDate(
-        endDate: Date,
-        renewable: boolean,
-    ): Promise<SubscriptionEntity[]>;
-    getSubscriptionsActiveAndRenewableWhenTheCurrentDateIsGreaterThanTheEndDate(): Promise<
-        SubscriptionEntity[]
-    >;
-    updateSubscriptionById(
-        subscriptionId: string,
-        subscription: SubscriptionEntity,
-    ): Promise<void>;
+    getSubscriptionByUserId(userId: string): Promise<SubscriptionEntity | null>;
 }

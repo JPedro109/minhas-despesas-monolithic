@@ -12,26 +12,6 @@ describe("External - StripeAdapter", () => {
         await sut.deleteCustomer(result);
     });
 
-    test("Should update customer email | updateCustomerEmailByCustomerId", async () => {
-        const email = "email@test.com";
-        const sut = new StripeAdapter();
-        const customerId = await sut.createCustomer(email);
-        const updateCustomerEmailByCustomerIdSpy = jest.spyOn(
-            sut,
-            "updateCustomerEmailByCustomerId",
-        );
-
-        await sut.updateCustomerEmailByCustomerId(customerId, email);
-
-        expect(updateCustomerEmailByCustomerIdSpy).toHaveBeenCalled();
-        expect(updateCustomerEmailByCustomerIdSpy).toHaveBeenCalledWith(
-            customerId,
-            email,
-        );
-
-        await sut.deleteCustomer(customerId);
-    });
-
     test("Should delete customer | deleteCustomer", async () => {
         const email = "email@test.com";
         const sut = new StripeAdapter();
@@ -60,7 +40,7 @@ describe("External - StripeAdapter", () => {
         await sut.deleteCustomer(customerId);
     });
 
-    test("Should delete payment method | deletePaymentMethodByToken", async () => {
+    test("Should delete payment method | detachmentPaymentMethodInCustomerByToken", async () => {
         const email = "email@test.com";
         const token = "pm_card_visa";
         const sut = new StripeAdapter();
@@ -71,10 +51,10 @@ describe("External - StripeAdapter", () => {
         );
         const deletePaymentMethodByTokenSpy = jest.spyOn(
             sut,
-            "deletePaymentMethodByToken",
+            "detachmentPaymentMethodInCustomerByToken",
         );
 
-        await sut.deletePaymentMethodByToken(paymentMethodId);
+        await sut.detachmentPaymentMethodInCustomerByToken(paymentMethodId);
 
         expect(deletePaymentMethodByTokenSpy).toHaveBeenCalled();
         expect(deletePaymentMethodByTokenSpy).toHaveBeenCalledWith(

@@ -55,7 +55,9 @@ export class CreatePaymentMethodUseCase implements ICreatePaymentMethodUseCase {
                         paymentMethod,
                     );
             } catch (e) {
-                await this.payment.deletePaymentMethodByToken(tokenCreated);
+                await this.payment.detachmentPaymentMethodInCustomerByToken(
+                    tokenCreated,
+                );
                 throw e;
             }
         });

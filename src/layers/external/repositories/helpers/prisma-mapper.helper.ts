@@ -122,6 +122,7 @@ export class PrismaMapperHelper {
         return new PlanEntity(
             {
                 name: prismaPlan.name as PlanNameEnum,
+                planExternalId: prismaPlan.planExternalId,
                 amount: prismaPlan.amount,
                 description: prismaPlan.description,
                 durationInDays: prismaPlan.durationInDays,
@@ -141,11 +142,8 @@ export class PrismaMapperHelper {
         return new SubscriptionEntity(
             {
                 userId: prismaSubscription.userId,
-                active: prismaSubscription.active,
-                renewable: prismaSubscription.renewable,
-                amount: prismaSubscription.amount,
-                startDate: prismaSubscription.startDate,
-                endDate: prismaSubscription.endDate,
+                subscriptionExternalId:
+                    prismaSubscription.subscriptionExternalId,
                 plan: PrismaMapperHelper.toPlanEntity(
                     prismaPlan,
                     prismaActions,

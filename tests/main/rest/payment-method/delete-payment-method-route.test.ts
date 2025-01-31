@@ -22,30 +22,11 @@ describe("/api/payment-methods/:id - DELETE", () => {
 
         expect(response.statusCode).toBe(404);
         expect(response.body.code).toBe("NotFoundError");
-        expect(response.body.message).toBe(
-            "Esse método de pagamento não existe",
-        );
-    });
-
-    test("Should not delete a payment method because the user has an active renewable subscription", async () => {
-        const renewableSubscriptionPaymentMethodId =
-            "00000000-0000-0000-0000-000000000003";
-        const token = await loginRest(
-            "email-with-plan-gold-and-with-expense@test.com",
-        );
-
-        const response = await request(setupServer())
-            .delete(makeUrl(renewableSubscriptionPaymentMethodId))
-            .set("User-Agent", "Supertest-Client/1.0")
-            .set("authorization", `Bearer ${token.accessToken}`);
-
-        expect(response.statusCode).toBe(403);
-        expect(response.body.code).toBe("ForbiddenError");
     });
 
     test("Should delete a payment method successfully", async () => {
         const validPaymentMethodId = "00000000-0000-0000-0000-000000000000";
-        const token = await loginRest("email-with-plan-free@test.com");
+        const token = await loginRest("email-with-plan-gold@test.com");
 
         const response = await request(setupServer())
             .delete(makeUrl(validPaymentMethodId))

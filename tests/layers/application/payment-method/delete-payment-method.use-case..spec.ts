@@ -4,19 +4,15 @@ import {
     ForbiddenError,
 } from "@/layers/application";
 import {
-    SubscriptionRepositoryStub,
     PaymentStub,
     PaymentMethodRepositoryStub,
     unitOfWorkRepositoryStubFactory,
     paymentStubFactory,
-    testSubscriptionEntityWithPlanDiamondNotRenewable,
-    testSubscriptionEntityWithPlanDiamond,
 } from "../__mocks__";
 
 const makeSut = (): {
     sut: DeletePaymentMethodUseCase;
     paymentMethodRepositoryStub: PaymentMethodRepositoryStub;
-    subscriptionRepositoryStub: SubscriptionRepositoryStub;
     paymentStub: PaymentStub;
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
@@ -30,8 +26,7 @@ const makeSut = (): {
         sut,
         paymentMethodRepositoryStub:
             unitOfWorkRepositoryStub.getPaymentMethodRepository(),
-        subscriptionRepositoryStub:
-            unitOfWorkRepositoryStub.getSubscriptionRepository(),
+
         paymentStub,
     };
 };
@@ -51,12 +46,17 @@ describe("Use case - DeletePaymentMethodUseCase", () => {
     });
 
     test("Should not delete payment method because subscription is renewable", async () => {
-        const { sut, subscriptionRepositoryStub } = makeSut();
-        const id = "1";
+        const { sut, paymentStub } = makeSut();
         jest.spyOn(
-            subscriptionRepositoryStub,
-            "getActiveSubscriptionByUserId",
-        ).mockResolvedValueOnce(testSubscriptionEntityWithPlanDiamond());
+            paymentStub,
+            "getSubscriptionBySubscriptionExternalId",
+        ).mockResolvedValueOnce({
+            active: true,
+            renewable: true,
+            startDate: new Date("3000-01-01"),
+            endDate: new Date("3000-02-01"),
+        });
+        const id = "1";
 
         const result = sut.execute({ id });
 
@@ -64,26 +64,15 @@ describe("Use case - DeletePaymentMethodUseCase", () => {
     });
 
     test("Should delete payment method successfully", async () => {
-        const {
-            sut,
-            subscriptionRepositoryStub,
-            paymentStub,
-            paymentMethodRepositoryStub,
-        } = makeSut();
+        const { sut, paymentStub, paymentMethodRepositoryStub } = makeSut();
         const id = "1";
         const deletePaymentMethodSpy = jest.spyOn(
             paymentStub,
-            "deletePaymentMethodByToken",
+            "detachmentPaymentMethodInCustomerByToken",
         );
         const deletePaymentMethodByIdSpy = jest.spyOn(
             paymentMethodRepositoryStub,
             "deletePaymentMethodById",
-        );
-        jest.spyOn(
-            subscriptionRepositoryStub,
-            "getActiveSubscriptionByUserId",
-        ).mockResolvedValueOnce(
-            testSubscriptionEntityWithPlanDiamondNotRenewable(),
         );
 
         await sut.execute({ id });

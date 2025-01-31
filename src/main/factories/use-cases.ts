@@ -105,11 +105,13 @@ export const verifyUserEmailUseCase = new VerifyUserEmailUseCase(
 
 export const getUserSubscriptionUseCase = new GetUserSubscriptionUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),
+    stripeAdapter,
 );
 
 export const updateSubscriptionRenewalStatusUseCase =
     new UpdateSubscriptionRenewalStatusUseCase(
         makePrismaUnitOfWorkRepositoryAdapter(),
+        stripeAdapter,
     );
 
 export const getPlansUseCase = new GetPlansUseCase(

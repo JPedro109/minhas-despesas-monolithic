@@ -22,7 +22,7 @@ describe("/api/payment-methods - GET", () => {
     });
 
     test("Should return the user payment method successfully", async () => {
-        const token = await loginRest("email-with-plan-free@test.com");
+        const token = await loginRest("email-with-plan-gold@test.com");
 
         const response = await request(setupServer())
             .get("/api/payment-methods")

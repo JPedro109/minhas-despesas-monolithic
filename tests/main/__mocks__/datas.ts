@@ -67,22 +67,11 @@ export const extractActions = [
     },
 ];
 
-export const testPlanFreeEntity = (): PlanEntity =>
-    new PlanEntity(
-        {
-            name: PlanNameEnum.Free,
-            amount: 0,
-            description: "Plano FREE",
-            actions: expenseActions,
-            durationInDays: 0,
-        },
-        "00000000-0000-0000-0000-000000000000",
-    );
-
 export const testPlanGoldEntity = (): PlanEntity =>
     new PlanEntity(
         {
             name: PlanNameEnum.Gold,
+            planExternalId: "price_1QkaxzRu300ehj2uYbE4FbTP",
             amount: 200,
             description: "Plano GOLD",
             actions: [...expenseActions, ...extractActions],
@@ -170,29 +159,13 @@ export const testUserVerificationCodeEntity = (
     });
 };
 
-export const testSubscriptionEntityWithPlanFree = (
-    userId: string,
-): SubscriptionEntity =>
-    new SubscriptionEntity({
-        userId,
-        active: true,
-        renewable: false,
-        startDate: new Date("3000-01-01"),
-        plan: testPlanFreeEntity(),
-        amount: 0,
-    });
-
 export const testSubscriptionEntityWithPlanGold = (
     userId: string,
 ): SubscriptionEntity =>
     new SubscriptionEntity({
         userId,
-        active: true,
-        renewable: true,
-        startDate: new Date("3000-01-01"),
-        endDate: new Date("3000-02-01"),
+        subscriptionExternalId: "1",
         plan: testPlanGoldEntity(),
-        amount: 0,
     });
 
 export const testExpenseEntityPaid = (

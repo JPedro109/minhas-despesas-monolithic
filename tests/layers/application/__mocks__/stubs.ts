@@ -22,6 +22,7 @@ import {
     IUserVerificationCodeRepository,
     JsonWebTokenType,
     MailBodyTypeEnum,
+    SubscriptionData,
 } from "@/layers/application";
 import {
     CustomerEntity,
@@ -43,8 +44,7 @@ import {
     testExtractEntity,
     testPaymentHistoryEntity,
     testPaymentMethodEntity,
-    testPlanFreeEntity,
-    testSubscriptionEntityWithPlanFree,
+    testPlanGoldEntity,
     testSubscriptionEntityWithPlanGold,
     testUserEntity,
 } from "./datas";
@@ -115,11 +115,6 @@ export class PaymentStub implements IPayment {
         return "1";
     }
 
-    async updateCustomerEmailByCustomerId(
-        customerId: string,
-        email: string,
-    ): Promise<void> {}
-
     async deleteCustomer(customerId: string): Promise<void> {}
 
     async attachmentPaymentMethodInCustomer(
@@ -129,7 +124,33 @@ export class PaymentStub implements IPayment {
         return "1";
     }
 
-    async deletePaymentMethodByToken(paymentMethodId: string): Promise<void> {}
+    async detachmentPaymentMethodInCustomerByToken(
+        paymentMethodId: string,
+    ): Promise<void> {}
+
+    public async createSubscription(
+        customerId: string,
+        planExternalId: string,
+        paymentMethod: string,
+    ): Promise<string> {
+        return "1";
+    }
+
+    public async getSubscriptionBySubscriptionExternalId(
+        subscriptionExternalId: string,
+    ): Promise<SubscriptionData> {
+        return {
+            active: true,
+            renewable: false,
+            startDate: new Date("3000-01-01"),
+            endDate: new Date("3000-01-02"),
+        };
+    }
+
+    public async updateSubscriptionRenewable(
+        subscriptionId: string,
+        renewable: boolean,
+    ): Promise<void> {}
 }
 
 export class CustomerRepositoryStub implements ICustomerRepository {
@@ -152,15 +173,15 @@ export class PlanRepositoryStub implements IPlanRepository {
     setContext(context: unknown): void {}
 
     async getPlans(): Promise<PlanEntity[]> {
-        return [testPlanFreeEntity()];
+        return [testPlanGoldEntity()];
     }
 
     async getPlanByName(planName: PlanNameEnum): Promise<PlanEntity | null> {
-        return testPlanFreeEntity();
+        return testPlanGoldEntity();
     }
 
     async getPlanById(planId: string): Promise<PlanEntity | null> {
-        return testPlanFreeEntity();
+        return testPlanGoldEntity();
     }
 }
 
@@ -173,28 +194,10 @@ export class SubscriptionRepositoryStub implements ISubscriptionRepository {
         return subscription;
     }
 
-    async updateSubscriptionById(
-        subscriptionId: string,
-        subscription: SubscriptionEntity,
-    ): Promise<void> {}
-
-    async getActiveSubscriptionByUserId(
+    async getSubscriptionByUserId(
         userId: string,
     ): Promise<SubscriptionEntity | null> {
-        return testSubscriptionEntityWithPlanFree();
-    }
-
-    async getActiveSubscriptionsByEndDate(
-        endDate: Date,
-        renewable: boolean,
-    ): Promise<SubscriptionEntity[]> {
-        return [testSubscriptionEntityWithPlanFree()];
-    }
-
-    async getSubscriptionsActiveAndRenewableWhenTheCurrentDateIsGreaterThanTheEndDate(): Promise<
-        SubscriptionEntity[]
-    > {
-        return [testSubscriptionEntityWithPlanGold()];
+        return testSubscriptionEntityWithPlanGold();
     }
 }
 

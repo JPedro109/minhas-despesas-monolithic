@@ -46,9 +46,13 @@ export class UpdatePaymentMethodTokenUseCase
                     paymentMethod.id,
                     paymentMethod,
                 );
-                await this.payment.deletePaymentMethodByToken(oldPaymentMethod);
+                await this.payment.detachmentPaymentMethodInCustomerByToken(
+                    oldPaymentMethod,
+                );
             } catch (e) {
-                await this.payment.deletePaymentMethodByToken(tokenCreated);
+                await this.payment.detachmentPaymentMethodInCustomerByToken(
+                    tokenCreated,
+                );
                 throw e;
             }
         });

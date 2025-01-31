@@ -16,7 +16,7 @@ describe("/api/payment-methods/token/:id - PATCH", () => {
     test("Should not update payment method because token is empty", async () => {
         const validId = "00000000-0000-0000-0000-000000000000";
         const body = makeBody("");
-        const token = await loginRest("email-with-plan-free@test.com");
+        const token = await loginRest("email-with-plan-gold@test.com");
 
         const response = await request(setupServer())
             .patch(makeUrl(validId))
@@ -48,7 +48,7 @@ describe("/api/payment-methods/token/:id - PATCH", () => {
     test("Should update the payment method token successfully", async () => {
         const validId = "00000000-0000-0000-0000-000000000000";
         const body = makeBody("pm_card_visa");
-        const token = await loginRest("email-with-plan-free@test.com");
+        const token = await loginRest("email-with-plan-gold@test.com");
 
         const response = await request(setupServer())
             .patch(makeUrl(validId))

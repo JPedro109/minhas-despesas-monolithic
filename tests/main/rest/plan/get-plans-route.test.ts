@@ -8,7 +8,7 @@ describe("/api/plans - GET", () => {
     setup();
 
     test("Should return a list of plans successfully", async () => {
-        const token = await loginRest("email-with-plan-free@test.com");
+        const token = await loginRest("email-with-plan-gold@test.com");
 
         const response = await request(setupServer())
             .get("/api/plans")

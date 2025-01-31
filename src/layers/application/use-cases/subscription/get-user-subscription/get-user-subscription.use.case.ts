@@ -2,12 +2,16 @@ import {
     GetUserSubscriptionDTO,
     GetUserSubscriptionResponseDTO,
     IGetUserSubscriptionUseCase,
+    IPayment,
     IUnitOfWorkRepository,
     NotFoundError,
 } from "@/layers/application";
 
 export class GetUserSubscriptionUseCase implements IGetUserSubscriptionUseCase {
-    constructor(private readonly unitOfWorkRepository: IUnitOfWorkRepository) {}
+    constructor(
+        private readonly unitOfWorkRepository: IUnitOfWorkRepository,
+        private readonly payment: IPayment,
+    ) {}
 
     async execute({
         userId,
@@ -20,16 +24,20 @@ export class GetUserSubscriptionUseCase implements IGetUserSubscriptionUseCase {
         if (!userExists) throw new NotFoundError("O usuário não existe");
 
         const subscription =
-            await subscriptionRepository.getActiveSubscriptionByUserId(userId);
+            await subscriptionRepository.getSubscriptionByUserId(userId);
+
+        const subscriptionData =
+            await this.payment.getSubscriptionBySubscriptionExternalId(
+                subscription.subscriptionExternalId,
+            );
 
         return {
             subscriptionId: subscription.id,
             userId: subscription.userId,
-            amount: subscription.amount,
-            active: subscription.active,
-            renewable: subscription.renewable,
-            startDate: subscription.startDate,
-            endDate: subscription.endDate,
+            active: subscriptionData.active,
+            renewable: subscriptionData.renewable,
+            startDate: subscriptionData.startDate,
+            endDate: subscriptionData.endDate,
             plan: {
                 planId: subscription.plan.id,
                 name: subscription.plan.name,

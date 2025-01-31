@@ -5,7 +5,6 @@ import {
 } from "@/layers/application";
 import {
     UserRepositoryStub,
-    PaymentStub,
     CryptographyStub,
     unitOfWorkRepositoryStubFactory,
     cryptographyStubFactory,
@@ -16,7 +15,6 @@ const makeSut = (): {
     sut: DeleteUserUseCase;
     userRepositoryStub: UserRepositoryStub;
     cryptographyStub: CryptographyStub;
-    paymentStub: PaymentStub;
     userRepository: UserRepositoryStub;
 } => {
     const paymentStub = paymentStubFactory();
@@ -32,7 +30,6 @@ const makeSut = (): {
         sut,
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
         cryptographyStub,
-        paymentStub,
         userRepository: unitOfWorkRepositoryStub.getUserRepository(),
     };
 };
@@ -90,14 +87,10 @@ describe("Use case - DeleteUserUseCase", () => {
     });
 
     test("Should delete user successfully", async () => {
-        const { sut, paymentStub, userRepository } = makeSut();
+        const { sut, userRepository } = makeSut();
         const id = "1";
         const password = "Password1234";
         const passwordConfirm = "Password1234";
-        const updateCustomerEmailByCustomerIdSpy = jest.spyOn(
-            paymentStub,
-            "updateCustomerEmailByCustomerId",
-        );
         const deleteUserByIdSpy = jest.spyOn(userRepository, "deleteUserById");
 
         await sut.execute({
@@ -106,7 +99,6 @@ describe("Use case - DeleteUserUseCase", () => {
             passwordConfirm,
         });
 
-        expect(updateCustomerEmailByCustomerIdSpy).toHaveBeenCalled();
         expect(deleteUserByIdSpy).toHaveBeenCalled();
     });
 });

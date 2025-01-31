@@ -57,7 +57,7 @@ describe("/api/users - POST", () => {
 
     test("Should not create user, because email is already registered", async () => {
         const body = makeBodyCreateUser(
-            "email-with-plan-free@test.com",
+            "email-with-plan-gold@test.com",
             "username",
             "Password1234",
             "Password1234",

@@ -1,6 +1,6 @@
 import { GetPlansUseCase } from "@/layers/application";
 import {
-    testPlanFreeEntity,
+    testPlanGoldEntity,
     unitOfWorkRepositoryStubFactory,
 } from "../__mocks__";
 
@@ -23,10 +23,10 @@ describe("Use case - GetPlansUseCase", () => {
 
         expect(result).toEqual([
             {
-                planId: testPlanFreeEntity().id,
-                planAmount: testPlanFreeEntity().amount,
-                planDescription: testPlanFreeEntity().description,
-                planName: testPlanFreeEntity().name,
+                planId: testPlanGoldEntity().id,
+                planAmount: testPlanGoldEntity().amount,
+                planDescription: testPlanGoldEntity().description,
+                planName: testPlanGoldEntity().name,
             },
         ]);
     });

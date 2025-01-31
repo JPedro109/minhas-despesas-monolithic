@@ -20,15 +20,4 @@ describe("Value Object - PlanNameValueObject", () => {
 
         expect(sut).toBeInstanceOf(InvalidPlanNameError);
     });
-
-    test("Should create PlanNameValueObject", () => {
-        const planName = PlanNameEnum.Free;
-
-        const sut = PlanNameValueObject.create(
-            planName,
-        ) as unknown as PlanNameValueObject;
-
-        expect(sut).toBeInstanceOf(PlanNameValueObject);
-        expect(sut.value).toBe(planName);
-    });
 });

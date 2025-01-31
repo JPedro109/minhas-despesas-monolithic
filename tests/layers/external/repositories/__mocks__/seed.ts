@@ -17,7 +17,7 @@ import {
     testExtractEntityExpired,
     testPaymentHistoryEntity,
     testPaymentMethodEntity,
-    testPlanFreeEntity,
+    testPlanGoldEntity,
     testSubscriptionEntity,
     testSubscriptionEntityExpired,
     testUserEntity,
@@ -61,7 +61,7 @@ export class Seed {
     }
 
     async populate(): Promise<void> {
-        const plan = testPlanFreeEntity();
+        const plan = testPlanGoldEntity();
         const action = await this.databaseSQLHelper.client.prismaAction.create({
             data: {
                 id: plan.actions[0].id,
@@ -74,6 +74,7 @@ export class Seed {
         await this.databaseSQLHelper.client.prismaPlan.create({
             data: {
                 id: plan.id,
+                planExternalId: plan.planExternalId,
                 name: plan.name,
                 description: plan.description,
                 amount: plan.amount,

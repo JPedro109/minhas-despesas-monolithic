@@ -15,6 +15,7 @@ export type PlanActionProps = {
 };
 
 export type PlanProps = {
+    planExternalId: string;
     name: PlanNameEnum;
     amount: number;
     description: string;
@@ -34,6 +35,10 @@ export class PlanEntity extends AbstractEntity<PlanProps> {
         };
 
         this.validate(valueObjects);
+    }
+
+    get planExternalId(): string {
+        return this.props.planExternalId;
     }
 
     get name(): string {

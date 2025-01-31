@@ -1,4 +1,3 @@
-import { DomainError } from "@/layers/domain";
 import {
     ForbiddenError,
     NotFoundError,
@@ -8,17 +7,21 @@ import {
     SubscriptionRepositoryStub,
     PaymentMethodRepositoryStub,
     unitOfWorkRepositoryStubFactory,
-    testSubscriptionEntityWithPlanDiamondNotRenewable,
+    PaymentStub,
+    paymentStubFactory,
 } from "../__mocks__";
 
 const makeSut = (): {
     sut: UpdateSubscriptionRenewalStatusUseCase;
     subscriptionRepositoryStub: SubscriptionRepositoryStub;
     paymentMethodRepositoryStub: PaymentMethodRepositoryStub;
+    paymentStub: PaymentStub;
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
+    const paymentStub = paymentStubFactory();
     const sut = new UpdateSubscriptionRenewalStatusUseCase(
         unitOfWorkRepositoryStub,
+        paymentStub,
     );
 
     return {
@@ -27,6 +30,7 @@ const makeSut = (): {
             unitOfWorkRepositoryStub.getSubscriptionRepository(),
         paymentMethodRepositoryStub:
             unitOfWorkRepositoryStub.getPaymentMethodRepository(),
+        paymentStub,
     };
 };
 
@@ -37,7 +41,7 @@ describe("Use case - UpdateSubscriptionRenewalStatusUseCase", () => {
         const { sut, subscriptionRepositoryStub } = makeSut();
         jest.spyOn(
             subscriptionRepositoryStub,
-            "getActiveSubscriptionByUserId",
+            "getSubscriptionByUserId",
         ).mockResolvedValueOnce(null);
 
         const result = sut.execute({ userId, renewable });
@@ -45,27 +49,11 @@ describe("Use case - UpdateSubscriptionRenewalStatusUseCase", () => {
         await expect(result).rejects.toThrow(NotFoundError);
     });
 
-    test("Should not update the subscription renewal status because subscription plan is FREE", async () => {
-        const userId = "1";
-        const renewable = true;
-        const { sut } = makeSut();
-
-        const result = sut.execute({ userId, renewable });
-
-        await expect(result).rejects.toThrow(ForbiddenError);
-    });
-
     test("Should not update the subscription renewal status because payment method does not exist", async () => {
         const userId = "1";
         const renewable = true;
-        const { sut, subscriptionRepositoryStub, paymentMethodRepositoryStub } =
-            makeSut();
-        jest.spyOn(
-            subscriptionRepositoryStub,
-            "getActiveSubscriptionByUserId",
-        ).mockResolvedValueOnce(
-            testSubscriptionEntityWithPlanDiamondNotRenewable(),
-        );
+        const { sut, paymentMethodRepositoryStub } = makeSut();
+
         jest.spyOn(
             paymentMethodRepositoryStub,
             "getPaymentMethodByUserId",
@@ -76,35 +64,60 @@ describe("Use case - UpdateSubscriptionRenewalStatusUseCase", () => {
         await expect(result).rejects.toThrow(ForbiddenError);
     });
 
-    test("Should not update if renewable status is already the same", async () => {
+    test("Should not update if renewable status is false", async () => {
         const userId = "1";
         const renewable = false;
-        const { sut, subscriptionRepositoryStub } = makeSut();
+        const { sut, paymentStub } = makeSut();
         jest.spyOn(
-            subscriptionRepositoryStub,
-            "getActiveSubscriptionByUserId",
-        ).mockResolvedValueOnce(
-            testSubscriptionEntityWithPlanDiamondNotRenewable(),
-        );
+            paymentStub,
+            "getSubscriptionBySubscriptionExternalId",
+        ).mockResolvedValueOnce({
+            active: true,
+            renewable: false,
+            startDate: new Date("3000-01-01"),
+            endDate: new Date("3000-02-01"),
+        });
 
         const result = sut.execute({ userId, renewable });
 
-        expect(result).rejects.toThrow(DomainError);
+        expect(result).rejects.toThrow(ForbiddenError);
+    });
+
+    test("Should not update if renewable status is true", async () => {
+        const userId = "1";
+        const renewable = true;
+        const { sut, paymentStub } = makeSut();
+        jest.spyOn(
+            paymentStub,
+            "getSubscriptionBySubscriptionExternalId",
+        ).mockResolvedValueOnce({
+            active: true,
+            renewable: true,
+            startDate: new Date("3000-01-01"),
+            endDate: new Date("3000-02-01"),
+        });
+
+        const result = sut.execute({ userId, renewable });
+
+        expect(result).rejects.toThrow(ForbiddenError);
     });
 
     test("Should update the subscription renewal status successfully", async () => {
         const userId = "1";
         const renewable = true;
-        const { sut, subscriptionRepositoryStub } = makeSut();
+        const { sut, paymentStub } = makeSut();
         jest.spyOn(
-            subscriptionRepositoryStub,
-            "getActiveSubscriptionByUserId",
-        ).mockResolvedValueOnce(
-            testSubscriptionEntityWithPlanDiamondNotRenewable(),
-        );
+            paymentStub,
+            "getSubscriptionBySubscriptionExternalId",
+        ).mockResolvedValueOnce({
+            active: true,
+            renewable: false,
+            startDate: new Date("3000-01-01"),
+            endDate: new Date("3000-02-01"),
+        });
         const updateSubscriptionByIdSpy = jest.spyOn(
-            subscriptionRepositoryStub,
-            "updateSubscriptionById",
+            paymentStub,
+            "updateSubscriptionRenewable",
         );
 
         await sut.execute({ userId, renewable });

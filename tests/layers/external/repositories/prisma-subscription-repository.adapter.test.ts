@@ -3,7 +3,7 @@ import {
     DatabaseSQLHelper,
 } from "@/layers/external";
 import { SubscriptionEntity } from "@/layers/domain";
-import { Seed, testPlanFreeEntity, testSubscriptionEntity } from "./__mocks__";
+import { Seed, testPlanGoldEntity } from "./__mocks__";
 
 describe("External - PrismaSubscriptionRepositoryAdapter", () => {
     const databaseSQLHelper = new DatabaseSQLHelper();
@@ -31,15 +31,11 @@ describe("External - PrismaSubscriptionRepositoryAdapter", () => {
             const sut = new PrismaSubscriptionRepositoryAdapter(
                 databaseSQLHelper,
             );
-            const plan = testPlanFreeEntity();
+            const plan = testPlanGoldEntity();
             const subscription = new SubscriptionEntity({
                 userId: "00000000-0000-0000-0000-000000000001",
-                active: true,
-                renewable: true,
-                startDate: new Date("3000-01-01"),
-                endDate: new Date("3000-02-02"),
+                subscriptionExternalId: "1",
                 plan,
-                amount: 0,
             });
 
             const result = await sut.createSubscription(subscription);
@@ -48,13 +44,13 @@ describe("External - PrismaSubscriptionRepositoryAdapter", () => {
         });
     });
 
-    describe("getActiveSubscriptionByUserId", () => {
+    describe("getSubscriptionByUserId", () => {
         test("Should return null if no active subscription exists", async () => {
             const sut = new PrismaSubscriptionRepositoryAdapter(
                 databaseSQLHelper,
             );
 
-            const result = await sut.getActiveSubscriptionByUserId(
+            const result = await sut.getSubscriptionByUserId(
                 "ffffffff-ffff-ffff-ffff-ffffffffffff",
             );
 
@@ -66,74 +62,11 @@ describe("External - PrismaSubscriptionRepositoryAdapter", () => {
                 databaseSQLHelper,
             );
 
-            const result = await sut.getActiveSubscriptionByUserId(
+            const result = await sut.getSubscriptionByUserId(
                 "00000000-0000-0000-0000-000000000000",
             );
 
             expect(result).toBeInstanceOf(SubscriptionEntity);
-        });
-    });
-
-    describe("getActiveSubscriptionsByEndDate", () => {
-        test("Should return an empty array if no subscriptions match the criteria", async () => {
-            const sut = new PrismaSubscriptionRepositoryAdapter(
-                databaseSQLHelper,
-            );
-            const endDate = new Date("2024-01-01");
-            const renewable = false;
-
-            const result = await sut.getActiveSubscriptionsByEndDate(
-                endDate,
-                renewable,
-            );
-
-            expect(result).toEqual([]);
-        });
-
-        test("Should return active subscriptions matching the end date and renewable status", async () => {
-            const sut = new PrismaSubscriptionRepositoryAdapter(
-                databaseSQLHelper,
-            );
-
-            const endDate = new Date("3000-01-01");
-            const renewable = true;
-
-            const result = await sut.getActiveSubscriptionsByEndDate(
-                endDate,
-                renewable,
-            );
-
-            expect(result.length).toBeGreaterThan(0);
-        });
-    });
-
-    describe("getActiveSubscriptionsByEndDate", () => {
-        test("Should return subscriptions active and Renewable when the current date is greater than the end date", async () => {
-            const sut = new PrismaSubscriptionRepositoryAdapter(
-                databaseSQLHelper,
-            );
-
-            const result =
-                await sut.getSubscriptionsActiveAndRenewableWhenTheCurrentDateIsGreaterThanTheEndDate();
-
-            expect(result.length).toBeGreaterThan(0);
-        });
-    });
-
-    describe("updateSubscriptionById", () => {
-        test("Should update the subscription by ID", async () => {
-            const sut = new PrismaSubscriptionRepositoryAdapter(
-                databaseSQLHelper,
-            );
-            const subscription = testSubscriptionEntity();
-            subscription.renewable = false;
-
-            await sut.updateSubscriptionById(subscription.id, subscription);
-
-            const updatedSubscription = await sut.getActiveSubscriptionByUserId(
-                subscription.userId,
-            );
-            expect(updatedSubscription.renewable).toBeFalsy();
         });
     });
 });

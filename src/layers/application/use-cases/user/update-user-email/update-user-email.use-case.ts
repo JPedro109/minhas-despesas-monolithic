@@ -17,8 +17,6 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
         const userRepository = this.unitOfWorkRepository.getUserRepository();
         const userVerificationCodeRepository =
             this.unitOfWorkRepository.getUserVerificationCodeRepository();
-        const customerRepository =
-            this.unitOfWorkRepository.getCustomerRepository();
 
         const userVerificationCode =
             await userVerificationCodeRepository.getUserVerificationCodeByVerificationCode(
@@ -48,14 +46,6 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
                 userVerificationCode,
             );
             await userRepository.updateUserById(user.id, user);
-
-            const customer = await customerRepository.getCustomerByUserId(
-                user.id,
-            );
-            await this.payment.updateCustomerEmailByCustomerId(
-                customer.customerId,
-                email,
-            );
         });
     }
 }

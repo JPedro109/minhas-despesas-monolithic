@@ -5,7 +5,6 @@ import {
 import {
     UserVerificationCodeRepositoryStub,
     UserRepositoryStub,
-    PaymentStub,
     unitOfWorkRepositoryStubFactory,
     paymentStubFactory,
     testUserVerificationCodeEntityOfTypeRecoveryUserPassword,
@@ -17,7 +16,6 @@ const makeSut = (): {
     sut: UpdateUserEmailUseCase;
     userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub;
     userRepositoryStub: UserRepositoryStub;
-    paymentStub: PaymentStub;
 } => {
     const paymentStub = paymentStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
@@ -31,7 +29,6 @@ const makeSut = (): {
         userVerificationCodeRepositoryStub:
             unitOfWorkRepositoryStub.getUserVerificationCodeRepository(),
         userRepositoryStub: unitOfWorkRepositoryStub.getUserRepository(),
-        paymentStub,
     };
 };
 
@@ -92,12 +89,8 @@ describe("Use case - UpdateUserEmailUseCase", () => {
     });
 
     test("Should update email successfully", async () => {
-        const {
-            sut,
-            userVerificationCodeRepositoryStub,
-            userRepositoryStub,
-            paymentStub,
-        } = makeSut();
+        const { sut, userVerificationCodeRepositoryStub, userRepositoryStub } =
+            makeSut();
         const email = "newemail@test.com";
         const code = "123456";
         jest.spyOn(
@@ -116,10 +109,6 @@ describe("Use case - UpdateUserEmailUseCase", () => {
             userRepositoryStub,
             "updateUserById",
         );
-        const updateCustomerEmailByCustomerIdSpy = jest.spyOn(
-            paymentStub,
-            "updateCustomerEmailByCustomerId",
-        );
 
         await sut.execute({
             email,
@@ -128,6 +117,5 @@ describe("Use case - UpdateUserEmailUseCase", () => {
 
         expect(updateUserVerificationCodeByIdSpy).toHaveBeenCalled();
         expect(updateUserByIdSpy).toHaveBeenCalled();
-        expect(updateCustomerEmailByCustomerIdSpy).toHaveBeenCalled();
     });
 });

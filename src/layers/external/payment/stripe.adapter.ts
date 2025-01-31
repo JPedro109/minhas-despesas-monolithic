@@ -1,5 +1,5 @@
 import { environmentVariables } from "@/shared";
-import { IPayment } from "@/layers/application";
+import { IPayment, SubscriptionData } from "@/layers/application";
 
 import { Stripe } from "stripe";
 
@@ -10,13 +10,6 @@ export class StripeAdapter implements IPayment {
         const customer = await this.stripe.customers.create({ email });
 
         return customer.id;
-    }
-
-    public async updateCustomerEmailByCustomerId(
-        customerId: string,
-        email: string,
-    ): Promise<void> {
-        await this.stripe.customers.update(customerId, { email });
     }
 
     public async deleteCustomer(customerId: string): Promise<void> {
@@ -34,8 +27,52 @@ export class StripeAdapter implements IPayment {
         return paymentMethod.id;
     }
 
-    public async deletePaymentMethodByToken(token: string): Promise<void> {
+    public async detachmentPaymentMethodInCustomerByToken(
+        token: string,
+    ): Promise<void> {
         await this.stripe.paymentMethods.detach(token);
+    }
+
+    public async createSubscription(
+        customerId: string,
+        planExternalId: string,
+        paymentMethod: string,
+    ): Promise<string> {
+        const subscription = await this.stripe.subscriptions.create({
+            customer: customerId,
+            items: [
+                {
+                    price: planExternalId,
+                },
+            ],
+            default_payment_method: paymentMethod,
+        });
+
+        return subscription.id;
+    }
+
+    public async getSubscriptionBySubscriptionExternalId(
+        subscriptionExternalId: string,
+    ): Promise<SubscriptionData> {
+        const subscription = await this.stripe.subscriptions.retrieve(
+            subscriptionExternalId,
+        );
+
+        return {
+            active: subscription.status === "active",
+            renewable: !subscription.cancel_at_period_end,
+            startDate: new Date(subscription.start_date),
+            endDate: new Date(subscription.ended_at),
+        };
+    }
+
+    public async updateSubscriptionRenewable(
+        subscriptionId: string,
+        renewable: boolean,
+    ): Promise<void> {
+        await this.stripe.subscriptions.update(subscriptionId, {
+            cancel_at_period_end: !renewable,
+        });
     }
 
     public async deleteAllCustomers(): Promise<void> {

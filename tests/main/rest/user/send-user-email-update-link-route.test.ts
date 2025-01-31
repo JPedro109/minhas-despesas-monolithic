@@ -12,7 +12,7 @@ describe("/api/users/send-email-update-link - POST", () => {
     setup();
 
     test("Should not send email update link because email is missing", async () => {
-        const token = await loginRest("email-with-plan-free@test.com");
+        const token = await loginRest("email-with-plan-gold@test.com");
         const body = makeBody("");
 
         const response = await request(setupServer())
@@ -26,8 +26,8 @@ describe("/api/users/send-email-update-link - POST", () => {
     });
 
     test("Should not send email update link because email is already registered", async () => {
-        const token = await loginRest("email-with-plan-free@test.com");
-        const body = makeBody("email-with-plan-free@test.com");
+        const token = await loginRest("email-with-plan-gold@test.com");
+        const body = makeBody("email-with-plan-gold@test.com");
 
         const response = await request(setupServer())
             .post("/api/users/send-email-update-link")
@@ -40,7 +40,7 @@ describe("/api/users/send-email-update-link - POST", () => {
     });
 
     test("Should send email update link successfully", async () => {
-        const token = await loginRest("email-with-plan-free@test.com");
+        const token = await loginRest("email-with-plan-gold@test.com");
         const body = makeBody("newemail@example.com");
 
         const response = await request(setupServer())

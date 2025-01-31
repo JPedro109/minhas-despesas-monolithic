@@ -48,7 +48,7 @@ describe("External - PrismaPlanRepositoryAdapter", () => {
         test("Should return a plan by name", async () => {
             const sut = new PrismaPlanRepositoryAdapter(databaseSQLHelper);
 
-            const result = await sut.getPlanByName(PlanNameEnum.Free);
+            const result = await sut.getPlanByName(PlanNameEnum.Gold);
 
             expect(result).toBeInstanceOf(PlanEntity);
         });

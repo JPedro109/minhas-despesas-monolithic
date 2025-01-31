@@ -255,7 +255,7 @@ export class Seed {
             ),
         );
 
-        const customerId = await this.stripeAdapter.createCustomer(user.email);
+        const customerId = await this.stripeAdapter.createCustomer();
         await this.prismaCustomerRepository.createCustomer(
             testCustomerEntity(user.id, customerId),
         );

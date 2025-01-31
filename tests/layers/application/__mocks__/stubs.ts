@@ -111,7 +111,7 @@ export class NotificationStub implements INotification {
 }
 
 export class PaymentStub implements IPayment {
-    async createCustomer(email: string): Promise<string> {
+    async createCustomer(): Promise<string> {
         return "1";
     }
 

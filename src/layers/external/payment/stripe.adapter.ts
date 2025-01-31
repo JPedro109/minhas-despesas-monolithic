@@ -6,8 +6,8 @@ import { Stripe } from "stripe";
 export class StripeAdapter implements IPayment {
     public readonly stripe = new Stripe(environmentVariables.stripeSecretKey);
 
-    public async createCustomer(email: string): Promise<string> {
-        const customer = await this.stripe.customers.create({ email });
+    public async createCustomer(): Promise<string> {
+        const customer = await this.stripe.customers.create();
 
         return customer.id;
     }
@@ -61,8 +61,8 @@ export class StripeAdapter implements IPayment {
         return {
             active: subscription.status === "active",
             renewable: !subscription.cancel_at_period_end,
-            startDate: new Date(subscription.start_date),
-            endDate: new Date(subscription.ended_at),
+            startDate: new Date(subscription.current_period_start * 1000),
+            endDate: new Date(subscription.current_period_end * 1000),
         };
     }
 

@@ -1,7 +1,7 @@
 import { SubscriptionData } from "@/layers/application";
 
 export interface IPayment {
-    createCustomer(email: string): Promise<string>;
+    createCustomer(): Promise<string>;
     deleteCustomer(customerId: string): Promise<void>;
     attachmentPaymentMethodInCustomer(
         customerId: string,

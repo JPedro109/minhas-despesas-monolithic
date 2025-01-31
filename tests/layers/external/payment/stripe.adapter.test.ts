@@ -2,10 +2,9 @@ import { StripeAdapter } from "@/layers/external";
 
 describe("External - StripeAdapter", () => {
     test("Should create customer | createCustomer", async () => {
-        const email = "email@test.com";
         const sut = new StripeAdapter();
 
-        const result = await sut.createCustomer(email);
+        const result = await sut.createCustomer();
 
         expect(typeof result).toBe("string");
 
@@ -13,9 +12,8 @@ describe("External - StripeAdapter", () => {
     });
 
     test("Should delete customer | deleteCustomer", async () => {
-        const email = "email@test.com";
         const sut = new StripeAdapter();
-        const customerId = await sut.createCustomer(email);
+        const customerId = await sut.createCustomer();
         const deleteCustomerSpy = jest.spyOn(sut, "deleteCustomer");
 
         await sut.deleteCustomer(customerId);
@@ -25,10 +23,9 @@ describe("External - StripeAdapter", () => {
     });
 
     test("Should create payment method | attachmentPaymentMethodInCustomer", async () => {
-        const email = "email@test.com";
         const token = "pm_card_visa";
         const sut = new StripeAdapter();
-        const customerId = await sut.createCustomer(email);
+        const customerId = await sut.createCustomer();
 
         const result = await sut.attachmentPaymentMethodInCustomer(
             customerId,
@@ -40,11 +37,80 @@ describe("External - StripeAdapter", () => {
         await sut.deleteCustomer(customerId);
     });
 
+    test("Should create subscription | createSubscription", async () => {
+        const token = "pm_card_visa";
+        const planExternalId = "price_1QkaxzRu300ehj2uYbE4FbTP";
+        const sut = new StripeAdapter();
+        const customerId = await sut.createCustomer();
+        const paymentMethodId = await sut.attachmentPaymentMethodInCustomer(
+            customerId,
+            token,
+        );
+
+        const result = await sut.createSubscription(
+            customerId,
+            planExternalId,
+            paymentMethodId,
+        );
+
+        expect(typeof result).toBe("string");
+
+        await sut.deleteCustomer(customerId);
+    });
+
+    test.only("Should get subscription | createSubscription", async () => {
+        const token = "pm_card_visa";
+        const planExternalId = "price_1QkaxzRu300ehj2uYbE4FbTP";
+        const sut = new StripeAdapter();
+        const customerId = await sut.createCustomer();
+        const paymentMethodId = await sut.attachmentPaymentMethodInCustomer(
+            customerId,
+            token,
+        );
+        const subscriptionExternalId = await sut.createSubscription(
+            customerId,
+            planExternalId,
+            paymentMethodId,
+        );
+
+        const result = await sut.getSubscriptionBySubscriptionExternalId(
+            subscriptionExternalId,
+        );
+
+        expect(result).not.toBeNull();
+
+        await sut.deleteCustomer(customerId);
+    });
+
+    test("Should update subscription renewable | updateSubscriptionRenewable", async () => {
+        const token = "pm_card_visa";
+        const planExternalId = "price_1QkaxzRu300ehj2uYbE4FbTP";
+        const sut = new StripeAdapter();
+        const customerId = await sut.createCustomer();
+        const paymentMethodId = await sut.attachmentPaymentMethodInCustomer(
+            customerId,
+            token,
+        );
+        const subscriptionExternalId = await sut.createSubscription(
+            customerId,
+            planExternalId,
+            paymentMethodId,
+        );
+
+        const result = await sut.updateSubscriptionRenewable(
+            subscriptionExternalId,
+            false,
+        );
+
+        expect(result).not.toBeNull();
+
+        await sut.deleteCustomer(customerId);
+    });
+
     test("Should delete payment method | detachmentPaymentMethodInCustomerByToken", async () => {
-        const email = "email@test.com";
         const token = "pm_card_visa";
         const sut = new StripeAdapter();
-        const customerId = await sut.createCustomer(email);
+        const customerId = await sut.createCustomer();
         const paymentMethodId = await sut.attachmentPaymentMethodInCustomer(
             customerId,
             token,

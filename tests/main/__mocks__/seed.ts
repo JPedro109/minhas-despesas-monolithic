@@ -107,7 +107,8 @@ export class Seed {
                 email: "email-with-plan-gold@test.com",
                 verifiedEmail: true,
                 withCodeExpired: false,
-                withPaymentMethodAndSubscription: true,
+                withPaymentMethod: true,
+                withSubscription: true,
                 withExpensesAndExtracts: false,
                 withExpense: false,
                 withSubscriptionInactive: true,
@@ -120,7 +121,8 @@ export class Seed {
                 email: "email-with-plan-gold-with-codes-expired-without-payment-method@test.com",
                 verifiedEmail: true,
                 withCodeExpired: true,
-                withPaymentMethodAndSubscription: true,
+                withPaymentMethod: true,
+                withSubscription: true,
                 withExpensesAndExtracts: false,
                 withExpense: false,
                 withSubscriptionInactive: false,
@@ -133,7 +135,8 @@ export class Seed {
                 email: "email-with-plan-gold-and-with-email-not-verified@test.com",
                 verifiedEmail: false,
                 withCodeExpired: false,
-                withPaymentMethodAndSubscription: false,
+                withPaymentMethod: false,
+                withSubscription: false,
                 withExpensesAndExtracts: false,
                 withExpense: false,
                 withSubscriptionInactive: false,
@@ -146,7 +149,8 @@ export class Seed {
                 email: "email-with-plan-gold-and-with-expense@test.com",
                 verifiedEmail: true,
                 withCodeExpired: false,
-                withPaymentMethodAndSubscription: true,
+                withPaymentMethod: true,
+                withSubscription: true,
                 withExpensesAndExtracts: false,
                 withExpense: true,
                 deletePaymentMethod: false,
@@ -158,7 +162,8 @@ export class Seed {
                 email: "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
                 verifiedEmail: true,
                 withCodeExpired: false,
-                withPaymentMethodAndSubscription: true,
+                withPaymentMethod: true,
+                withSubscription: true,
                 withExpensesAndExtracts: true,
                 withExpenses: false,
                 deletePaymentMethod: false,
@@ -170,13 +175,28 @@ export class Seed {
                 email: "email-with-plan-gold-and-without-payment-method@test.com",
                 verifiedEmail: true,
                 withCodeExpired: false,
-                withPaymentMethodAndSubscription: true,
+                withPaymentMethod: true,
+                withSubscription: true,
                 withExpensesAndExtracts: false,
                 withExpense: false,
                 withSubscriptionInactive: true,
                 deletePaymentMethod: true,
                 plan: "GOLD",
                 codes: ["000015", "000016", "000017"],
+            },
+            {
+                id: "00000000-0000-0000-0000-000000000006",
+                email: "email-without-subscription@test.com",
+                verifiedEmail: true,
+                withCodeExpired: false,
+                withPaymentMethod: true,
+                withSubscription: false,
+                withExpensesAndExtracts: false,
+                withExpense: false,
+                withSubscriptionInactive: true,
+                deletePaymentMethod: false,
+                plan: "GOLD",
+                codes: ["000018", "000019", "000020"],
             },
         ];
 
@@ -189,7 +209,8 @@ export class Seed {
                     user.verifiedEmail,
                     user.plan,
                     user.withCodeExpired,
-                    user.withPaymentMethodAndSubscription,
+                    user.withPaymentMethod,
+                    user.withSubscription,
                     user.withExpensesAndExtracts,
                     user.withExpense,
                     user.withSubscriptionInactive,
@@ -216,7 +237,8 @@ export class Seed {
         verifiedEmail: boolean,
         plan: string,
         withCodeExpired: boolean,
-        withPaymentMethodAndSubscription: boolean,
+        withPaymentMethod: boolean,
+        withSubscription: boolean,
         withExpensesAndExtracts: boolean,
         withExpense: boolean,
         withSubscriptionInactive: boolean,
@@ -260,7 +282,7 @@ export class Seed {
             testCustomerEntity(user.id, customerId),
         );
 
-        if (withPaymentMethodAndSubscription) {
+        if (withPaymentMethod) {
             const token =
                 await this.stripeAdapter.attachmentPaymentMethodInCustomer(
                     customerId,
@@ -270,20 +292,30 @@ export class Seed {
                 await this.prismaPaymentMethodRepository.createPaymentMethod(
                     testPaymentMethodEntity(user.id, token),
                 );
-            const plan = testPlanGoldEntity();
-            const subscriptionExternalId =
-                await this.stripeAdapter.createSubscription(
-                    customerId,
-                    plan.planExternalId,
-                    token,
+
+            if (withSubscription) {
+                const plan = testPlanGoldEntity();
+                const subscriptionExternalId =
+                    await this.stripeAdapter.createSubscription(
+                        customerId,
+                        plan.planExternalId,
+                        token,
+                    );
+                await this.prismaSubscriptionRepository.createSubscription(
+                    new SubscriptionEntity({
+                        plan,
+                        subscriptionExternalId,
+                        userId,
+                    }),
                 );
-            await this.prismaSubscriptionRepository.createSubscription(
-                new SubscriptionEntity({
-                    plan,
-                    subscriptionExternalId,
-                    userId,
-                }),
-            );
+
+                if (withSubscriptionInactive) {
+                    await this.stripeAdapter.updateSubscriptionRenewable(
+                        subscriptionExternalId,
+                        false,
+                    );
+                }
+            }
 
             if (deletePaymentMethod) {
                 await this.stripeAdapter.detachmentPaymentMethodInCustomerByToken(
@@ -291,13 +323,6 @@ export class Seed {
                 );
                 await this.prismaPaymentMethodRepository.deletePaymentMethodById(
                     paymentMethod.id,
-                );
-            }
-
-            if (withSubscriptionInactive) {
-                await this.stripeAdapter.updateSubscriptionRenewable(
-                    subscriptionExternalId,
-                    false,
                 );
             }
         }

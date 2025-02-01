@@ -82,7 +82,6 @@ export const sendUserPasswordRecoveryLinkUseCase =
 
 export const updateUserEmailUseCase = new UpdateUserEmailUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),
-    stripeAdapter,
 );
 
 export const updateUserPasswordUseCase = new UpdateUserPasswordUseCase(

@@ -6,7 +6,6 @@ import {
     UserVerificationCodeRepositoryStub,
     UserRepositoryStub,
     unitOfWorkRepositoryStubFactory,
-    paymentStubFactory,
     testUserVerificationCodeEntityOfTypeRecoveryUserPassword,
     testUserVerificationCodeEntityOfTypeUpdateUserEmail,
     testUserVerificationCodeEntityOfTypeUpdateUserEmailWithDateExpired,
@@ -17,12 +16,8 @@ const makeSut = (): {
     userVerificationCodeRepositoryStub: UserVerificationCodeRepositoryStub;
     userRepositoryStub: UserRepositoryStub;
 } => {
-    const paymentStub = paymentStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new UpdateUserEmailUseCase(
-        unitOfWorkRepositoryStub,
-        paymentStub,
-    );
+    const sut = new UpdateUserEmailUseCase(unitOfWorkRepositoryStub);
 
     return {
         sut,

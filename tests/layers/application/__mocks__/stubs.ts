@@ -168,6 +168,12 @@ export class CustomerRepositoryStub implements ICustomerRepository {
         return testCustomerEntity();
     }
 
+    async getCustomerByCustomerId(
+        customerId: string,
+    ): Promise<CustomerEntity | null> {
+        return testCustomerEntity();
+    }
+
     async getCustomersByUserIds(userIds: string[]): Promise<CustomerEntity[]> {
         return [testCustomerEntity()];
     }

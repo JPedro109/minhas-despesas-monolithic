@@ -30,7 +30,7 @@ describe("External - PrismaCustomerRepositoryAdapter", () => {
         test("Should create customer", async () => {
             const customer = new CustomerEntity({
                 userId: "00000000-0000-0000-0000-000000000001",
-                customerId: "1",
+                customerId: "2",
             });
             const sut = new PrismaCustomerRepositoryAdapter(databaseSQLHelper);
 
@@ -57,6 +57,26 @@ describe("External - PrismaCustomerRepositoryAdapter", () => {
             const result = await sut.getCustomerByUserId(userId);
 
             expect(result.userId).toBe(userId);
+        });
+    });
+
+    describe("getCustomerByCustomerId", () => {
+        test("Should get null", async () => {
+            const customerId = "not-found";
+            const sut = new PrismaCustomerRepositoryAdapter(databaseSQLHelper);
+
+            const result = await sut.getCustomerByCustomerId(customerId);
+
+            expect(result).toBeNull();
+        });
+
+        test("Should get customer", async () => {
+            const customerId = "1";
+            const sut = new PrismaCustomerRepositoryAdapter(databaseSQLHelper);
+
+            const result = await sut.getCustomerByCustomerId(customerId);
+
+            expect(result.customerId).toBe(customerId);
         });
     });
 

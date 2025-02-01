@@ -42,6 +42,20 @@ export class PrismaCustomerRepositoryAdapter implements ICustomerRepository {
         return PrismaMapperHelper.toCustomerEntity(customer);
     }
 
+    async getCustomerByCustomerId(
+        customerId: string,
+    ): Promise<CustomerEntity | null> {
+        const customer = await this.context.prismaCustomer.findFirst({
+            where: {
+                customerId,
+            },
+        });
+
+        if (!customer) return null;
+
+        return PrismaMapperHelper.toCustomerEntity(customer);
+    }
+
     async getCustomersByUserIds(userIds: string[]): Promise<CustomerEntity[]> {
         const prismaCustomers = await this.context.prismaCustomer.findMany({
             where: {

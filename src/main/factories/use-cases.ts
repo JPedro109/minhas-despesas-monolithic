@@ -29,6 +29,7 @@ import {
     UpdatePaymentMethodTokenUseCase,
     CreateExtractUseCase,
     CreateSubscriptionUseCase,
+    NotifyUserOfSubscriptionPaymentFailureUseCase,
 } from "@/layers/application";
 
 import {
@@ -117,6 +118,12 @@ export const updateSubscriptionRenewalStatusUseCase =
     new UpdateSubscriptionRenewalStatusUseCase(
         makePrismaUnitOfWorkRepositoryAdapter(),
         stripeAdapter,
+    );
+
+export const notifyUserOfSubscriptionPaymentFailureUseCase =
+    new NotifyUserOfSubscriptionPaymentFailureUseCase(
+        makePrismaUnitOfWorkRepositoryAdapter(),
+        notificationAdapter,
     );
 
 export const getPlansUseCase = new GetPlansUseCase(

@@ -6,4 +6,5 @@ export interface ISubscriptionRepository {
         subscription: SubscriptionEntity,
     ): Promise<SubscriptionEntity>;
     getSubscriptionByUserId(userId: string): Promise<SubscriptionEntity | null>;
+    deleteSubscriptionByUserId(userId: string): Promise<void>;
 }

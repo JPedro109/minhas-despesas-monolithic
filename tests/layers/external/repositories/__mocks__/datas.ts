@@ -143,17 +143,6 @@ export const testSubscriptionEntity = (): SubscriptionEntity =>
         new Date(),
     );
 
-export const testSubscriptionEntityExpired = (): SubscriptionEntity =>
-    new SubscriptionEntity(
-        {
-            userId: "00000000-0000-0000-0000-000000000001",
-            subscriptionExternalId: "1",
-            plan: testPlanGoldEntity(),
-        },
-        "00000000-0000-0000-0000-000000000001",
-        new Date(),
-    );
-
 export const testUserVerificationCodeEntity = (): UserVerificationCodeEntity =>
     new UserVerificationCodeEntity(
         {

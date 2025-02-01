@@ -70,4 +70,8 @@ export class PrismaSubscriptionRepositoryAdapter
             subscription.plan.actions,
         );
     }
+
+    async deleteSubscriptionByUserId(userId: string): Promise<void> {
+        await this.context.prismaSubscription.delete({ where: { userId } });
+    }
 }

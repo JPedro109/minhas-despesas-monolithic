@@ -107,7 +107,7 @@ model PrismaPaymentHistory {
 
 model PrismaSubscription {
   id                     String     @id @db.Uuid
-  userId                 String     @map("user_id") @db.Uuid
+  userId                 String     @unique @map("user_id") @db.Uuid
   planId                 String     @map("plan_id") @db.Uuid
   user                   PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   plan                   PrismaPlan @relation(fields: [planId], references: [id])

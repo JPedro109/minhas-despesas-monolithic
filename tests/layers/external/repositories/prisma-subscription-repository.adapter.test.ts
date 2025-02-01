@@ -69,4 +69,18 @@ describe("External - PrismaSubscriptionRepositoryAdapter", () => {
             expect(result).toBeInstanceOf(SubscriptionEntity);
         });
     });
+
+    describe("deleteSubscriptionByUserId", () => {
+        test("Should delete subscription", async () => {
+            const userId = "00000000-0000-0000-0000-000000000000";
+            const sut = new PrismaSubscriptionRepositoryAdapter(
+                databaseSQLHelper,
+            );
+
+            await sut.deleteSubscriptionByUserId(userId);
+
+            const result = await sut.getSubscriptionByUserId(userId);
+            expect(result).toBeNull();
+        });
+    });
 });

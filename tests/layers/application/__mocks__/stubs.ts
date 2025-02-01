@@ -203,6 +203,8 @@ export class SubscriptionRepositoryStub implements ISubscriptionRepository {
     ): Promise<SubscriptionEntity | null> {
         return testSubscriptionEntityWithPlanGold();
     }
+
+    async deleteSubscriptionByUserId(userId: string): Promise<void> {}
 }
 
 export class UserConsentRepositoryStub implements IUserConsentRepository {

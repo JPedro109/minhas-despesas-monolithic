@@ -14,6 +14,7 @@ type EnvironmentVariables = {
     sendMailQueue: string;
     stripeSecretKey: string;
     port: number;
+    webhookSecret: string;
 };
 
 export const environmentVariables: EnvironmentVariables = {
@@ -30,4 +31,5 @@ export const environmentVariables: EnvironmentVariables = {
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     port: parseInt(process.env.PORT),
     localstackEndpoint: process.env.LOCALSTACK_ENDPOINT,
+    webhookSecret: process.env.WEBHOOK_SECRET,
 };

@@ -1,4 +1,5 @@
 import {
+    createSubscriptionController,
     getUserSubscriptionController,
     updateSubscriptionRenewalStatusController,
     authenticationUserMiddleware,
@@ -8,6 +9,11 @@ import { RestAdapter } from "@/main/rest";
 import { Router } from "express";
 
 export default (router: Router): void => {
+    router.post(
+        "/subscriptions",
+        RestAdapter.middleware(authenticationUserMiddleware),
+        RestAdapter.route(createSubscriptionController),
+    );
     router.get(
         "/subscriptions",
         RestAdapter.middleware(authenticationUserMiddleware),

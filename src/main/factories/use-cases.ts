@@ -28,6 +28,7 @@ import {
     UpdatePaymentMethodNameUseCase,
     UpdatePaymentMethodTokenUseCase,
     CreateExtractUseCase,
+    CreateSubscriptionUseCase,
 } from "@/layers/application";
 
 import {
@@ -101,6 +102,11 @@ export const userLoginUseCase = new UserLoginUseCase(
 
 export const verifyUserEmailUseCase = new VerifyUserEmailUseCase(
     makePrismaUnitOfWorkRepositoryAdapter(),
+);
+
+export const createSubscriptionUseCase = new CreateSubscriptionUseCase(
+    makePrismaUnitOfWorkRepositoryAdapter(),
+    stripeAdapter,
 );
 
 export const getUserSubscriptionUseCase = new GetUserSubscriptionUseCase(

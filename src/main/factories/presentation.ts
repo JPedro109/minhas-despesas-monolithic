@@ -30,6 +30,7 @@ import {
     CreateExtractController,
     AuthenticateUserMiddleware,
     BasicAuthenticationMiddleware,
+    CreateSubscriptionController,
 } from "@/layers/presentation";
 
 import {
@@ -62,6 +63,7 @@ import {
     payExpenseUseCase,
     updateExpenseUseCase,
     updatePreviousMonthPaidExpensesToUnpaidUseCase,
+    createSubscriptionUseCase,
 } from "./use-cases";
 import { securityAdapter, winstonAdapter } from "./external";
 
@@ -119,6 +121,11 @@ export const userLoginController = new UserLoginController(
 
 export const verifyUserEmailController = new VerifyUserEmailController(
     verifyUserEmailUseCase,
+    winstonAdapter,
+);
+
+export const createSubscriptionController = new CreateSubscriptionController(
+    createSubscriptionUseCase,
     winstonAdapter,
 );
 

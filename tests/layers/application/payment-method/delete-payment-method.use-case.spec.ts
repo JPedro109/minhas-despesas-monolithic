@@ -8,12 +8,14 @@ import {
     PaymentMethodRepositoryStub,
     unitOfWorkRepositoryStubFactory,
     paymentStubFactory,
+    SubscriptionRepositoryStub,
 } from "../__mocks__";
 
 const makeSut = (): {
     sut: DeletePaymentMethodUseCase;
     paymentMethodRepositoryStub: PaymentMethodRepositoryStub;
     paymentStub: PaymentStub;
+    subscriptionRepositoryStub: SubscriptionRepositoryStub;
 } => {
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
     const paymentStub = paymentStubFactory();
@@ -26,8 +28,9 @@ const makeSut = (): {
         sut,
         paymentMethodRepositoryStub:
             unitOfWorkRepositoryStub.getPaymentMethodRepository(),
-
         paymentStub,
+        subscriptionRepositoryStub:
+            unitOfWorkRepositoryStub.getSubscriptionRepository(),
     };
 };
 
@@ -63,7 +66,34 @@ describe("Use case - DeletePaymentMethodUseCase", () => {
         await expect(result).rejects.toThrow(ForbiddenError);
     });
 
-    test("Should delete payment method successfully", async () => {
+    test("Should delete payment method successfully without existing subscription", async () => {
+        const {
+            sut,
+            paymentStub,
+            paymentMethodRepositoryStub,
+            subscriptionRepositoryStub,
+        } = makeSut();
+        const id = "1";
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getSubscriptionByUserId",
+        ).mockResolvedValueOnce(null);
+        const deletePaymentMethodSpy = jest.spyOn(
+            paymentStub,
+            "detachmentPaymentMethodInCustomerByToken",
+        );
+        const deletePaymentMethodByIdSpy = jest.spyOn(
+            paymentMethodRepositoryStub,
+            "deletePaymentMethodById",
+        );
+
+        await sut.execute({ id });
+
+        expect(deletePaymentMethodSpy).toHaveBeenCalled();
+        expect(deletePaymentMethodByIdSpy).toHaveBeenCalled();
+    });
+
+    test("Should delete payment method successfully with existing subscription", async () => {
         const { sut, paymentStub, paymentMethodRepositoryStub } = makeSut();
         const id = "1";
         const deletePaymentMethodSpy = jest.spyOn(

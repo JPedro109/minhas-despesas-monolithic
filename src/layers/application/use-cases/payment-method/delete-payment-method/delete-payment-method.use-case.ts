@@ -29,15 +29,17 @@ export class DeletePaymentMethodUseCase implements IDeletePaymentMethodUseCase {
                 paymentMethod.userId,
             );
 
-        const subscriptionData =
-            await this.payment.getSubscriptionBySubscriptionExternalId(
-                subscription.subscriptionExternalId,
-            );
+        if (subscription) {
+            const subscriptionData =
+                await this.payment.getSubscriptionBySubscriptionExternalId(
+                    subscription.subscriptionExternalId,
+                );
 
-        if (subscriptionData.renewable)
-            throw new ForbiddenError(
-                "Não possível excluir o método de pagamento pois existe uma assinatura ativa, cancele a assinatura para excluir o método de pagamento",
-            );
+            if (subscriptionData.renewable)
+                throw new ForbiddenError(
+                    "Não possível excluir o método de pagamento pois existe uma assinatura ativa, cancele a assinatura para excluir o método de pagamento",
+                );
+        }
 
         await this.unitOfWorkRepository.transaction(async () => {
             await paymentMethodRepository.deletePaymentMethodById(id);

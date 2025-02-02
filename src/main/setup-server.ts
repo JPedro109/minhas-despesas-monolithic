@@ -1,7 +1,7 @@
 import { environmentVariables } from "@/shared";
 import { setupRest } from "@/main/rest";
 
-import express, { Express } from "express";
+import express, { Express, raw } from "express";
 import cors from "cors";
 
 export const setupServer = (): Express => {
@@ -25,7 +25,14 @@ export const setupServer = (): Express => {
             },
         }),
     );
-    initExpress.use(express.json());
+    initExpress.use((req, res, next) => {
+        if (req.originalUrl === "/api/subscriptions/webhook") {
+            raw({ type: "application/json" })(req, res, next);
+        } else {
+            express.json()(req, res, next);
+        }
+    });
+
     setupRest(initExpress);
 
     return initExpress;

@@ -31,6 +31,7 @@ import {
     AuthenticateUserMiddleware,
     BasicAuthenticationMiddleware,
     CreateSubscriptionController,
+    SubscriptionWebhookController,
 } from "@/layers/presentation";
 
 import {
@@ -64,8 +65,9 @@ import {
     updateExpenseUseCase,
     updatePreviousMonthPaidExpensesToUnpaidUseCase,
     createSubscriptionUseCase,
+    notifyUserOfSubscriptionPaymentFailureUseCase,
 } from "./use-cases";
-import { securityAdapter, winstonAdapter } from "./external";
+import { securityAdapter, stripeAdapter, winstonAdapter } from "./external";
 
 export const createUserController = new CreateUserController(
     createUserUseCase,
@@ -139,6 +141,12 @@ export const updateSubscriptionRenewalStatusController =
         updateSubscriptionRenewalStatusUseCase,
         winstonAdapter,
     );
+
+export const subscriptionWebhookController = new SubscriptionWebhookController(
+    stripeAdapter,
+    notifyUserOfSubscriptionPaymentFailureUseCase,
+    winstonAdapter,
+);
 
 export const getPlansController = new GetPlansController(
     getPlansUseCase,

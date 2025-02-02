@@ -3,6 +3,7 @@ import {
     getUserSubscriptionController,
     updateSubscriptionRenewalStatusController,
     authenticationUserMiddleware,
+    subscriptionWebhookController,
 } from "@/main/factories";
 import { RestAdapter } from "@/main/rest";
 
@@ -23,5 +24,9 @@ export default (router: Router): void => {
         "/subscriptions/renewal-status",
         RestAdapter.middleware(authenticationUserMiddleware),
         RestAdapter.route(updateSubscriptionRenewalStatusController),
+    );
+    router.post(
+        "/subscriptions/webhook",
+        RestAdapter.route(subscriptionWebhookController),
     );
 };

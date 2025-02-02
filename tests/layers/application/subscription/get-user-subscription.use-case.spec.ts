@@ -32,8 +32,21 @@ const makeSut = (): {
 describe("Use case - GetUserSubscriptionUseCase", () => {
     test("Should not get user subscription because user does not exist", async () => {
         const { sut, userRepositoryStub } = makeSut();
-        const userId = "2";
+        const userId = "3";
         jest.spyOn(userRepositoryStub, "getUserById").mockReturnValueOnce(null);
+
+        const result = sut.execute({ userId });
+
+        await expect(result).rejects.toThrow(NotFoundError);
+    });
+
+    test("Should not get user subscription because subsctiption does not exist", async () => {
+        const { sut, subscriptionRepositoryStub } = makeSut();
+        const userId = "2";
+        jest.spyOn(
+            subscriptionRepositoryStub,
+            "getSubscriptionByUserId",
+        ).mockReturnValueOnce(null);
 
         const result = sut.execute({ userId });
 

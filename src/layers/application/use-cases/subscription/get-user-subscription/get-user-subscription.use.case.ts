@@ -26,6 +26,9 @@ export class GetUserSubscriptionUseCase implements IGetUserSubscriptionUseCase {
         const subscription =
             await subscriptionRepository.getSubscriptionByUserId(userId);
 
+        if (!subscription)
+            throw new NotFoundError("O usuário não tem uma assinatura");
+
         const subscriptionData =
             await this.payment.getSubscriptionBySubscriptionExternalId(
                 subscription.subscriptionExternalId,

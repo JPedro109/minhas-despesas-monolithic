@@ -155,6 +155,10 @@ export class PaymentStub implements IPayment {
     public async deleteSubscription(
         subscriptionExternalId: string,
     ): Promise<void> {}
+
+    validateWebhookRequest<T>(body: object, signature: string): T {
+        return {} as T;
+    }
 }
 
 export class CustomerRepositoryStub implements ICustomerRepository {

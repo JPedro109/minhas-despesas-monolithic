@@ -1,5 +1,9 @@
 import { environmentVariables } from "@/shared";
-import { IPayment, SubscriptionData } from "@/layers/application";
+import {
+    IPayment,
+    SubscriptionData,
+    UnauthorizedError,
+} from "@/layers/application";
 
 import { Stripe } from "stripe";
 
@@ -77,6 +81,18 @@ export class StripeAdapter implements IPayment {
 
     async deleteSubscription(subscriptionExternalId: string): Promise<void> {
         await this.stripe.subscriptions.cancel(subscriptionExternalId);
+    }
+
+    validateWebhookRequest<T>(body: object, signature: string): T {
+        try {
+            return this.stripe.webhooks.constructEvent(
+                body as unknown as string,
+                signature,
+                environmentVariables.webhookSecret,
+            ) as T;
+        } catch (e) {
+            throw new UnauthorizedError(e.message);
+        }
     }
 
     public async deleteAllCustomers(): Promise<void> {

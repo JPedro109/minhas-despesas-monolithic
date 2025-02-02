@@ -3,7 +3,6 @@ import {
     DomainError,
     InvalidExpenseNameError,
     InvalidExpenseValueError,
-    InvalidExpenseDueDateError,
 } from "@/layers/domain";
 
 describe("Entity - Expense", () => {
@@ -39,25 +38,6 @@ describe("Entity - Expense", () => {
                 expenseName,
                 expenseValue: invalidExpenseValue,
                 dueDate,
-                paid,
-            });
-
-        expect(sut).toThrow(DomainError);
-    });
-
-    test("Should not create ExpenseEntity, because due date is not valid", () => {
-        const userId = "1";
-        const expenseName = "Rent";
-        const expenseValue = 100;
-        const invalidDueDate = new Date("2000-01-01");
-        const paid = false;
-
-        const sut = (): ExpenseEntity =>
-            new ExpenseEntity({
-                userId,
-                expenseName,
-                expenseValue,
-                dueDate: invalidDueDate,
                 paid,
             });
 
@@ -163,25 +143,6 @@ describe("Entity - Expense", () => {
         expense.expenseValue = 200;
 
         expect(expense.expenseValue).toBe(200);
-    });
-
-    test("Should not update due date, because it is invalid", () => {
-        const userId = "1";
-        const expenseName = "Rent";
-        const expenseValue = 100;
-        const dueDate = new Date("3000-01-01");
-        const paid = false;
-        const expense = new ExpenseEntity({
-            userId,
-            expenseName,
-            expenseValue,
-            dueDate,
-            paid,
-        });
-
-        const sut = (): Date => (expense.dueDate = new Date("2000-01-01"));
-
-        expect(sut).toThrow(InvalidExpenseDueDateError);
     });
 
     test("Should update due date", () => {

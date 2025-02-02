@@ -1,5 +1,4 @@
 import {
-    InvalidExpenseDueDateError,
     InvalidExpenseNameError,
     InvalidExpenseValueError,
 } from "@/layers/domain";
@@ -55,23 +54,6 @@ describe("Use case - UpdateExpenseUseCase", () => {
         });
 
         await expect(result).rejects.toThrow(InvalidExpenseValueError);
-    });
-
-    test("Should not update expense because due date is invalid", async () => {
-        const { sut } = makeSut();
-        const id = "1";
-        const expenseName = "Updated Expense Name";
-        const expenseValue = 100;
-        const dueDate = new Date("2000-01-01");
-
-        const result = sut.execute({
-            id,
-            expenseName,
-            expenseValue,
-            dueDate,
-        });
-
-        await expect(result).rejects.toThrow(InvalidExpenseDueDateError);
     });
 
     test("Should not update expense because expense does not exists", async () => {

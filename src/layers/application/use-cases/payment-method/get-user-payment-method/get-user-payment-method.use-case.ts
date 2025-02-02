@@ -28,6 +28,7 @@ export class GetUserPaymentMethodUseCase
         if (!paymentMethod) return null;
 
         return {
+            paymentMethodId: paymentMethod.id,
             userId: paymentMethod.userId,
             name: paymentMethod.name,
             token: paymentMethod.token,

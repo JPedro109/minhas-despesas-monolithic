@@ -9,6 +9,7 @@ const makeSut = (): {
     const mockGetUserPaymentMethodUseCase: jest.Mocked<IGetUserPaymentMethodUseCase> =
         {
             execute: jest.fn().mockResolvedValue({
+                paymentMethodId: "1",
                 userId: "1",
                 name: "Payment method",
                 token: "token",

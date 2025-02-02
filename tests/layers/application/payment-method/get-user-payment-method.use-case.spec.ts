@@ -51,14 +51,16 @@ describe("Use case - GetUserPaymentMethodUseCase", () => {
 
     test("Should get user payment method successfully", async () => {
         const { sut } = makeSut();
+        const paymentMethod = testPaymentMethodEntity();
         const userId = "1";
 
         const result = await sut.execute({ userId });
 
         expect(result).toEqual({
-            userId: testPaymentMethodEntity().userId,
-            name: testPaymentMethodEntity().name,
-            token: testPaymentMethodEntity().token,
+            paymentMethodId: paymentMethod.id,
+            userId: paymentMethod.userId,
+            name: paymentMethod.name,
+            token: paymentMethod.token,
         });
     });
 });

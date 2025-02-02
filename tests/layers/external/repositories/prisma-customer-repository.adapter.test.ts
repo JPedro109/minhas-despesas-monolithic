@@ -79,15 +79,4 @@ describe("External - PrismaCustomerRepositoryAdapter", () => {
             expect(result.customerId).toBe(customerId);
         });
     });
-
-    describe("getCustomersByUserIds", () => {
-        test("Should get customers", async () => {
-            const userIds = ["00000000-0000-0000-0000-000000000000"];
-            const sut = new PrismaCustomerRepositoryAdapter(databaseSQLHelper);
-
-            const result = await sut.getCustomersByUserIds(userIds);
-
-            expect(result.length).toBeGreaterThan(0);
-        });
-    });
 });

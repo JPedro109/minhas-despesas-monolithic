@@ -11,5 +11,4 @@ export interface IExpenseRepository {
         month: number,
     ): Promise<void>;
     deleteExpenseById(id: string): Promise<void>;
-    deleteExpensesByUserId(userId: string): Promise<void>;
 }

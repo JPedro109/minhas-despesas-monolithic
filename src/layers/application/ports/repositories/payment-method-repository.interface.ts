@@ -9,9 +9,6 @@ export interface IPaymentMethodRepository {
     getPaymentMethodByUserId(
         userId: string,
     ): Promise<PaymentMethodEntity | null>;
-    getPaymentMethodsByUserIds(
-        userIds: string[],
-    ): Promise<PaymentMethodEntity[]>;
     updatePaymentMethodById(
         paymentMethodId: string,
         paymentMethod: PaymentMethodEntity,

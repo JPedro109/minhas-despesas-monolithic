@@ -5,5 +5,4 @@ export interface ICustomerRepository {
     createCustomer(customer: CustomerEntity): Promise<CustomerEntity>;
     getCustomerByUserId(userId: string): Promise<CustomerEntity | null>;
     getCustomerByCustomerId(customerId: string): Promise<CustomerEntity | null>;
-    getCustomersByUserIds(userIds: string[]): Promise<CustomerEntity[]>;
 }

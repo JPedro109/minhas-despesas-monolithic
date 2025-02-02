@@ -1,6 +1,6 @@
 import { PrismaPlanRepositoryAdapter } from "@/layers/external";
 import { DatabaseSQLHelper } from "@/layers/external";
-import { PlanEntity, PlanNameEnum } from "@/layers/domain";
+import { PlanEntity } from "@/layers/domain";
 import { Seed } from "./__mocks__";
 
 describe("External - PrismaPlanRepositoryAdapter", () => {
@@ -31,26 +31,6 @@ describe("External - PrismaPlanRepositoryAdapter", () => {
             const result = await sut.getPlans();
 
             expect(result.length).toBeGreaterThan(0);
-        });
-    });
-
-    describe("getPlanByName", () => {
-        test("Should return null if plan does not exist", async () => {
-            const sut = new PrismaPlanRepositoryAdapter(databaseSQLHelper);
-
-            const result = await sut.getPlanByName(
-                "NON_EXISTING_PLAN" as PlanNameEnum,
-            );
-
-            expect(result).toBeNull();
-        });
-
-        test("Should return a plan by name", async () => {
-            const sut = new PrismaPlanRepositoryAdapter(databaseSQLHelper);
-
-            const result = await sut.getPlanByName(PlanNameEnum.Gold);
-
-            expect(result).toBeInstanceOf(PlanEntity);
         });
     });
 

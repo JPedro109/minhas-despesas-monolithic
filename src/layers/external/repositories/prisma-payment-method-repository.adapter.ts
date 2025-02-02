@@ -62,20 +62,6 @@ export class PrismaPaymentMethodRepositoryAdapter
         return PrismaMapperHelper.toPaymentMethodEntity(paymentMethod);
     }
 
-    async getPaymentMethodsByUserIds(
-        userIds: string[],
-    ): Promise<PaymentMethodEntity[]> {
-        const paymentMethods = await this.context.prismaPaymentMethod.findMany({
-            where: {
-                userId: { in: userIds },
-            },
-        });
-
-        return paymentMethods.map((paymentMethod) =>
-            PrismaMapperHelper.toPaymentMethodEntity(paymentMethod),
-        );
-    }
-
     async updatePaymentMethodById(
         paymentMethodId: string,
         paymentMethod: PaymentMethodEntity,

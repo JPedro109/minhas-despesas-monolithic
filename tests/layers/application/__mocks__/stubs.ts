@@ -177,10 +177,6 @@ export class CustomerRepositoryStub implements ICustomerRepository {
     ): Promise<CustomerEntity | null> {
         return testCustomerEntity();
     }
-
-    async getCustomersByUserIds(userIds: string[]): Promise<CustomerEntity[]> {
-        return [testCustomerEntity()];
-    }
 }
 
 export class PlanRepositoryStub implements IPlanRepository {
@@ -188,10 +184,6 @@ export class PlanRepositoryStub implements IPlanRepository {
 
     async getPlans(): Promise<PlanEntity[]> {
         return [testPlanGoldEntity()];
-    }
-
-    async getPlanByName(planName: PlanNameEnum): Promise<PlanEntity | null> {
-        return testPlanGoldEntity();
     }
 
     async getPlanById(planId: string): Promise<PlanEntity | null> {
@@ -236,10 +228,6 @@ export class UserRepositoryStub implements IUserRepository {
 
     async getUserById(id: string): Promise<UserEntity | null> {
         return testUserEntity();
-    }
-
-    async getUsersByIds(ids: string[]): Promise<UserEntity[]> {
-        return [testUserEntity()];
     }
 
     async getUserByEmail(email: string): Promise<UserEntity | null> {
@@ -289,12 +277,6 @@ export class PaymentMethodRepositoryStub implements IPaymentMethodRepository {
         return testPaymentMethodEntity();
     }
 
-    async getPaymentMethodsByUserIds(
-        userIds: string[],
-    ): Promise<PaymentMethodEntity[]> {
-        return [testPaymentMethodEntity()];
-    }
-
     async getPaymentMethodById(
         id: string,
     ): Promise<PaymentMethodEntity | null> {
@@ -335,8 +317,6 @@ export class ExpenseRepositoryStub implements IExpenseRepository {
     ): Promise<void> {}
 
     async deleteExpenseById(id: string): Promise<void> {}
-
-    async deleteExpensesByUserId(userId: string): Promise<void> {}
 }
 
 export class PaymentHistoryRepositoryStub implements IPaymentHistoryRepository {

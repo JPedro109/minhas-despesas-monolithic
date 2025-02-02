@@ -61,17 +61,6 @@ describe("External - PrismaUserRepositoryAdapter", () => {
         });
     });
 
-    describe("getUsersByIds", () => {
-        test("Should get users", async () => {
-            const ids = ["00000000-0000-0000-0000-000000000000"];
-            const sut = new PrismaUserRepositoryAdapter(databaseSQLHelper);
-
-            const result = await sut.getUsersByIds(ids);
-
-            expect(result.length).toBeGreaterThan(0);
-        });
-    });
-
     describe("getUserByEmail", () => {
         test("Should get null", async () => {
             const email = "email_not_exists@test.com";

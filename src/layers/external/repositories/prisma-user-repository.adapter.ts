@@ -45,20 +45,6 @@ export class PrismaUserRepositoryAdapter implements IUserRepository {
         return PrismaMapperHelper.toUserEntity(user);
     }
 
-    async getUsersByIds(ids: string[]): Promise<UserEntity[]> {
-        const prismaUsers = await this.context.prismaUser.findMany({
-            where: {
-                id: {
-                    in: ids,
-                },
-            },
-        });
-
-        return prismaUsers.map((prismaUser) =>
-            PrismaMapperHelper.toUserEntity(prismaUser),
-        );
-    }
-
     async getUserByEmail(email: string): Promise<UserEntity | null> {
         const user = await this.context.prismaUser.findUnique({
             where: {

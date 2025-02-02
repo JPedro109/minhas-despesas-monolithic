@@ -84,8 +84,4 @@ export class PrismaExpenseRepositoryAdapter implements IExpenseRepository {
     async deleteExpenseById(id: string): Promise<void> {
         await this.context.prismaExpense.delete({ where: { id } });
     }
-
-    async deleteExpensesByUserId(userId: string): Promise<void> {
-        await this.context.prismaExpense.deleteMany({ where: { userId } });
-    }
 }

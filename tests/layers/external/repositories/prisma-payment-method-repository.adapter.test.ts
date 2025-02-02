@@ -94,32 +94,6 @@ describe("External - PrismaPaymentMethodRepositoryAdapter", () => {
         });
     });
 
-    describe("getPaymentMethodsByUserIds", () => {
-        test("Should return an empty array if no payment methods exist for given user IDs", async () => {
-            const sut = new PrismaPaymentMethodRepositoryAdapter(
-                databaseSQLHelper,
-            );
-
-            const result = await sut.getPaymentMethodsByUserIds([
-                "ffffffff-ffff-ffff-ffff-ffffffffffff",
-            ]);
-
-            expect(result).toEqual([]);
-        });
-
-        test("Should return payment methods for given user IDs", async () => {
-            const sut = new PrismaPaymentMethodRepositoryAdapter(
-                databaseSQLHelper,
-            );
-
-            const result = await sut.getPaymentMethodsByUserIds([
-                "00000000-0000-0000-0000-000000000000",
-            ]);
-
-            expect(result.length).toBeGreaterThan(0);
-        });
-    });
-
     describe("updatePaymentMethodById", () => {
         test("Should update a payment method", async () => {
             const sut = new PrismaPaymentMethodRepositoryAdapter(

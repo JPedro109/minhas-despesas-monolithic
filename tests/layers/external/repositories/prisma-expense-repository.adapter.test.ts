@@ -124,16 +124,4 @@ describe("External - PrismaExpenseRepositoryAdapter", () => {
             expect(result).toBeNull();
         });
     });
-
-    describe("deleteExpensesByUserId", () => {
-        test("Should delete all expenses for a user", async () => {
-            const userId = "00000000-0000-0000-0000-000000000000";
-            const sut = new PrismaExpenseRepositoryAdapter(databaseSQLHelper);
-
-            await sut.deleteExpensesByUserId(userId);
-
-            const result = await sut.getExpensesByUserId(userId);
-            expect(result.length).toBe(0);
-        });
-    });
 });

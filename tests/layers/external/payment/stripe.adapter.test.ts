@@ -1,3 +1,5 @@
+jest.setTimeout(10000);
+
 import { StripeAdapter } from "@/layers/external";
 
 describe("External - StripeAdapter", () => {

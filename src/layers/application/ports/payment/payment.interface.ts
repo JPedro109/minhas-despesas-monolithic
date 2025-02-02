@@ -22,4 +22,8 @@ export interface IPayment {
     ): Promise<void>;
     validateWebhookRequest<T>(body: object, signature: string): T;
     deleteSubscription(subscriptionExternalId: string): Promise<void>;
+    payExpiredSubscriptionIfAny(
+        customerId: string,
+        token: string,
+    ): Promise<void>;
 }

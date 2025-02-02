@@ -95,6 +95,24 @@ export class StripeAdapter implements IPayment {
         }
     }
 
+    async payExpiredSubscriptionIfAny(
+        customerId: string,
+        token: string,
+    ): Promise<void> {
+        const invoices = await this.stripe.invoices.list({
+            limit: 1,
+            customer: customerId,
+            status: "open",
+        });
+
+        if (invoices.data.length > 0) {
+            const invoice = invoices.data[0];
+            this.stripe.invoices.pay(invoice.id, {
+                payment_method: token,
+            });
+        }
+    }
+
     public async deleteAllCustomers(): Promise<void> {
         const customers = await this.stripe.customers.list({
             limit: 100,

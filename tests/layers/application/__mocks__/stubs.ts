@@ -159,6 +159,11 @@ export class PaymentStub implements IPayment {
     validateWebhookRequest<T>(body: object, signature: string): T {
         return {} as T;
     }
+
+    async payExpiredSubscriptionIfAny(
+        customerId: string,
+        token: string,
+    ): Promise<void> {}
 }
 
 export class CustomerRepositoryStub implements ICustomerRepository {

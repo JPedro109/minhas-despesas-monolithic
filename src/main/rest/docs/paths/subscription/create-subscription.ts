@@ -4,13 +4,13 @@ import {
     internalServerError,
     notFoundError,
 } from "@/main/rest/docs/components";
-import { basicAuthorizationHeaderSchema } from "@/main/rest/docs/schemas";
+import { authorizationHeaderSchema } from "@/main/rest/docs/schemas";
 
-export const manageSubscriptionRenewal = {
+export const createSubscription = {
     tags: ["Subscription"],
-    summary: "Faz o gerenciamento da assinatura do usuário",
+    summary: "Faz a criação da assinatura do usuário",
     parameters: [
-        basicAuthorizationHeaderSchema,
+        authorizationHeaderSchema,
         {
             in: "body",
             name: "body",
@@ -18,10 +18,7 @@ export const manageSubscriptionRenewal = {
             schema: {
                 type: "object",
                 properties: {
-                    renew: {
-                        type: "boolean",
-                    },
-                    userId: {
+                    planId: {
                         type: "string",
                     },
                 },
@@ -29,8 +26,8 @@ export const manageSubscriptionRenewal = {
         },
     ],
     responses: {
-        204: {
-            description: "Sucesso no gerenciamento da assinatura do usuário",
+        201: {
+            description: "Sucesso na criação da assinatura",
         },
 
         400: badRequestError,

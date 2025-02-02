@@ -9,22 +9,18 @@ export const recoverUserPassword = {
     summary: "Faz a recuperação da senha do usuário",
     parameters: [
         {
-            in: "query",
-            name: "code",
-            required: true,
-        },
-
-        {
             in: "body",
             name: "body",
             required: true,
             schema: {
                 type: "object",
                 properties: {
+                    code: {
+                        type: "string",
+                    },
                     password: {
                         type: "string",
                     },
-
                     passwordConfirm: {
                         type: "string",
                     },

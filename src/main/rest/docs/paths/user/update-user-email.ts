@@ -11,16 +11,21 @@ export const updateUserEmail = {
     summary: "Faz a confirmação da atualização do e-mail",
     parameters: [
         authorizationHeaderSchema,
-
         {
-            in: "query",
-            name: "email",
+            in: "body",
+            name: "body",
             required: true,
-        },
-        {
-            in: "query",
-            name: "code",
-            required: true,
+            schema: {
+                type: "object",
+                properties: {
+                    code: {
+                        type: "string",
+                    },
+                    email: {
+                        type: "string",
+                    },
+                },
+            },
         },
     ],
     responses: {

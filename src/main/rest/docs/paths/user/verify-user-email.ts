@@ -9,9 +9,17 @@ export const verifyUserEmail = {
     summary: "Faz a confirmação de que e-mail do usuário existe",
     parameters: [
         {
-            in: "query",
-            name: "code",
+            in: "body",
+            name: "body",
             required: true,
+            schema: {
+                type: "object",
+                properties: {
+                    code: {
+                        type: "string",
+                    },
+                },
+            },
         },
     ],
     responses: {

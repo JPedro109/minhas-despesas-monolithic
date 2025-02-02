@@ -2,33 +2,27 @@ import {
     createExpense,
     createExtract,
     createPaymentMethod,
+    createSubscription,
     createUser,
     deleteExpense,
     deleteExpiredExtracts,
     deletePaymentMethod,
     deleteUser,
-    executeChargeToExpiredSubscriptions,
     expenseUndoPayment,
     getPlans,
     getUserExpenses,
     getUserExtracts,
     getUserPaymentMethod,
-    getUserPlan,
     getUserSubscription,
-    manageSubscriptionRenewal,
     payExpense,
     recoverUserPassword,
     refreshUserToken,
-    sendnotificationOfexpensesThatAreComingDue,
-    sendNotificationOfSubscriptionsThatAreComingDue,
     sendUserEmailUpdateLink,
     sendUserPasswordRecoverLink,
-    setFreePlanForNonRenewableSubscriptions,
     updateExpense,
     updatePaymentMethodName,
     updatePaymentMethodToken,
     updatePreviousMonthPaidExpensesToUnpaid,
-    updateSubscription,
     updateSubscriptionRenewalStatus,
     updateUserEmail,
     updateUsername,
@@ -75,9 +69,6 @@ const swaggerSetup = {
         "/api/expenses/pay/{id}": {
             patch: payExpense,
         },
-        "/api/expenses/notify-due": {
-            post: sendnotificationOfexpensesThatAreComingDue,
-        },
         "/api/expenses/update-unpaid": {
             post: updatePreviousMonthPaidExpensesToUnpaid,
         },
@@ -110,31 +101,14 @@ const swaggerSetup = {
         "/api/plans": {
             get: getPlans,
         },
-        "/api/plans/user": {
-            get: getUserPlan,
-        },
 
         // Subscriptions
-        "/api/subscriptions/charge-expired": {
-            post: executeChargeToExpiredSubscriptions,
-        },
         "/api/subscriptions": {
+            post: createSubscription,
             get: getUserSubscription,
-        },
-        "/api/subscriptions/renew": {
-            post: manageSubscriptionRenewal,
-        },
-        "/api/subscriptions/notify-due": {
-            post: sendNotificationOfSubscriptionsThatAreComingDue,
-        },
-        "/api/subscriptions/plan/{newPlanId}": {
-            patch: updateSubscription,
         },
         "/api/subscriptions/renewal-status": {
             patch: updateSubscriptionRenewalStatus,
-        },
-        "/api/subscriptions/set-free-plan": {
-            post: setFreePlanForNonRenewableSubscriptions,
         },
 
         // Users

@@ -4,6 +4,7 @@ import {
     HttpHelper,
     HttpResponse,
 } from "@/layers/presentation";
+import { logStubFactory } from "../__mocks__";
 
 class Test {
     async execute(): Promise<void> {}
@@ -11,7 +12,7 @@ class Test {
 
 class TestMiddleware extends AbstractMiddleware {
     constructor(private readonly test: Test) {
-        super();
+        super(logStubFactory(), "Test");
     }
 
     protected async handler(): Promise<HttpResponse> {

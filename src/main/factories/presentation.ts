@@ -235,8 +235,10 @@ export const updatePreviousMonthPaidExpensesToUnpaidController =
 
 export const authenticationUserMiddleware = new AuthenticateUserMiddleware(
     securityAdapter,
+    winstonAdapter,
 );
 
 export const basicAuthenticationMiddleware = new BasicAuthenticationMiddleware(
     securityAdapter,
+    winstonAdapter,
 );

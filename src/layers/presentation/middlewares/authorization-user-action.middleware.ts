@@ -1,6 +1,7 @@
 import {
     ForbiddenError,
     IGetUserSubscriptionUseCase,
+    ILog,
     UnauthorizedError,
 } from "@/layers/application";
 import {
@@ -14,8 +15,9 @@ export class AuthorizationUserActionMiddleware extends AbstractMiddleware {
     constructor(
         private readonly getUserSubscriptionUseCase: IGetUserSubscriptionUseCase,
         private readonly action: string,
+        protected readonly log: ILog,
     ) {
-        super();
+        super(log, "AuthorizationUserAction");
     }
 
     async handler(request: HttpRequest): Promise<HttpResponse> {

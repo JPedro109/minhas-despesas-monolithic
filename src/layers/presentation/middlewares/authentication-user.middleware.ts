@@ -1,4 +1,4 @@
-import { ISecurity, UnauthorizedError } from "@/layers/application";
+import { ILog, ISecurity, UnauthorizedError } from "@/layers/application";
 import {
     HttpRequest,
     HttpResponse,
@@ -7,8 +7,11 @@ import {
 } from "@/layers/presentation";
 
 export class AuthenticateUserMiddleware extends AbstractMiddleware {
-    constructor(private readonly secutiry: ISecurity) {
-        super();
+    constructor(
+        private readonly secutiry: ISecurity,
+        protected readonly log: ILog,
+    ) {
+        super(log, "AuthenticateUser");
     }
 
     async handler(request: HttpRequest): Promise<HttpResponse> {

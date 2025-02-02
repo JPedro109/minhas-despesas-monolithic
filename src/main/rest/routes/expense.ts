@@ -10,6 +10,7 @@ import {
     authenticationUserMiddleware,
     basicAuthenticationMiddleware,
     getUserSubscriptionUseCase,
+    winstonAdapter,
 } from "@/main/factories";
 import { RestAdapter } from "@/main/rest";
 
@@ -23,6 +24,7 @@ export default (router: Router): void => {
             new AuthorizationUserActionMiddleware(
                 getUserSubscriptionUseCase,
                 "create:expense",
+                winstonAdapter,
             ),
         ),
         RestAdapter.route(createExpenseController),
@@ -34,6 +36,7 @@ export default (router: Router): void => {
             new AuthorizationUserActionMiddleware(
                 getUserSubscriptionUseCase,
                 "delete:expense",
+                winstonAdapter,
             ),
         ),
         RestAdapter.route(deleteExpenseController),
@@ -45,6 +48,7 @@ export default (router: Router): void => {
             new AuthorizationUserActionMiddleware(
                 getUserSubscriptionUseCase,
                 "undo-payment:expense",
+                winstonAdapter,
             ),
         ),
         RestAdapter.route(expenseUndoPaymentController),
@@ -56,6 +60,7 @@ export default (router: Router): void => {
             new AuthorizationUserActionMiddleware(
                 getUserSubscriptionUseCase,
                 "get:expense",
+                winstonAdapter,
             ),
         ),
         RestAdapter.route(getUserExpensesController),
@@ -67,6 +72,7 @@ export default (router: Router): void => {
             new AuthorizationUserActionMiddleware(
                 getUserSubscriptionUseCase,
                 "pay:expense",
+                winstonAdapter,
             ),
         ),
         RestAdapter.route(payExpenseController),
@@ -78,6 +84,7 @@ export default (router: Router): void => {
             new AuthorizationUserActionMiddleware(
                 getUserSubscriptionUseCase,
                 "update:expense",
+                winstonAdapter,
             ),
         ),
         RestAdapter.route(updateExpenseController),

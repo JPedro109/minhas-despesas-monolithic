@@ -6,6 +6,7 @@ import {
     authenticationUserMiddleware,
     getUserSubscriptionUseCase,
     basicAuthenticationMiddleware,
+    winstonAdapter,
 } from "@/main/factories";
 import { RestAdapter } from "@/main/rest";
 
@@ -19,6 +20,7 @@ export default (router: Router): void => {
             new AuthorizationUserActionMiddleware(
                 getUserSubscriptionUseCase,
                 "create:extract",
+                winstonAdapter,
             ),
         ),
         RestAdapter.route(createExtractController),
@@ -35,6 +37,7 @@ export default (router: Router): void => {
             new AuthorizationUserActionMiddleware(
                 getUserSubscriptionUseCase,
                 "get:extract",
+                winstonAdapter,
             ),
         ),
         RestAdapter.route(getUserExtractsController),

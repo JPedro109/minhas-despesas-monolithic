@@ -1,12 +1,15 @@
 import { BasicAuthenticationMiddleware } from "@/layers/presentation";
-import { SecurityStub } from "../__mocks__";
+import { logStubFactory, SecurityStub } from "../__mocks__";
 
 const makeSut = (): {
     sut: BasicAuthenticationMiddleware;
     securityStub: SecurityStub;
 } => {
     const securityStub = new SecurityStub();
-    const sut = new BasicAuthenticationMiddleware(securityStub);
+    const sut = new BasicAuthenticationMiddleware(
+        securityStub,
+        logStubFactory(),
+    );
 
     return {
         sut,

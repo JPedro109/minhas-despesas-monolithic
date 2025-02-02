@@ -1,5 +1,6 @@
 import { IGetUserSubscriptionUseCase } from "@/layers/application";
 import { AuthorizationUserActionMiddleware } from "@/layers/presentation";
+import { logStubFactory } from "../__mocks__";
 
 const makeSut = (): {
     sutWithActionNameAndWithTenTotalOperations: AuthorizationUserActionMiddleware;
@@ -37,11 +38,13 @@ const makeSut = (): {
         new AuthorizationUserActionMiddleware(
             mockGetUserSubscriptionUseCase,
             "Name",
+            logStubFactory(),
         );
 
     const sutWithActionNotFound = new AuthorizationUserActionMiddleware(
         mockGetUserSubscriptionUseCase,
         "NotFound",
+        logStubFactory(),
     );
 
     return {

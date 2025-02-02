@@ -76,7 +76,7 @@ describe("Use case - SendUserEmailUpdateLinkUseCase", () => {
             userVerificationCodeStub,
             "createUserVerificationCode",
         );
-        const sendMailSpy = jest.spyOn(mailStub, "sendMail");
+        const sendEmailSpy = jest.spyOn(mailStub, "sendEmail");
 
         await sut.execute({
             id,
@@ -84,6 +84,6 @@ describe("Use case - SendUserEmailUpdateLinkUseCase", () => {
         });
 
         expect(createUserVerificationCodeSpy).toHaveBeenCalled();
-        expect(sendMailSpy).toHaveBeenCalled();
+        expect(sendEmailSpy).toHaveBeenCalled();
     });
 });

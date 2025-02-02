@@ -57,13 +57,13 @@ describe("Use case - SendUserPasswordRecoveryLinkUseCase", () => {
             userVerificationCodeStub,
             "createUserVerificationCode",
         );
-        const sendMailSpy = jest.spyOn(mailStub, "sendMail");
+        const sendEmailSpy = jest.spyOn(mailStub, "sendEmail");
 
         await sut.execute({
             email,
         });
 
         expect(createUserVerificationCodeSpy).toHaveBeenCalled();
-        expect(sendMailSpy).toHaveBeenCalled();
+        expect(sendEmailSpy).toHaveBeenCalled();
     });
 });

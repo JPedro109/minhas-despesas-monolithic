@@ -92,7 +92,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
                     customerId,
                 });
                 await customerRepository.createCustomer(customer);
-                await this.notification.sendMail(
+                await this.notification.sendEmail(
                     email,
                     EmailTemplateEnum.VerifyUserEmailTemplate,
                     {

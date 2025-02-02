@@ -4,7 +4,7 @@ import { INotification, IQueue } from "@/layers/application";
 export class NotificationAdapter implements INotification {
     constructor(private readonly queue: IQueue) {}
 
-    async sendMail(to: string, type: string, props?: object): Promise<void> {
+    async sendEmail(to: string, type: string, props?: object): Promise<void> {
         const email = {
             to,
             type,
@@ -12,7 +12,7 @@ export class NotificationAdapter implements INotification {
             service: "EXPENSES",
         };
 
-        await this.queue.sendMessage(environmentVariables.sendMailQueue, {
+        await this.queue.sendMessage(environmentVariables.sendEmailQueue, {
             pattern: "send_mail",
             data: email,
         });

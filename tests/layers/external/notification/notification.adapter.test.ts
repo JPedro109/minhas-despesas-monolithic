@@ -7,11 +7,11 @@ describe("External - NotificationAdapter", () => {
         const props = { name: "Test" };
         const queueAdapter = new SQSAdapter();
         const sut = new NotificationAdapter(queueAdapter);
-        jest.spyOn(sut, "sendMail");
+        jest.spyOn(sut, "sendEmail");
 
-        await sut.sendMail(email, type, props);
+        await sut.sendEmail(email, type, props);
 
-        expect(sut.sendMail).toHaveBeenCalled();
-        expect(sut.sendMail).toHaveBeenCalledWith(email, type, props);
+        expect(sut.sendEmail).toHaveBeenCalled();
+        expect(sut.sendEmail).toHaveBeenCalledWith(email, type, props);
     });
 });

@@ -46,10 +46,10 @@ describe("Use case - NotifyUserOfSubscriptionPaymentFailureUseCase", () => {
     test("Should send notification successfully when customer and user exist", async () => {
         const customerId = "1";
         const { sut, notificationStub } = makeSut();
-        const sendMailSpy = jest.spyOn(notificationStub, "sendMail");
+        const sendEmailSpy = jest.spyOn(notificationStub, "sendEmail");
 
         await sut.execute({ customerId });
 
-        expect(sendMailSpy).toHaveBeenCalled();
+        expect(sendEmailSpy).toHaveBeenCalled();
     });
 });

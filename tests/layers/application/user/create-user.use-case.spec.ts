@@ -121,7 +121,7 @@ describe("Use case - CreateUserUseCase", () => {
         jest.spyOn(userRepositoryStub, "getUserByEmail").mockReturnValueOnce(
             Promise.resolve(null),
         );
-        jest.spyOn(mailStub, "sendMail").mockReturnValueOnce(
+        jest.spyOn(mailStub, "sendEmail").mockReturnValueOnce(
             Promise.reject(new Error()),
         );
 

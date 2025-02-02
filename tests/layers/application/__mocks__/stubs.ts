@@ -103,7 +103,7 @@ export class GenerationStub implements IGeneration {
 }
 
 export class NotificationStub implements INotification {
-    async sendMail(
+    async sendEmail(
         to: string,
         type: EmailTemplateEnum,
         props?: object,

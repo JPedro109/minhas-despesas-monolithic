@@ -11,7 +11,7 @@ type EnvironmentVariables = {
     awsRegion: string;
     awsBucketName: string;
     localstackEndpoint: string;
-    sendMailQueue: string;
+    sendEmailQueue: string;
     stripeSecretKey: string;
     port: number;
     webhookSecret: string;
@@ -27,7 +27,7 @@ export const environmentVariables: EnvironmentVariables = {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     awsRegion: process.env.AWS_REGION,
     awsBucketName: process.env.AWS_BUCKET_NAME,
-    sendMailQueue: process.env.SEND_MAIL_QUEUE,
+    sendEmailQueue: process.env.SEND_MAIL_QUEUE,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     port: parseInt(process.env.PORT),
     localstackEndpoint: process.env.LOCALSTACK_ENDPOINT,

@@ -1,7 +1,7 @@
 import { EmailTemplateEnum } from "./notification.enums";
 
 export interface INotification {
-    sendMail(
+    sendEmail(
         to: string,
         type: EmailTemplateEnum,
         props?: object,

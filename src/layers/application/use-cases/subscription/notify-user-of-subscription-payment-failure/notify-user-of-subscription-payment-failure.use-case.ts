@@ -29,7 +29,7 @@ export class NotifyUserOfSubscriptionPaymentFailureUseCase
 
         const user = await userRepository.getUserById(customer.userId);
 
-        await this.notification.sendMail(
+        await this.notification.sendEmail(
             user.email,
             EmailTemplateEnum.NotifySubscriptionPaymentFailureTemplate,
             { username: user.username },

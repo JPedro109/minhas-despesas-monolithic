@@ -50,7 +50,7 @@ export class SendUserEmailUpdateLinkUseCase
             await userVerificationCodeRepository.createUserVerificationCode(
                 userVerificationCode,
             );
-            await this.notification.sendMail(
+            await this.notification.sendEmail(
                 email,
                 EmailTemplateEnum.UpdateUserEmailTemplate,
                 {

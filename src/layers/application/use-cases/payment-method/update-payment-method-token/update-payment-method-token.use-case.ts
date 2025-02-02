@@ -49,6 +49,10 @@ export class UpdatePaymentMethodTokenUseCase
                 await this.payment.detachmentPaymentMethodInCustomerByToken(
                     oldPaymentMethod,
                 );
+                await this.payment.payExpiredSubscriptionIfAny(
+                    customer.customerId,
+                    tokenCreated,
+                );
             } catch (e) {
                 await this.payment.detachmentPaymentMethodInCustomerByToken(
                     tokenCreated,

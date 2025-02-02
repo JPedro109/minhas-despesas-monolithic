@@ -54,6 +54,10 @@ export class CreatePaymentMethodUseCase implements ICreatePaymentMethodUseCase {
                     await paymentMethodRepository.createPaymentMethod(
                         paymentMethod,
                     );
+                await this.payment.payExpiredSubscriptionIfAny(
+                    customer.customerId,
+                    tokenCreated,
+                );
             } catch (e) {
                 await this.payment.detachmentPaymentMethodInCustomerByToken(
                     tokenCreated,

@@ -14,7 +14,7 @@ import {
     IPayment,
     InvalidParamError,
     ConflictedError,
-    MailBodyTypeEnum,
+    EmailTemplateEnum,
     CreateUserDTO,
     ICreateUserUseCase,
 } from "@/layers/application";
@@ -94,7 +94,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
                 await customerRepository.createCustomer(customer);
                 await this.notification.sendMail(
                     email,
-                    MailBodyTypeEnum.VerifyUserEmailBody,
+                    EmailTemplateEnum.VerifyUserEmailTemplate,
                     {
                         appUrl: environmentVariables.appUrl,
                         email,

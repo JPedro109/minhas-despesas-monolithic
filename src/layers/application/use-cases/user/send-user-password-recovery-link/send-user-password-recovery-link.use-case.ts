@@ -7,7 +7,7 @@ import {
     IUnitOfWorkRepository,
     INotification,
     IGeneration,
-    MailBodyTypeEnum,
+    EmailTemplateEnum,
     SendUserPasswordRecoveryLinkDTO,
     ISendUserPasswordRecoveryLinkUseCase,
     NotFoundError,
@@ -48,7 +48,7 @@ export class SendUserPasswordRecoveryLinkUseCase
             );
             await this.notification.sendMail(
                 email,
-                MailBodyTypeEnum.RecoveryUserPasswordBody,
+                EmailTemplateEnum.RecoveryUserPasswordTemplate,
                 {
                     appUrl: environmentVariables.appUrl,
                     email,

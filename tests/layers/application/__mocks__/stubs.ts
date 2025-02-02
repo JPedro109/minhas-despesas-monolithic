@@ -21,7 +21,7 @@ import {
     IUserRepository,
     IUserVerificationCodeRepository,
     JsonWebTokenType,
-    MailBodyTypeEnum,
+    EmailTemplateEnum,
     SubscriptionData,
 } from "@/layers/application";
 import {
@@ -105,7 +105,7 @@ export class GenerationStub implements IGeneration {
 export class NotificationStub implements INotification {
     async sendMail(
         to: string,
-        type: MailBodyTypeEnum,
+        type: EmailTemplateEnum,
         props?: object,
     ): Promise<void> {}
 }

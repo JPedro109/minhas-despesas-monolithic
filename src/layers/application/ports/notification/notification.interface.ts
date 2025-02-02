@@ -1,5 +1,9 @@
-import { MailBodyTypeEnum } from "./mail-body-type.enum";
+import { EmailTemplateEnum } from "./notification.enums";
 
 export interface INotification {
-    sendMail(to: string, type: MailBodyTypeEnum, props?: object): Promise<void>;
+    sendMail(
+        to: string,
+        type: EmailTemplateEnum,
+        props?: object,
+    ): Promise<void>;
 }

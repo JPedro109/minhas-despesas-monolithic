@@ -2,7 +2,7 @@ import {
     INotification,
     INotifyUserOfSubscriptionPaymentFailureUseCase,
     IUnitOfWorkRepository,
-    MailBodyTypeEnum,
+    EmailTemplateEnum,
     NotFoundError,
     NotifyUserOfSubscriptionPaymentFailureDTO,
 } from "@/layers/application";
@@ -31,7 +31,7 @@ export class NotifyUserOfSubscriptionPaymentFailureUseCase
 
         await this.notification.sendMail(
             user.email,
-            MailBodyTypeEnum.NotifySubscriptionPaymentFailureBody,
+            EmailTemplateEnum.NotifySubscriptionPaymentFailureTemplate,
             { username: user.username },
         );
     }

@@ -8,7 +8,7 @@ import {
     INotification,
     IGeneration,
     ConflictedError,
-    MailBodyTypeEnum,
+    EmailTemplateEnum,
     SendUserEmailUpdateLinkDTO,
     ISendUserEmailUpdateLinkUseCase,
     NotFoundError,
@@ -52,7 +52,7 @@ export class SendUserEmailUpdateLinkUseCase
             );
             await this.notification.sendMail(
                 email,
-                MailBodyTypeEnum.UpdateUserEmailBody,
+                EmailTemplateEnum.UpdateUserEmailTemplate,
                 {
                     appUrl: environmentVariables.appUrl,
                     email,

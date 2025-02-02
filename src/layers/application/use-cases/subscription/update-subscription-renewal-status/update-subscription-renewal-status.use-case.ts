@@ -27,7 +27,8 @@ export class UpdateSubscriptionRenewalStatusUseCase
         const subscription =
             await subscriptionRepository.getSubscriptionByUserId(userId);
 
-        if (!subscription) throw new NotFoundError("Esse usuário não existe");
+        if (!subscription)
+            throw new NotFoundError("O usuário não tem uma assinatura");
 
         if (renewable) {
             const paymentMethodExists =

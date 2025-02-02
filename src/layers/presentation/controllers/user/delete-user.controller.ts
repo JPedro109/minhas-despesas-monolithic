@@ -28,7 +28,7 @@ export class DeleteUserController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { password, passwordConfirm } = request.data;
+        const { password, passwordConfirm } = request.body;
         const body = {
             id: request.userId,
             password,

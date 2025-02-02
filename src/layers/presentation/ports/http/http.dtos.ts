@@ -2,7 +2,9 @@
 
 export type HttpRequest = {
     headers?: any;
-    data?: any;
+    body?: any;
+    params?: any;
+    query?: any;
     userId?: string;
     method?: string;
     path?: string;

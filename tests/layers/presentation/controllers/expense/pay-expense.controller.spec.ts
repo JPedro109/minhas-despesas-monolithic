@@ -25,7 +25,7 @@ describe("Controller - PayExpenseController", () => {
         const id = "";
 
         const result = await sut.http({
-            data: {
+            params: {
                 id,
             },
         });
@@ -38,7 +38,7 @@ describe("Controller - PayExpenseController", () => {
         const id = "1";
 
         const result = await sut.http({
-            data: {
+            params: {
                 id,
             },
         });

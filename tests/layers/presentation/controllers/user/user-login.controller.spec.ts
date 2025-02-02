@@ -29,7 +29,7 @@ describe("Controller - UserLoginController", () => {
         const password = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 email,
                 password,
             },
@@ -44,7 +44,7 @@ describe("Controller - UserLoginController", () => {
         const password = "Password@12345";
 
         const result = await sut.http({
-            data: {
+            body: {
                 email,
                 password,
             },

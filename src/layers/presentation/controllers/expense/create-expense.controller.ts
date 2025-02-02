@@ -32,7 +32,7 @@ export class CreateExpenseController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { expenseName, expenseValue, dueDate } = request.data;
+        const { expenseName, expenseValue, dueDate } = request.body;
         const body = {
             userId: request.userId,
             expenseName,

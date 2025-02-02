@@ -30,8 +30,8 @@ describe("Controller - UpdatePaymentMethodNameController", () => {
         const name = "";
 
         const result = await sut.http({
-            data: {
-                id,
+            params: { id },
+            body: {
                 name,
             },
         });
@@ -45,8 +45,8 @@ describe("Controller - UpdatePaymentMethodNameController", () => {
         const name = "name";
 
         const result = await sut.http({
-            data: {
-                id,
+            params: { id },
+            body: {
                 name,
             },
         });

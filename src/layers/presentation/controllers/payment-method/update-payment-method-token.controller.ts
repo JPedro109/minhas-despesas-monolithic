@@ -28,7 +28,8 @@ export class UpdatePaymentMethodTokenController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { id, token } = request.data;
+        const { id } = request.params;
+        const { token } = request.body;
         const body = {
             id,
             token,

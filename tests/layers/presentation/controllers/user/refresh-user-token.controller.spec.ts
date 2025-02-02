@@ -28,7 +28,7 @@ describe("Controller - RefreshUserTokenController", () => {
         const refreshToken = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 refreshToken,
             },
         });
@@ -41,7 +41,7 @@ describe("Controller - RefreshUserTokenController", () => {
         const refreshToken = "refresh-token";
 
         const result = await sut.http({
-            data: {
+            body: {
                 refreshToken,
             },
         });

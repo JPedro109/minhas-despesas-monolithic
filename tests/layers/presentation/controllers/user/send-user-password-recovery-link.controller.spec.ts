@@ -29,7 +29,7 @@ describe("Controller - SendUserPasswordRecoveryLinkController", () => {
         const email = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 email,
             },
         });
@@ -42,7 +42,7 @@ describe("Controller - SendUserPasswordRecoveryLinkController", () => {
         const email = "email@test.com";
 
         const result = await sut.http({
-            data: {
+            body: {
                 email,
             },
         });

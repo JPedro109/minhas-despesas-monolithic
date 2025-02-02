@@ -20,8 +20,7 @@ export class RefreshUserTokenController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { refreshToken } = request.data;
-
+        const { refreshToken } = request.body;
         const body = { refreshToken };
 
         this.validateRequestSchema(body);

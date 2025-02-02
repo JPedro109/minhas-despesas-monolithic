@@ -31,7 +31,7 @@ describe("Controller - CreateUserController", () => {
         const userAgent = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 email,
                 username,
                 password,
@@ -57,7 +57,7 @@ describe("Controller - CreateUserController", () => {
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
 
         const result = await sut.http({
-            data: {
+            body: {
                 email,
                 username,
                 password,

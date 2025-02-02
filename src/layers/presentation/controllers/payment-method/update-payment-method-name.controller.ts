@@ -24,7 +24,8 @@ export class UpdatePaymentMethodNameController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { id, name } = request.data;
+        const { id } = request.params;
+        const { name } = request.body;
         const body = {
             id,
             name,

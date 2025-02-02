@@ -20,8 +20,7 @@ export class VerifyUserEmailController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { code } = request.data;
-
+        const { code } = request.body;
         const body = { code };
 
         this.validateRequestSchema(body);

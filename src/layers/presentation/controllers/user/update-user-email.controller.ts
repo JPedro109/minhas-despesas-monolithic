@@ -24,8 +24,7 @@ export class UpdateUserEmailController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { code, email } = request.data;
-
+        const { code, email } = request.body;
         const body = {
             code,
             email,

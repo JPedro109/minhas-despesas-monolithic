@@ -5,7 +5,9 @@ export class RestAdapter {
     static route = (route: IHttp) => {
         return async (req: Request, res: Response): Promise<void> => {
             const { response, statusCode } = await route.http({
-                data: { ...req.body, ...req.query, ...req.params },
+                body: req.body,
+                params: req.params,
+                query: req.query,
                 userId: req.userId,
                 headers: req.headers,
                 method: req.method,

@@ -68,7 +68,7 @@ class TestController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { account, address } = request.data;
+        const { account, address } = request.body;
 
         const body = {
             account,
@@ -117,7 +117,7 @@ describe("Controller - CreateUserController", () => {
         );
 
         const result = await sut.http({
-            data: {
+            body: {
                 account,
                 address,
             },
@@ -144,7 +144,7 @@ describe("Controller - CreateUserController", () => {
         );
 
         const result = await sut.http({
-            data: {
+            body: {
                 account,
                 address,
             },
@@ -171,7 +171,7 @@ describe("Controller - CreateUserController", () => {
         );
 
         const result = await sut.http({
-            data: {
+            body: {
                 account,
                 address,
             },
@@ -198,7 +198,7 @@ describe("Controller - CreateUserController", () => {
         );
 
         const result = await sut.http({
-            data: {
+            body: {
                 account,
                 address,
             },
@@ -225,7 +225,7 @@ describe("Controller - CreateUserController", () => {
         );
 
         const result = await sut.http({
-            data: {
+            body: {
                 account,
                 address,
             },
@@ -250,7 +250,7 @@ describe("Controller - CreateUserController", () => {
         jest.spyOn(useCase, "execute").mockRejectedValueOnce(new Error("Test"));
 
         const result = await sut.http({
-            data: {
+            body: {
                 account,
                 address,
             },
@@ -274,7 +274,7 @@ describe("Controller - CreateUserController", () => {
         };
 
         const result = await sut.http({
-            data: {
+            body: {
                 account,
                 address,
             },
@@ -299,7 +299,7 @@ describe("Controller - CreateUserController", () => {
         jest.spyOn(sut, "http").mockResolvedValueOnce(HttpHelper.ok("1"));
 
         const result = await sut.http({
-            data: {
+            body: {
                 account,
                 address,
             },
@@ -323,7 +323,7 @@ describe("Controller - CreateUserController", () => {
         };
 
         const result = await sut.http({
-            data: {
+            body: {
                 account,
                 address,
             },
@@ -348,7 +348,7 @@ describe("Controller - CreateUserController", () => {
         jest.spyOn(sut, "http").mockResolvedValueOnce(HttpHelper.noBody());
 
         const result = await sut.http({
-            data: {
+            body: {
                 account,
                 address,
             },

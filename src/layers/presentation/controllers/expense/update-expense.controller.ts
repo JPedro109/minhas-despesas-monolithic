@@ -36,7 +36,8 @@ export class UpdateExpenseController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { id, expenseName, expenseValue, dueDate } = request.data;
+        const { id } = request.params;
+        const { expenseName, expenseValue, dueDate } = request.body;
         const body = {
             id,
             userId: request.userId,

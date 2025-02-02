@@ -30,7 +30,7 @@ describe("Controller - SendUserEmailUpdateLinkController", () => {
         const email = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 email,
             },
             userId: id,
@@ -45,7 +45,7 @@ describe("Controller - SendUserEmailUpdateLinkController", () => {
         const email = "email@test.com";
 
         const result = await sut.http({
-            data: {
+            body: {
                 email,
             },
             userId: id,

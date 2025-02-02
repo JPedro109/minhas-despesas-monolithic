@@ -20,7 +20,7 @@ export class PayExpenseController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { id } = request.data;
+        const { id } = request.params;
         const body = { id };
 
         this.validateRequestSchema(body);

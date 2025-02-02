@@ -20,8 +20,7 @@ export class UpdateUsernameController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { username } = request.data;
-
+        const { username } = request.body;
         const body = {
             id: request.userId,
             username,

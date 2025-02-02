@@ -28,7 +28,7 @@ export class CreatePaymentMethodController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { name, token } = request.data;
+        const { name, token } = request.body;
         const body = {
             userId: request.userId,
             name,

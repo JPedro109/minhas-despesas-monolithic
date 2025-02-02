@@ -31,7 +31,7 @@ describe("Controller - RecoverUserPasswordController", () => {
         const passwordConfirm = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 code,
                 password,
                 passwordConfirm,
@@ -48,7 +48,7 @@ describe("Controller - RecoverUserPasswordController", () => {
         const passwordConfirm = "Password@123456";
 
         const result = await sut.http({
-            data: {
+            body: {
                 code,
                 password,
                 passwordConfirm,

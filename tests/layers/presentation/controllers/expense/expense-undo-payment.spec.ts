@@ -29,7 +29,7 @@ describe("Controller - ExpenseUndoPaymentController", () => {
         const id = "";
 
         const result = await sut.http({
-            data: {
+            params: {
                 id,
             },
         });
@@ -42,7 +42,7 @@ describe("Controller - ExpenseUndoPaymentController", () => {
         const id = "1";
 
         const result = await sut.http({
-            data: {
+            params: {
                 id,
             },
         });

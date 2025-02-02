@@ -30,7 +30,7 @@ describe("Controller - CreateSubscriptionController", () => {
         const planId = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 planId,
             },
             userId,
@@ -45,7 +45,7 @@ describe("Controller - CreateSubscriptionController", () => {
         const planId = "1";
 
         const result = await sut.http({
-            data: {
+            body: {
                 planId,
             },
             userId,

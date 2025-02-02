@@ -30,7 +30,7 @@ describe("Controller - UpdateSubscriptionRenewalStatusController", () => {
         const renewable = undefined;
 
         const result = await sut.http({
-            data: {
+            body: {
                 renewable,
             },
             userId,
@@ -45,7 +45,7 @@ describe("Controller - UpdateSubscriptionRenewalStatusController", () => {
         const renewable = true;
 
         const result = await sut.http({
-            data: {
+            body: {
                 renewable,
             },
             userId,

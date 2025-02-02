@@ -28,7 +28,7 @@ describe("Controller - CreateExpenseController", () => {
         const dueDate = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 expenseName,
                 expenseValue,
                 dueDate,
@@ -47,7 +47,7 @@ describe("Controller - CreateExpenseController", () => {
         const dueDate = "3000-01-01";
 
         const result = await sut.http({
-            data: {
+            body: {
                 expenseName,
                 expenseValue,
                 dueDate,

@@ -31,7 +31,7 @@ describe("Controller - CreatePaymentMethodController", () => {
         const name = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 token,
                 name,
             },
@@ -48,7 +48,7 @@ describe("Controller - CreatePaymentMethodController", () => {
         const name = "Payment method";
 
         const result = await sut.http({
-            data: {
+            body: {
                 token,
                 name,
             },

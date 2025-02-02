@@ -28,7 +28,7 @@ describe("Controller - UpdateUsernameController", () => {
         const username = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 username,
             },
         });
@@ -41,7 +41,7 @@ describe("Controller - UpdateUsernameController", () => {
         const username = "Test One";
 
         const result = await sut.http({
-            data: {
+            body: {
                 username,
             },
         });

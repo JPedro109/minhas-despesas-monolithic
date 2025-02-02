@@ -28,7 +28,7 @@ describe("Controller - VerifyUserEmailController", () => {
         const code = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 code,
             },
         });
@@ -41,7 +41,7 @@ describe("Controller - VerifyUserEmailController", () => {
         const code = "123456";
 
         const result = await sut.http({
-            data: {
+            body: {
                 code,
             },
         });

@@ -24,8 +24,7 @@ export class UserLoginController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { email, password } = request.data;
-
+        const { email, password } = request.body;
         const body = {
             email,
             password,

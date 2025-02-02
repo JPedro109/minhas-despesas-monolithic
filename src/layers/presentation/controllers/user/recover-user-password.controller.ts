@@ -28,7 +28,7 @@ export class RecoverUserPasswordController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { code, password, passwordConfirm } = request.data;
+        const { code, password, passwordConfirm } = request.body;
 
         const body = {
             code,

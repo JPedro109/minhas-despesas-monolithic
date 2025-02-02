@@ -31,8 +31,8 @@ describe("Controller - UpdatePaymentMethodTokenController", () => {
         const userId = "";
 
         const result = await sut.http({
-            data: {
-                id,
+            params: { id },
+            body: {
                 token,
             },
             userId,
@@ -48,8 +48,8 @@ describe("Controller - UpdatePaymentMethodTokenController", () => {
         const token = "token";
 
         const result = await sut.http({
-            data: {
-                id,
+            params: { id },
+            body: {
                 token,
             },
             userId,

@@ -27,7 +27,7 @@ describe("Controller - CreateExtractController", () => {
         const referenceYear = null;
 
         const result = await sut.http({
-            data: {
+            body: {
                 referenceMonth,
                 referenceYear,
             },
@@ -44,7 +44,7 @@ describe("Controller - CreateExtractController", () => {
         const referenceYear = 1;
 
         const result = await sut.http({
-            data: {
+            body: {
                 referenceMonth,
                 referenceYear,
             },

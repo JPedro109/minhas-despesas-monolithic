@@ -26,8 +26,8 @@ describe("Controller - DeleteExpenseController", () => {
         const deleteExpensePaymentHistory = undefined;
 
         const result = await sut.http({
-            data: {
-                id,
+            params: { id },
+            query: {
                 deleteExpensePaymentHistory,
             },
         });
@@ -41,8 +41,8 @@ describe("Controller - DeleteExpenseController", () => {
         const deleteExpensePaymentHistory = "false";
 
         const result = await sut.http({
-            data: {
-                id,
+            params: { id },
+            query: {
                 deleteExpensePaymentHistory,
             },
         });
@@ -56,8 +56,8 @@ describe("Controller - DeleteExpenseController", () => {
         const deleteExpensePaymentHistory = "true";
 
         const result = await sut.http({
-            data: {
-                id,
+            params: { id },
+            query: {
                 deleteExpensePaymentHistory,
             },
         });

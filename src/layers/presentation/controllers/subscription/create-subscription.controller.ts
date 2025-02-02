@@ -24,8 +24,7 @@ export class CreateSubscriptionController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { planId } = request.data;
-
+        const { planId } = request.body;
         const body = {
             userId: request.userId,
             planId,

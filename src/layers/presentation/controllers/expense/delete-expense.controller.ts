@@ -24,7 +24,8 @@ export class DeleteExpenseController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { id, deleteExpensePaymentHistory } = request.data;
+        const { id } = request.params;
+        const { deleteExpensePaymentHistory } = request.query;
         const body = {
             id,
             deleteExpensePaymentHistory:

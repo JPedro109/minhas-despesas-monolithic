@@ -32,7 +32,7 @@ describe("Controller - UpdateUserPasswordController", () => {
         const newPasswordConfirm = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 password,
                 newPassword,
                 newPasswordConfirm,
@@ -51,7 +51,7 @@ describe("Controller - UpdateUserPasswordController", () => {
         const newPasswordConfirm = "Password@1234567";
 
         const result = await sut.http({
-            data: {
+            body: {
                 password,
                 newPassword,
                 newPasswordConfirm,

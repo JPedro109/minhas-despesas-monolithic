@@ -32,8 +32,7 @@ export class UpdateUserPasswordController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { password, newPassword, newPasswordConfirm } = request.data;
-
+        const { password, newPassword, newPasswordConfirm } = request.body;
         const body = {
             id: request.userId,
             password,

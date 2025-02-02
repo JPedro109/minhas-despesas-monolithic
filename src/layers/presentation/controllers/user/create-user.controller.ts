@@ -45,8 +45,7 @@ export class CreateUserController extends AbstractController {
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
         const { email, username, password, passwordConfirm, consentVersion } =
-            request.data;
-
+            request.body;
         const body = {
             email,
             username,

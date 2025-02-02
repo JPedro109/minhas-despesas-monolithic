@@ -27,7 +27,7 @@ describe("Controller - DeleteUserController", () => {
         const passwordConfirm = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 password,
                 passwordConfirm,
             },
@@ -44,7 +44,7 @@ describe("Controller - DeleteUserController", () => {
         const passwordConfirm = "Password@123456";
 
         const result = await sut.http({
-            data: {
+            body: {
                 password,
                 passwordConfirm,
             },

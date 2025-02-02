@@ -29,7 +29,7 @@ describe("Controller - UpdateUserEmailController", () => {
         const email = "";
 
         const result = await sut.http({
-            data: {
+            body: {
                 code,
                 email,
             },
@@ -44,7 +44,7 @@ describe("Controller - UpdateUserEmailController", () => {
         const email = "email@test.com";
 
         const result = await sut.http({
-            data: {
+            body: {
                 code,
                 email,
             },

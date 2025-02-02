@@ -28,7 +28,7 @@ export class CreateExtractController extends AbstractController {
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { referenceYear, referenceMonth } = request.data;
+        const { referenceYear, referenceMonth } = request.body;
         const body = {
             userId: request.userId,
             referenceYear,

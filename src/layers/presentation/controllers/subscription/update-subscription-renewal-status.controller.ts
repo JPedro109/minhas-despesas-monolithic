@@ -27,8 +27,7 @@ export class UpdateSubscriptionRenewalStatusController extends AbstractControlle
     }
 
     protected async handler(request: HttpRequest): Promise<HttpResponse> {
-        const { renewable } = request.data;
-
+        const { renewable } = request.body;
         const body = {
             userId: request.userId,
             renewable,

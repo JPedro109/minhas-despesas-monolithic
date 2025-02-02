@@ -5,6 +5,7 @@ import {
     PaymentHistoryRepositoryStub,
     unitOfWorkRepositoryStubFactory,
     testExpenseEntityPaid,
+    testExpenseEntityUnpaidAndExpired,
 } from "../__mocks__";
 
 const makeSut = (): {
@@ -50,7 +51,30 @@ describe("Use case - PayExpenseUseCase", () => {
         await expect(result).rejects.toThrow(DomainError);
     });
 
-    test("Should mark expense as paid and create a payment history", async () => {
+    test("Should mark expense expired as paid and create a payment history", async () => {
+        const { sut, expenseRepositoryStub, paymentHistoryRepositoryStub } =
+            makeSut();
+        jest.spyOn(
+            expenseRepositoryStub,
+            "getExpenseById",
+        ).mockResolvedValueOnce(testExpenseEntityUnpaidAndExpired());
+        const updateExpenseByIdSpy = jest.spyOn(
+            expenseRepositoryStub,
+            "updateExpenseById",
+        );
+        const createPaymentHistorySpy = jest.spyOn(
+            paymentHistoryRepositoryStub,
+            "createPaymentHistory",
+        );
+        const id = "1";
+
+        await sut.execute({ id });
+
+        expect(updateExpenseByIdSpy).toHaveBeenCalled();
+        expect(createPaymentHistorySpy).toHaveBeenCalled();
+    });
+
+    test("Should mark expense not expired as paid and create a payment history", async () => {
         const { sut, expenseRepositoryStub, paymentHistoryRepositoryStub } =
             makeSut();
         const updateExpenseByIdSpy = jest.spyOn(

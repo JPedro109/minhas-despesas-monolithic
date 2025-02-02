@@ -192,6 +192,19 @@ export const testExpenseEntityUnpaid = (): ExpenseEntity =>
         new Date("2024-01-01"),
     );
 
+export const testExpenseEntityUnpaidAndExpired = (): ExpenseEntity =>
+    new ExpenseEntity(
+        {
+            userId: "1",
+            expenseName: "Expense",
+            expenseValue: 100,
+            dueDate: new Date("2000-01-01"),
+            paid: false,
+        },
+        "1",
+        new Date("2024-01-01"),
+    );
+
 export const testExpenseEntityPaid = (): ExpenseEntity =>
     new ExpenseEntity(
         {

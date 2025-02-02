@@ -18,7 +18,16 @@ export class PayExpenseUseCase implements IPayExpenseUseCase {
         const expense = await expenseRepository.getExpenseById(id);
         if (!expense) throw new NotFoundError("Essa despesa não existe");
 
-        expense.paid = true;
+        const currentDate = new Date().getTime();
+        if (currentDate > expense.dueDate.getTime()) {
+            expense.dueDate = new Date(
+                expense.dueDate.getUTCFullYear(),
+                expense.dueDate.getUTCMonth() + 1,
+                expense.dueDate.getUTCDate(),
+            );
+        } else {
+            expense.paid = true;
+        }
 
         const paymentHistory = new PaymentHistoryEntity({
             expenseId: expense.id,

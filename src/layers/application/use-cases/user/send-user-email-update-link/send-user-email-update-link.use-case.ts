@@ -1,4 +1,3 @@
-import { environmentVariables } from "@/shared";
 import {
     UserVerificationCodeEntity,
     UserVerificationCodeTypeEnum,
@@ -54,7 +53,6 @@ export class SendUserEmailUpdateLinkUseCase
                 email,
                 EmailTemplateEnum.UpdateUserEmailTemplate,
                 {
-                    appUrl: environmentVariables.appUrl,
                     email,
                     code: verificationCode,
                 },

@@ -1,4 +1,3 @@
-import { environmentVariables } from "@/shared";
 import {
     CustomerEntity,
     UserConsentEntity,
@@ -96,7 +95,6 @@ export class CreateUserUseCase implements ICreateUserUseCase {
                     email,
                     EmailTemplateEnum.VerifyUserEmailTemplate,
                     {
-                        appUrl: environmentVariables.appUrl,
                         email,
                         username,
                         code,

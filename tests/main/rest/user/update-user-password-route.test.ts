@@ -16,7 +16,9 @@ describe("/api/users/password - PATCH", () => {
     setup();
 
     test("Should not update password because fields are emptys", async () => {
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
         const body = makeBody("", "", "");
 
         const response = await request(setupServer())
@@ -30,7 +32,9 @@ describe("/api/users/password - PATCH", () => {
     });
 
     test("Should not update password because newPassword and newPasswordConfirm do not match", async () => {
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
         const body = makeBody(
             "Password1234",
             "Password12345",
@@ -48,7 +52,9 @@ describe("/api/users/password - PATCH", () => {
     });
 
     test("Should not update password because the current is incorrect", async () => {
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
         const body = makeBody(
             "Password1234567",
             "Password1234",
@@ -66,7 +72,9 @@ describe("/api/users/password - PATCH", () => {
     });
 
     test("Should not update password because the new password is the same as the current one", async () => {
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
         const body = makeBody("Password1234", "Password1234", "Password1234");
 
         const response = await request(setupServer())
@@ -80,7 +88,9 @@ describe("/api/users/password - PATCH", () => {
     });
 
     test("Should update password successfully", async () => {
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
         const body = makeBody("Password1234", "Password12345", "Password12345");
 
         const response = await request(setupServer())

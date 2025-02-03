@@ -12,7 +12,9 @@ describe("/api/users/email - PATCH", () => {
     setup();
 
     test("Should not update email because fields are missing", async () => {
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
         const body = makeBody("", "");
 
         const response = await request(setupServer())
@@ -27,7 +29,9 @@ describe("/api/users/email - PATCH", () => {
 
     test("Should not update email because code is invalid", async () => {
         const body = makeBody("newemail@example.com", "999999");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
 
         const response = await request(setupServer())
             .patch("/api/users/email")
@@ -40,8 +44,10 @@ describe("/api/users/email - PATCH", () => {
     });
 
     test("Should not update email because code type is invalid", async () => {
-        const body = makeBody("newemail@example.com", "000001");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const body = makeBody("newemail@example.com", "000002");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
 
         const response = await request(setupServer())
             .patch("/api/users/email")
@@ -54,9 +60,9 @@ describe("/api/users/email - PATCH", () => {
     });
 
     test("Should not update email because code is expired", async () => {
-        const body = makeBody("newemail@example.com", "000005");
+        const body = makeBody("newemail@example.com", "000003");
         const token = await loginRest(
-            "email-with-plan-gold-with-codes-expired-without-payment-method@test.com",
+            "email-verified-with-invalid-codes@test.com",
         );
 
         const response = await request(setupServer())
@@ -70,8 +76,10 @@ describe("/api/users/email - PATCH", () => {
     });
 
     test("Should update email successfully", async () => {
-        const body = makeBody("newemail@example.com", "000002");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const body = makeBody("newemail@example.com", "000001");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
 
         const response = await request(setupServer())
             .patch("/api/users/email")

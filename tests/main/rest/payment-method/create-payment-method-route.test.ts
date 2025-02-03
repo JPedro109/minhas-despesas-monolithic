@@ -13,7 +13,9 @@ describe("/api/payment-methods - POST", () => {
 
     test("Should not create a payment method because fields are empty", async () => {
         const body = makeBody("", "");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-exclude-payment-method-and-sub-with-full@test.com",
+        );
 
         const response = await request(setupServer())
             .post("/api/payment-methods")
@@ -27,7 +29,9 @@ describe("/api/payment-methods - POST", () => {
 
     test("Should not create a payment method because one already exists", async () => {
         const body = makeBody("Duplicate Method Name", "pm_card_visa");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-payment-method-and-inactive-sub-expenses@test.com",
+        );
 
         const response = await request(setupServer())
             .post("/api/payment-methods")
@@ -42,7 +46,7 @@ describe("/api/payment-methods - POST", () => {
     test("Should create a payment method successfully", async () => {
         const body = makeBody("Valid Method Name", "pm_card_visa");
         const token = await loginRest(
-            "email-with-plan-gold-with-codes-expired-without-payment-method@test.com",
+            "email-verified-with-exclude-payment-method-and-sub-with-full@test.com",
         );
 
         const response = await request(setupServer())

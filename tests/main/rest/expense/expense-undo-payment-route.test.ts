@@ -11,7 +11,7 @@ describe("/api/expenses/undo-payment/:id - PATCH", () => {
 
     test("Should not undo payment because the expense does not exist", async () => {
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+            "email-payment-method-and-inactive-sub-expenses@test.com",
         );
 
         const response = await request(setupServer())
@@ -26,7 +26,7 @@ describe("/api/expenses/undo-payment/:id - PATCH", () => {
 
     test("Should undo payment", async () => {
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+            "email-payment-method-and-inactive-sub-expenses@test.com",
         );
 
         const response = await request(setupServer())

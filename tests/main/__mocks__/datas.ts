@@ -140,18 +140,11 @@ export const testUserEntityWithEmailNotVerified = (
 export const testUserVerificationCodeEntity = (
     user: UserEntity,
     code: string,
-    type: "verify-user-email" | "recovery-user-password" | "update-user-email",
+    type: UserVerificationCodeTypeEnum,
     verificationCodeExpiryDate?: Date,
 ): UserVerificationCodeEntity => {
-    const typesDictionary = {
-        "verify-user-email": UserVerificationCodeTypeEnum.VerifyUserEmail,
-        "recovery-user-password":
-            UserVerificationCodeTypeEnum.RecoveryUserPassword,
-        "update-user-email": UserVerificationCodeTypeEnum.UpdateUserEmail,
-    };
-
     return new UserVerificationCodeEntity({
-        type: typesDictionary[type],
+        type,
         user,
         valid: true,
         verificationCode: code,

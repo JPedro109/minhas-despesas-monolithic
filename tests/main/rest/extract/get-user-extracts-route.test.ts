@@ -9,7 +9,7 @@ describe("/api/extracts - GET", () => {
 
     test("Should return a list of extracts successfully", async () => {
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+            "email-verified-with-exclude-payment-method-and-sub-with-full@test.com",
         );
 
         const response = await request(setupServer())

@@ -39,7 +39,7 @@ describe("/api/users - POST", () => {
 
     test("Should not create user, because passwords do not match", async () => {
         const body = makeBodyCreateUser(
-            "email@test.com",
+            "new_email@test.com",
             "username",
             "Password1234",
             "Password5678",
@@ -57,7 +57,7 @@ describe("/api/users - POST", () => {
 
     test("Should not create user, because email is already registered", async () => {
         const body = makeBodyCreateUser(
-            "email-with-plan-gold@test.com",
+            "email-verified-with-valid-codes@test.com",
             "username",
             "Password1234",
             "Password1234",
@@ -75,7 +75,7 @@ describe("/api/users - POST", () => {
 
     test("Should not create user, because password is too weak", async () => {
         const body = makeBodyCreateUser(
-            "email@test.com",
+            "new_email@test.com",
             "username",
             "123",
             "123",
@@ -93,7 +93,7 @@ describe("/api/users - POST", () => {
 
     test("Should create user with valid data", async () => {
         const body = makeBodyCreateUser(
-            "new_email@test.com",
+            "new_new_email@test.com",
             "username",
             "Password1234",
             "Password1234",

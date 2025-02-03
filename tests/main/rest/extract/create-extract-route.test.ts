@@ -14,7 +14,7 @@ describe("/api/extracts - POST", () => {
     test("Should not create extract because are fields invalid", async () => {
         const body = makeBody("", "");
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expense@test.com",
+            "email-payment-method-and-inactive-sub-expenses@test.com",
         );
 
         const response = await request(setupServer())
@@ -30,7 +30,7 @@ describe("/api/extracts - POST", () => {
     test("Should not create extract because the user already has the maximum number of extracts", async () => {
         const body = makeBody(1, 3000);
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+            "email-verified-with-exclude-payment-method-and-sub-with-full@test.com",
         );
 
         const response = await request(setupServer())
@@ -46,7 +46,7 @@ describe("/api/extracts - POST", () => {
     test("Should not create extract because is not exists payment histories in reference", async () => {
         const body = makeBody(12, 2000);
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expense@test.com",
+            "email-payment-method-and-inactive-sub-expenses@test.com",
         );
 
         const response = await request(setupServer())
@@ -62,7 +62,7 @@ describe("/api/extracts - POST", () => {
     test("Should create an extract successfully", async () => {
         const body = makeBody(1, 3000);
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expense@test.com",
+            "email-payment-method-and-inactive-sub-expenses@test.com",
         );
 
         const response = await request(setupServer())

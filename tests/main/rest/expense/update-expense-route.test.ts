@@ -20,7 +20,7 @@ describe("/api/expenses/:id - PUT", () => {
     test("Should not update expense because the are fields invalid", async () => {
         const body = makeBody("", undefined, "");
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+            "email-payment-method-and-inactive-sub-expenses@test.com",
         );
 
         const response = await request(setupServer())
@@ -36,7 +36,7 @@ describe("/api/expenses/:id - PUT", () => {
     test("Should not update expense because the expense does not exist", async () => {
         const body = makeBody("Updated Expense Name", 150, "3000-12-31");
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+            "email-payment-method-and-inactive-sub-expenses@test.com",
         );
 
         const response = await request(setupServer())
@@ -52,7 +52,7 @@ describe("/api/expenses/:id - PUT", () => {
     test("Should successfully update an expense", async () => {
         const body = makeBody("Updated Expense Name", 150, "3000-12-31");
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+            "email-payment-method-and-inactive-sub-expenses@test.com",
         );
 
         const response = await request(setupServer())

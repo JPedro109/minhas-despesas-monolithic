@@ -18,7 +18,9 @@ describe("/api/users - DELETE", () => {
 
     test("Should not delete user because password fields are empty", async () => {
         const body = makeBody("", "");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
 
         const response = await request(setupServer())
             .delete("/api/users")
@@ -32,7 +34,9 @@ describe("/api/users - DELETE", () => {
 
     test("Should not delete user because passwords is not match", async () => {
         const body = makeBody("Password1234", "Password12345");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
 
         const response = await request(setupServer())
             .delete("/api/users")
@@ -46,7 +50,9 @@ describe("/api/users - DELETE", () => {
 
     test("Should not delete user because password is invalid", async () => {
         const body = makeBody("password", "password");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
 
         const response = await request(setupServer())
             .delete("/api/users")
@@ -60,7 +66,9 @@ describe("/api/users - DELETE", () => {
 
     test("Should delete user", async () => {
         const body = makeBody("Password1234", "Password1234");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
 
         const response = await request(setupServer())
             .delete("/api/users")

@@ -14,9 +14,11 @@ describe("/api/payment-methods/name/:id - PATCH", () => {
     const makeUrl = (id: string): string => `/api/payment-methods/name/${id}`;
 
     test("Should not update payment method because name is empty", async () => {
-        const validId = "00000000-0000-0000-0000-000000000000";
+        const validId = "00000000-0000-0000-0000-000000000003";
         const body = makeBody("");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-payment-method-and-inactive-sub-expenses@test.com",
+        );
 
         const response = await request(setupServer())
             .patch(makeUrl(validId))
@@ -32,7 +34,7 @@ describe("/api/payment-methods/name/:id - PATCH", () => {
         const nonExistentId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
         const body = makeBody("New Payment Method Name");
         const token = await loginRest(
-            "email-with-plan-gold-with-codes-expired-without-payment-method@test.com",
+            "email-verified-with-exclude-payment-method-and-sub-with-full@test.com",
         );
 
         const response = await request(setupServer())
@@ -46,9 +48,11 @@ describe("/api/payment-methods/name/:id - PATCH", () => {
     });
 
     test("Should update the payment method name successfully", async () => {
-        const validId = "00000000-0000-0000-0000-000000000000";
+        const validId = "00000000-0000-0000-0000-000000000003";
         const body = makeBody("Updated Payment Method Name");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-payment-method-and-inactive-sub-expenses@test.com",
+        );
 
         const response = await request(setupServer())
             .patch(makeUrl(validId))

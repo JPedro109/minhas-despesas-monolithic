@@ -14,7 +14,7 @@ describe("/api/subscriptions - POST", () => {
     test("Should not create subscription because schema is invalid", async () => {
         const body = makeBody(undefined);
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+            "email-verified-with-payment-method@test.com",
         );
 
         const response = await request(setupServer())
@@ -30,7 +30,7 @@ describe("/api/subscriptions - POST", () => {
     test("Should not create subscription if payment method does not exist", async () => {
         const body = makeBody("1");
         const token = await loginRest(
-            "email-with-plan-gold-and-without-payment-method@test.com",
+            "email-verified-with-valid-codes@test.com",
         );
 
         const response = await request(setupServer())
@@ -45,7 +45,9 @@ describe("/api/subscriptions - POST", () => {
 
     test("Should not create subscription if plan does not exist", async () => {
         const body = makeBody("ffffffff-ffff-ffff-ffff-ffffffffffff");
-        const token = await loginRest("email-without-subscription@test.com");
+        const token = await loginRest(
+            "email-verified-with-payment-method@test.com",
+        );
 
         const response = await request(setupServer())
             .post("/api/subscriptions")
@@ -59,7 +61,9 @@ describe("/api/subscriptions - POST", () => {
 
     test("Should create a subscription successfully", async () => {
         const body = makeBody("00000000-0000-0000-0000-000000000001");
-        const token = await loginRest("email-without-subscription@test.com");
+        const token = await loginRest(
+            "email-verified-with-payment-method@test.com",
+        );
 
         const response = await request(setupServer())
             .post("/api/subscriptions")

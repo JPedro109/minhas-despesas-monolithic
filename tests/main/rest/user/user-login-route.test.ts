@@ -37,7 +37,7 @@ describe("/api/users/login - POST", () => {
 
     test("Should not login because email is not verified", async () => {
         const body = makeBody(
-            "email-with-plan-gold-and-with-email-not-verified@test.com",
+            "email-verified-with-valid-codes-and-with-email-not-verified@test.com",
             "Password1234",
         );
 
@@ -52,7 +52,7 @@ describe("/api/users/login - POST", () => {
 
     test("Should not login because password is incorrect", async () => {
         const body = makeBody(
-            "email-with-plan-gold@test.com",
+            "email-verified-with-valid-codes@test.com",
             "Password123456",
         );
 
@@ -66,7 +66,10 @@ describe("/api/users/login - POST", () => {
     });
 
     test("Should login successfully and return tokens", async () => {
-        const body = makeBody("email-with-plan-gold@test.com", "Password1234");
+        const body = makeBody(
+            "email-verified-with-valid-codes@test.com",
+            "Password1234",
+        );
 
         const response = await request(setupServer())
             .post("/api/users/login")

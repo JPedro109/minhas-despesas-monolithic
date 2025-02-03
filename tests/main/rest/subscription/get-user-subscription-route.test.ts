@@ -9,7 +9,7 @@ describe("/api/subscriptions - GET", () => {
 
     test("Should return the subscription user successfully", async () => {
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+            "email-payment-method-and-inactive-sub-expenses@test.com",
         );
 
         const response = await request(setupServer())

@@ -17,7 +17,9 @@ describe("/api/expenses - POST", () => {
 
     test("Should not create expense because fields are invalid", async () => {
         const body = makeBody("", "", "");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-payment-method-and-inactive-sub-expenses@test.com",
+        );
 
         const response = await request(setupServer())
             .post("/api/expenses")
@@ -32,7 +34,7 @@ describe("/api/expenses - POST", () => {
     test("Should not create expense because the user has reached the maximum number of expenses", async () => {
         const body = makeBody("Rent", 500, "3000-01-01");
         const token = await loginRest(
-            "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
+            "email-verified-with-exclude-payment-method-and-sub-with-full@test.com",
         );
 
         const response = await request(setupServer())
@@ -47,7 +49,9 @@ describe("/api/expenses - POST", () => {
 
     test("Should create an expense successfully", async () => {
         const body = makeBody("Rent", 500, "3000-01-01");
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-payment-method-and-inactive-sub-expenses@test.com",
+        );
 
         const response = await request(setupServer())
             .post("/api/expenses")

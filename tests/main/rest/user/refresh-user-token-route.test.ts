@@ -36,7 +36,9 @@ describe("/api/users/refresh-token - POST", () => {
     });
 
     test("Should not refresh token because type of refreshToken is invalid", async () => {
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
         const refreshToken = token.accessToken;
         const body = makeBody(refreshToken);
 
@@ -50,7 +52,9 @@ describe("/api/users/refresh-token - POST", () => {
     });
 
     test("Should refresh token successfully", async () => {
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
         const refreshToken = token.refreshToken;
         const body = makeBody(refreshToken);
 

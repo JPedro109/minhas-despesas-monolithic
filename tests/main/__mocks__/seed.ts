@@ -27,7 +27,11 @@ import {
     testPaymentHistoryEntity,
     testExpenseEntityUnpaid,
 } from "./datas";
-import { SubscriptionEntity } from "@/layers/domain";
+import {
+    SubscriptionEntity,
+    UserEntity,
+    UserVerificationCodeTypeEnum,
+} from "@/layers/domain";
 
 export class Seed {
     private readonly prismaUserRepository: PrismaUserRepositoryAdapter;
@@ -70,16 +74,211 @@ export class Seed {
     }
 
     async populate(): Promise<void> {
-        for (const action of [...expenseActions, ...extractActions]) {
-            await this.databaseSQLHelper.client.prismaAction.create({
-                data: {
-                    id: action.id,
-                    description: action.description,
-                    name: action.name,
-                    createdAt: action.createdAt,
+        await this.createActionsAndPlans();
+
+        const createUserOne = async (): Promise<void> => {
+            const user = testUserEntityWithEmailNotVerified(
+                "00000000-0000-0000-0000-000000000000",
+                "email-not-verified@test.com",
+            );
+
+            await this.createUser(user);
+
+            await this.createUserVerificationCode(
+                user,
+                UserVerificationCodeTypeEnum.VerifyUserEmail,
+                "000000",
+            );
+
+            await this.createCustomer(user);
+        };
+
+        const createUserTwo = async (): Promise<void> => {
+            const user = testUserEntity(
+                "00000000-0000-0000-0000-000000000001",
+                "email-verified-with-valid-codes@test.com",
+            );
+
+            await this.createUser(user);
+
+            await this.createUserVerificationCode(
+                user,
+                UserVerificationCodeTypeEnum.UpdateUserEmail,
+                "000001",
+                new Date("3000-01-01"),
+            );
+            await this.createUserVerificationCode(
+                user,
+                UserVerificationCodeTypeEnum.RecoveryUserPassword,
+                "000002",
+                new Date("3000-01-01"),
+            );
+            await this.createUserVerificationCode(
+                user,
+                UserVerificationCodeTypeEnum.VerifyUserEmail,
+                "000005",
+            );
+
+            await this.createCustomer(user);
+        };
+
+        const createUserThree = async (): Promise<void> => {
+            const user = testUserEntity(
+                "00000000-0000-0000-0000-000000000002",
+                "email-verified-with-invalid-codes@test.com",
+            );
+
+            await this.createUser(user);
+
+            await this.createUserVerificationCode(
+                user,
+                UserVerificationCodeTypeEnum.UpdateUserEmail,
+                "000003",
+                new Date("2000-01-01"),
+            );
+            await this.createUserVerificationCode(
+                user,
+                UserVerificationCodeTypeEnum.RecoveryUserPassword,
+                "000004",
+                new Date("2000-01-01"),
+            );
+
+            await this.createCustomer(user);
+        };
+
+        const createUserFour = async (): Promise<void> => {
+            const user = testUserEntity(
+                "00000000-0000-0000-0000-000000000003",
+                "email-payment-method-and-inactive-sub-expenses@test.com",
+            );
+
+            await this.createUser(user);
+            const customerId = await this.createCustomer(user);
+            await this.createPaymentMethodAndSubscription(
+                user,
+                customerId,
+                false,
+                true,
+                true,
+            );
+
+            await this.createExpenses(user, [
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000000",
+                    pay: true,
                 },
-            });
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000001",
+                    pay: false,
+                },
+            ]);
+        };
+
+        const createUserFive = async (): Promise<void> => {
+            const user = testUserEntity(
+                "00000000-0000-0000-0000-000000000004",
+                "email-verified-with-exclude-payment-method-and-sub-with-full@test.com",
+            );
+
+            await this.createUser(user);
+            const customerId = await this.createCustomer(user);
+            await this.createPaymentMethodAndSubscription(
+                user,
+                customerId,
+                true,
+                true,
+            );
+
+            await this.createExpenses(user, [
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000003",
+                    pay: true,
+                },
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000004",
+                    pay: true,
+                },
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000005",
+                    pay: true,
+                },
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000006",
+                    pay: true,
+                },
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000007",
+                    pay: true,
+                },
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000008",
+                    pay: true,
+                },
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000009",
+                    pay: true,
+                },
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000010",
+                    pay: true,
+                },
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000011",
+                    pay: true,
+                },
+                {
+                    expenseId: "00000000-0000-0000-0000-000000000012",
+                    pay: true,
+                },
+            ]);
+            await this.createExtract(user);
+        };
+
+        const createUserSix = async (): Promise<void> => {
+            const user = testUserEntity(
+                "00000000-0000-0000-0000-000000000005",
+                "email-verified-with-payment-method@test.com",
+            );
+
+            await this.createUser(user);
+            const customerId = await this.createCustomer(user);
+            await this.createPaymentMethodAndSubscription(user, customerId);
+        };
+
+        await Promise.all([
+            createUserOne(),
+            createUserTwo(),
+            createUserThree(),
+            createUserFour(),
+            createUserFive(),
+            createUserSix(),
+        ]);
+    }
+
+    async truncate(): Promise<void> {
+        await this.databaseSQLHelper.client.prismaUser.deleteMany({});
+
+        await this.databaseSQLHelper.client.prismaPlan.deleteMany({});
+        await this.databaseSQLHelper.client.prismaAction.deleteMany({});
+
+        await this.stripeAdapter.deleteAllCustomers();
+    }
+
+    private async createActionsAndPlans(): Promise<void> {
+        const promises = [];
+        for (const action of [...expenseActions, ...extractActions]) {
+            promises.push(
+                this.databaseSQLHelper.client.prismaAction.create({
+                    data: {
+                        id: action.id,
+                        description: action.description,
+                        name: action.name,
+                        createdAt: action.createdAt,
+                    },
+                }),
+            );
         }
+        await Promise.all(promises);
 
         const planGold = testPlanGoldEntity();
         await this.databaseSQLHelper.client.prismaPlan.create({
@@ -100,278 +299,134 @@ export class Seed {
                 },
             },
         });
-
-        const users = [
-            {
-                id: "00000000-0000-0000-0000-000000000000",
-                email: "email-with-plan-gold@test.com",
-                verifiedEmail: true,
-                withCodeExpired: false,
-                withPaymentMethod: true,
-                withSubscription: true,
-                withExpensesAndExtracts: false,
-                withExpense: false,
-                withSubscriptionInactive: true,
-                deletePaymentMethod: false,
-                plan: "GOLD",
-                codes: ["000000", "000001", "000002"],
-            },
-            {
-                id: "00000000-0000-0000-0000-000000000001",
-                email: "email-with-plan-gold-with-codes-expired-without-payment-method@test.com",
-                verifiedEmail: true,
-                withCodeExpired: true,
-                withPaymentMethod: true,
-                withSubscription: true,
-                withExpensesAndExtracts: false,
-                withExpense: false,
-                withSubscriptionInactive: false,
-                deletePaymentMethod: true,
-                plan: "GOLD",
-                codes: ["000003", "000004", "000005"],
-            },
-            {
-                id: "00000000-0000-0000-0000-000000000002",
-                email: "email-with-plan-gold-and-with-email-not-verified@test.com",
-                verifiedEmail: false,
-                withCodeExpired: false,
-                withPaymentMethod: false,
-                withSubscription: false,
-                withExpensesAndExtracts: false,
-                withExpense: false,
-                withSubscriptionInactive: false,
-                deletePaymentMethod: false,
-                plan: "GOLD",
-                codes: ["000006", "000007", "000008"],
-            },
-            {
-                id: "00000000-0000-0000-0000-000000000003",
-                email: "email-with-plan-gold-and-with-expense@test.com",
-                verifiedEmail: true,
-                withCodeExpired: false,
-                withPaymentMethod: true,
-                withSubscription: true,
-                withExpensesAndExtracts: false,
-                withExpense: true,
-                deletePaymentMethod: false,
-                plan: "GOLD",
-                codes: ["000009", "000010", "000011"],
-            },
-            {
-                id: "00000000-0000-0000-0000-000000000004",
-                email: "email-with-plan-gold-and-with-expenses-and-extracts@test.com",
-                verifiedEmail: true,
-                withCodeExpired: false,
-                withPaymentMethod: true,
-                withSubscription: true,
-                withExpensesAndExtracts: true,
-                withExpenses: false,
-                deletePaymentMethod: false,
-                plan: "GOLD",
-                codes: ["000012", "000013", "000014"],
-            },
-            {
-                id: "00000000-0000-0000-0000-000000000005",
-                email: "email-with-plan-gold-and-without-payment-method@test.com",
-                verifiedEmail: true,
-                withCodeExpired: false,
-                withPaymentMethod: true,
-                withSubscription: true,
-                withExpensesAndExtracts: false,
-                withExpense: false,
-                withSubscriptionInactive: true,
-                deletePaymentMethod: true,
-                plan: "GOLD",
-                codes: ["000015", "000016", "000017"],
-            },
-            {
-                id: "00000000-0000-0000-0000-000000000006",
-                email: "email-without-subscription@test.com",
-                verifiedEmail: true,
-                withCodeExpired: false,
-                withPaymentMethod: true,
-                withSubscription: false,
-                withExpensesAndExtracts: false,
-                withExpense: false,
-                withSubscriptionInactive: true,
-                deletePaymentMethod: false,
-                plan: "GOLD",
-                codes: ["000018", "000019", "000020"],
-            },
-        ];
-
-        const promises = [];
-        for (const user of users) {
-            promises.push(
-                this.createUser(
-                    user.id,
-                    user.email,
-                    user.verifiedEmail,
-                    user.plan,
-                    user.withCodeExpired,
-                    user.withPaymentMethod,
-                    user.withSubscription,
-                    user.withExpensesAndExtracts,
-                    user.withExpense,
-                    user.withSubscriptionInactive,
-                    user.deletePaymentMethod,
-                    user.codes,
-                ),
-            );
-        }
-        await Promise.all(promises);
     }
 
-    async truncate(): Promise<void> {
-        await this.databaseSQLHelper.client.prismaUser.deleteMany({});
-
-        await this.databaseSQLHelper.client.prismaPlan.deleteMany({});
-        await this.databaseSQLHelper.client.prismaAction.deleteMany({});
-
-        await this.stripeAdapter.deleteAllCustomers();
-    }
-
-    private async createUser(
-        userId: string,
-        email: string,
-        verifiedEmail: boolean,
-        plan: string,
-        withCodeExpired: boolean,
-        withPaymentMethod: boolean,
-        withSubscription: boolean,
-        withExpensesAndExtracts: boolean,
-        withExpense: boolean,
-        withSubscriptionInactive: boolean,
-        deletePaymentMethod: boolean,
-        codes: string[],
-    ): Promise<void> {
-        const user = verifiedEmail
-            ? testUserEntity(userId, email)
-            : testUserEntityWithEmailNotVerified(userId, email);
+    private async createUser(user: UserEntity): Promise<void> {
         await this.prismaUserRepository.createUser(user);
         await this.prismaUserConsentRepository.createUserConsent(
             testUserConsentEntity(user.id),
         );
+    }
 
-        await this.prismaUserVerificationCodeRepository.createUserVerificationCode(
-            testUserVerificationCodeEntity(user, codes[0], "verify-user-email"),
-        );
-
-        const expiryDate = withCodeExpired
-            ? new Date("2000-01-01")
-            : new Date("3000-01-01");
-        await this.prismaUserVerificationCodeRepository.createUserVerificationCode(
-            testUserVerificationCodeEntity(
-                user,
-                codes[1],
-                "recovery-user-password",
-                expiryDate,
-            ),
-        );
+    private async createUserVerificationCode(
+        user: UserEntity,
+        userVerificationCodeType: UserVerificationCodeTypeEnum,
+        code: string,
+        expiryDate?: Date,
+    ): Promise<void> {
         await this.prismaUserVerificationCodeRepository.createUserVerificationCode(
             testUserVerificationCodeEntity(
                 user,
-                codes[2],
-                "update-user-email",
+                code,
+                userVerificationCodeType,
                 expiryDate,
             ),
         );
+    }
 
+    private async createCustomer(user: UserEntity): Promise<string> {
         const customerId = await this.stripeAdapter.createCustomer();
         await this.prismaCustomerRepository.createCustomer(
             testCustomerEntity(user.id, customerId),
         );
+        return customerId;
+    }
 
-        if (withPaymentMethod) {
-            const token =
-                await this.stripeAdapter.attachmentPaymentMethodInCustomer(
-                    customerId,
-                    "pm_card_visa",
-                );
-            const paymentMethod =
-                await this.prismaPaymentMethodRepository.createPaymentMethod(
-                    testPaymentMethodEntity(user.id, token),
-                );
+    private async createPaymentMethodAndSubscription(
+        user: UserEntity,
+        customerId: string,
+        excludePaymentMethod?: boolean,
+        withSubscription?: boolean,
+        inactiveSubscription?: boolean,
+    ): Promise<void> {
+        const token =
+            await this.stripeAdapter.attachmentPaymentMethodInCustomer(
+                customerId,
+                "pm_card_visa",
+            );
+        const paymentMethod =
+            await this.prismaPaymentMethodRepository.createPaymentMethod(
+                testPaymentMethodEntity(user.id, token),
+            );
 
-            if (withSubscription) {
-                const plan = testPlanGoldEntity();
-                const subscriptionExternalId =
-                    await this.stripeAdapter.createSubscription(
-                        customerId,
-                        plan.planExternalId,
-                        token,
-                    );
-                await this.prismaSubscriptionRepository.createSubscription(
-                    new SubscriptionEntity({
-                        plan,
-                        subscriptionExternalId,
-                        userId,
-                    }),
-                );
-
-                if (withSubscriptionInactive) {
-                    await this.stripeAdapter.updateSubscriptionRenewable(
-                        subscriptionExternalId,
-                        false,
-                    );
-                }
-            }
-
-            if (deletePaymentMethod) {
-                await this.stripeAdapter.detachmentPaymentMethodInCustomerByToken(
-                    token,
-                );
-                await this.prismaPaymentMethodRepository.deletePaymentMethodById(
-                    paymentMethod.id,
-                );
-            }
+        if (withSubscription) {
+            await this.createSubscription(
+                user,
+                customerId,
+                token,
+                inactiveSubscription,
+            );
         }
 
-        if (withExpensesAndExtracts) {
-            const extract = testExtractEntity(user.id);
-            await this.prismaExtractRepository.createExtract(extract);
+        if (excludePaymentMethod) {
+            await this.stripeAdapter.detachmentPaymentMethodInCustomerByToken(
+                token,
+            );
+            await this.prismaPaymentMethodRepository.deletePaymentMethodById(
+                paymentMethod.id,
+            );
+        }
+    }
 
-            const expenses = [
-                { id: "00000000-0000-0000-0000-000000000000", pay: true },
-                { id: "00000000-0000-0000-0000-000000000001", pay: false },
-                { id: "00000000-0000-0000-0000-000000000002", pay: true },
-                { id: "00000000-0000-0000-0000-000000000003", pay: true },
-                { id: "00000000-0000-0000-0000-000000000004", pay: true },
-                { id: "00000000-0000-0000-0000-000000000005", pay: true },
-                { id: "00000000-0000-0000-0000-000000000006", pay: true },
-                { id: "00000000-0000-0000-0000-000000000007", pay: true },
-                { id: "00000000-0000-0000-0000-000000000008", pay: true },
-                { id: "00000000-0000-0000-0000-000000000009", pay: true },
-            ];
+    private async createExpenses(
+        user: UserEntity,
+        expenses: {
+            expenseId: string;
+            pay: boolean;
+        }[],
+    ): Promise<void> {
+        const promises = [];
+        for (const expense of expenses) {
+            promises.push(
+                this.prismaExpenseRepository.createExpense(
+                    expense.pay
+                        ? testExpenseEntityPaid(expense.expenseId, user.id)
+                        : testExpenseEntityUnpaid(expense.expenseId, user.id),
+                ),
+            );
 
-            const promises = [];
-            for (const expense of expenses) {
+            if (expense.pay) {
                 promises.push(
-                    this.prismaExpenseRepository.createExpense(
-                        expense.pay
-                            ? testExpenseEntityPaid(expense.id, user.id)
-                            : testExpenseEntityUnpaid(expense.id, user.id),
+                    this.prismaPaymentHistoryRepository.createPaymentHistory(
+                        testPaymentHistoryEntity(expense.expenseId, user.id),
                     ),
                 );
-
-                if (expense.pay) {
-                    promises.push(
-                        this.prismaPaymentHistoryRepository.createPaymentHistory(
-                            testPaymentHistoryEntity(expense.id, user.id),
-                        ),
-                    );
-                }
             }
-            await Promise.all(promises);
         }
 
-        if (withExpense) {
-            const expenseId = "00000000-0000-0000-0000-000000000010";
-            await this.prismaExpenseRepository.createExpense(
-                testExpenseEntityPaid(expenseId, user.id),
+        await Promise.all(promises);
+    }
+
+    private async createExtract(user: UserEntity): Promise<void> {
+        const extract = testExtractEntity(user.id);
+        await this.prismaExtractRepository.createExtract(extract);
+    }
+
+    private async createSubscription(
+        user: UserEntity,
+        customerId: string,
+        paymentMethodToken: string,
+        inactiveSubscription?: boolean,
+    ): Promise<void> {
+        const plan = testPlanGoldEntity();
+        const subscriptionExternalId =
+            await this.stripeAdapter.createSubscription(
+                customerId,
+                plan.planExternalId,
+                paymentMethodToken,
             );
-            await this.prismaPaymentHistoryRepository.createPaymentHistory(
-                testPaymentHistoryEntity(expenseId, user.id),
+        await this.prismaSubscriptionRepository.createSubscription(
+            new SubscriptionEntity({
+                plan,
+                subscriptionExternalId,
+                userId: user.id,
+            }),
+        );
+
+        if (inactiveSubscription) {
+            await this.stripeAdapter.updateSubscriptionRenewable(
+                subscriptionExternalId,
+                false,
             );
         }
     }

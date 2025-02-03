@@ -36,7 +36,7 @@ describe("/api/users/verify-email - PATCH", () => {
     });
 
     test("Should not verify email because the code type is incorrect", async () => {
-        const body = makeBody("000007");
+        const body = makeBody("000001");
 
         const response = await request(setupServer())
             .patch("/api/users/verify-email")
@@ -48,7 +48,7 @@ describe("/api/users/verify-email - PATCH", () => {
     });
 
     test("Should not verify email because email already verified", async () => {
-        const body = makeBody("000000");
+        const body = makeBody("000005");
 
         const response = await request(setupServer())
             .patch("/api/users/verify-email")
@@ -60,7 +60,7 @@ describe("/api/users/verify-email - PATCH", () => {
     });
 
     test("Should verify email successfully", async () => {
-        const body = makeBody("000006");
+        const body = makeBody("000000");
 
         const response = await request(setupServer())
             .patch("/api/users/verify-email")

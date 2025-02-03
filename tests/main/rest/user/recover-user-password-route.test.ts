@@ -34,7 +34,7 @@ describe("/api/users/password-recover - PATCH", () => {
     });
 
     test("Should not recover password because passwords do not match", async () => {
-        const body = makeBody("000001", "Password1234", "Password12345");
+        const body = makeBody("000002", "Password1234", "Password12345");
 
         const response = await request(setupServer())
             .patch("/api/users/password-recover")
@@ -70,7 +70,7 @@ describe("/api/users/password-recover - PATCH", () => {
     });
 
     test("Should not recover password because new password is the same as the current password", async () => {
-        const body = makeBody("000001", "Password1234", "Password1234");
+        const body = makeBody("000002", "Password1234", "Password1234");
 
         const response = await request(setupServer())
             .patch("/api/users/password-recover")
@@ -82,7 +82,7 @@ describe("/api/users/password-recover - PATCH", () => {
     });
 
     test("Should recover password successfully", async () => {
-        const body = makeBody("000001", "NewPassword123", "NewPassword123");
+        const body = makeBody("000002", "NewPassword123", "NewPassword123");
 
         const response = await request(setupServer())
             .patch("/api/users/password-recover")

@@ -12,7 +12,9 @@ describe("/api/users/username - PATCH", () => {
     setup();
 
     test("Should not update username because username is empty", async () => {
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
         const body = makeBody("");
 
         const response = await request(setupServer())
@@ -26,7 +28,9 @@ describe("/api/users/username - PATCH", () => {
     });
 
     test("Should update username successfully", async () => {
-        const token = await loginRest("email-with-plan-gold@test.com");
+        const token = await loginRest(
+            "email-verified-with-valid-codes@test.com",
+        );
         const body = makeBody("New Username");
 
         const response = await request(setupServer())

@@ -20,6 +20,11 @@ env:
     JWT_KEY: "secret-key"
     BASIC_AUTHENTICATION_USER: "user"
     BASIC_AUTHENTICATION_PASSWORD: "pass"
+    HOST_PROVIDER_EMAIL: "sandbox.smtp.mailtrap.io"
+    PORT_PROVIDER_EMAIL: 587
+    SENDER_EMAIL: "no-reply@jpmns.com"
+    EMAIL_PROVIDER_EMAIL: ${{ secrets.EMAIL_PROVIDER_EMAIL }}
+    PASSWORD_PROVIDER_EMAIL: ${{ secrets.PASSWORD_PROVIDER_EMAIL }}
 
 jobs:
     test:

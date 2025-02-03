@@ -1,6 +1,6 @@
 import {
     NotFoundError,
-    SendUserPasswordRecoveryLinkUseCase,
+    SendUserPasswordRecoveryCodeUseCase,
 } from "@/layers/application";
 import {
     UserRepositoryStub,
@@ -12,7 +12,7 @@ import {
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: SendUserPasswordRecoveryLinkUseCase;
+    sut: SendUserPasswordRecoveryCodeUseCase;
     userRepositoryStub: UserRepositoryStub;
     userVerificationCodeStub: UserVerificationCodeRepositoryStub;
     mailStub: NotificationStub;
@@ -20,7 +20,7 @@ const makeSut = (): {
     const generationStub = generationStubFactory();
     const mailStub = notificationStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new SendUserPasswordRecoveryLinkUseCase(
+    const sut = new SendUserPasswordRecoveryCodeUseCase(
         unitOfWorkRepositoryStub,
         mailStub,
         generationStub,
@@ -35,7 +35,7 @@ const makeSut = (): {
     };
 };
 
-describe("Use case - SendUserPasswordRecoveryLinkUseCase", () => {
+describe("Use case - SendUserPasswordRecoveryCodeUseCase", () => {
     test("Should not send password recovery link because email is not registered", async () => {
         const { sut, userRepositoryStub } = makeSut();
         const email = "nonexistentemail@test.com";

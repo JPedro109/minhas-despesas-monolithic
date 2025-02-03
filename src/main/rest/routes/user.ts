@@ -3,8 +3,8 @@ import {
     deleteUserController,
     recoverUserPasswordController,
     refreshUserTokenController,
-    sendUserEmailUpdateLinkController,
-    sendUserPasswordRecoveryLinkController,
+    sendUserEmailUpdateCodeController,
+    sendUserPasswordRecoveryCodeController,
     updateUserEmailController,
     updateUserPasswordController,
     updateUsernameController,
@@ -35,11 +35,11 @@ export default (router: Router): void => {
     router.post(
         "/users/send-email-update-link",
         RestAdapter.middleware(authenticationUserMiddleware),
-        RestAdapter.route(sendUserEmailUpdateLinkController),
+        RestAdapter.route(sendUserEmailUpdateCodeController),
     );
     router.post(
         "/users/send-password-recovery-link",
-        RestAdapter.route(sendUserPasswordRecoveryLinkController),
+        RestAdapter.route(sendUserPasswordRecoveryCodeController),
     );
     router.patch(
         "/users/email",

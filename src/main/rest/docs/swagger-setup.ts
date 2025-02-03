@@ -17,7 +17,7 @@ import {
     payExpense,
     recoverUserPassword,
     refreshUserToken,
-    sendUserEmailUpdateLink,
+    sendUserEmailUpdateCode,
     sendUserPasswordRecoverLink,
     updateExpense,
     updatePaymentMethodName,
@@ -126,7 +126,7 @@ const swaggerSetup = {
             post: refreshUserToken,
         },
         "/api/users/send-email-update-link": {
-            post: sendUserEmailUpdateLink,
+            post: sendUserEmailUpdateCode,
         },
         "/api/users/email": {
             patch: updateUserEmail,

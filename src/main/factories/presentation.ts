@@ -12,8 +12,8 @@ import {
     DeleteUserController,
     RecoverUserPasswordController,
     RefreshUserTokenController,
-    SendUserEmailUpdateLinkController,
-    SendUserPasswordRecoveryLinkController,
+    SendUserEmailUpdateCodeController,
+    SendUserPasswordRecoveryCodeController,
     UpdateUserEmailController,
     UpdateUserPasswordController,
     UpdateUsernameController,
@@ -39,8 +39,8 @@ import {
     deleteUserUseCase,
     recoverUserPasswordUseCase,
     refreshUserTokenUseCase,
-    sendUserEmailUpdateLinkUseCase,
-    sendUserPasswordRecoveryLinkUseCase,
+    sendUserEmailUpdateCodeUseCase,
+    sendUserPasswordRecoveryCodeUseCase,
     updateUserEmailUseCase,
     updateUserPasswordUseCase,
     updateUsernameUseCase,
@@ -89,15 +89,15 @@ export const refreshUserTokenController = new RefreshUserTokenController(
     winstonAdapter,
 );
 
-export const sendUserEmailUpdateLinkController =
-    new SendUserEmailUpdateLinkController(
-        sendUserEmailUpdateLinkUseCase,
+export const sendUserEmailUpdateCodeController =
+    new SendUserEmailUpdateCodeController(
+        sendUserEmailUpdateCodeUseCase,
         winstonAdapter,
     );
 
-export const sendUserPasswordRecoveryLinkController =
-    new SendUserPasswordRecoveryLinkController(
-        sendUserPasswordRecoveryLinkUseCase,
+export const sendUserPasswordRecoveryCodeController =
+    new SendUserPasswordRecoveryCodeController(
+        sendUserPasswordRecoveryCodeUseCase,
         winstonAdapter,
     );
 

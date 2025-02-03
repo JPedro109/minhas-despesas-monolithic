@@ -1,29 +1,29 @@
-import { ISendUserEmailUpdateLinkUseCase } from "@/layers/application";
-import { SendUserEmailUpdateLinkController } from "@/layers/presentation";
+import { ISendUserEmailUpdateCodeUseCase } from "@/layers/application";
+import { SendUserEmailUpdateCodeController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: SendUserEmailUpdateLinkController;
-    mockSendUserEmailUpdateLinkUseCase: jest.Mocked<ISendUserEmailUpdateLinkUseCase>;
+    sut: SendUserEmailUpdateCodeController;
+    mockSendUserEmailUpdateCodeUseCase: jest.Mocked<ISendUserEmailUpdateCodeUseCase>;
 } => {
-    const mockSendUserEmailUpdateLinkUseCase: jest.Mocked<ISendUserEmailUpdateLinkUseCase> =
+    const mockSendUserEmailUpdateCodeUseCase: jest.Mocked<ISendUserEmailUpdateCodeUseCase> =
         {
             execute: jest.fn(),
         };
     const logStub = logStubFactory();
 
-    const sut = new SendUserEmailUpdateLinkController(
-        mockSendUserEmailUpdateLinkUseCase,
+    const sut = new SendUserEmailUpdateCodeController(
+        mockSendUserEmailUpdateCodeUseCase,
         logStub,
     );
 
     return {
         sut,
-        mockSendUserEmailUpdateLinkUseCase,
+        mockSendUserEmailUpdateCodeUseCase,
     };
 };
 
-describe("Controller - SendUserEmailUpdateLinkController", () => {
+describe("Controller - SendUserEmailUpdateCodeController", () => {
     test("Should not send user email update link because schema is invalid", async () => {
         const { sut } = makeSut();
         const id = "";

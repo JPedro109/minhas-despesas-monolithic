@@ -7,13 +7,13 @@ import {
     INotification,
     IGeneration,
     EmailTemplateEnum,
-    SendUserPasswordRecoveryLinkDTO,
-    ISendUserPasswordRecoveryLinkUseCase,
+    SendUserPasswordRecoveryCodeDTO,
+    ISendUserPasswordRecoveryCodeUseCase,
     NotFoundError,
 } from "@/layers/application";
 
-export class SendUserPasswordRecoveryLinkUseCase
-    implements ISendUserPasswordRecoveryLinkUseCase
+export class SendUserPasswordRecoveryCodeUseCase
+    implements ISendUserPasswordRecoveryCodeUseCase
 {
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository,
@@ -21,7 +21,7 @@ export class SendUserPasswordRecoveryLinkUseCase
         private readonly generation: IGeneration,
     ) {}
 
-    async execute({ email }: SendUserPasswordRecoveryLinkDTO): Promise<void> {
+    async execute({ email }: SendUserPasswordRecoveryCodeDTO): Promise<void> {
         const userRepository = this.unitOfWorkRepository.getUserRepository();
         const userVerificationCodeRepository =
             this.unitOfWorkRepository.getUserVerificationCodeRepository();

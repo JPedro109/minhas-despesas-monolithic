@@ -1,29 +1,29 @@
-import { ISendUserPasswordRecoveryLinkUseCase } from "@/layers/application";
-import { SendUserPasswordRecoveryLinkController } from "@/layers/presentation";
+import { ISendUserPasswordRecoveryCodeUseCase } from "@/layers/application";
+import { SendUserPasswordRecoveryCodeController } from "@/layers/presentation";
 import { logStubFactory } from "../../__mocks__";
 
 const makeSut = (): {
-    sut: SendUserPasswordRecoveryLinkController;
-    mockSendUserPasswordRecoveryLinkUseCase: jest.Mocked<ISendUserPasswordRecoveryLinkUseCase>;
+    sut: SendUserPasswordRecoveryCodeController;
+    mockSendUserPasswordRecoveryCodeUseCase: jest.Mocked<ISendUserPasswordRecoveryCodeUseCase>;
 } => {
-    const mockSendUserPasswordRecoveryLinkUseCase: jest.Mocked<ISendUserPasswordRecoveryLinkUseCase> =
+    const mockSendUserPasswordRecoveryCodeUseCase: jest.Mocked<ISendUserPasswordRecoveryCodeUseCase> =
         {
             execute: jest.fn(),
         };
     const logStub = logStubFactory();
 
-    const sut = new SendUserPasswordRecoveryLinkController(
-        mockSendUserPasswordRecoveryLinkUseCase,
+    const sut = new SendUserPasswordRecoveryCodeController(
+        mockSendUserPasswordRecoveryCodeUseCase,
         logStub,
     );
 
     return {
         sut,
-        mockSendUserPasswordRecoveryLinkUseCase,
+        mockSendUserPasswordRecoveryCodeUseCase,
     };
 };
 
-describe("Controller - SendUserPasswordRecoveryLinkController", () => {
+describe("Controller - SendUserPasswordRecoveryCodeController", () => {
     test("Should not send user password recovery link because schema is invalid", async () => {
         const { sut } = makeSut();
         const email = "";

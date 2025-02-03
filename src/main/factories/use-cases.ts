@@ -12,8 +12,8 @@ import {
     DeleteUserUseCase,
     RecoverUserPasswordUseCase,
     RefreshUserTokenUseCase,
-    SendUserEmailUpdateLinkUseCase,
-    SendUserPasswordRecoveryLinkUseCase,
+    SendUserEmailUpdateCodeUseCase,
+    SendUserPasswordRecoveryCodeUseCase,
     UpdateUserEmailUseCase,
     UpdateUserPasswordUseCase,
     UpdateUsernameUseCase,
@@ -67,15 +67,15 @@ export const refreshUserTokenUseCase = new RefreshUserTokenUseCase(
     securityAdapter,
 );
 
-export const sendUserEmailUpdateLinkUseCase =
-    new SendUserEmailUpdateLinkUseCase(
+export const sendUserEmailUpdateCodeUseCase =
+    new SendUserEmailUpdateCodeUseCase(
         makePrismaUnitOfWorkRepositoryAdapter(),
         notificationAdapter,
         generationAdapter,
     );
 
-export const sendUserPasswordRecoveryLinkUseCase =
-    new SendUserPasswordRecoveryLinkUseCase(
+export const sendUserPasswordRecoveryCodeUseCase =
+    new SendUserPasswordRecoveryCodeUseCase(
         makePrismaUnitOfWorkRepositoryAdapter(),
         notificationAdapter,
         generationAdapter,

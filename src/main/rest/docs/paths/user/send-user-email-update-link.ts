@@ -7,7 +7,7 @@ import {
 } from "@/main/rest/docs/components";
 import { authorizationHeaderSchema } from "@/main/rest/docs/schemas";
 
-export const sendUserEmailUpdateLink = {
+export const sendUserEmailUpdateCode = {
     tags: ["User"],
     summary: "Faz o envio do link de confirmação de atualização de email",
     parameters: [

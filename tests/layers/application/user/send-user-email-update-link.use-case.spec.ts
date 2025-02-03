@@ -1,7 +1,7 @@
 import {
     ConflictedError,
     NotFoundError,
-    SendUserEmailUpdateLinkUseCase,
+    SendUserEmailUpdateCodeUseCase,
 } from "@/layers/application";
 import {
     UserRepositoryStub,
@@ -13,7 +13,7 @@ import {
 } from "../__mocks__";
 
 const makeSut = (): {
-    sut: SendUserEmailUpdateLinkUseCase;
+    sut: SendUserEmailUpdateCodeUseCase;
     userRepositoryStub: UserRepositoryStub;
     userVerificationCodeStub: UserVerificationCodeRepositoryStub;
     mailStub: NotificationStub;
@@ -21,7 +21,7 @@ const makeSut = (): {
     const generationStub = generationStubFactory();
     const mailStub = notificationStubFactory();
     const unitOfWorkRepositoryStub = unitOfWorkRepositoryStubFactory();
-    const sut = new SendUserEmailUpdateLinkUseCase(
+    const sut = new SendUserEmailUpdateCodeUseCase(
         unitOfWorkRepositoryStub,
         mailStub,
         generationStub,
@@ -36,7 +36,7 @@ const makeSut = (): {
     };
 };
 
-describe("Use case - SendUserEmailUpdateLinkUseCase", () => {
+describe("Use case - SendUserEmailUpdateCodeUseCase", () => {
     test("Should not send email update link because user does not exist", async () => {
         const { sut, userRepositoryStub } = makeSut();
         const id = "2";

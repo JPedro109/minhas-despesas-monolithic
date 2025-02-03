@@ -8,13 +8,13 @@ import {
     IGeneration,
     ConflictedError,
     EmailTemplateEnum,
-    SendUserEmailUpdateLinkDTO,
-    ISendUserEmailUpdateLinkUseCase,
+    SendUserEmailUpdateCodeDTO,
+    ISendUserEmailUpdateCodeUseCase,
     NotFoundError,
 } from "@/layers/application";
 
-export class SendUserEmailUpdateLinkUseCase
-    implements ISendUserEmailUpdateLinkUseCase
+export class SendUserEmailUpdateCodeUseCase
+    implements ISendUserEmailUpdateCodeUseCase
 {
     constructor(
         private readonly unitOfWorkRepository: IUnitOfWorkRepository,
@@ -22,7 +22,7 @@ export class SendUserEmailUpdateLinkUseCase
         private readonly generation: IGeneration,
     ) {}
 
-    async execute({ id, email }: SendUserEmailUpdateLinkDTO): Promise<void> {
+    async execute({ id, email }: SendUserEmailUpdateCodeDTO): Promise<void> {
         const userRepository = this.unitOfWorkRepository.getUserRepository();
         const userVerificationCodeRepository =
             this.unitOfWorkRepository.getUserVerificationCodeRepository();

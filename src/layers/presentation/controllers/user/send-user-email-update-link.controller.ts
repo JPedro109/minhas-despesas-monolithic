@@ -1,4 +1,4 @@
-import { ISendUserEmailUpdateLinkUseCase, ILog } from "@/layers/application";
+import { ISendUserEmailUpdateCodeUseCase, ILog } from "@/layers/application";
 import {
     AbstractController,
     HttpRequest,
@@ -6,12 +6,12 @@ import {
     HttpHelper,
 } from "@/layers/presentation";
 
-export class SendUserEmailUpdateLinkController extends AbstractController {
+export class SendUserEmailUpdateCodeController extends AbstractController {
     constructor(
-        private readonly useCase: ISendUserEmailUpdateLinkUseCase,
+        private readonly useCase: ISendUserEmailUpdateCodeUseCase,
         protected readonly log: ILog,
     ) {
-        super(log, "SendUserEmailUpdateLink", {
+        super(log, "SendUserEmailUpdateCode", {
             id: {
                 type: "string",
                 optional: false,

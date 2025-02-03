@@ -1,5 +1,5 @@
 import {
-    ISendUserPasswordRecoveryLinkUseCase,
+    ISendUserPasswordRecoveryCodeUseCase,
     ILog,
 } from "@/layers/application";
 import {
@@ -9,12 +9,12 @@ import {
     HttpHelper,
 } from "@/layers/presentation";
 
-export class SendUserPasswordRecoveryLinkController extends AbstractController {
+export class SendUserPasswordRecoveryCodeController extends AbstractController {
     constructor(
-        private readonly useCase: ISendUserPasswordRecoveryLinkUseCase,
+        private readonly useCase: ISendUserPasswordRecoveryCodeUseCase,
         protected readonly log: ILog,
     ) {
-        super(log, "SendUserPasswordRecoveryLink", {
+        super(log, "SendUserPasswordRecoveryCode", {
             email: {
                 type: "string",
                 optional: false,

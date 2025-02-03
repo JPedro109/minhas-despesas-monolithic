@@ -28,7 +28,7 @@ export const generationAdapter = new GenerationAdapter();
 export const winstonAdapter = new WinstonAdapter();
 export const sqsAdapter = new SQSAdapter();
 export const s3BucketAdapter = new S3BucketAdapter();
-export const notificationAdapter = new NotificationAdapter(sqsAdapter);
+export const notificationAdapter = new NotificationAdapter();
 export const stripeAdapter = new StripeAdapter();
 export const securityAdapter = new SecurityAdapter();
 

@@ -1,0 +1,82 @@
+name: Node.js CI
+
+on:
+    push:
+        branches: ["staging"]
+    pull_request:
+        branches: ["staging"]
+
+env:
+    APP_URL: "https://despesas.com"
+    AWS_REGION: "us-east-1"
+    AWS_ACCESS_KEY_ID: "test"
+    AWS_SECRET_ACCESS_KEY: "test"
+    AWS_BUCKET_NAME: "test"
+    SEND_MAIL_QUEUE: "http://localhost:4566/000000000000/Test"
+    LOCALSTACK_ENDPOINT: "http://localhost:4566"
+    DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/expense?schema:public"
+    STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+    PORT: "3000"
+    JWT_KEY: "secret-key"
+    BASIC_AUTHENTICATION_USER: "user"
+    BASIC_AUTHENTICATION_PASSWORD: "pass"
+    HOST_PROVIDER_EMAIL: "sandbox.smtp.mailtrap.io"
+    PORT_PROVIDER_EMAIL: 587
+    SENDER_EMAIL: "no-reply@jpmns.com"
+    EMAIL_PROVIDER_EMAIL: ${{ secrets.EMAIL_PROVIDER_EMAIL }}
+    PASSWORD_PROVIDER_EMAIL: ${{ secrets.PASSWORD_PROVIDER_EMAIL }}
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [22.x]
+
+        services:
+            postgres:
+                image: postgres
+                env:
+                    POSTGRES_PASSWORD: postgres
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+                ports:
+                    - 5432:5432
+
+            localstack:
+                image: localstack/localstack:latest
+                env:
+                  SERVICES: sqs, s3
+                  DEFAULT_REGION: us-east-1
+                  AWS_ACCESS_KEY_ID: test
+                  AWS_SECRET_ACCESS_KEY: test
+                ports:
+                  - 4566:4566
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+
+            - name: "Create bucket"
+              run: aws s3 mb s3://test --endpoint-url=http://localhost:4566
+            
+            - name: "Create queue"
+              run: aws sqs create-queue --queue-name Test --endpoint-url=http://localhost:4566
+
+            - name: "Install yarn package"
+              run: npm i -g yarn
+
+            - name: "Install dependencies"
+              run: yarn
+
+            - name: "Run migrations"
+              run: yarn migrate:execute
+
+            - name: "Run tests"
+              run: yarn test:coverage

@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PrismaUser {
+  id            String    @id @db.Uuid
+  email         String    @unique @db.VarChar(255)
+  username      String    @db.VarChar(255)
+  password      String    @db.VarChar(255)
+  verifiedEmail Boolean   @map("verified_email")
+  createdAt     DateTime  @map("created_at")
+  updatedAt     DateTime? @map("updated_at")
+
+  customers      PrismaCustomer?
+  userConsents   PrismaUserConsent?
+  paymentMethods PrismaPaymentMethod?
+
+  expenses          PrismaExpense[]
+  verificationCodes PrismaUserVerificationCode[]
+  paymentHistories  PrismaPaymentHistory[]
+  subscriptions     PrismaSubscription[]
+  extracts          PrismaExtract[]
+
+  @@map("users")
+}
+
+model PrismaExpense {
+  id           String     @id @db.Uuid
+  userId       String     @map("user_id") @db.Uuid
+  user         PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  expenseName  String     @map("expense_name") @db.VarChar(60)
+  expenseValue Float      @map("expense_value")
+  dueDate      DateTime   @map("due_date") @db.Date
+  paid         Boolean
+  createdAt    DateTime   @map("created_at")
+  updatedAt    DateTime?  @map("updated_at")
+
+  @@map("expenses")
+}
+
+model PrismaCustomer {
+  id         String     @id @db.Uuid
+  userId     String     @unique @map("user_id") @db.Uuid
+  user       PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  customerId String     @map("customer_id") @db.VarChar(20)
+  createdAt  DateTime   @map("created_at")
+
+  @@map("customers")
+}
+
+model PrismaUserConsent {
+  id             String     @id @db.Uuid
+  userId         String     @unique @map("user_id") @db.Uuid
+  user           PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  consentVersion String     @map("consent_version") @db.VarChar(10)
+  ipAddress      String     @map("ip_address") @db.VarChar(50)
+  userAgent      String     @map("user_agent") @db.VarChar(255)
+  createdAt      DateTime   @map("created_at")
+
+  @@map("user_consents")
+}
+
+model PrismaPaymentMethod {
+  id        String     @id @db.Uuid
+  userId    String     @unique @map("user_id") @db.Uuid
+  user      PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  name      String     @db.VarChar(30)
+  token     String     @db.VarChar(30)
+  createdAt DateTime   @map("created_at")
+  updatedAt DateTime?  @map("updated_at")
+
+  @@map("payment_methods")
+}
+
+model PrismaUserVerificationCode {
+  id                         String     @id @db.Uuid
+  userId                     String     @map("user_id") @db.Uuid
+  user                       PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  type                       String     @db.VarChar(25)
+  verificationCode           String     @map("verification_code") @db.VarChar(6)
+  verificationCodeExpiryDate DateTime?  @map("verification_code_expiry_date")
+  valid                      Boolean
+  createdAt                  DateTime   @map("created_at")
+  updatedAt                  DateTime?  @map("updated_at")
+
+  @@map("user_verification_codes")
+}
+
+model PrismaPaymentHistory {
+  id           String     @id @db.Uuid
+  userId       String     @map("user_id") @db.Uuid
+  expenseId    String     @map("expense_id") @db.Uuid
+  user         PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  expenseName  String     @map("expense_name") @db.VarChar(60)
+  expenseValue Float      @map("expense_value")
+  dueDate      DateTime   @map("due_date") @db.Date
+  paymentDate  DateTime   @map("payment_date")
+  createdAt    DateTime   @map("created_at")
+
+  @@map("payment_histories")
+}
+
+model PrismaSubscription {
+  id                     String     @id @db.Uuid
+  userId                 String     @unique @map("user_id") @db.Uuid
+  planId                 String     @map("plan_id") @db.Uuid
+  user                   PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  plan                   PrismaPlan @relation(fields: [planId], references: [id])
+  subscriptionExternalId String     @map("subscription_external_id") @db.VarChar(50)
+  createdAt              DateTime   @map("created_at")
+  updatedAt              DateTime?  @map("updated_at")
+
+  @@map("subscriptions")
+}
+
+model PrismaExtract {
+  id             String     @id @db.Uuid
+  userId         String     @map("user_id") @db.Uuid
+  user           PrismaUser @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  url            String     @db.VarChar(600)
+  referenceYear  Int        @map("reference_year")
+  referenceMonth Int        @map("reference_month")
+  expiryDate     DateTime   @map("expiry_date")
+  urlExpiryDate  DateTime   @map("url_expiry_date")
+  createdAt      DateTime   @map("created_at")
+  updatedAt      DateTime?  @map("updated_at")
+
+  @@map("extracts")
+}
+
+model PrismaPlan {
+  id             String    @id @db.Uuid
+  planExternalId String    @map("plan_external_id") @db.VarChar(50)
+  name           String    @db.VarChar(50)
+  description    String    @db.VarChar(100)
+  amount         Float
+  durationInDays Int       @map("duration_in_days")
+  createdAt      DateTime  @map("created_at")
+  updatedAt      DateTime? @map("updated_at")
+
+  actions            PrismaAction[]
+  PrismaSubscription PrismaSubscription[]
+
+  @@map("plans")
+}
+
+model PrismaAction {
+  id          String    @id @db.Uuid
+  name        String    @db.VarChar(30)
+  description String    @db.VarChar(50)
+  createdAt   DateTime  @map("created_at")
+  updatedAt   DateTime? @map("updated_at")
+
+  plans PrismaPlan[]
+
+  @@map("actions")
+}

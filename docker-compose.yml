@@ -12,8 +12,6 @@ services:
         depends_on:
             - localstack
             - postgres
-        volumes:
-            - ./:/api-minhas-despesas
 
     postgres:
         image: postgres:15

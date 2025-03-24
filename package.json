@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/server.js",
   "author": "João Pedro <joaopedromoraesnsilva@gmail.com>",
-  "repository": "https://github.com/JPedro109/minhas-despesas-api.git",
+  "repository": "https://github.com/JPedro109/minhas-despesas-monolithic.git",
   "license": "MIT",
   "scripts": {
     "postinstall": "husky",
